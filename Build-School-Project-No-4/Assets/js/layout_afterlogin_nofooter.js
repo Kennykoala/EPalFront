@@ -45,6 +45,7 @@ let passerror = document.getElementById('myinput-error');
 let valerror = document.querySelectorAll(".field-validation-error");
 //let isRequestAuthenticated = ' @Request.IsAuthenticated';
 
+let logoutbtn = document.querySelector('#logoutbutton')
 
 
 
@@ -115,7 +116,25 @@ window.onload = function () {
                         LoginMethod: "1"
                     },
                     success: function (msg) {
+                        $("#myModal").modal('hide');
+                        //$("#loginmodal").style.display="none";
+                        //$("#signupmodal").style.display="none";
+
+
                         console.log(msg);
+                        swal.fire({
+                            title: "Welcome to Epal",
+                            icon: "success",
+                            //buttons: true,
+                            //dangerMode: true
+                        });
+
+                        return User.Identity.IsAuthenticated; 
+
+                        //logbtn.style.display="none";
+                        //signbtn.style.display = "none";
+                        //logoutbtn.style.display = "block";
+
                     }
                 });//end $.ajax
 
@@ -150,14 +169,14 @@ window.onload = function () {
 
 
 
-    // 點擊登出
-    $("#GOOGLE_logout").click(function () {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-            // 登出後的動作
-            $("#GOOGLE_STATUS_2").html("");
-        });
-    });
+    //// 點擊登出
+    //$("#GOOGLE_logout").click(function () {
+    //    var auth2 = gapi.auth2.getAuthInstance();
+    //    auth2.signOut().then(function () {
+    //        // 登出後的動作
+    //        $("#GOOGLE_STATUS_2").html("");
+    //    });
+    //});
 
 
 

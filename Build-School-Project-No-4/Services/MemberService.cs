@@ -64,8 +64,7 @@ namespace Build_School_Project_No_4.Services
                     RegistrationDate = item.RegistrationDate,
                     Email = item.Email,
                     Password = item.Password,
-                    AuthCode = item.AuthCode,
-                    IsAdmin = item.IsAdmin
+                    AuthCode = item.AuthCode
                 });
             }
             return result;
@@ -84,7 +83,9 @@ namespace Build_School_Project_No_4.Services
                     MemberId = item.MemberId,
                     RegistrationDate = item.RegistrationDate,
                     Email = item.Email,
-                    Password = item.Password
+                    Password = item.Password,
+                    ProfilePicture = item.ProfilePicture,
+                    MemberName = item.MemberName                    
                 });
             }
             return result;

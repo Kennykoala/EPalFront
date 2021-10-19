@@ -415,6 +415,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
             integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         //$("#btnSubmit").click(function () {
         //    var fileUpload = $("#imageUpload").get(0);
@@ -530,12 +532,25 @@
                 processData: false,
                 //dataType: "json",
                 success: function (res) {
+                    swal.fire({
+                        title: "Update Success",
+                        icon: "success",
+                        //buttons: true,
+                        //dangerMode: true
+                    });
                         console.log(res);
-                     $("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
+                     //$("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
                 },
                 error: function (err) {
+                    swal.fire({
+                        title: "Update Failure",
+                        icon: "error",
+                        //buttons: true,
+                        //dangerMode: true
+                    });
+
                         console.log(err);
-                    $("#ShowMsg").text("Image Not Uploaded...!").css("color", "red")
+                    //$("#ShowMsg").text("Image Not Uploaded...!").css("color", "red")
                 }
             });
 

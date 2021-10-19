@@ -187,7 +187,8 @@ namespace Build_School_Project_No_4.Controllers
         public async Task<ActionResult> Test(string id_token, string LoginMethod)
         {
             string msg = "ok";
-            string email;            
+            string email;
+            string fullname;
             GoogleJsonWebSignature.Payload payload = null;
             try
             {
@@ -219,12 +220,14 @@ namespace Build_School_Project_No_4.Controllers
             if (msg == "ok" && payload != null)
             {
                 email = payload.Email;
+                fullname = payload.Name;
                 //確認是否已註冊google
+                //var memberDM = _MemberService.MemberLoginData()
+                //            .Where(m => m.Email == email   )
+                //            .FirstOrDefault();
                 var memberRVM = _MemberService.MemberRigisterData()
-                            .Where(m => m.Email == email)
+                            .Where(m => m.Email == email  )
                             .FirstOrDefault();
-                //Members user = _MemberService.GetDataByAccount(email);
-
 
                 if (memberRVM == null)
                 {
@@ -244,12 +247,16 @@ namespace Build_School_Project_No_4.Controllers
                     db.SaveChanges();
 
 
+                    //var getmeminfo = _MemberService.MemberLoginData()
+                    //                .Where(m => m.Email == email   )
+                    //                .FirstOrDefault();
+
 
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
-                        MemberName = memberRVM.MemberName,
-                        ProfilePicture = memberRVM.ProfilePicture
+                        MemberName = fullname,
+                        //ProfilePicture = memberRVM.ProfilePicture
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
@@ -303,20 +310,43 @@ namespace Build_School_Project_No_4.Controllers
                     var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(cookie);
 
+                    ////4.取得original URL.
+                    //var url = FormsAuthentication.GetRedirectUrl(email, true);
 
-                    //都成功
-                    string user_id = payload.Subject;//取得user_id
-                    msg = $@"您的 user_id :{user_id}";
+                    ////5.導向original URL
+                    //return Redirect(url);
 
+
+
+                    ////都成功
+                    //string user_id = payload.Subject;//取得user_id
+                    //msg = $@"您的 user_id :{user_id}";
                     return Content(msg);
 
                 }
 
+                //反回原頁面
+                //獲取使用者登錄中的資訊
+                string loginName = Request["email"];
+                string password = Request["password"];
+
+                //把使用者的資訊儲存在session中
+                Session[LoginUserKey] = email;
+
+                //獲取該頁面url的參數資訊
+                string returnURL = Request.Params["HTTP_REFERER"];
+                int index = returnURL.IndexOf('=');
+                returnURL = returnURL.Substring(index + 1);
+
+                //如果參數為空，則跳轉到首頁，否則切回原頁面
+                if (string.IsNullOrEmpty(returnURL))
+                    return Redirect("/Home/HomePage");
+                else
+                    return Redirect(returnURL);
+
             }
+            msg = "error";
             return Content(msg);
-
-
-
 
 
 
