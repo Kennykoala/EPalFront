@@ -71,6 +71,8 @@ namespace Build_School_Project_No_4.DataModels
 
         public string MeetPicture { get; set; }
 
+        public int? LoginMethod { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chatlist> Chatlist { get; set; }
 

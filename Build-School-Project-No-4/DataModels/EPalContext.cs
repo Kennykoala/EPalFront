@@ -155,6 +155,11 @@ namespace Build_School_Project_No_4.DataModels
                 .Property(e => e.Discount)
                 .HasPrecision(18, 0);
 
+            modelBuilder.Entity<Orders>()
+                .HasMany(e => e.Payments)
+                .WithRequired(e => e.Orders)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<OrderStatus>()
                 .HasMany(e => e.Orders)
                 .WithRequired(e => e.OrderStatus)

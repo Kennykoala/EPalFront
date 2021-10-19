@@ -8,6 +8,12 @@ namespace Build_School_Project_No_4.DataModels
 
     public partial class Orders
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Orders()
+        {
+            Payments = new HashSet<Payments>();
+        }
+
         [Key]
         public int OrderId { get; set; }
 
@@ -35,16 +41,15 @@ namespace Build_School_Project_No_4.DataModels
 
         public DateTime? GameStartTime { get; set; }
 
-        public int? PaymentId { get; set; }
-
         public virtual Members Members { get; set; }
 
         public virtual OrderStatus OrderStatus { get; set; }
 
         public virtual OrderStatus OrderStatus1 { get; set; }
 
-        public virtual Payments Payments { get; set; }
-
         public virtual Products Products { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payments> Payments { get; set; }
     }
 }
