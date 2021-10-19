@@ -245,9 +245,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference> 
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -743,8 +740,6 @@
     <Content Include="Assets\WalletImages\Money.png" />
     <Content Include="Assets\WalletImages\nobody.png" />
     <Content Include="Assets\WalletImages\wallet.png" />
-    <Content Include="bin\Build-School-Project-No-4.dll" />
-    <Content Include="bin\Build-School-Project-No-4.pdb" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -814,23 +809,15 @@
     <Content Include="Views\FAQ\FAQ.cshtml" />
     <Content Include="Views\Shared\_Layout_nofooter.cshtml" />
     <Content Include="Views\Coupons\Coupons.cshtml" />
-    <Content Include="Views\ePal\ePal.cshtml" />
-    <Content Include="Views\epalAccount\Wallet.cshtml" />
     <Content Include="Views\epalAccount\Wallet.cshtml" />
     <Content Include="Views\MeForPhone\MeForPhonePage.cshtml" />
     <Content Include="Views\ChatForPhone\ChatForPhonePage.cshtml" />
     <Content Include="Views\becomeepal\BecomeEPalPage.cshtml" />
     <Content Include="Views\Page404\Page404.cshtml" />
     <Content Include="Views\AboutUs\AboutUs.cshtml" />
-    <Content Include="Views\Edit_Profile\Edit_Profile.cshtml" />
-    <Content Include="Views\SettingsAccount\SettingsAccount.cshtml" />
     <Content Include="Views\UserAgreement\UserAgreement.cshtml" />
     <Content Include="Views\Subscription\Subscription.cshtml" />
-    <Content Include="Views\Detail\DetailPage.cshtml" />
-    <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\CreatorProject\CreatorProject.cshtml" />
-    <Content Include="Views\ePal\EPalIndex.cshtml" />
-    <Content Include="Views\Members\Create.cshtml" />
     <Content Include="Views\ChooseAService\ChooseAService.cshtml" />
     <Content Include="Views\Members\Login.cshtml" />
     <Content Include="Views\Members\Register.cshtml" />
@@ -865,7 +852,6 @@
     <Content Include="Views\CreatorProject\Rule_ListCover.cshtml" />
     <Content Include="Views\CreatorProject\Rule_ScreenshotRules.cshtml" />
     <Content Include="Views\CreatorProject\Rule_VoiceRecord.cshtml" />
-    <Content Include="Views\epalAccount\Wallet.cshtml" />
     <Content Include="Views\GameInformation\GameInformation.cshtml" />
     <Content Include="Views\GameInformation\Rule_ListCover.cshtml" />
     <Content Include="Views\GameInformation\Rule_ScreenshotRules.cshtml" />
@@ -882,8 +868,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="obj\Debug\" />
-    <Folder Include="obj\Release\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
