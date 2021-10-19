@@ -813,18 +813,12 @@
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+        .bg-black1 {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAeFBMVEUAAACqgP+Sbf+VavSOZu6Qae6QaO2NZuuOZ+qNZuuOZeuOZeqNZeuOZeuOZuuNZeuOZuqNZeqNZeqPaOqQaeqUbuuWceubeOyefe2ffe2lhe6lhu7GsvTPvvbQv/bUxffZy/jd0fjq4/vx7Pz08P308f349f3///9W78FDAAAAEnRSTlMABgcYLS5HgpWWv8fZ4/Hy8/TT2gOVAAAA7UlEQVQ4y4WT20LDIBBEl6AECIlhvNQLXmqr+/9/6AM0DQnIPHIGWJZZokVCaevm2VmtBO0lzYRFk5Eb3PUemXzfZdsH7DSsDrkdUdB4s+wvcmBMZ3QDKhpiHT2q6omIpK8bvCQig39kiMRUJPepY4JUkX8ck0ORLnLm4wMAQJMtc+ZPAIAlV+HnZwCAozmtHr7fChzzxXA48e/rnuMuXfF4Yo6OnMNdigwcHe85h12eGR1fzMznl2vB+tqowEk/Kw61anUo8EmsPyvsOEz+3WHLvdwEJuQ8BiaL3FMpcs3QtmPfHpz26LWHtz7+f42dP2nUknWiAAAAAElFTkSuQmCC');
+            background-repeat: no-repeat;
+            background-position: 120px;
+            background-size: 20px;
+        }
 
 
         /*----------------------------------*/
@@ -1497,15 +1491,14 @@
         statuslist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
+                x.classList.toggle('bg-black1')
                 if (filterObj.status === undefined) {
                     filterObj.status = x.innerText;
                     console.log(filterObj.status)
-                    
                 }
                 else if (filterObj.status == x.innerText) {
                     delete (filterObj.status)
                     console.log(filterObj.status)
-                    
                 }
                 else {
                     y.classList.add('d-none')
@@ -1521,10 +1514,7 @@
         languagelist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                let listSpan = x.querySelectorAll('span');
-                listSpan.forEach(y => {
-                    y.classList.toggle('d-none')
-                })
+                x.classList.toggle('bg-black1')
                 addOrRemove(languageArr, x.innerText)
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
@@ -1533,10 +1523,7 @@
         agelist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                let listSpan = x.querySelectorAll('span');
-                listSpan.forEach(y => {
-                    y.classList.toggle('d-none')
-                })
+                x.classList.toggle('bg-black1')
                 let temp = x.innerText;
                 let result = temp.split(/- /g).slice(0);
 
@@ -1560,10 +1547,7 @@
         pricelist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                let listSpan = x.querySelectorAll('span');
-                listSpan.forEach(y => {
-                    y.classList.toggle('d-none')
-                })
+                x.classList.toggle('bg-black1')
                 let temp = x.innerText;
                 let result = temp.split(/-/g).slice(0);
 
@@ -1586,10 +1570,7 @@
         serverlist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                let listSpan = x.querySelectorAll('span');
-                listSpan.forEach(y => {
-                    y.classList.toggle('d-none')
-                })
+                x.classList.toggle('bg-black1')
                 addOrRemove(serverArr, x.innerText)
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
@@ -1598,10 +1579,7 @@
         genderlist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                let listSpan = x.querySelectorAll('span');
-                listSpan.forEach(y => {
-                    y.classList.toggle('d-none')
-                })
+                x.classList.toggle('bg-black1')
                 if (filterObj.gender === undefined) {
                     filterObj.gender = x.innerText;
                 }
@@ -1615,10 +1593,7 @@
         levellist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                let listSpan = x.querySelectorAll('span');
-                listSpan.forEach(y => {
-                    y.classList.toggle('d-none')
-                })
+                x.classList.toggle('bg-black1')
                 addOrRemove(levelArr, x.innerText)
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
