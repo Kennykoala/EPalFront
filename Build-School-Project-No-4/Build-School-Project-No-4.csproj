@@ -51,6 +51,9 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.90\lib\net461\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="ECPay.Payment.Integration, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ECPay.Payment.Integration.1.0.0.8\lib\net45\ECPay.Payment.Integration.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -358,17 +361,21 @@
     <Compile Include="Services\ApiFilterService.cs" />
     <Compile Include="Services\CheckoutService.cs" />
     <Compile Include="Services\DetailServices.cs" />
+    <Compile Include="Services\EcPayService.cs" />
     <Compile Include="Services\FollowService.cs" />
+    <Compile Include="Services\GetCustomerIdService.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\becomeepalService.cs" />
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Services\OrderConfirmationService.cs" />
+    <Compile Include="Services\PaymentUIDService.cs" />
     <Compile Include="Services\PaypalService.cs" />
-    <Compile Include="Services\PaypaylConfiguration.cs" />
+    <Compile Include="Services\PaypalConfiguration.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProfileEpalService.cs" />
+    <Compile Include="Services\TimestampService.cs" />
     <Compile Include="Services\WalletService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
@@ -386,6 +393,7 @@
     <Compile Include="ViewModels\MemberViewModel.cs" />
     <Compile Include="ViewModels\OrderConfirmationViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
+    <Compile Include="ViewModels\PayTrans.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\WalletViewModel.cs" />
@@ -417,6 +425,7 @@
     <Content Include="Assets\images\becomeEPal\zero.png" />
     <Content Include="Assets\images\checkout\buff-charge.png" />
     <Content Include="Assets\images\checkout\check.png" />
+    <Content Include="Assets\images\checkout\ecpay_logo.png" />
     <Content Include="Assets\images\checkout\heyhinaa.jpg" />
     <Content Include="Assets\images\checkout\paypal.png" />
     <Content Include="Assets\images\ChooseAService\CAS01.jpg" />
@@ -822,7 +831,7 @@
     <Content Include="Views\ePals\GamesJson.cshtml" />
     <Content Include="Views\ePals\Order.cshtml" />
     <Content Include="Views\ePals\Checkout.cshtml" />
-    <Content Include="Views\ePals\DetailPage.cshtml" />
+    <Content Include="Views\ePals\Detail.cshtml" />
     <Content Include="Views\ePals\Index.cshtml" />
     <Content Include="Views\ePals\NotFound.cshtml" />
     <Content Include="Views\Order\OrderSummary.cshtml" />

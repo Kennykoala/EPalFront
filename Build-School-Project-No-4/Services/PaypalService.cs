@@ -36,7 +36,6 @@ namespace Build_School_Project_No_4.Services
             var members = _repo.GetAll<Members>();
             var products = _repo.GetAll<Products>();
             var gameCat = _repo.GetAll<GameCategories>();
-            //var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
             var result = (from o in orders
                           join p in products on o.ProductId equals p.ProductId
                           join m in members on p.CreatorId equals m.MemberId
@@ -88,11 +87,12 @@ namespace Build_School_Project_No_4.Services
                 details = details
             };
             var transactionList = new List<Transaction>();
+            var customerId = GetCustomerIdService.GetMemberId();
             // Adding description about the transaction  
             transactionList.Add(new Transaction()
             {
-                description = "Game4Lyfe" + confirmation,
-                invoice_number = confirmation, //Generate an Invoice No  
+                description = $"Order ID: {confirmation}",
+                invoice_number = PaymentUIDService.CreateTransactionUID(customerId), //Generate an Invoice No  
                 amount = amount,
                 item_list = itemList
             });
@@ -105,6 +105,12 @@ namespace Build_School_Project_No_4.Services
             };
             // Create a payment using a APIContext  
             return this.payment.Create(apiContext);
+        }
+
+        public bool PaymentTransaction(int paymentId)
+        {
+            //change primary key and foreign key in payments and order
+            return true;
         }
 
     }

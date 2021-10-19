@@ -9,83 +9,94 @@
 }
 
 <div class="container">
-    <div class="checkout-container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="checkout-header">Checkout</h1>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="checkout-container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="checkout-header">Checkout</h1>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="cart-summary">
-                    <div class="order-info">
-                        <div class="order-id greyish">OrderID:</div>
-                        <div class="order-id-value greyish">@Model.Checkout.OrderConfirmation</div>
-                    </div>
-                    <hr>
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="cart-summary">
+                        <div class="order-info">
+                            <div class="order-id greyish">OrderID:</div>
+                            <div class="order-id-value greyish">@Model.Checkout.OrderConfirmation</div>
+                        </div>
+                        <hr>
 
-                    <div class="game-info">
-                        <div class="game-play">Play @Model.Checkout.GameName with @Model.Checkout.PlayerName</div>
-                        <img src="@Model.Checkout.PlayerPic" />
+                        <div class="game-info">
+                            <div class="game-play">Play @Model.Checkout.GameName with @Model.Checkout.PlayerName</div>
+                            <img src="@Model.Checkout.PlayerPic" />
+                        </div>
+
+                        <div class="start-info">
+                            <div class="greyish">Start Time:</div>
+                            <div class="start-time desc">@startTime</div>
+                        </div>
+
+                        <div class="unit-price">
+                            <div class="greyish">Unit Price:</div>
+                            <div class="price desc">$@Model.Checkout.UnitPrice.ToString("N2")/G</div>
+                        </div>
+
+                        <div class="rounds-info">
+                            <div class="greyish">Rounds:</div>
+                            <div class="rounds-value desc">@Model.Checkout.Rounds</div>
+                        </div>
+                        <hr>
+                        <div class="subtotal-info">
+                            <div class="greyish">Subtotal:</div>
+                            <div class="subtotal desc">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
+                        </div>
+                        <div class="promotion">
+                            <div class="greyish">ePal Promotion: </div>
+                            <div class="discount desc"></div>
+                        </div>
+                        <hr>
+                        <div class="final-price-div">
+                            <div class="greyish">Final Price:</div>
+                            <div class="rounds-total greyish">@Model.Checkout.Rounds Round(s) total</div>
+                            <div class="price-total price-summary">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
+                        </div>
+                        <div class="timer-div greyish">
+                            Please complete the payment within <span class="time-left" id="counter"></span><span class="testtest"></span>, otherwise the order will be cancelled automatically
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-8">
+                    <div class="payment">
+                        <div class="payment-label">
+                            <label class="payment-check-label" for="paymentRadio">
+                                <span class="straighten">
+                                    <input class="form-check-input" type="radio" name="payType" id="paymentRadio" value="paypal" checked>
+                                    <span>Paypal</span>
+
+                                </span>
+                                <span class="paypal-img">
+                                    <img src="~/Assets/images/checkout/paypal.png" />
+                                </span>
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="start-info">
-                        <div class="greyish">Start Time:</div>
-                        <div class="start-time desc">@startTime</div>
-                    </div>
-
-                    <div class="unit-price">
-                        <div class="greyish">Unit Price:</div>
-                        <div class="price desc">$@Model.Checkout.UnitPrice.ToString("N2")/G</div>
-                    </div>
-
-                    <div class="rounds-info">
-                        <div class="greyish">Rounds:</div>
-                        <div class="rounds-value desc">@Model.Checkout.Rounds</div>
-                    </div>
-                    <hr>
-                    <div class="subtotal-info">
-                        <div class="greyish">Subtotal:</div>
-                        <div class="subtotal desc">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
-                    </div>
-                    <div class="promotion">
-                        <div class="greyish">ePal Promotion: </div>
-                        <div class="discount desc"></div>
-                    </div>
-                    <hr>
-                    <div class="final-price-div">
-                        <div class="greyish">Final Price:</div>
-                        <div class="rounds-total greyish">@Model.Checkout.Rounds Round(s) total</div>
-                        <div class="price-total price-summary">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
-                    </div>
-                    <div class="timer-div greyish">
-                        Please complete the payment within <span class="time-left" id="counter"></span><span class="testtest"></span>, otherwise the order will be cancelled automatically
-
+                    <div class="payment">
+                        <div class="payment-label">
+                            <label class="payment-check-label" for="ecPay">
+                                <input class="form-check-input" type="radio" name="payType" id="ecPay" value="ecpay">
+                                <span>綠界</span>
+                                <span class="ecpay-img">
+                                    <img src="~/Assets/images/checkout/ecpay_logo.png" />
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-8">
-                <div class="payment">
 
-                    <div class="payment-label">
-                        <label class="payment-check-label" for="paymentRadio">
-                            <span class="straighten">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="paymentRadio" checked>
-                                <span>Paypal</span>
-                            </span>
-
-                            <span class="paypal-img">
-                                <img src="~/Assets/images/checkout/paypal.png" />
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
             <div class="row">
                 <div class="col-12">
                     <div class="total-div">
@@ -98,10 +109,10 @@
 
                 </div>
             </div>
-        }
-
+            
+        </div>
+    }
     </div>
-</div>
 
 @section endJS{
     
@@ -117,44 +128,21 @@
     let timeNow = dateTimeNow.getTime();
     let orderTime = new Date("@startTime");
 
-    let expireTime = new Date(orderTime.setMinutes(orderTime.getMinutes() + 5 )).getTime();
-    let remainingTime = expireTime - timeNow;
-
     const utcStart = new Date("@unixDateTime").getTime();
     const utcEnd = utcStart + 900000;
     var now = new Date();
     const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000).getTime();
-    console.log(utcStart)
-    console.log(utcEnd)
-    console.log(utcNow)
-
-    console.log(utcEnd - utcNow)
-
-
-
-
-
-
-
+    let remainingTime = (utcEnd - utcNow);
 
 
     let timeLeft = (remainingTime) / 1000;
+    CheckTime();
     let min, sec;
     min = Math.floor(timeLeft / 60);
     sec = Math.floor(timeLeft % 60);
 
-    let isTimedOut = CheckTime();
-    if (isTimedOut == false) {
-        let setTime = setInterval(countdown, 1000)
-    }
-    else {
-        timer.innerText = "---";
-        alert('Session has timed out, please try placing a new order');
-        window.location = `/detail/detailpage/@Model.Checkout.ProductId`;
-    }
-
-
     function countdown() {
+        
         sec--
         timeLeft--;
         if (sec < 0 && min > 0) {
@@ -163,12 +151,10 @@
             timer.innerText = `${min}m ${sec}s`;
         } else if (sec > 0 && min > 0) {
             timer.innerText = `${min}m ${sec}s`;
-        } else if (sec == 0 && min == 0) {
-            timer.innerText = '0s';
+        } else if (sec < 0 && min == 0) {
+            CheckTime();
 
             clearInterval(setTime);
-            alert('Session has timed out, please try placing a new order');
-            window.location = `/epals/detailpage/@Model.Checkout.ProductId`;
         } else {
             timer.innerText = `${min}m ${sec}s`;
         }
@@ -176,9 +162,14 @@
 
     function CheckTime() {
         if (timeLeft < 0) {
-            return true;
+            PaymentTimeout();
         }
-        else { return false };
+        else { let setTime = setInterval(countdown, 1000)};
+    }
+
+    function PaymentTimeout() {
+        timer.innerText = "-----";
+        window.location = `/epals/detail/@Model.Checkout.ProductId`;
     }
 </script>
 }

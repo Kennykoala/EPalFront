@@ -24,11 +24,11 @@ namespace Build_School_Project_No_4.Services
             var timeNow = DateTime.Now;
             var utcTimeNow = timeNow.ToUniversalTime();
             var timestamp = UtcDateTimeToUnix(utcTimeNow);
-            var dummyCustomerId = 1;
-            var formattedTimestamp = $"GLHF-{dummyCustomerId}{timestamp}";
+            var customerId = Int32.Parse(GetCustomerIdService.GetMemberId());
+            var formattedTimestamp = $"GLHF-{customerId}{timestamp}";
             Orders order = new Orders()
             {
-                CustomerId = dummyCustomerId,
+                CustomerId = customerId,
                 ProductId = id,
                 Quantity = cart.Rounds,
                 UnitPrice = cart.UnitPrice,
@@ -42,12 +42,12 @@ namespace Build_School_Project_No_4.Services
 
         public bool AddCartSuccess(Orders unpaid)
         {
-            using (var tran = _ctx.Database.BeginTransaction())
+            using (var tran = _repo._context.Database.BeginTransaction())
             {
                 try
                 {
-                    _ctx.Orders.Add(unpaid);
-                    _ctx.SaveChanges();
+                    _repo.Create(unpaid);
+                    _repo.SaveChanges();
                     tran.Commit();
                     var confirmation = unpaid.OrderConfirmation;
                     return true;

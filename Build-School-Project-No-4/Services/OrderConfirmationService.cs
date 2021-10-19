@@ -27,26 +27,21 @@ namespace Build_School_Project_No_4.Services
                 return false;
             }
 
-            using (var tran = _repo._context.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-                    result.OrderStatusId = 4;
-                    //result.UpdateDateTime = DateTime.Now.ToUniversalTime();
-                    _repo.Update(result);
-                    _repo.SaveChanges();
-                    tran.Commit();
-
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    var err = ex.ToString();
-                    return false;
-                }
+                var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
+                result.OrderStatusId = 3;
+                //result.UpdateDateTime = DateTime.Now.ToUniversalTime();
+                _repo.Update(result);
+                _repo.SaveChanges();
+                return true;
             }
+            catch (Exception ex)
+            {
+                var err = ex.ToString();
+                return false;
+            }
+            
 
         }
         public OrderConfirmationViewModel GetConfirmationInfo(string confirmationNum)

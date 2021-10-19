@@ -18,6 +18,7 @@ namespace Build_School_Project_No_4.Controllers
         private readonly DetailServices _detailService;
         private readonly AddToCartService _cartService;
         private readonly CheckoutService _checkoutService;
+        private readonly GetCustomerIdService _custIdService;
 
         public ePalsController()
         {
@@ -26,6 +27,7 @@ namespace Build_School_Project_No_4.Controllers
             _ctx = new EPalContext();
             _cartService = new AddToCartService();
             _checkoutService = new CheckoutService();
+            _custIdService = new GetCustomerIdService();
         }
 
         public ActionResult ePal(int? id)
@@ -68,7 +70,7 @@ namespace Build_School_Project_No_4.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult DetailPage(int? id)
+        public ActionResult Detail(int? id)
         {
 
             if (id == null)
@@ -88,20 +90,29 @@ namespace Build_School_Project_No_4.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DetailPage(GroupViewModel AddCartVM, string startTime, int id)
+        public ActionResult Detail(GroupViewModel AddCartVM, string startTime, int id)
         {
-            var unpaid = _cartService.CreateUnpaidOrder(AddCartVM, startTime, id);
-            var isSuccess = _cartService.AddCartSuccess(unpaid);
 
-            if (isSuccess)
+            string currentUrl = Request.Url.AbsoluteUri;
+            if (GetCustomerIdService.GetMemberId() == null)
             {
-                var confirmation = unpaid.OrderConfirmation;
-                return RedirectToAction("Checkout", new { Confirmation = confirmation });
+                return Redirect(currentUrl);
             }
             else
             {
-                return Content("Failed to create new order");
+                var unpaid = _cartService.CreateUnpaidOrder(AddCartVM, startTime, id);
+                var isSuccess = _cartService.AddCartSuccess(unpaid);
+                if (isSuccess)
+                {
+                    var confirmation = unpaid.OrderConfirmation;
+                    return RedirectToAction("Checkout", new { Confirmation = confirmation });
+                }
+                else
+                {
+                    return Content("Failed to create new order");
+                }
             }
+
 
         }
         [HttpGet]
@@ -120,10 +131,20 @@ namespace Build_School_Project_No_4.Controllers
             return View(groupVM);
         }
         [HttpPost]
-        public ActionResult Checkout(GroupViewModel x, string confirmation)
+        public ActionResult Checkout(GroupViewModel x, string confirmation, string payType)
         {
-            TempData["confirmation"] = confirmation;
-            return RedirectToAction("PaymentWithPaypal", "Checkout");
+            
+            //add 判斷 for routing to right payment action
+            if (payType == "payal")
+            {
+                return RedirectToAction("PaymentWithPaypal", "Checkout");
+            }
+            else
+            {
+                return RedirectToAction("PaymentWithEcPay", "Checkout");
+            }
+            
+            
         }
     }
 }
