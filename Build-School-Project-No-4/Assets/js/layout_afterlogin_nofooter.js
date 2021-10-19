@@ -101,6 +101,7 @@ window.onload = function () {
                 var OauthName = profile.getName();
                 var OauthEmail = profile.getEmail();
                 var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
+                var LoginMethod = "1";
 
                 $.ajax({
                     url: '/Members/Test',
@@ -110,7 +111,8 @@ window.onload = function () {
                         OauthId: OauthId,
                         OauthName: OauthName,
                         OauthEmail: OauthEmail,
-                        AuthResponse: AuthResponse
+                        AuthResponse: AuthResponse,
+                        LoginMethod: "1"
                     },
                     success: function (msg) {
                         console.log(msg);

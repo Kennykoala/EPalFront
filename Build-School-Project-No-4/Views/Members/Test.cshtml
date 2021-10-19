@@ -1,4 +1,4 @@
-﻿@using System.Web.Configuration
+﻿<!--@using System.Web.Configuration
 @{
     Layout = null;
 }
@@ -8,32 +8,32 @@
     <meta name="viewport" content="width=device-width" />
     <title>Test Google Login</title>
 </head>
-<body>
+<body>-->
 
     <!--用戶一鍵Google登入或綁定Google帳戶時使用↓-->
-    <button type="button" id="btnSignIn">Google登入</button>
+    <!--<button type="button" id="btnSignIn">Google登入</button>-->
     <!--用戶解除Google帳戶綁定時使用↓-->
-    <button type="button" id="btnDisconnect">斷連Google App</button>
+    <!--<button type="button" id="btnDisconnect">斷連Google App</button>
 </body>
 </html>
 
-@section endJS{
+@section endJS{-->
     <!-- 引用jQuery-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
 
     <!--從 Web.config檔 抓取Googl App Client ID-->
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         let GoolgeApp_Cient_Id = "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com";
         let id_token_to_userIDUrl = "@Url.Action("Test","Members")";
-    </script>
+    </script>-->
 
     <!--引用Google Sign-in必須的.js，callback function(GoogleSigninInit)名稱自訂 -->
-    <script src="https://apis.google.com/js/platform.js?onload=GoogleSigninInit" async defer></script>
+    <!--<script src="https://apis.google.com/js/platform.js?onload=GoogleSigninInit" async defer></script>-->
 
 
 
     <!--以下請放置到*.js檔-->
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         //jQuery處理button click event 當畫面DOM都載入時....
         $(function () {
             $("#btnSignIn").on("click", function () {
@@ -87,6 +87,6 @@
             });
         }
     </script>
-}
+}-->
 
 

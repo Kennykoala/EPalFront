@@ -123,6 +123,7 @@ namespace Build_School_Project_No_4.Controllers
         [HttpPost]
         public async Task<ActionResult> LoginProcess(string token)
         {
+
             string msg = "ok";
             GoogleJsonWebSignature.Payload payload = null;
             try
@@ -183,9 +184,10 @@ namespace Build_School_Project_No_4.Controllers
 
         //, string OauthId, string OauthName, string OauthEmail, string AuthResponse
         [HttpPost]
-        public async Task<ActionResult> Test(string id_token)
+        public async Task<ActionResult> Test(string id_token, string LoginMethod)
         {
             string msg = "ok";
+            string email;            
             GoogleJsonWebSignature.Payload payload = null;
             try
             {
@@ -193,9 +195,9 @@ namespace Build_School_Project_No_4.Controllers
                 {
                     Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
                 });
-                string email = payload.Email;
-                string Id = payload.JwtId;
-                string name = payload.Name;
+                //email = payload.Email;
+                //string Id = payload.JwtId;
+                //string name = payload.Name;
             }
             catch (Google.Apis.Auth.InvalidJwtException ex)
             {
@@ -209,43 +211,123 @@ namespace Build_School_Project_No_4.Controllers
             {
                 msg = ex.Message;
             }
+            //payload = await GoogleJsonWebSignature.ValidateAsync(id_token, new GoogleJsonWebSignature.ValidationSettings()
+            //{
+            //    Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
+            //});
 
             if (msg == "ok" && payload != null)
-            {   
-                //都成功
-                string user_id = payload.Subject;//取得user_id
-                msg = $@"您的 user_id :{user_id}";
-            }
+            {
+                email = payload.Email;
+                //確認是否已註冊google
+                var memberRVM = _MemberService.MemberRigisterData()
+                            .Where(m => m.Email == email)
+                            .FirstOrDefault();
+                //Members user = _MemberService.GetDataByAccount(email);
 
+
+                if (memberRVM == null)
+                {
+                    Random rnd = new Random(Guid.NewGuid().GetHashCode());
+                    string rndnumber = rnd.Next(0, 100).ToString();
+                    //將密碼Hash
+                    rndnumber = _MemberService.HashPassword(rndnumber);
+
+                    //GroupViewModel -> DM
+                    Members emp = new Members
+                    {
+                        Email = email,
+                        Password = rndnumber,
+                        //LoginMethod = "1"
+                    };
+                    db.Members.Add(emp);
+                    db.SaveChanges();
+
+
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = memberRVM.MemberName,
+                        ProfilePicture = memberRVM.ProfilePicture
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+
+
+                    msg = "新增會員成功";
+                    return Content(msg);
+                }
+                else
+                {
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = memberRVM.MemberName,
+                        ProfilePicture = memberRVM.ProfilePicture
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+
+                    //都成功
+                    string user_id = payload.Subject;//取得user_id
+                    msg = $@"您的 user_id :{user_id}";
+
+                    return Content(msg);
+
+                }
+
+            }
             return Content(msg);
 
 
 
-            //var member = _MemberService.MemberRigisterData()
-            //.Where(m => m.Email == newMember.MemberRegister.Email)
-            //.FirstOrDefault();
-            //if (member == null)
-            //{
-            //    //將密碼Hash
-            //    newMember.MemberRegister.Password = _MemberService.HashPassword(newMember.MemberRegister.Password);
 
-            //    //GroupViewModel -> DM
-            //    Members emp = new Members
-            //    {
-            //        Email = newMember.MemberRegister.Email,
-            //        Password = newMember.MemberRegister.Password,
-            //        AuthCode = AuthCode
-            //    };
-            //    db.Members.Add(emp);
-            //    db.SaveChanges();
+
+
+            //if (msg == "ok" && payload != null)
+            //{   
+            //    //都成功
+            //    string user_id = payload.Subject;//取得user_id
+            //    msg = $@"您的 user_id :{user_id}";
             //}
-            //else
-            //{
-            //    //用TempData儲存註冊訊息
-            //    TempData["RegisterState"] = "此帳號己有人使用，請重新註冊";
-            //    //重新導向頁面
-            //    return RedirectToAction("RegisterResult");
-            //}
+            //return Content(msg);
+
         }
 
 
