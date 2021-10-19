@@ -1601,19 +1601,6 @@
         let genderlist = document.querySelectorAll('.gender-list .list-Item')
         let levellist = document.querySelectorAll('.level-list .list-Item')
 
-        let inputArr = document.querySelectorAll('.filter-Game-Item input')
-
-        rC = function (radioEl) {
-            if (radioEl.checked == true) {
-                radioEl.checked = false;
-                return false;
-            }
-            else {
-                radioEl.checked = true;
-                return true;
-            }
-        }
-
         statuslist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
@@ -1789,6 +1776,7 @@
                 JSON.parse(res.data).ProductCards.forEach(x => {
                     CreateProducts(x)
                 })
+                
             )
         }
 
