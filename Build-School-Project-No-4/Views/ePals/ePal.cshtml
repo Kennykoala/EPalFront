@@ -1743,7 +1743,7 @@
                 }          
         }
 
-        axios.get(`https://localhost:44322/api/jsonapi/${lastId}`)
+        axios.get(`/api/jsonapi/${lastId}`)
             .then(function (response) {
                 let CardArray = JSON.parse(response.data).ProductCards
 
@@ -1772,7 +1772,7 @@
 
         //post filter
         function sendfilter(filterObj) {
-            axios.post('https://localhost:44322/api/jsonapi', filterObj).then(res =>
+            axios.post('/api/jsonapi', filterObj).then(res =>
                 JSON.parse(res.data).ProductCards.forEach(x => {
                     CreateProducts(x)
                 })
