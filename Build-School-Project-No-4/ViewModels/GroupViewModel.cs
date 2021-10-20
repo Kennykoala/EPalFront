@@ -26,9 +26,9 @@ namespace Build_School_Project_No_4.ViewModels
         public IEnumerable<ProfileViewModel> Profiles { get; set; }
         public MemberViewModel MemberData { get; set; }
 
-        public MemberRegisterViewModel MemberRegister { get; set; }
-        public MemberLoginViewModel MemberLogin { get; set; }
-        public MemberInfoViewModel MemberInfo { get; set; }
+        //public MemberRegisterViewModel MemberRegister { get; set; }
+        //public MemberLoginViewModel MemberLogin { get; set; }
+        //public MemberInfoViewModel MemberInfo { get; set; }
 
 
         public DetailViewModel Deets { get; set; }

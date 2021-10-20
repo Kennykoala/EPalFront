@@ -1,5 +1,4 @@
-﻿@model GroupViewModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -236,7 +235,7 @@
                                         <a href="~/Members/profile/@userid">
                                             <div style="color:white">@(User.Identity.Name)</div>
                                         </a>
-                                        @Html.HiddenFor(model => model.MemberLogin.MemberId, new { @class = "", id = "memberId" })
+                                        @*@Html.HiddenFor(model => model.MemberLogin.MemberId, new { @class = "", id = "memberId" })*@
                                     </div>
                                     <div class="aside-close">
                                         <button type="button" class="btn-close btn-close-white" aria-label="Close"
@@ -439,31 +438,7 @@
                         <div class="tab-pane fade logsignTabContent" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="wrap">
 
-                                @using (Html.BeginForm("Login", "Members", FormMethod.Post, new { id = "logsignform", @class = "needs-validation", novalidate = "true" }))
-                                {
-
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    //mail
-                                    <div class="maillog logmethod form-group">
-                                        @Html.LabelFor(model => model.MemberLogin.Email, new { @class = "maillabel", @for = "email" })<br />
-                                        @Html.TextBoxFor(model => model.MemberLogin.Email, null, new { @class = "emailinput ellipsis form-control", id = "email", name = "email", placeholder = "Please enter your email", required = "required" })
-                                        @Html.ValidationMessageFor(model => model.MemberLogin.Email, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    //password
-                                    <div class="form-group ">
-                                        @Html.LabelFor(model => model.MemberLogin.Password, new { @for = "password", @class = "passTitle" })<br />
-                                        @Html.PasswordFor(model => model.MemberLogin.Password, new { @class = "passwordinput ellipsis form-control", id = "password", name = "password", placeholder = "Please enter your password", required = "required" })
-                                        <input type="button" class="passwordshow passwordshowLogin" value="show">
-                                        @Html.ValidationMessageFor(model => model.MemberLogin.Password, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    <a href="#" id="forgetpass">Forget your password?</a>
-
-                                    <input type="submit" class="btn btn-secondary loginbutton" id="loginbutton" value="Log In">
-
-                                }
+                                @Html.Partial("LoginPartialPage")
 
                             </div>
                         </div>
@@ -474,26 +449,7 @@
 
                             <div class="wrap">
 
-                                @using (Html.BeginForm("Register", "Members", FormMethod.Post, new { id = "logsignform", @class = "needs-validation", novalidate = "true" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    //mail
-                                    <div class="maillog form-group">
-                                        @Html.LabelFor(model => model.MemberRegister.Email, new { @class = "maillabel", @for = "email" })<br>
-                                        @Html.TextBoxFor(model => model.MemberRegister.Email, null, new { @class = "emailinput ellipsis form-control", id = "email", name = "email", placeholder = "Please enter your email", required = "required" })
-                                        @Html.ValidationMessageFor(model => model.MemberRegister.Email, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.MemberRegister.Password, new { @for = "password", @class = "passTitle" })<br>
-                                        @Html.PasswordFor(model => model.MemberRegister.Password, new { @class = "passwordinput ellipsis form-control", id = "password", name = "password", placeholder = "Please enter your password", required = "required" })
-                                        <input type="button" class="passwordshow passwordshowSignup" value="show">
-                                        @Html.ValidationMessageFor(model => model.MemberRegister.Password, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    <input type="submit" class="btn btn-secondary mt-5 loginbutton" id="loginbutton" value="Sign Up">
-                                }
+                                @Html.Partial("SignupPartialPage")
 
                             </div>
                         </div>

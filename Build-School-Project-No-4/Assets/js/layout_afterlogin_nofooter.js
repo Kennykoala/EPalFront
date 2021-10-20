@@ -129,7 +129,11 @@ window.onload = function () {
                             //dangerMode: true
                         });
 
-                        return User.Identity.IsAuthenticated; 
+                        if (msg == true) {
+                            window.location.href = '/'
+                        }
+
+                        //return User.Identity.IsAuthenticated; 
 
                         //logbtn.style.display="none";
                         //signbtn.style.display = "none";

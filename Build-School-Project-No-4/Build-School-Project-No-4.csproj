@@ -862,8 +862,10 @@
     <Content Include="Views\ePals\FailureView.cshtml" />
     <Content Include="Views\ePals\SuccessView.cshtml" />
     <Content Include="Views\Members\PrivacyPolicy.cshtml" />
-    <Content Include="Views\Members\FBtest.cshtml" />
     <Content Include="Views\Members\LoginProcess.cshtml" />
+    <Content Include="Views\Shared\LoginPartialPage.cshtml" />
+    <Content Include="Views\Shared\SignupPartialPage.cshtml" />
+    <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

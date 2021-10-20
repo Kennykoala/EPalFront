@@ -178,7 +178,6 @@ namespace Build_School_Project_No_4.Controllers
 
 
         //google
-        //, string OauthId, string OauthName, string OauthEmail, string AuthResponse
         [HttpPost]
         public async Task<ActionResult> GoogleLogin(string id_token, string LoginMethod)
         {
@@ -275,8 +274,9 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-                    msg = "新增會員成功";
-                    return Content(msg);
+                    //msg = "新增會員成功";
+                    //return Content(msg);
+                    //return RedirectToAction("HoemPage", "Home");
                 }
                 else
                 {
@@ -317,28 +317,30 @@ namespace Build_School_Project_No_4.Controllers
                     ////都成功
                     //string user_id = payload.Subject;//取得user_id
                     //msg = $@"您的 user_id :{user_id}";
-                    return Content(msg);
+                    //return Content(msg);
 
                 }
 
-                //反回原頁面
-                //獲取使用者登錄中的資訊
-                string loginName = Request["email"];
-                string password = Request["password"];
+                return Json(true);
 
-                //把使用者的資訊儲存在session中
-                Session[LoginUserKey] = email;
+                ////反回原頁面
+                ////獲取使用者登錄中的資訊
+                //string loginName = Request["email"];
+                //string password = Request["password"];
 
-                //獲取該頁面url的參數資訊
-                string returnURL = Request.Params["HTTP_REFERER"];
-                int index = returnURL.IndexOf('=');
-                returnURL = returnURL.Substring(index + 1);
+                ////把使用者的資訊儲存在session中
+                //Session[LoginUserKey] = email;
 
-                //如果參數為空，則跳轉到首頁，否則切回原頁面
-                if (string.IsNullOrEmpty(returnURL))
-                    return Redirect("/Home/HomePage");
-                else
-                    return Redirect(returnURL);
+                ////獲取該頁面url的參數資訊
+                //string returnURL = Request.Params["HTTP_REFERER"];
+                //int index = returnURL.IndexOf('=');
+                //returnURL = returnURL.Substring(index + 1);
+
+                ////如果參數為空，則跳轉到首頁，否則切回原頁面
+                //if (string.IsNullOrEmpty(returnURL))
+                //    return Redirect("/Home/HomePage");
+                //else
+                //    return Redirect(returnURL);
 
             }
             msg = "error";
@@ -466,39 +468,39 @@ namespace Build_School_Project_No_4.Controllers
             //};
 
 
-            GroupViewModel groupMember = new GroupViewModel()
-            {
-                MemberInfo = new MemberInfoViewModel()
-            };
+            //GroupViewModel groupMember = new GroupViewModel()
+            //{
+            //    MemberInfo = new MemberInfoViewModel()
+            //};
 
-            groupMember.MemberInfo = MemberInfo;
-            ViewBag.Avatar = groupMember.MemberInfo.ProfilePicture;                        
+            //groupMember.MemberInfo = MemberInfo;
+            ViewBag.Avatar = MemberInfo.ProfilePicture;                        
 
-            return View("EditProfile", groupMember);
+            return View("EditProfile", MemberInfo);
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile([Bind(Include = "MemberInfo")] GroupViewModel EditMember)
+        public ActionResult EditProfile([Bind(Include = "MemberInfo")] MemberInfoViewModel EditMember)
         {   
             //密碼Hash
-            EditMember.MemberInfo.Password = _MemberService.HashPassword(EditMember.MemberInfo.Password);
+            EditMember.Password = _MemberService.HashPassword(EditMember.Password);
 
             //GroupViewModel -> MemberInfoViewModel -> DM
             Members emp = new Members
             {
-                MemberId = EditMember.MemberInfo.MemberId,
-                MemberName = EditMember.MemberInfo.MemberName,
-                Phone = EditMember.MemberInfo.Phone,
-                Country = EditMember.MemberInfo.Country,
-                Gender = (int)EditMember.MemberInfo.Gender,
-                BirthDay = EditMember.MemberInfo.BirthDay,
-                TimeZone = EditMember.MemberInfo.TimeZone,
-                LanguageId = (int)EditMember.MemberInfo.LanguageId,
-                Bio = EditMember.MemberInfo.Bio,
-                Email = EditMember.MemberInfo.Email,
-                Password = EditMember.MemberInfo.Password
+                MemberId = EditMember.MemberId,
+                MemberName = EditMember.MemberName,
+                Phone = EditMember.Phone,
+                Country = EditMember.Country,
+                Gender = (int)EditMember.Gender,
+                BirthDay = EditMember.BirthDay,
+                TimeZone = EditMember.TimeZone,
+                LanguageId = (int)EditMember.LanguageId,
+                Bio = EditMember.Bio,
+                Email = EditMember.Email,
+                Password = EditMember.Password
             };
 
             if (ModelState.IsValid)
@@ -530,7 +532,6 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        [Authorize] 
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -562,7 +563,7 @@ namespace Build_School_Project_No_4.Controllers
         //Post: Members/Login
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Login(GroupViewModel loginMember)
+        public ActionResult Login(MemberLoginViewModel loginMember)
         {
             //未通過Model驗證
             if (!ModelState.IsValid)
@@ -571,14 +572,14 @@ namespace Build_School_Project_No_4.Controllers
             }
 
             //驗證登入email.密碼，回傳結果
-            string ValidateStr = _MemberService.LoginCheck(loginMember.MemberLogin.Email, loginMember.MemberLogin.Password);
+            string ValidateStr = _MemberService.LoginCheck(loginMember.Email, loginMember.Password);
 
-            Members user = _MemberService.GetDataByAccount(loginMember.MemberLogin.Email);
+            Members user = _MemberService.GetDataByAccount(loginMember.Email);
 
             if (String.IsNullOrEmpty(ValidateStr))
             {
                 //通過Model驗證後, 使用HtmlEncode將帳密做HTML編碼, 去除有害的字元
-                string email = HttpUtility.HtmlEncode(loginMember.MemberLogin.Email);
+                string email = HttpUtility.HtmlEncode(loginMember.Email);
                 //string password = HashService.MD5Hash(HttpUtility.HtmlEncode(loginVM.Password));
 
                 Members meminfo = new Members()
@@ -595,7 +596,7 @@ namespace Build_School_Project_No_4.Controllers
                             name: user.Email.ToString(), //可以放使用者Id
                             issueDate: DateTime.UtcNow,//現在UTC時間
                             expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-                            isPersistent: loginMember.MemberLogin.Remember,// 是否要記住我 true or false
+                            isPersistent: loginMember.Remember,// 是否要記住我 true or false
                             userData: JsonMeminfo, //可以放使用者角色名稱
                             //userData: user.MemberId.ToString(), //可以放使用者角色名稱
                             cookiePath: FormsAuthentication.FormsCookiePath);
@@ -625,7 +626,7 @@ namespace Build_School_Project_No_4.Controllers
                 string password = Request["password"];
 
                 //把使用者的資訊儲存在session中
-                Session[LoginUserKey] = loginMember.MemberLogin.Email;
+                Session[LoginUserKey] = loginMember.Email;
 
                 //獲取該頁面url的參數資訊
                 string returnURL = Request.Params["HTTP_REFERER"];
@@ -671,7 +672,7 @@ namespace Build_School_Project_No_4.Controllers
         //[AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(GroupViewModel newMember)
+        public ActionResult Register(MemberRegisterViewModel newMember)
         {
             if (ModelState.IsValid)
             {
@@ -680,18 +681,18 @@ namespace Build_School_Project_No_4.Controllers
 
                 //註冊成為新會員
                 var member = _MemberService.MemberRigisterData()
-                            .Where(m => m.Email == newMember.MemberRegister.Email)
+                            .Where(m => m.Email == newMember.Email)
                             .FirstOrDefault();
                 if (member == null)
                 {
                     //將密碼Hash
-                    newMember.MemberRegister.Password = _MemberService.HashPassword(newMember.MemberRegister.Password);
+                    newMember.Password = _MemberService.HashPassword(newMember.Password);
 
                     //GroupViewModel -> DM
                     Members emp = new Members
                     {
-                        Email = newMember.MemberRegister.Email,
-                        Password = newMember.MemberRegister.Password,
+                        Email = newMember.Email,
+                        Password = newMember.Password,
                         AuthCode = AuthCode
                     };
                     db.Members.Add(emp);
@@ -711,14 +712,14 @@ namespace Build_School_Project_No_4.Controllers
                 UriBuilder ValidateUrl = new UriBuilder(Request.Url)
                 {
                     Path = Url.Action("EmailValidate", "Members", new{
-                        Email = newMember.MemberRegister.Email,
+                        Email = newMember.Email,
                         AuthCode = AuthCode
                     })
                 };
 
-                string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.MemberRegister.Email, ValidateUrl.ToString().Replace("%3F", "?"));
+                string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
 
-                _MailService.SendRegisterMail(MailBody, newMember.MemberRegister.Email);
+                _MailService.SendRegisterMail(MailBody, newMember.Email);
 
                 //用TempData儲存註冊訊息
                 TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
@@ -728,7 +729,7 @@ namespace Build_School_Project_No_4.Controllers
             }
 
             //未經驗證清空密碼相關欄位
-            newMember.MemberRegister.Password = null;
+            newMember.Password = null;
 
             //獲取使用者登錄中的資訊
             string loginName = Request["email"];
