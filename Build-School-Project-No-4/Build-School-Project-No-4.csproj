@@ -328,7 +328,6 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\Page404Controller.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Controllers\UserAgreementController.cs" />
