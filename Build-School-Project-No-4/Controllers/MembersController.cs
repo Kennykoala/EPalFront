@@ -176,15 +176,11 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        //google
-        public ActionResult Test()
-        {
-            return View();
-        }
 
+        //google
         //, string OauthId, string OauthName, string OauthEmail, string AuthResponse
         [HttpPost]
-        public async Task<ActionResult> Test(string id_token, string LoginMethod)
+        public async Task<ActionResult> GoogleLogin(string id_token, string LoginMethod)
         {
             string msg = "ok";
             string email;

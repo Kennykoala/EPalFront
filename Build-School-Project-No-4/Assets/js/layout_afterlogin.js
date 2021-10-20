@@ -103,7 +103,7 @@ window.onload = function () {
                 var LoginMethod = "1";
 
                 $.ajax({
-                    url: '/Members/Test',
+                    url: '/Members/GoogleLogin',
                     method: "post",
                     data: {
                         id_token: id_token,
