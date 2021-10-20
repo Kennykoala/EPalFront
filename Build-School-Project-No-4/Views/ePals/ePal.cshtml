@@ -1,4 +1,4 @@
-﻿@model GroupViewModel
+﻿@model CategoryViewModel
 <div class="wrapper">
     <div class="section">
         <div id="root">
@@ -10,7 +10,7 @@
                         <!-- Main-Body-Header-Title -->
                         <div class="body-Header-Title">
                             <div class="title-Text">
-                                <h1>@Model.GamesDetails.GameTitle</h1>
+                                <h1>@Model.GameTitle</h1>
                                 <div class="start-Icon">
                                     <i class="fas fa-star gold-star"></i>
                                 </div>
@@ -292,7 +292,7 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            @foreach (var m in Model.GamesDetails.GameAll)
+                            @foreach (var m in Model.GameAll)
                             {
                                 <a href="@Url.Action("ePal","ePals",new {id = m.GameId})">
                                     <span>
@@ -622,7 +622,7 @@
             margin-top: 60px;
             margin: auto;
             height: 300px;
-            background-image: url("@Model.GamesDetails.GameCoverImg");
+            background-image: url("@Model.GameCoverImg");
             background-size: cover;
             background-position: center center;
         }
