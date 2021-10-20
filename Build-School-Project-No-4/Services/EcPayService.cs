@@ -8,7 +8,7 @@ namespace Build_School_Project_No_4.Services
 {
     public class EcPayService
     {
-        public List<string> CreateEcPayment()
+        public static List<string> CreateEcPayment()
         {
             List<string> enErrors = new List<string>();
             try
