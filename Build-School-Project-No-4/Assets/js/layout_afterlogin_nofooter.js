@@ -45,49 +45,148 @@ let passerror = document.getElementById('myinput-error');
 let valerror = document.querySelectorAll(".field-validation-error");
 //let isRequestAuthenticated = ' @Request.IsAuthenticated';
 
+let logoutbtn = document.querySelector('#logoutbutton')
+
+
+
+
 window.onload = function () {
 
-    ////BS validation
-    //// Example starter JavaScript for disabling form submissions if there are invalid fields
-    //(function () {
-    //    'use strict'
+    //google進行登入程序，使用gapi.auth2.init()方法的client_id參數指定應用程序的客戶端ID
+    var startApp = function () {
+        gapi.load("auth2", function () {
+            auth2 = gapi.auth2.init({
+                client_id: "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com", // 用戶端ID
+                cookiepolicy: "single_host_origin"
+            });
 
-    //    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    //    var forms = document.querySelectorAll('.needs-validation')
-
-    //    // Loop over them and prevent submission
-    //    Array.prototype.slice.call(forms)
-    //        .forEach(function (form) {
-    //            form.addEventListener('submit', function (event) {
-    //                if (!form.checkValidity()) {
-    //                    event.preventDefault()
-    //                    event.stopPropagation()
-    //                }
-
-    //                form.classList.add('was-validated')
-    //            }, false)
-    //        })
-    //})()
+            //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
 
 
 
-    //// Validate Email
-    //const email = document.getElementById('email');
-    //email.addEventListener('blur', () => {
-    //    let regex =
-    //        /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
-    //    let s = email.value;
-    //    if (regex.test(s)) {
-    //        email.classList.remove(
-    //            'is-invalid');
-    //        emailError = true;
+            attachSignin(document.getElementById("GOOGLE_login"));
+        });
+    };
+
+
+    //function updateSigninStatus(isSignedIn) {
+    //    if (isSignedIn) {
+    //        document.getElementById("loginmodal").style.display = 'none';
+    //        document.getElementById("logoutbutton").style.display = 'block';
+    //        //makeApiCall();
+    //    } else {
+    //        document.getElementById("loginmodal").style.display = 'block';
+    //        document.getElementById("logoutbutton").style.display = 'none';
     //    }
-    //    else {
-    //        email.classList.add(
-    //            'is-invalid');
-    //        emailError = false;
-    //    }
-    //})
+    //}
+
+
+    function attachSignin(element) {
+        auth2.attachClickHandler(element, {},
+            // 登入成功
+            function (googleUser) {
+                // Useful data for your client-side scripts:
+                var profile = googleUser.getBasicProfile();
+                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log("Image URL: " + profile.getImageUrl());
+                console.log("Email: " + profile.getEmail());
+
+                // The ID token you need to pass to your backend:
+                var id_token = googleUser.getAuthResponse().id_token;
+                console.log("ID Token: " + id_token);
+                var OauthId = profile.getId();
+                var OauthName = profile.getName();
+                var OauthEmail = profile.getEmail();
+                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
+                var LoginMethod = "1";
+
+                $.ajax({
+                    url: '/Members/GoogleLogin',
+                    method: "post",
+                    data: {
+                        id_token: id_token,
+                        OauthId: OauthId,
+                        OauthName: OauthName,
+                        OauthEmail: OauthEmail,
+                        AuthResponse: AuthResponse,
+                        LoginMethod: "1"
+                    },
+                    success: function (msg) {
+                        $("#myModal").modal('hide');
+                        //$("#loginmodal").style.display="none";
+                        //$("#signupmodal").style.display="none";
+
+
+                        console.log(msg);
+                        swal.fire({
+                            title: "Welcome to Epal",
+                            icon: "success",
+                            //buttons: true,
+                            //dangerMode: true
+                        });
+
+                        if (msg == true) {
+                            window.location.href = '/'
+                        }
+
+                        //return User.Identity.IsAuthenticated; 
+
+                        //logbtn.style.display="none";
+                        //signbtn.style.display = "none";
+                        //logoutbtn.style.display = "block";
+
+                    }
+                });//end $.ajax
+
+
+                ////v1
+                //var profile = googleUser.getBasicProfile(),
+                //    $target = $("#GOOGLE_STATUS_2"),
+                //    html = "";
+
+                //html += "ID: " + profile.getId() + "<br/>";
+                //html += "會員暱稱： " + profile.getName() + "<br/>";
+                //html += "會員頭像：" + profile.getImageUrl() + "<br/>";
+                //html += "會員 email：" + profile.getEmail() + "<br/>";
+                //html += "id token：" + googleUser.getAuthResponse().id_token + "<br/>";
+                //html += "access token：" + googleUser.getAuthResponse(true).access_token + "<br/>";
+                //$target.html(html);
+            },
+            // 登入失敗
+            function (error) {
+                $("#GOOGLE_STATUS_2").html("");
+                alert(JSON.stringify(error, undefined, 2));
+            });
+    }
+
+    startApp();
+
+    // 點擊登入
+    $("#GOOGLE_login").click(function () {
+        // 進行登入程序
+        startApp();
+    });
+
+
+
+    //// 點擊登出
+    //$("#GOOGLE_logout").click(function () {
+    //    var auth2 = gapi.auth2.getAuthInstance();
+    //    auth2.signOut().then(function () {
+    //        // 登出後的動作
+    //        $("#GOOGLE_STATUS_2").html("");
+    //    });
+    //});
+
+
+
+
+
+
 
 
 

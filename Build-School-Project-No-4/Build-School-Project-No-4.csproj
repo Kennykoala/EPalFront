@@ -57,6 +57,21 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.55.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.55.0\lib\net461\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.55.0\lib\net461\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.55.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.55.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.55.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="jose-jwt, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jose-jwt.3.2.0\lib\net461\jose-jwt.dll</HintPath>
     </Reference>
@@ -76,8 +91,8 @@
     <Reference Include="Microsoft.Extensions.WebEncoders, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.WebEncoders.1.0.0\lib\netstandard1.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
       <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
@@ -298,6 +313,7 @@
     <Compile Include="Controllers\ChatForPhoneController.cs" />
     <Compile Include="Controllers\ChillController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\ChillMeetApiController.cs" />
     <Compile Include="Controllers\ChooseAServiceController.cs" />
     <Compile Include="Controllers\CouponsController.cs" />
     <Compile Include="Controllers\CreatorProjectController.cs" />
@@ -312,7 +328,6 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\Page404Controller.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Controllers\UserAgreementController.cs" />
@@ -354,6 +369,7 @@
     <Compile Include="Services\AddToCartService.cs" />
     <Compile Include="Services\ApiFilterService.cs" />
     <Compile Include="Services\CheckoutService.cs" />
+    <Compile Include="Services\ChillMeetService.cs" />
     <Compile Include="Services\DetailServices.cs" />
     <Compile Include="Services\FollowService.cs" />
     <Compile Include="Services\MailService.cs" />
@@ -368,6 +384,7 @@
     <Compile Include="Services\ProfileEpalService.cs" />
     <Compile Include="Services\WalletService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChillMeetViewModel.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\AddToCartViewModel.cs" />
@@ -817,7 +834,6 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Members\Logout.cshtml" />
     <Content Include="Views\Members\profile.cshtml" />
-    <Content Include="Views\Members\ImageUpload.cshtml" />
     <Content Include="Views\Shared\_AvatarPartial.cshtml" />
     <Content Include="Views\Members\EditProfile.cshtml" />
     <Content Include="Views\Chill\Live.cshtml" />
@@ -844,6 +860,11 @@
     <Content Include="Views\Checkout\Success.cshtml" />
     <Content Include="Views\ePals\FailureView.cshtml" />
     <Content Include="Views\ePals\SuccessView.cshtml" />
+    <Content Include="Views\Members\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Members\LoginProcess.cshtml" />
+    <Content Include="Views\Shared\LoginPartialPage.cshtml" />
+    <Content Include="Views\Shared\SignupPartialPage.cshtml" />
+    <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

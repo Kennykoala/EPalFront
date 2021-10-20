@@ -32,5 +32,10 @@ namespace Build_School_Project_No_4.ViewModels
 
         [Display(Name = "記得我")]
         public bool Remember { get; set; }
+
+        [StringLength(50)]
+        public string MemberName { get; set; }
+
+        public string ProfilePicture { get; set; }
     }
 }

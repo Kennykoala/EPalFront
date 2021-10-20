@@ -22,29 +22,27 @@ namespace Build_School_Project_No_4.Services
         public List<ProfileViewModel> GetProfiles(int? assignMemberId)
         {
 
-            List<Members> memberAll = _Repo.GetAll<Members>().ToList();
-            List<Followings> followAll = _Repo.GetAll<Followings>().ToList();
-            List<RecentVistors> vistorAll = _Repo.GetAll<RecentVistors>().ToList();
-            List<Language> languages = _Repo.GetAll<Language>().ToList();
-            List<CommentDetails> commentAll = _Repo.GetAll<CommentDetails>().ToList();
-            List<Products> products = _Repo.GetAll<Products>().ToList();
+            var memberAll = _Repo.GetAll<Members>();
+            var followAll = _Repo.GetAll<Followings>();
+            var vistorAll = _Repo.GetAll<RecentVistors>();
+            var languages = _Repo.GetAll<Language>();
+            var commentAll = _Repo.GetAll<CommentDetails>();
+            var products = _Repo.GetAll<Products>();
 
             var selectMemberLanguage = memberAll.Where(x => x.MemberId == assignMemberId).FirstOrDefault();
             var selectlanguage = languages.Where(x => x.LanguageId == selectMemberLanguage.LanguageId).FirstOrDefault();
             var selectmemberId = memberAll.Where(x => x.MemberId == assignMemberId).ToList();
-            var selectfollowId = followAll.Where(x => x.MemberId == assignMemberId).ToList();
-            var selectfollwersTotal = followAll.Where(x => x.FollowingId == assignMemberId).ToList();
-            var selectVistor = vistorAll.Where(x => x.MemberId == assignMemberId).ToList();
-            var selectServers = products.Where(x => x.CreatorId == assignMemberId).ToList();
+            var follingCal = followAll.Where(x => x.MemberId == assignMemberId).ToList().Count();
+            var followersCal = followAll.Where(x => x.FollowingId == assignMemberId).ToList().Count();
+            var vistorCal = vistorAll.Where(x => x.MemberId == assignMemberId).ToList().Count();
+            var serversCal = products.Where(x => x.CreatorId == assignMemberId).ToList().Count();
             var selectRecommend = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
             var RecommendList = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
 
-            int follingCal = selectfollowId.Count;
-            int vistorCal = selectVistor.Count;
-            int followersCal = selectfollwersTotal.Count;
             string languageNames = selectlanguage.LanguageName;
-            int serversCal = selectServers.Count;
             int commentCal = selectRecommend.Count;
+
+            //計算評分平均
             decimal avgStar = 0;
             avgStar = starAvgMethod(selectRecommend);
 
@@ -57,6 +55,7 @@ namespace Build_School_Project_No_4.Services
                     MemberName = item.MemberName,
                     Gender = item.Gender,
                     ProfilePicture = item.ProfilePicture,
+                    Bio = item.Bio,
                     FollingsNumber = follingCal,
                     FollowsNumber = followersCal,
                     LanguageName = languageNames,
