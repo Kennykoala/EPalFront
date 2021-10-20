@@ -1,4 +1,4 @@
-﻿@model  GroupViewModel
+﻿@model  IEnumerable<FollowViewModel>
 @{
     ViewBag.Title = "Followings";
 
@@ -39,7 +39,7 @@
 
 
 
-                                        @foreach (var item in Model.FollowingMember)
+                                        @foreach (var item in ViewBag.Followings)
                                         {
 
 
@@ -138,7 +138,7 @@
 
 
 
-                                        @foreach (var item in Model.FollowerMember)
+                                        @foreach (var item in ViewBag.Followers)
                                         {
 
 

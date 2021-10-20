@@ -97,12 +97,16 @@ namespace Build_School_Project_No_4.Controllers
             var members = memberGet.GetMemberFollow();
             var Followers = memberGet.GetMemberFollowers();
 
-            GroupViewModel followSelectMembers = new GroupViewModel
-            {
-                FollowingMember = members,
-                FollowerMember = Followers
-            };
-            return View(followSelectMembers);
+            //GroupViewModel followSelectMembers = new GroupViewModel
+            //{
+            //    FollowingMember = members,
+            //    FollowerMember = Followers
+            //};
+
+            ViewBag.Followings = members;
+            ViewBag.Followers = Followers;
+
+            return View();
         }
 
 

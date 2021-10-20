@@ -81,12 +81,15 @@ namespace Build_School_Project_No_4.Controllers
 
             var memberMatch = memberMatchGet.GetMemberMatch();
             var memberlike = memberlikeGet.GetMemberLike();
-            GroupViewModel meetlikes = new GroupViewModel
-            {
-                MeetLikes = memberlike,
-                Matches = memberMatch
-            };
-            return View(meetlikes);
+
+            ViewBag.Match = memberMatch;
+            ViewBag.Like = memberlike;
+            //GroupViewModel meetlikes = new GroupViewModel
+            //{
+            //    MeetLikes = memberlike,
+            //    Matches = memberMatch
+            //};
+            return View();
         }
 
         public ActionResult MeetMatches()

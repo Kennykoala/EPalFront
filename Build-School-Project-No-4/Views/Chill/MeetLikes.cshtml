@@ -1,4 +1,4 @@
-﻿@model  GroupViewModel
+﻿@model  IEnumerable<MemberViewModel>
 @{
     ViewBag.Title = "Followings";
 
@@ -56,7 +56,7 @@
 
 
 
-                                        @foreach (var item in Model.MeetLikes)
+                                        @foreach (var item in ViewBag.Like)
                                         {
 
 
@@ -155,7 +155,7 @@
 
 
 
-                                        @foreach (var item in Model.Matches)
+                                        @foreach (var item in ViewBag.Match)
                                         {
 
 
