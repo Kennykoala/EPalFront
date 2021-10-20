@@ -29,10 +29,10 @@ namespace Build_School_Project_No_4.Controllers
             _orderService = new OrderService();
         }
         // GET: Order
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public string GetMemberId()
         {
@@ -49,11 +49,14 @@ namespace Build_School_Project_No_4.Controllers
         }
         public ActionResult OrderSummary(int? id)
         {
-            
             if (!id.HasValue)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction( "OrderSummary", "Order", new { id = 1 });
             }
+            //if (!id.HasValue)
+            //{
+            //    return RedirectToAction("Index");
+            //}
             var order = new OrderService();
             var abc = order.GetOrderCardData(id.Value);
             // var ordercards = _orderService.GetOrderCardData(id.Value);

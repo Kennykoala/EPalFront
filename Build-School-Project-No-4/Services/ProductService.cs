@@ -68,7 +68,7 @@ namespace Build_School_Project_No_4.Services
                 RecommendationVoice = p.RecommendationVoice,
                 LineStatus = LineStatus.First(y => y.LineStatusId == (Members.First(x => x.MemberId == p.CreatorId).LineStatusId)).LineStatusImg,
                 CreatorName = Members.First(x => x.MemberId == p.CreatorId).MemberName,
-                //StarLevel = CommentDetails.FirstOrDefault(x => x.ProductId == p.ProductId).StarLevel,
+               // StarLevel = CommentDetails.FirstOrDefault(x => x.ProductId == p.ProductId).StarLevel,
                 Rank = Ranks.FirstOrDefault(x => x.RankId == p.RankId) == null ? "No Rank" : Ranks.First(x => x.RankId == p.RankId).RankName,
                 Position = Positions.First(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
                 ProductId = p.ProductId,

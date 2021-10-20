@@ -22,7 +22,8 @@ namespace Build_School_Project_No_4.Services
         {
             var result = new OrderViewModel()
             {
-              OrderCards = new List<OrderCard>()
+              OrderCards = new List<OrderCard>(),
+               Order = new List<Orderstatusall>()
             };
             var category = _repo.GetAll<OrderStatus>().FirstOrDefault(x => x.OrderStatusId == OrderStatusId);
             if(category == null)
@@ -30,40 +31,34 @@ namespace Build_School_Project_No_4.Services
                 return result;
             }
             var orders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId);
-            var GameNames = _repo.GetAll<GameCategories>().ToList();
+            var GameCat = _repo.GetAll<GameCategories>().ToList();
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var products = _repo.GetAll<Products>().ToList();
+
 
             var OrderCards = orders.Select(o => new OrderCard
             {
                 OrderStatusName = category.OrderStatusName,
                 Quantity = o.Quantity,
-                OrderDate=o.OrderDate,
-                TotalPrice=o.UnitPrice*o.Quantity,
-                OrderId=o.OrderId,
-                GameName=GameNames.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
+                OrderDate = o.OrderDate,
+                TotalPrice = o.UnitPrice * o.Quantity,
+                OrderId = o.OrderId,
+                GameName = o.Products.GameCategories.GameName
+                //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
 
             }).ToList();
 
+            var Orders = orderstatu.Select(g => new Orderstatusall
+            {
+                Id = g.OrderStatusId,
+                Name = g.OrderStatusName
+            }).ToList();
+            result.Order = Orders;
             result.OrderCards = OrderCards;
             result.OrderStatusId = OrderStatusId;
             return result;
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         ////private OrderRepository _OrderRepo;

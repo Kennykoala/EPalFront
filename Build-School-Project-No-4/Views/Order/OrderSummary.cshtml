@@ -12,12 +12,21 @@
             <div class="order-list col-md-2">
                 <div class="greyish title">Purchased Orders</div>
                 <div class="categories">
-                    <div class="stat-category selected">Unpaid</div>
+                  @foreach(var m in Model.Order.Order)
+                      {
+                         <a href="@Url.Action("OrderSummary","Order",new { id = m.Id })">
+                           <span>
+                             @m.Name
+                             <i class="stat-category"></i>
+                            </span>
+                          </a>
+                      }
+                    @*<div class="stat-category selected">Unpaid</div>
                     <div class="stat-category">Pending</div>
                     <div class="stat-category">Not Started</div>
                     <div class="stat-category">Started</div>
                     <div class="stat-category">Cancelled</div>
-                    <div class="stat-category">Completed</div>
+                    <div class="stat-category">Completed</div>*@
                 </div>
             </div>
         </div>
@@ -75,7 +84,7 @@
                                 <a href="#">
                                     <div class="u-details">
                                         <div class="user-img"></div>
-                                        <div class="name">Jolie</div>
+                                        <div class="name">@Html.DisplayFor(x => m.GameName)</div>
                                     </div>
                                 </a>
                                 <div class="order-game">

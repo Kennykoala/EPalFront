@@ -10,9 +10,17 @@ namespace Build_School_Project_No_4.ViewModels
         public int OrderStatusId { get; set; }
 
         public List<OrderCard> OrderCards { get; set; }
-     }
-    public class OrderCard
+
+        public List<Orderstatusall> Order { get; set; }
+
+    }
+    public class Orderstatusall
     {
+        public string Name { get; set; }
+        public int Id { get; set; }
+    }
+    public class OrderCard
+    {     
         public int OrderId { get; set; }
         public int PlayerId { get; set; }
         public int ProductId { get; set; }
