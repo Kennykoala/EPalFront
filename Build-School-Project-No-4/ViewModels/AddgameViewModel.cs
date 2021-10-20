@@ -67,63 +67,63 @@ namespace Build_School_Project_No_4.ViewModels
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime1 { get; set; }
+        public TimeSpan? GameStartTime1 { get; set; }
 
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime1 { get; set; }
+        public TimeSpan? GameEndTime1 { get; set; }
 
 
 
         public string GameAvailableDay2 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime2 { get; set; }
+        public TimeSpan? GameStartTime2 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime2 { get; set; }
+        public TimeSpan? GameEndTime2 { get; set; }
 
 
         public string GameAvailableDay3 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime3 { get; set; }
+        public TimeSpan? GameStartTime3 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime3 { get; set; }
+        public TimeSpan? GameEndTime3 { get; set; }
 
         public string GameAvailableDay4 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime4 { get; set; }
+        public TimeSpan? GameStartTime4 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime4 { get; set; }
+        public TimeSpan? GameEndTime4 { get; set; }
 
         public string GameAvailableDay5 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime5 { get; set; }
+        public TimeSpan? GameStartTime5 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime5 { get; set; }
+        public TimeSpan? GameEndTime5 { get; set; }
 
         public string GameAvailableDay6 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime6 { get; set; }
+        public TimeSpan? GameStartTime6 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime6 { get; set; }
+        public TimeSpan? GameEndTime6 { get; set; }
 
         public string GameAvailableDay7 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameStartTime7 { get; set; }
+        public TimeSpan? GameStartTime7 { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime? GameEndTime7 { get; set; }
+        public TimeSpan? GameEndTime7 { get; set; }
 
 
 

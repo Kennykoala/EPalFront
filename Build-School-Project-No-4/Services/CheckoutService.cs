@@ -31,7 +31,7 @@ namespace Build_School_Project_No_4.Services
                           select new CheckoutViewModel
                           {
                               OrderConfirmation = orderConfirmation,
-                              StartTime = o.GameStartDateTime,
+                              StartTime = o.DesiredStartTime,
                               UnitPrice = o.UnitPrice,
                               Rounds = o.Quantity,
                               PlayerId = p.CreatorId,

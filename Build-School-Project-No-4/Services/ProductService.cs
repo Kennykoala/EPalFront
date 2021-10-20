@@ -73,11 +73,6 @@ namespace Build_School_Project_No_4.Services
                 Position = Positions.First(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
                 ProductId = p.ProductId,
             }).ToList();
-
-            var ProductCard = new ProductCard()
-            {
-                
-            };
             result.CategoryId = categoryId;
             result.ProductCards = productCards;
             return JsonConvert.SerializeObject(result);

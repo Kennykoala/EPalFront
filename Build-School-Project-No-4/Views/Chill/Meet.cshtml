@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<ChillMeetViewModel>
+
+
 <nav>
     <div class="container phoneTopNav">
         <div class="phoneNavSelect">
@@ -44,27 +46,30 @@
     <div class="row">
         <div class="col-4 Meet-Left-link">
             <a href="@Url.Action("Live","Chill")">Live</a>
-            <a href="@Url.Action("Meet", "Chill")">Meet</a>
+            <a href="#">Meet</a>
         </div>
         <div class="col-4">
 
         </div>
         <div class="col-4 Meet-Right-link">
-            @*<a href="#">Like</a>
-                <a href="#">Setting</a>*@
-            <button type="button" class="btn btn-secondary ">
-                <a href="@Url.Action("MeetLikes","Chill")">
-                    <i class="far fa-smile"></i>
-                    <span>Likes</span>
-                </a>
-            </button>
-            <button type="button" class="btn btn-secondary">
-                <i class="fas fa-cog"></i>
-                <span>Setting</span>
-            </button>
+            @*<button type="button" class="btn btn-secondary ">*@
+                <button type="button">
+                    <a href="@Url.Action("MeetLikes","Chill")">
+                        <i class="far fa-smile"></i>
+                        <span>Likes</span>
+                    </a>
+                </button>
+                <button type="button">
+                    <a href="@Url.Action("MeetLikes","Chill")">
+                        <i class="fas fa-cog"></i>
+                        <span>Setting</span>
+                    </a>
+                </button>
         </div>
     </div>
 </div>
+
+
 
 
 <div class="tinder">
@@ -75,37 +80,36 @@
 
     </div>
 
+
+
     <div class="tinder--cards">
-        <div class="tinder--card">
-            <img src="~/Assets/MeetImages/Meets/Meet500.png" />
-            <h3>Mini</h3>
-            <p>English</p>
-        </div>
-        <div class="tinder--card">
-            <img src="~/Assets/MeetImages/Meets/Meet13.png" />
-            <h3>Mini</h3>
-            <p>English</p>
-        </div>
-        <div class="tinder--card">
-            <img src="~/Assets/MeetImages/Meets/Meet17.png" />
-            <h3>Mini</h3>
-            <p>English</p>
-        </div>
-        <div class="tinder--card">
-            <img src="~/Assets/MeetImages/Meets/Meet14.png" />
-            <h3>Mini</h3>
-            <p>English</p>
-        </div>
-        <div class="tinder--card">
-            <img src="~/Assets/MeetImages/Meets/Meet16.png" />
-            <h3>Mini</h3>
-            <p>English</p>
-        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="tinder--card">
+                <p id=@item.UserId style="display:none">@item.UserId</p>
+                @*<img src="~/Assets/MeetImages/Meets/Meet500.png" />*@
+                <img src="@item.MeetPicture" />
+
+                @*<img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1634371760/Meet/AndyM_usuezv.png" />*@
+                <h3>@item.MemberName</h3>
+                <p>@item.Country</p>
+                @*<div id="memberLikeID" style="display:none">@item.MemberId</div>*@
+                @*<div id="memberLikeID" style="display:none">222</div>*@
+                @*<div id=@item.MemberId style="display:none">@item.MemberId</div>*@
+                <p id=@item.MemberId style="display:none">@item.MemberId</p>
+            </div>
+        }
+
+
+
     </div>
 
+
+
+    @*}*@
     <div class="tinder--buttons">
         <div class="circle col-md-3 col-3" id="circle1">
-            @*<img src="./pic/icon1.png" alt="Alternate Text" />*@
             <img src="~/Assets/MeetImages/Meets/icon1.png" />
         </div>
         <div class="circle col-md-3 col-3" id="nope">
@@ -121,7 +125,10 @@
 </div>
 
 
+
+
 <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+
 
 
 
@@ -133,12 +140,15 @@
     var allCards = document.querySelectorAll('.tinder--card');
     var nope = document.getElementById('nope');
     var love = document.getElementById('love');
+    /* let cardUserId = 60;*/
+
 
     function initCards(card, index) {
         var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
 
         newCards.forEach(function (card, index) {
             card.style.zIndex = allCards.length - index;
+            /*    card.tagName = allCards.length - index;*/
             // card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
             card.style.opacity = (10 - index) / 10;
         });
@@ -177,7 +187,7 @@
             var moveOutWidth = document.body.clientWidth;
             var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
 
-            event.target.classList.toggle('removed', !keep);
+            /*  event.target.classList.toggle('removed', !keep);*/
 
             if (keep) {
                 event.target.style.transform = '';
@@ -189,6 +199,22 @@
                 var xMulti = event.deltaX * 0.03;
                 var yMulti = event.deltaY / 80;
                 var rotate = xMulti * yMulti;
+
+
+                if (toX > 0) {
+                    var cards = document.querySelectorAll('.tinder--card:not(.removed)');
+
+                    var card = cards[0];
+                    //取得卡片最後一個元素的內容
+                    var cardHtml = cards[0].innerHTML;
+                    var cardlikeId = cards[0].lastElementChild.innerText;
+                    var cardUserId = cards[0].firstElementChild.innerText;
+                    /* console.log(cardUserId);*/
+
+                    SaveImageViaAjax(cardUserId, cardlikeId);
+                }
+
+                event.target.classList.toggle('removed', !keep);
 
                 event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
                 initCards();
@@ -204,14 +230,24 @@
             if (!cards.length) return false;
 
             var card = cards[0];
+            //取得卡片最後一個元素的內容
+            var cardlikeId = cards[0].lastElementChild.innerText;
+            var cardUserId = cards[0].firstElementChild.innerText;
+            console.log(cardUserId);
+            console.log(cardlikeId);
 
-            card.classList.add('removed');
+            //let memberId = 1;
+            //SaveImageViaAjax(memberId, cardlikeId);
+
 
             if (love) {
                 card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+                SaveImageViaAjax(cardUserId, cardlikeId);
             } else {
                 card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
             }
+
+            card.classList.add('removed');
 
             initCards();
 
@@ -227,6 +263,68 @@
 
 
 </script>
+
+
+<script>
+
+
+        var fileUpload = document.getElementById('love');
+
+        fileUpload.addEventListener("click", function (event) {
+
+
+        });
+
+
+        //save avatar to Cloudinary、DB
+    function SaveImageViaAjax(cardUserId,cardId) {
+
+
+        let CardIDs = cardId;
+        let usersId = cardUserId;
+
+        console.log(CardIDs);
+        console.log(usersId);
+        console.log('==========');
+
+
+
+
+        var Data = JSON.stringify({
+       /*     CardUserId: 555,*/
+            UserId: `${usersId}`,
+            LikeId: `${CardIDs}`,
+        });
+
+
+
+
+            $.ajax({
+                url: "https://localhost:44322/api/ChillMeetApi/",
+                type: "POST",
+                data: Data,
+                async: true,
+                contentType: 'application/json; charset=utf-8',
+                processData: false,
+                //dataType: "json",
+                success: function (res) {
+                        console.log(res);
+                     //$("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
+                },
+                error: function (err) {
+                        console.log(err);
+                    //$("#ShowMsg").text("Image Not Uploaded...!").css("color", "red")
+                }
+            });
+
+
+        }
+
+
+</script>
+
+
+
 
 @section topCSS{
 
@@ -273,14 +371,14 @@
         }
 
             /* .tinder--status i {
-                font-size: 100px;
-                opacity: 0;
-                transform: scale(0.3);
-                transition: all 0.2s ease-in-out;
-                position: absolute;
-                width: 100px;
-                margin-left: -50px;
-            } */
+                    font-size: 100px;
+                    opacity: 0;
+                    transform: scale(0.3);
+                    transition: all 0.2s ease-in-out;
+                    position: absolute;
+                    width: 100px;
+                    margin-left: -50px;
+                } */
 
             .tinder--status img {
                 font-size: 100px;
@@ -360,9 +458,9 @@
             pointer-events: none;
             color: #FFFFFF;
             /*
-            background: #302f3d;
-            margin-top: 0px;
-            color: white; */
+                background: #302f3d;
+                margin-top: 0px;
+                color: white; */
         }
 
         .tinder--card p {
@@ -461,11 +559,7 @@
         }
 
         .Meet-Left-link {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .Meet-Right-link {
+            margin-top: 18px;
             text-align: center;
         }
 
@@ -488,13 +582,17 @@
 
         .Meet-Right-link {
             display: flex;
-            justify-content: center;
+           /* justify-content: center;*/
+          /*  text-align: center;*/
         }
 
             .Meet-Right-link button {
                 border-radius: 20px;
-                margin: 15px;
-                font-size: x-large;
+                background-color:gray;
+               /* max-width:180px;*/
+                padding:5px;
+                margin: 10px;
+             /*   font-size: x-large;*/
             }
 
                 .Meet-Right-link button i {
@@ -502,7 +600,8 @@
                 }
 
                 .Meet-Right-link button a {
-                    /*size: 5px;*/
+                  /*  size: 5px;*/
+                  font-size:24px;
                     color: white;
                     text-decoration: none;
                 }
@@ -603,3 +702,15 @@
 
 
 }
+
+@*測試抓取值
+    var card = cards[0];
+                        var cardHTML = cards[0].innerHTML
+                        var cardContent = cards[0].innerText;
+                        /* var carddiv = cards[0].lastChild.innerText;*/
+                        var carddiv = cards[0].lastElementChild.innerText;
+                        console.log(cardHTML);
+                        console.log('=========');
+                        console.log(cardContent);
+                        console.log('=========');
+                        console.log(carddiv);*@

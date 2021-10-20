@@ -1,0 +1,194 @@
+﻿@model MemberInfoViewModel
+
+@*抓到使用者登入的cookie資訊*@
+@{
+    HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
+
+    string userid = "";
+    //string avatar = "";
+    if (cookie != null)
+    {
+        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+        var obj = Json.Decode<Members>(ticket.UserData);
+        userid = obj.MemberId.ToString();
+
+        //avatar = obj.ProfilePicture;
+
+    }
+}
+
+@using (Html.BeginForm("EditProfile", "Members", FormMethod.Post, new { @class = "needs-validation", novalidate = "true" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal form-body">
+
+
+        <hr class="col-md-12" /><br />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => Model.MemberId, new { @value = @userid })
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.MemberName, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.MemberName, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                    @Html.ValidationMessageFor(model => Model.MemberName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.Phone, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.Phone, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                    @Html.ValidationMessageFor(model => Model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.Country, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.Country, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                    @Html.ValidationMessageFor(model => Model.Country, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!--Radio, Gender-->
+        @*<div class="form-group">
+            @Html.LabelFor(m => m.Gender, htmlAttributes: new { @class = "col-md-6 control-label" })
+            <div class="col-md-6">
+                <div class="radio">*@
+        @*@foreach (var item in (List<SelectListItem>)GenderList)
+            {
+                <label>@Html.RadioButton("Gender", item.Value) @item.Text</label>
+            }*@
+
+        @*<label>@Html.RadioButtonFor(model => Model.Gender,0, new { id = "Male" }) Male</label>
+            <label>@Html.RadioButtonFor(model => Model.Gender,1, new { id = "Female" }) Female</label>
+            <label>@Html.RadioButtonFor(model => Model.Gender,2, new { id = "Other" }) Other</label>*@
+
+        @*<input type="radio" id="rdbtnGender0" name="rdbtnGender" value="Male" @(ViewBag.UserObj == "Male" ? "checked='true'" : "") required>
+            <label for="rdbtnGender0">Male</label>
+
+            <input type="radio" id="rdbtnGender1" name="rdbtnGender" value="Female" @(ViewBag.UserObj == "Female" ? "checked='true'" : "") required>
+            <label for="rdbtnGender1">Female</label>
+
+            <input type="radio" id="rdbtnGender2" name="rdbtnGender" value="Other" @(ViewBag.UserObj == "Other" ? "checked='true'" : "") required>
+            <label for="rdbtnGender2">Other</label>*@
+
+        @*</div>
+                </div>
+            </div>*@
+
+
+        <!--DropDownList, Gender-->
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(m => m.Gender, new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EnumDropDownListFor(model => model.Gender, new { @class = "form-control form-select", style = "background-color:#21212C; color:white; margin-top:5px;" })
+                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.BirthDay, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.BirthDay, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                    @Html.ValidationMessageFor(model => Model.BirthDay, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.TimeZone, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.TimeZone, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                </div>
+            </div>
+        </div>
+
+        <!--DropDownList, LanguageList-->
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.LanguageId, htmlAttributes: new { @class = "col-md-6 control-label" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EnumDropDownListFor(model => model.LanguageId, new { @class = "form-control form-select", style = "background-color:#21212C; color:white; margin-top:5px;" })
+                    @Html.ValidationMessageFor(model => model.LanguageId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.Bio, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.Bio, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.Email, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.Email, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                    @Html.ValidationMessageFor(model => Model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                @Html.LabelFor(model => Model.Password, htmlAttributes: new { @class = "control-label col-md-6" })
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    @Html.EditorFor(model => Model.Password, new { htmlAttributes = new { @class = "form-control", style = "background-color:#21212C; color:white; margin-top:5px;" } })
+                    @Html.ValidationMessageFor(model => Model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row justify-content-center">
+                <div class="col-md-offset-2 col-md-6">
+                    <input type="submit" value="Save" class="btn btn-default profilesave" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

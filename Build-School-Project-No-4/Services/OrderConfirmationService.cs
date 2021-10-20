@@ -33,7 +33,7 @@ namespace Build_School_Project_No_4.Services
                 {
                     var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
                     result.OrderStatusId = 4;
-                    result.UpdateDateTime = DateTime.Now.ToUniversalTime();
+                    //result.UpdateDateTime = DateTime.Now.ToUniversalTime();
                     _repo.Update(result);
                     _repo.SaveChanges();
                     tran.Commit();
@@ -69,7 +69,7 @@ namespace Build_School_Project_No_4.Services
                               PlayerName = m.MemberName,
                               GameName = g.GameName,
                               PlayerPic = p.CreatorImg,
-                              StartTime = o.GameStartDateTime
+                              StartTime = o.DesiredStartTime
 
                           }).FirstOrDefault();
 

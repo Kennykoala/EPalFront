@@ -26,6 +26,8 @@ namespace Build_School_Project_No_4.DataModels
 
         public string GameCoverImgMini { get; set; }
 
+        public string GameAlias { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Products> Products { get; set; }
     }

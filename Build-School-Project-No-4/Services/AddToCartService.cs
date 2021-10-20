@@ -33,7 +33,7 @@ namespace Build_School_Project_No_4.Services
                 Quantity = cart.Rounds,
                 UnitPrice = cart.UnitPrice,
                 OrderDate = utcTimeNow,
-                GameStartDateTime = Convert.ToDateTime(startTime),
+                DesiredStartTime = Convert.ToDateTime(startTime),
                 OrderStatusId = 1,
                 OrderConfirmation = formattedTimestamp
             };

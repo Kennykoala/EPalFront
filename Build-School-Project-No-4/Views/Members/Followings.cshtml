@@ -1,7 +1,6 @@
-﻿@model  GroupViewModel
+﻿@model  IEnumerable<FollowViewModel>
 @{
     ViewBag.Title = "Followings";
-    var Cards = Model.FollowMembers;
 
 }
 
@@ -10,8 +9,8 @@
 <div class="visitorPage">
     <div class="pageWrapper">
         <div class="content">
-            <p>Home>Profile>Visitors</p>
-            <div class="title">Jzp’s Followings</div>
+            @*<p>Home>Profile>Visitors</p>*@
+            <div class="title">Follow</div>
 
             <!-- pageLoading -->
             <div class="pageLoading">
@@ -19,46 +18,127 @@
                     <div class="addGame">
 
                         <!-- visitorsTabs -->
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item purple-text-border" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                        data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                        aria-selected="true">
-                                    Following(1)
-                                </button>
+                        @*<ul class="nav nav-tabs" id="myTab" role="tablist">*@
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="nav-item purple-text-border">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Likes</a>
                             </li>
-                            <li class="nav-item purple-text-border" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                        aria-selected="false">
-                                    Followers(0)
-                                </button>
+                            <li class="nav-item purple-text-border">
+                                <a class="nav-link" data-bs-toggle="tab" href="#tab2">Match</a>
                             </li>
-                            <li class="nav-item purple-text-border" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                        data-bs-target="#contact" type="button" role="tab" aria-controls="contact"
-                                        aria-selected="false">
-                                    Recent Visitors(0)
-                                </button>
-                            </li>
+
                         </ul>
 
                         <!-- tabContent -->
                         <div class="tab-content" id="myTabContent">
 
                             <!-- Following(5) -->
-                            <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                 aria-labelledby="home-tab">
+                            <div class="tab-pane fade show active" id="tab1">
                                 <div class="list">
                                     <ul class="list-group">
 
 
-                                        @*@if (Cards != null)
-                                            {*@
+
+                                        @foreach (var item in ViewBag.Followings)
+                                        {
+
+
+                                            <!-- profilecard - online -->
+                                            <li class="list-group-item">
+                                                <div class="listCard">
+                                                    <div class="profileAvatar">
+                                                        <span class="antAvatar">
+                                                            @*<img src="~/Assets/MemberImgages/Following/head1.jpg" />*@
+                                                            <img src="@item.ProfilePicture" alt="avatar">
+                                                        </span>
+                                                        <div class="antStatus">
+                                                            <div class="onlineStatus">
+                                                                <div class="smallIcon">
+                                                                    <span class="iconImg">
+                                                                        <img src="@item.LineStatus" />
+
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="profileBox">
+                                                        <div class="profileInfo">
+                                                            <div class="infoTitle">
+                                                                <a href="https://www.epal.gg/epal/2322">
+                                                                    <div class="paragraph name">
+                                                                        <div class="antTypography antTypographyLine">
+                                                                            @*pgcalm*@
+                                                                            @item.MemberName
+
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="infoSpace infoSapceAlign">
+                                                                    <div class="antSpaceItem">
+                                                                        <div class="smallSpaceIcon">
+                                                                            <span class="antSpaceAvatar antSpaceSquare antSpaceImg">
+                                                                                @*@if (item.Gender == 1){<img src="~/Assets/MemberImgages/Following/boy.png" />}
+                                                                                    else{<img src="~/Assets/MemberImgages/Following/girl.png" />}*@
+                                                                                @if (@item.Gender == 0)
+                                                                                {<div class="gender"><img class="gender" src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632833966/Profile/gender-m_msytvi.png" alt=""></div>}
+                                                                                else
+                                                                                { <div class="gender"><img class="gender" src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632833966/Profile/gender-f_ia8gbh.png" alt=""></div>}
+                                                                                @*<img src="~/Assets/MemberImgages/Following/girl.png" />*@
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="infoFollow infoFollowAlign infoFollowDesc">
+                                                                    <div class="antFollow">
+                                                                        <span class="antFollowing">0 Following</span>
+                                                                    </div>
+                                                                    <div class="antFollow">
+                                                                        <span class="antFollowers">1 Followers</span>
+                                                                    </div>
+                                                                    <p>@item.Bio</p>
+                                                                    <div>@item.Bio</div>
+                                                                </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="listButton">
+                                                    <div class="followButton">
+                                                        <button class="btnfollowing" id="followButton">Following</button>
+                                                    </div>
+                                                    <div class="chatBotton">
+                                                        <button type="button" class="btn btn-outline-dark">Chat</button>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        }
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Followers(0) -->
+                            <!--<div class="tab-pane fade" id="tab2">
+                            <div class="list">
+
+                                <div class="nobody">-->
+                            @*<img src="~/Assets/MemberImgages/Following/nobody.png" />*@
+                            <!--<img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632840566/Profile/nobody_lbbrte.png" />
+                                        <h5>Wow, nobody is here!</h5>
+                                    </div>
+
+                                </div>
+                            </div>-->
+
+                            <div class="tab-pane fade show" id="tab2">
+                                <div class="list">
+                                    <ul class="list-group">
 
 
 
-                                        @foreach (var item in Cards)
+                                        @foreach (var item in ViewBag.Followers)
                                         {
 
 
@@ -104,19 +184,23 @@
                                                                                 else
                                                                                 { <div class="gender"><img class="gender" src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632833966/Profile/gender-f_ia8gbh.png" alt=""></div>}
 
+                                                                                @*<img src="~/Assets/MemberImgages/Following/girl.png" />*@
+
                                                                             </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="infoFollow infoFollowAlign infoFollowDesc">
-                                                                <div class="antFollow">
-                                                                    <span class="antFollowing">0 Following</span>
-                                                                </div>
-                                                                <div class="antFollow">
-                                                                    <span class="antFollowers">1 Followers</span>
-                                                                </div>
-                                                            </div>
+                                                            @*<div class="infoFollow infoFollowAlign infoFollowDesc">
+                                                                    <div class="antFollow">
+                                                                        <span class="antFollowing">0 Following</span>
+                                                                    </div>
+                                                                    <div class="antFollow">
+                                                                        <span class="antFollowers">1 Followers</span>
+                                                                    </div>
+                                                                    <p>@item.Bio</p>
+                                                                    <div>@item.Bio</div>
+                                                                </div>*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -136,31 +220,18 @@
                                 </div>
                             </div>
 
-                            <!-- Followers(0) -->
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="list">
-
-                                    <div class="nobody">
-                                        @*<img src="~/Assets/MemberImgages/Following/nobody.png" />*@
-                                        <img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632840566/Profile/nobody_lbbrte.png" />
-                                        <h5>Wow, nobody is here!</h5>
-                                    </div>
-
-                                </div>
-                            </div>
-
                             <!-- Recent Visitors(0) -->
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <!--<div class="tab-pane fade" id="tab3">
                                 <div class="list">
 
-                                    <div class="nobody">
-                                        @*<img src="~/Assets/MemberImgages/Following/nobody.png" />*@
-                                        <img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632840566/Profile/nobody_lbbrte.png" />
+                                    <div class="nobody">-->
+                            @*<img src="~/Assets/MemberImgages/Following/nobody.png" />*@
+                            <!--<img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632840566/Profile/nobody_lbbrte.png" />
                                         <h5>Wow, nobody is here!</h5>
                                     </div>
 
                                 </div>
-                            </div>
+                            </div>-->
 
                         </div>
                     </div>
@@ -210,6 +281,7 @@
             }
 
         .title {
+            margin-top: 20px;
             margin-bottom: 24px;
             line-height: 1;
             font-size: 32px;
