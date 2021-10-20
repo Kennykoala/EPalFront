@@ -77,11 +77,11 @@ namespace Build_School_Project_No_4.Controllers
                 var profiles = new ProfileEpalService();
                 var profileGetAll = profiles.GetProfiles(memberId);
 
-                GroupViewModel profileContent = new GroupViewModel
-                {
-                    Profiles = profileGetAll
-                };
-                return View(profileContent);
+                //GroupViewModel profileContent = new GroupViewModel
+                //{
+                //    Profiles = profileGetAll
+                //};
+                return View(profileGetAll);
 
             }
             catch(Exception ex)

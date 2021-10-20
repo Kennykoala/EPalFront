@@ -66,12 +66,12 @@ namespace Build_School_Project_No_4.Controllers
 
             var meetGet = new ChillMeetService();
             var meetsContent = meetGet.GetMeetFiles(memberId);
-            GroupViewModel meetlikes = new GroupViewModel
-            {
-                ChillMeetResult = meetsContent
-            };
+            //GroupViewModel meetlikes = new GroupViewModel
+            //{
+            //    ChillMeetResult = meetsContent
+            //};
 
-            return View(meetlikes);
+            return View(meetsContent);
         }
         
         public ActionResult MeetLikes()

@@ -1,4 +1,4 @@
-﻿@model GroupViewModel
+﻿@model IEnumerable<ChillMeetViewModel>
 
 
 <nav>
@@ -84,7 +84,7 @@
 
     <div class="tinder--cards">
 
-        @foreach (var item in Model.ChillMeetResult)
+        @foreach (var item in Model)
         {
             <div class="tinder--card">
                 <p id=@item.UserId style="display:none">@item.UserId</p>

@@ -15,7 +15,7 @@ namespace Build_School_Project_No_4.ViewModels
         public ProductViewModel ProductCards { get; set; }
         public CategoryViewModel GamesDetails{ get; set; }
         public IEnumerable<ProductViewModel> EPalIndex { get; set; }
-        public IEnumerable<ChillMeetViewModel> ChillMeetResult { get; set; }
+        //public IEnumerable<ChillMeetViewModel> ChillMeetResult { get; set; }
         public IEnumerable<MemberViewModel> Matches { get; set; }
 
         public IEnumerable<WalletViewModel> wallets { get; set; }
@@ -23,7 +23,7 @@ namespace Build_School_Project_No_4.ViewModels
         //public ProductPlanSet plansetGV { get; set; }
         public IEnumerable<FollowViewModel> FollowingMember { get; set; }
         public IEnumerable<FollowViewModel> FollowerMember { get; set; }
-        public IEnumerable<ProfileViewModel> Profiles { get; set; }
+        //public IEnumerable<ProfileViewModel> Profiles { get; set; }
         public MemberViewModel MemberData { get; set; }
 
         //public MemberRegisterViewModel MemberRegister { get; set; }
