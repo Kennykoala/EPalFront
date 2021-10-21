@@ -58,11 +58,11 @@
                                         </div>
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
-                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                 id="language" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Language
                                             </div>
 
-                                            <ul class="dropdown-menu language-list" aria-labelledby="server" id="abc">
+                                            <ul class="dropdown-menu language-list" aria-labelledby="language" id="abc">
                                                 <li><span class="dropdown-item">Nederlands</span></li>
                                                 <li><span class="dropdown-item">Deutsch</span></li>
                                                 <li><span class="dropdown-item">English</span></li>
@@ -74,17 +74,17 @@
                                         </div>
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
-                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                 id="gender" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Gender
                                             </div>
-                                            <ul class="dropdown-menu gender-list" aria-labelledby="server" id="abc">
+                                            <ul class="dropdown-menu gender-list" aria-labelledby="gender" id="abc">
                                                 <li><span class="dropdown-item">Male</span></li>
                                                 <li><span class="dropdown-item">Female</span></li>
                                             </ul>
                                         </div>
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
-                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                 id="status" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Status
                                             </div>
 
@@ -95,11 +95,11 @@
                                         </div>
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
-                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                 id="level" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Level
                                             </div>
 
-                                            <ul class="dropdown-menu level-list" aria-labelledby="server" id="abc">
+                                            <ul class="dropdown-menu level-list" aria-labelledby="level" id="abc">
                                                 <li><span class="dropdown-item">Iron</span></li>
                                                 <li><span class="dropdown-item">Bronze</span></li>
                                                 <li><span class="dropdown-item">Silver</span></li>
@@ -110,11 +110,11 @@
                                         </div>
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
-                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                 id="price" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Price
                                             </div>
 
-                                            <ul class="dropdown-menu price-list" aria-labelledby="server" id="abc">
+                                            <ul class="dropdown-menu price-list" aria-labelledby="price" id="abc">
                                                 <li><span class="dropdown-item">1-5</span></li>
                                                 <li><span class="dropdown-item">5.0 - 10</span></li>
                                                 <li><span class="dropdown-item">10.0 - 20</span></li>
@@ -124,11 +124,11 @@
                                         </div>
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
-                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                 id="age" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Age
                                             </div>
 
-                                            <ul class="dropdown-menu age-list" aria-labelledby="server" id="abc">
+                                            <ul class="dropdown-menu age-list" aria-labelledby="age" id="abc">
                                                 <li><span class="dropdown-item">18 - 25</span></li>
                                                 <li><span class="dropdown-item">26 - 30</span></li>
                                                 <li><span class="dropdown-item">30 - 60</span></li>
@@ -1476,7 +1476,7 @@
             Gender: gender,
             Language: languageArr,
             Status: status,
-            level:levelArr
+            Level:levelArr
         }
         
         let statuslist = document.querySelectorAll('.status-list li > .dropdown-item')
@@ -1489,115 +1489,210 @@
         console.log(genderlist)
         let levellist = document.querySelectorAll('.level-list li > .dropdown-item')
 
-        statuslist.forEach(x => {
+        statuslist.forEach((x,index) => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
+                let statusbox = document.getElementById('status')
+                if (statuslist[0].classList.contains('bg-black1')) {
+                    statuslist[0].classList.toggle('bg-black1')
+                }
+                if (statuslist[1].classList.contains('bg-black1')) {
+                    statuslist[1].classList.toggle('bg-black1')
+                }
                 if (filterObj.status === undefined) {
                     filterObj.status = x.innerText;
+                    x.classList.toggle('bg-black1')
+                    statusbox.setAttribute('style', 'background-color:#7041E6')
+                    sendfilter(filterObj)
                     console.log(filterObj.status)
                 }
                 else if (filterObj.status == x.innerText) {
                     delete (filterObj.status)
+                    statusbox.setAttribute('style', 'background-color:#302F3D')
                     console.log(filterObj.status)
+                    sendfilter(filterObj)
+                    return;
                 }
-                else {
-                    y.classList.add('d-none')
+                else if (filterObj.Status !== undefined) {
                     filterObj.status = x.innerText;
+                    x.classList.toggle('bg-black1')
+                    statusbox.setAttribute('style', 'background-color:#7041E6')
+                    sendfilter(filterObj)
                     console.log(filterObj.status)
                 }
-               
+                
                 console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
+                
             })
         })
 
         languagelist.forEach(x => {
             x.addEventListener('click', () => {
+                let languagebox = document.getElementById('language')
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
-                addOrRemove(languageArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
+                if (filterObj.Language !== undefined) {
+                    x.classList.toggle('bg-black1')
+                    addOrRemove(languageArr, x.innerText)
+                    languagebox.setAttribute('style', 'background-color:#7041E6')
+                    console.log(filterObj.Language)
+                    
+                    if (filterObj.Language.length == 0) {
+                        languagebox.setAttribute('style', 'background-color:#302F3D')
+                    }
+                    sendfilter(filterObj)
+                }
+                
             })
         })
         agelist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
+                let agebox = document.getElementById('age')
+
+                if (agelist[0].classList.contains('bg-black1')) {
+                    agelist[0].classList.toggle('bg-black1')
+                }
+                if (agelist[1].classList.contains('bg-black1')) {
+                    agelist[1].classList.toggle('bg-black1')
+                }
+                if (agelist[2].classList.contains('bg-black1')) {
+                    agelist[2].classList.toggle('bg-black1')
+                }
+
                 let temp = x.innerText;
                 let result = temp.split(/- /g).slice(0);
 
-                if (filterObj.lowAge ===  undefined) {
+                if (filterObj.lowAge === undefined && filterObj.highAge === undefined) {
                     filterObj.lowAge = result[0]
+                    filterObj.highAge = result[1] 
+                    x.classList.toggle('bg-black1')
+                    agebox.setAttribute('style', 'background-color:#7041E6')
                 }
-                else {
+                else if (filterObj.lowAge == result[0] && filterObj.highAge == result[1]){
                     delete (filterObj.lowAge)
-                }
-                if (filterObj.highAge === undefined) {
-                    filterObj.highAge = result[1]   
-                }
-                else {
                     delete (filterObj.highAge)
+                    agebox.setAttribute('style', 'background-color:#302F3D')
+                }
+                else if (filterObj.lowAge !== undefined && filterObj.highAge !== undefined) {
+                    filterObj.lowAge = result[0];
+                    filterObj.highAge = result[1];
+                    x.classList.toggle('bg-black1')
+                    agebox.setAttribute('style', 'background-color:#7041E6')
+                    sendfilter(filterObj)
+                    console.log(filterObj.status)
                 }
                              
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
             })
         })
+
         pricelist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
+                let pricebox = document.getElementById('price')
+
+                if (pricelist[0].classList.contains('bg-black1')) {
+                    pricelist[0].classList.toggle('bg-black1')
+                }
+                if (pricelist[1].classList.contains('bg-black1')) {
+                    pricelist[1].classList.toggle('bg-black1')
+                }
+                if (pricelist[2].classList.contains('bg-black1')) {
+                    pricelist[2].classList.toggle('bg-black1')
+                }
+                if (pricelist[3].classList.contains('bg-black1')) {
+                    pricelist[3].classList.toggle('bg-black1')
+                }
+
                 let temp = x.innerText;
                 let result = temp.split(/-/g).slice(0);
 
-                if (filterObj.lowPrice === undefined) {
+                if (filterObj.lowPrice === undefined && filterObj.highPrice === undefined) {
                     filterObj.lowPrice = result[0]
-                }
-                else {
-                    delete (filterObj.lowPrice)
-                }
-                if (filterObj.highPrice === undefined) {
                     filterObj.highPrice = result[1]
+                    x.classList.toggle('bg-black1')
+                    pricebox.setAttribute('style', 'background-color:#7041E6')
                 }
-                else {
+                else if (filterObj.lowPrice == result[0] && filterObj.highPrice == result[1]) {
+                    delete (filterObj.lowPrice)
                     delete (filterObj.highPrice)
+                    pricebox.setAttribute('style', 'background-color:#302F3D')
                 }
+                else if (filterObj.lowPrice !== undefined && filterObj.highPrice !== undefined) {
+                    filterObj.lowPrice = result[0];
+                    filterObj.highPrice = result[1];
+                    x.classList.toggle('bg-black1')
+                    pricebox.setAttribute('style', 'background-color:#7041E6')
+                    sendfilter(filterObj)
+                }
+
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
             })
         })
         serverlist.forEach(x => {
             x.addEventListener('click', () => {
+                let serverbox = document.getElementById('server')
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
-                addOrRemove(serverArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
+                if (filterObj.Server !== undefined) {
+                    x.classList.toggle('bg-black1')
+                    addOrRemove(serverArr, x.innerText)
+                    serverbox.setAttribute('style', 'background-color:#7041E6')
+
+                    if (filterObj.Server.length == 0) {
+                        serverbox.setAttribute('style', 'background-color:#302F3D')
+                    }
+                    sendfilter(filterObj)
+                }
             })
         })
         genderlist.forEach(x => {
             x.addEventListener('click', () => {
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
-                if (filterObj.gender === undefined) {
-                    filterObj.gender = x.innerText;
+                let genderbox = document.getElementById('gender')
+                if (genderlist[0].classList.contains('bg-black1')) {
+                    genderlist[0].classList.toggle('bg-black1')
                 }
-                else {
-                    delete (filterObj.gender)
+                if (genderlist[1].classList.contains('bg-black1')) {
+                    genderlist[1].classList.toggle('bg-black1')
                 }
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
+                if (filterObj.Gender === undefined) {
+                    filterObj.Gender = x.innerText;
+                    x.classList.toggle('bg-black1')
+                    genderbox.setAttribute('style', 'background-color:#7041E6')
+                    sendfilter(filterObj)
+                    console.log(filterObj.Gender)
+                }
+                else if (filterObj.Gender == x.innerText) {
+                    delete (filterObj.Gender)
+                    genderbox.setAttribute('style', 'background-color:#302F3D')
+                    sendfilter(filterObj)
+                    return;
+                }
+                else if (filterObj.Gender !== undefined) {
+                    filterObj.Gender = x.innerText;
+                    x.classList.toggle('bg-black1')
+                    genderbox.setAttribute('style', 'background-color:#7041E6')
+                    sendfilter(filterObj)
+                }
             })
         })
         levellist.forEach(x => {
             x.addEventListener('click', () => {
+                let levelbox = document.getElementById('level')
                 row.innerHTML = "";
-                x.classList.toggle('bg-black1')
-                addOrRemove(levelArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
+                if (filterObj.Level !== undefined) {
+                    x.classList.toggle('bg-black1')
+                    addOrRemove(levelArr, x.innerText)
+                    levelbox.setAttribute('style', 'background-color:#7041E6')
+                    console.log(filterObj.Level)
+
+                    if (filterObj.Level.length == 0) {
+                        levelbox.setAttribute('style', 'background-color:#302F3D')
+                    }
+                    sendfilter(filterObj)
+                }
             })
         })
         // 檢查陣列內容無重複就加入
