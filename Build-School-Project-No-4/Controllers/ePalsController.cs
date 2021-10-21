@@ -75,15 +75,12 @@ namespace Build_School_Project_No_4.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            GroupViewModel groupVM = new GroupViewModel
-            {
-                Deets = playerListing
-            };
-            return View(groupVM);
+
+            return View(playerListing);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DetailPage(GroupViewModel AddCartVM, string startTime, int id)
+        public ActionResult DetailPage(DetailViewModel AddCartVM, string startTime, int id)
         {
             var unpaid = _cartService.CreateUnpaidOrder(AddCartVM, startTime, id);
             var isSuccess = _cartService.AddCartSuccess(unpaid);
@@ -108,14 +105,15 @@ namespace Build_School_Project_No_4.Controllers
             }
             var checkoutVM = _checkoutService.GetCheckoutDetails(confirmation);
 
-            GroupViewModel groupVM = new GroupViewModel
-            {
-                Checkout = checkoutVM
-            };
-            return View(groupVM);
+            //GroupViewModel groupVM = new GroupViewModel
+            //{
+            //    Checkout = checkoutVM
+            //};
+
+            return View(checkoutVM);
         }
         [HttpPost]
-        public ActionResult Checkout(GroupViewModel x, string confirmation)
+        public ActionResult Checkout(CheckoutViewModel x, string confirmation)
         {
             TempData["confirmation"] = confirmation;
             return RedirectToAction("PaymentWithPaypal", "Checkout");
