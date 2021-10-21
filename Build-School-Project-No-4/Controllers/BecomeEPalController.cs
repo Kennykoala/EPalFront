@@ -360,8 +360,11 @@ namespace Build_School_Project_No_4.Controllers
                         tran.Commit();
 
                         //ViewData["Message"] = "使用者儲存成功";
-                        return Content("創建商品成功");
-                    }
+                        //return Content("創建商品成功");
+
+                    TempData["message"] = "創建商品成功";
+                    return RedirectToAction("BecomeEPalPage", "becomeepal");
+                }
                     catch (Exception ex)
                     {
                         tran.Rollback();
