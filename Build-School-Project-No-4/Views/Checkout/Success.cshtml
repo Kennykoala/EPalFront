@@ -1,9 +1,9 @@
-﻿@model GroupViewModel
+﻿@model OrderConfirmationViewModel
 
 @{
     ViewBag.Title = "Success";
-    var startTime = Model.OrderConfirmDetails.StartTime.ToString("MM/dd/yyyy hh:mm tt");
-    var o = Model.OrderConfirmDetails;
+    var startTime = Model.StartTime.ToString("MM/dd/yyyy hh:mm tt");
+    var o = Model;
 }
 @section topCSS{
 
