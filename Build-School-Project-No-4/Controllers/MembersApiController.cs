@@ -24,28 +24,19 @@ namespace Build_School_Project_No_4.Controllers
 
         public IHttpActionResult PostAvatar([FromBody] MemberAvatarViewModel Data)
         {
-            // = MemberAvatar.MemberAvatar.MemberId;
-            //int MemberId, string ProfilePicture
-
-            //string aaa = JsonConvert.DeserializeObject(data);
-
             Members member = db.Members.First(x => x.MemberId == Data.MemberId);
 
             using (var tran = db.Database.BeginTransaction())
             {
                 try
                 {
-                    //Members result = new Members()
-                    //{
-                    //    ProfilePicture = Data.ProfilePicture
-                    //};
-
                     member.ProfilePicture = Data.ProfilePicture;
-                    //db.Members.Add();
+
                     db.SaveChanges();
                     tran.Commit();
 
-                    return Ok(member);
+                    var msg = "OK";
+                    return Json(msg);
                 }
                 catch (Exception ex)
                 {

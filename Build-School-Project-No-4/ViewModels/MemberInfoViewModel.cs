@@ -66,11 +66,11 @@ namespace Build_School_Project_No_4.ViewModels
 
     public enum LanguageCategories
     {
-        簡體中文 = 1,
-        Korean = 2,
+        Nederlands = 1,
+        Deutsch = 2,
         English = 3,
-        Deutsch = 4,
-        Nederlands = 5,
+        Français = 4,
+        Español_AR = 5,
         日本語 = 6,
         繁體中文 = 7
     }

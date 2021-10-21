@@ -25,6 +25,7 @@
 
     @*抓到使用者登入的cookie資訊*@
     @{
+        var memberService = new Build_School_Project_No_4.Services.MemberService();
         HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
 
         string userid = "";
@@ -35,8 +36,8 @@
 
             var obj = Json.Decode<Members>(ticket.UserData);
             userid = obj.MemberId.ToString();
-
-            avatar = obj.ProfilePicture;
+            avatar = memberService.GetEditProfileInfo(obj.MemberId).ProfilePicture;
+            //userid = ticket.UserData;
         }
     }
 
@@ -273,14 +274,18 @@
                                 </div>
 
                                 <div class="info-wrapper">
-                                    <div class="infosta" id="followers">
-                                        <div class="num">0</div>
-                                        <div class="txt">Followers</div>
-                                    </div>
-                                    <div class="infosta" id="followings">
-                                        <div class="num">1</div>
-                                        <div class="txt">Folloeings</div>
-                                    </div>
+                                    @*<a href="@Url.Action("Followings","Members")">*@
+                                        <div class="infosta" id="followers">
+                                            <div class="num">0</div>
+                                            <div class="txt">Followers</div>
+                                        </div>
+                                    @*</a>*@
+                                    @*<a href="@Url.Action("Followings","Members")">*@
+                                        <div class="infosta" id="followings">
+                                            <div class="num">1</div>
+                                            <div class="txt">Folloeings</div>
+                                        </div>
+                                    @*</a>*@
                                     <div class="infosta" id="vistors">
                                         <div class="num">2</div>
                                         <div class="txt">Vistors</div>
@@ -470,9 +475,15 @@
                         @*<a href="#"><img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google"></a>*@
                         @*<a href="#"><i class="fab fa-twitch"></i></a>
                             <a href="#"><i class="fab fa-discord"></i></a>*@
-                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <button id="FB_login" class="btn" style="background-color:transparent;">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                        @*<a href="#"><i class="fab fa-facebook"></i></a>*@
                         @*<a href="#"><i class="fab fa-apple"></i></a>*@
-                        <a href="#"><i class="fab fa-line"></i></a>
+                        <button id="Line_login" class="btn" style="background-color:transparent;">
+                            <i class="fab fa-line"></i>
+                        </button>
+                        @*<a href="#"><i class="fab fa-line"></i></a>*@
                     </div>
                     <span id="GOOGLE_STATUS_2"></span>
                 </div>
