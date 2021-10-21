@@ -209,15 +209,10 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         Email = email,
                         Password = rndnumber,
-                        //LoginMethod = "2"
+                        LoginMethod = 2
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
-
-
-                    //var getmeminfo = _MemberService.MemberLoginData()
-                    //                .Where(m => m.Email == email   )
-                    //                .FirstOrDefault();
 
 
                     Members meminfo = new Members()
@@ -258,7 +253,8 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         MemberName = memberRVM.MemberName,
-                        ProfilePicture = memberRVM.ProfilePicture
+                        ProfilePicture = memberRVM.ProfilePicture,
+                        LoginMethod = 2
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
@@ -279,19 +275,6 @@ namespace Build_School_Project_No_4.Controllers
                     var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(cookie);
 
-                    ////4.取得original URL.
-                    //var url = FormsAuthentication.GetRedirectUrl(email, true);
-
-                    ////5.導向original URL
-                    //return Redirect(url);
-
-
-
-                    ////都成功
-                    //string user_id = payload.Subject;//取得user_id
-                    //msg = $@"您的 user_id :{user_id}";
-                    //return Content(msg);
-
                 }
 
                 //return Json(email);
@@ -304,9 +287,9 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        //google
+        //google 
         [HttpPost]
-        public async Task<ActionResult> GoogleLogin(string id_token, string LoginMethod)
+        public async Task<ActionResult> GoogleLogin(string id_token)
         {
             string msg = "ok";
             string email;
@@ -334,10 +317,7 @@ namespace Build_School_Project_No_4.Controllers
             {
                 msg = ex.Message;
             }
-            //payload = await GoogleJsonWebSignature.ValidateAsync(id_token, new GoogleJsonWebSignature.ValidationSettings()
-            //{
-            //    Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
-            //});
+
 
             if (msg == "ok" && payload != null)
             {
@@ -363,15 +343,10 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         Email = email,
                         Password = rndnumber,
-                        //LoginMethod = "1"
+                        LoginMethod = 1
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
-
-
-                    //var getmeminfo = _MemberService.MemberLoginData()
-                    //                .Where(m => m.Email == email   )
-                    //                .FirstOrDefault();
 
 
                     Members meminfo = new Members()
@@ -400,19 +375,18 @@ namespace Build_School_Project_No_4.Controllers
                     Response.Cookies.Add(cookie);
 
 
-
                     //msg = "新增會員成功";
                     //return Content(msg);
                     //return RedirectToAction("HomePage", "Home");
                 }
                 else
                 {
-
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
                         MemberName = memberRVM.MemberName,
-                        ProfilePicture = memberRVM.ProfilePicture
+                        ProfilePicture = memberRVM.ProfilePicture,
+                        LoginMethod = 1
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
@@ -449,31 +423,9 @@ namespace Build_School_Project_No_4.Controllers
                 }
 
                 return Json(true);
-
-                ////反回原頁面
-                ////獲取使用者登錄中的資訊
-                //string loginName = Request["email"];
-                //string password = Request["password"];
-
-                ////把使用者的資訊儲存在session中
-                //Session[LoginUserKey] = email;
-
-                ////獲取該頁面url的參數資訊
-                //string returnURL = Request.Params["HTTP_REFERER"];
-                //int index = returnURL.IndexOf('=');
-                //returnURL = returnURL.Substring(index + 1);
-
-                ////如果參數為空，則跳轉到首頁，否則切回原頁面
-                //if (string.IsNullOrEmpty(returnURL))
-                //    return Redirect("/Home/HomePage");
-                //else
-                //    return Redirect(returnURL);
-
             }
             msg = "error";
             return Content(msg);
-
-
 
             //if (msg == "ok" && payload != null)
             //{   

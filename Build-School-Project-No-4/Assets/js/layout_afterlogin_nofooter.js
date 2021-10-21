@@ -62,24 +62,9 @@ window.onload = function () {
 
             //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
             //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-
-
-
             attachSignin(document.getElementById("GOOGLE_login"));
         });
     };
-
-
-    //function updateSigninStatus(isSignedIn) {
-    //    if (isSignedIn) {
-    //        document.getElementById("loginmodal").style.display = 'none';
-    //        document.getElementById("logoutbutton").style.display = 'block';
-    //        //makeApiCall();
-    //    } else {
-    //        document.getElementById("loginmodal").style.display = 'block';
-    //        document.getElementById("logoutbutton").style.display = 'none';
-    //    }
-    //}
 
 
     function attachSignin(element) {
@@ -102,7 +87,7 @@ window.onload = function () {
                 var OauthName = profile.getName();
                 var OauthEmail = profile.getEmail();
                 var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
-                var LoginMethod = "1";
+                //var LoginMethod = "1";
 
                 $.ajax({
                     url: '/Members/GoogleLogin',
@@ -113,13 +98,10 @@ window.onload = function () {
                         OauthName: OauthName,
                         OauthEmail: OauthEmail,
                         AuthResponse: AuthResponse,
-                        LoginMethod: "1"
+                        //LoginMethod: "1"
                     },
                     success: function (msg) {
                         $("#myModal").modal('hide');
-                        //$("#loginmodal").style.display="none";
-                        //$("#signupmodal").style.display="none";
-
 
                         console.log(msg);
                         swal.fire({
@@ -247,8 +229,6 @@ window.onload = function () {
             contentType: 'application/json; charset=utf-8',
             success: function (msg) {
                 $("#myModal").modal('hide');
-                //$("#loginmodal").style.display="none";
-                //$("#signupmodal").style.display="none";
 
                 //console.log(msg);
                 swal.fire({
@@ -258,10 +238,6 @@ window.onload = function () {
                     //dangerMode: true
                 });
 
-
-                ////logbtn.style.display="none";
-                ////signbtn.style.display = "none";
-                ////logoutbtn.style.display = "block";
 
                 if (msg == true) {
                     window.location.href = '/'

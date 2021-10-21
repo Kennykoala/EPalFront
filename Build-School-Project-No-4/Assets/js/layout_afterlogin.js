@@ -60,24 +60,9 @@ window.onload = function () {
 
             //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
             //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-
-
-
             attachSignin(document.getElementById("GOOGLE_login"));
         });
     };
-
-
-    //function updateSigninStatus(isSignedIn) {
-    //    if (isSignedIn) {
-    //        document.getElementById("loginmodal").style.display = 'none';
-    //        document.getElementById("logoutbutton").style.display = 'block';
-    //        //makeApiCall();
-    //    } else {
-    //        document.getElementById("loginmodal").style.display = 'block';
-    //        document.getElementById("logoutbutton").style.display = 'none';
-    //    }
-    //}
 
 
     function attachSignin(element) {
@@ -115,9 +100,6 @@ window.onload = function () {
                     },
                     success: function (msg) {
                         $("#myModal").modal('hide');
-                        //$("#loginmodal").style.display="none";
-                        //$("#signupmodal").style.display="none";
-
 
                         console.log(msg);
                         swal.fire({
@@ -250,21 +232,13 @@ window.onload = function () {
             contentType: 'application/json; charset=utf-8',
             success: function (msg) {
                 $("#myModal").modal('hide');
-                //$("#loginmodal").style.display="none";
-                //$("#signupmodal").style.display="none";
 
-                //console.log(msg);
                 swal.fire({
                     title: "Welcome to Epal",
                     icon: "success",
                     //buttons: true,
                     //dangerMode: true
                 });
-
-
-                ////logbtn.style.display="none";
-                ////signbtn.style.display = "none";
-                ////logoutbtn.style.display = "block";
 
                 if (msg == true) {
                     window.location.href = '/'
