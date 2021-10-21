@@ -79,11 +79,11 @@ namespace Build_School_Project_No_4.Controllers
             if (isPaid == true)
             {
                 var confirmationInfo = _orderConfirmService.GetConfirmationInfo(confirmation);
-                GroupViewModel groupVM = new GroupViewModel
-                {
-                    OrderConfirmDetails = confirmationInfo
-                };
-                return View(groupVM);
+                //GroupViewModel groupVM = new GroupViewModel
+                //{
+                //    OrderConfirmDetails = confirmationInfo
+                //};
+                return View(confirmationInfo);
             }
             else
             {

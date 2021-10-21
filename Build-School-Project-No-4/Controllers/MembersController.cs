@@ -19,11 +19,14 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.IO;
 using Newtonsoft.Json;
+using Google.Apis.Auth;
+using Google.Apis.Http;
 
 namespace Build_School_Project_No_4.Controllers
 {
     public class MembersController : Controller
     {
+
         private EPalContext db = new EPalContext();
         private MemberService _MemberService;
         private MailService _MailService;
@@ -32,6 +35,7 @@ namespace Build_School_Project_No_4.Controllers
             _MemberService = new MemberService();
             _MailService = new MailService();
         }
+
 
 
         //取得登入者的memberId
@@ -43,7 +47,9 @@ namespace Build_School_Project_No_4.Controllers
             if (cookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-                userid = ticket.UserData;
+
+                var obj = JsonConvert.DeserializeObject<Members>(ticket.UserData);
+                userid = obj.MemberId.ToString();
                 return userid;
             }
             return null;
@@ -71,11 +77,11 @@ namespace Build_School_Project_No_4.Controllers
                 var profiles = new ProfileEpalService();
                 var profileGetAll = profiles.GetProfiles(memberId);
 
-                GroupViewModel profileContent = new GroupViewModel
-                {
-                    Profiles = profileGetAll
-                };
-                return View(profileContent);
+                //GroupViewModel profileContent = new GroupViewModel
+                //{
+                //    Profiles = profileGetAll
+                //};
+                return View(profileGetAll);
 
             }
             catch(Exception ex)
@@ -88,175 +94,322 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult Followings()
         {
             var memberGet = new FollowService();
-            var members = memberGet.GetFollowMember();
+            var members = memberGet.GetMemberFollow();
+            var Followers = memberGet.GetMemberFollowers();
 
-            GroupViewModel followSelectMembers = new GroupViewModel
-            {
-                FollowMembers = members
-            };
-            return View(followSelectMembers);
-        }
+            //GroupViewModel followSelectMembers = new GroupViewModel
+            //{
+            //    FollowingMember = members,
+            //    FollowerMember = Followers
+            //};
 
+            ViewBag.Followings = members;
+            ViewBag.Followers = Followers;
 
-
-        // GET: Cloudinary
-        public ActionResult ImageUpload()
-        {
-            //return PartialView("_AvatarPartial");
             return View();
         }
-        //[HttpPost]
-        //public bool SaveImageToServer()
+
+
+
+
+
+
+
+
+        //public ActionResult LoginProcess()
         //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult> LoginProcess(string token)
+        //{
+
+        //    string msg = "ok";
+        //    GoogleJsonWebSignature.Payload payload = null;
         //    try
         //    {
-        //        HttpFileCollectionBase files = Request.Files;
-        //        HttpPostedFileBase file = files[0];
-        //        string _apiKey = ConfigurationManager.AppSettings["CloudinaryAPIKey"];
-        //        string _apiSecret = ConfigurationManager.AppSettings["CloudinarySecretKey"];
-        //        string _cloud = ConfigurationManager.AppSettings["CloudinaryAccount"];
-        //        string uploadedImageUrl = string.Empty;
-        //        string fname = string.Empty;
-        //        var myAccount = new Account { ApiKey = _apiKey, ApiSecret = _apiSecret, Cloud = _cloud };
-        //        Cloudinary _cloudinary = new Cloudinary(myAccount);
-        //        _cloudinary.Api.Secure = true;
-
-
-        //        //if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-        //        //{
-        //        //    string[] testfiles = file.FileName.Split(new char[] { '\\' });
-        //        //    fname = testfiles[testfiles.Length - 1];
-        //        //}
-        //        //else
-        //        //{
-        //        //    fname = Regex.Replace(file.FileName.Trim(), @"[^0-9a-zA-Z.]+", "_");
-        //        //}
-
-        //        using (Image img = Image.FromStream(file.InputStream))
+        //        payload = await GoogleJsonWebSignature.ValidateAsync(token, new GoogleJsonWebSignature.ValidationSettings()
         //        {
-        //            int imageHeight = 0;
-        //            int imageWidth = 0;
-        //            if (img.Height > 320)
-        //            {
-        //                var ratio = (double)img.Height / 320;
-        //                imageHeight = (int)(img.Height / ratio);
-        //                imageWidth = (int)(img.Width / ratio);
-        //            }
-        //            else
-        //            {
-        //                imageHeight = img.Height;
-        //                imageWidth = img.Width;
-        //            }
-        //            var uploadParams = new ImageUploadParams()
-        //            {
-        //                File = new FileDescription(file.FileName, file.InputStream),
-        //                Folder = "MyImages",
-        //                Transformation = new Transformation().Width(imageWidth).Height(imageHeight).Crop("thumb").Gravity("face")
-        //            };
-                    
-                    
-        //            var uploadResult = _cloudinary.Upload(uploadParams);
-                    
-        //            //Failed to deserialize response with status code: NotFound cloudinary
-        //            //cloudinary Unexpected character encountered while parsing value: <.Path '', line 0, position 0.
-
-        //            //uploadedImageUrl = uploadResult?.SecureUri?.AbsoluteUri;
-        //            return true;
-        //        }
+        //            Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
+        //        });
+        //        string email = payload.Email;
+        //        string Id = payload.JwtId;
+        //        string name = payload.Name;
+        //    }
+        //    catch (Google.Apis.Auth.InvalidJwtException ex)
+        //    {
+        //        msg = ex.Message;
+        //    }
+        //    catch (Newtonsoft.Json.JsonReaderException ex)
+        //    {
+        //        msg = ex.Message;
         //    }
         //    catch (Exception ex)
         //    {
-        //        return false;
+        //        msg = ex.Message;
         //    }
+
+        //    if (msg == "ok" && payload != null)
+        //    {//都成功
+        //        string user_id = payload.Subject;//取得user_id
+        //        msg = $@"您的 user_id :{user_id}";
+        //    }
+
+        //    return Content(msg);
+
+        //    ////// Nuget套件 System.IdentityModel.Tokens.Jwt
+        //    ////var user = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(token);
+
+        //    //// 除此之外，也可以透過Google API 取得
+        //    //var url = $"https://oauth2.googleapis.com/tokeninfo?id_token={token}";
+        //    //var client = _clientFactory.CreateClient();
+        //    //var response = await client.GetAsync(url);
+        //    //if (response.IsSuccessStatusCode)
+        //    //{
+        //    //    var responseContent = await response.Content.ReadAsStringAsync();
+        //    //    // 略...
+        //    //}
+
+        //    //return View();
         //}
 
 
-        //[HttpPost]
-        //public ActionResult SaveAvatarToDB(int MemberId, string ProfilePicture)
-        //{
-
-        //    Members member = db.Members.First(x => x.MemberId == MemberId);
-
-        //    using (var tran = db.Database.BeginTransaction())
-        //    {
-        //        try
-        //        {
-        //            member.ProfilePicture = ProfilePicture;
-        //            db.SaveChanges();
-        //            tran.Commit();
-
-        //            return Content("寫入資料庫成功");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            tran.Rollback();
-
-        //            return Content("寫入資料庫失敗:" + ex.ToString());
-        //        }
-        //    }
-        //}
 
 
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult GetAvatar()
+        //FB  
+        [HttpPost]
+        public ActionResult FBLogin(string Fbemail, string Fbname)
         {
-            Members emp = db.Members.Find(int.Parse(GetMemberId()));
-            if (emp == null)
+            string msg = "ok";
+            string email;
+            string fullname;
+
+            if (msg == "ok" && Fbemail != null)
             {
-                return HttpNotFound();
+                email = Fbemail;
+                fullname = Fbname;
+                //確認是否已註冊FB
+                //var memberDM = _MemberService.MemberLoginData()
+                //            .Where(m => m.Email == email   )
+                //            .FirstOrDefault();
+                var memberRVM = _MemberService.MemberRigisterData()
+                            .Where(m => m.Email == email)
+                            .FirstOrDefault();
+
+                if (memberRVM == null)
+                {
+                    Random rnd = new Random(Guid.NewGuid().GetHashCode());
+                    string rndnumber = rnd.Next(0, 100).ToString();
+                    //將密碼Hash
+                    rndnumber = _MemberService.HashPassword(rndnumber);
+
+                    //GroupViewModel -> DM
+                    Members emp = new Members
+                    {
+                        Email = email,
+                        Password = rndnumber,
+                        LoginMethod = 2
+                    };
+                    db.Members.Add(emp);
+                    db.SaveChanges();
+
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = fullname,
+                        //ProfilePicture = memberRVM.ProfilePicture
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+                }
+                else
+                {
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = memberRVM.MemberName,
+                        ProfilePicture = memberRVM.ProfilePicture,
+                        LoginMethod = 2
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+                }
+
+                return Json(true);
             }
+            msg = "error";
+            return Content(msg);
 
-            GroupViewModel groupMember = new GroupViewModel()
-            {
-                MemberInfo = new MemberInfoViewModel()
-            };
-
-            //DM -> MemberInfoViewModel -> GroupViewModel
-            MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
-            {
-                //MemberId = emp.MemberId,
-                ProfilePicture = emp.ProfilePicture
-            };
-
-            groupMember.MemberInfo = MemberInfo;
-            ViewBag.Avatar = groupMember;
-            //TempData["Avatar"] = groupMember;
-
-
-            //return View("EditProfile");
-            return View("EditProfile");
         }
 
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult GetAvatarForLayout()
+
+        //google 
+        [HttpPost]
+        public async Task<ActionResult> GoogleLogin(string id_token)
         {
-            Members emp = db.Members.Find(int.Parse(GetMemberId()));
-            if (emp == null)
+            string msg = "ok";
+            string email;
+            string fullname;
+            GoogleJsonWebSignature.Payload payload = null;
+            try
             {
-                return HttpNotFound();
+                payload = await GoogleJsonWebSignature.ValidateAsync(id_token, new GoogleJsonWebSignature.ValidationSettings()
+                {
+                    Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
+                });
+                //email = payload.Email;
+                //string Id = payload.JwtId;
+                //string name = payload.Name;
+            }
+            catch (Google.Apis.Auth.InvalidJwtException ex)
+            {
+                msg = ex.Message;
+            }
+            catch (Newtonsoft.Json.JsonReaderException ex)
+            {
+                msg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
             }
 
-            GroupViewModel groupMember = new GroupViewModel()
+
+            if (msg == "ok" && payload != null)
             {
-                MemberInfo = new MemberInfoViewModel()
-            };
+                email = payload.Email;
+                fullname = payload.Name;
+                //確認是否已註冊google
+                //var memberDM = _MemberService.MemberLoginData()
+                //            .Where(m => m.Email == email   )
+                //            .FirstOrDefault();
+                var memberRVM = _MemberService.MemberRigisterData()
+                            .Where(m => m.Email == email  )
+                            .FirstOrDefault();
 
-            //DM -> MemberInfoViewModel -> GroupViewModel
-            MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
-            {
-                //MemberId = emp.MemberId,
-                ProfilePicture = emp.ProfilePicture
-            };
+                if (memberRVM == null)
+                {
+                    Random rnd = new Random(Guid.NewGuid().GetHashCode());
+                    string rndnumber = rnd.Next(0, 100).ToString();
+                    //將密碼Hash
+                    rndnumber = _MemberService.HashPassword(rndnumber);
 
-            groupMember.MemberInfo = MemberInfo;
-            ViewBag.Avatar = groupMember;
+                    //GroupViewModel -> DM
+                    Members emp = new Members
+                    {
+                        Email = email,
+                        Password = rndnumber,
+                        LoginMethod = 1
+                    };
+                    db.Members.Add(emp);
+                    db.SaveChanges();
 
-            return View("_Layout_nofooter", groupMember);
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = fullname,
+                        //ProfilePicture = memberRVM.ProfilePicture
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+
+                    //msg = "新增會員成功";
+                    //return Content(msg);
+                    //return RedirectToAction("HomePage", "Home");
+                }
+                else
+                {
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = memberRVM.MemberName,
+                        ProfilePicture = memberRVM.ProfilePicture,
+                        LoginMethod = 1
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+                }
+
+                return Json(true);
+            }
+            msg = "error";
+            return Content(msg);
+
         }
+
 
 
 
@@ -267,72 +420,74 @@ namespace Build_School_Project_No_4.Controllers
         [Authorize]
         public ActionResult EditProfile()
         {
-            Members emp = db.Members.Find(int.Parse(GetMemberId()));
-            if (emp == null)
-            {
-                return HttpNotFound();
-            }
+            MemberInfoViewModel MemberInfo = _MemberService.GetEditProfileInfo(int.Parse(GetMemberId()));
 
-            if(emp.Gender == null)
-            {
-                emp.Gender = 0;
-            }
-            if (emp.LanguageId == null)
-            {
-                emp.LanguageId = 0;
-            }
+            //Members emp = db.Members.Find(int.Parse(GetMemberId()));
+            //if (emp == null)
+            //{
+            //    return HttpNotFound();
+            //}
 
-            GroupViewModel groupMember = new GroupViewModel()
-            {
-                MemberInfo = new MemberInfoViewModel()
-            };
+            //if(emp.Gender == null)
+            //{
+            //    emp.Gender = 0;
+            //}
+            //if (emp.LanguageId == null)
+            //{
+            //    emp.LanguageId = 0;
+            //}
 
-            //DM -> MemberInfoViewModel -> GroupViewModel
-            MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
-            {
-                MemberId = emp.MemberId,
-                MemberName = emp.MemberName,
-                Phone = emp.Phone,
-                Country = emp.Country,
-                Gender = (Genders)emp.Gender,
-                BirthDay = emp.BirthDay,
-                TimeZone = emp.TimeZone,
-                LanguageId = (LanguageCategories)emp.LanguageId,
-                Bio = emp.Bio,
-                Email = emp.Email,
-                Password = emp.Password,
-                ProfilePicture = emp.ProfilePicture
-            };
+            ////DM -> MemberInfoViewModel -> GroupViewModel
+            //MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
+            //{
+            //    MemberId = emp.MemberId,
+            //    MemberName = emp.MemberName,
+            //    Phone = emp.Phone,
+            //    Country = emp.Country,
+            //    Gender = (Genders)emp.Gender,
+            //    BirthDay = emp.BirthDay,
+            //    TimeZone = emp.TimeZone,
+            //    LanguageId = (LanguageCategories)emp.LanguageId,
+            //    Bio = emp.Bio,
+            //    Email = emp.Email,
+            //    Password = emp.Password,
+            //    ProfilePicture = emp.ProfilePicture
+            //};
 
-            groupMember.MemberInfo = MemberInfo;
-            ViewBag.Avatar = groupMember.MemberInfo.ProfilePicture;
-                        
 
-            return View("EditProfile", groupMember);
+            //GroupViewModel groupMember = new GroupViewModel()
+            //{
+            //    MemberInfo = new MemberInfoViewModel()
+            //};
+
+            //groupMember.MemberInfo = MemberInfo;
+            ViewBag.Avatar = MemberInfo.ProfilePicture;                        
+
+            return View("EditProfile", MemberInfo);
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile([Bind(Include = "MemberInfo")] GroupViewModel EditMember)
+        public ActionResult EditProfile([Bind(Include = "MemberInfo")] MemberInfoViewModel EditMember)
         {   
-            //將密碼Hash
-            EditMember.MemberInfo.Password = _MemberService.HashPassword(EditMember.MemberInfo.Password);
+            //密碼Hash
+            EditMember.Password = _MemberService.HashPassword(EditMember.Password);
 
             //GroupViewModel -> MemberInfoViewModel -> DM
             Members emp = new Members
             {
-                MemberId = EditMember.MemberInfo.MemberId,
-                MemberName = EditMember.MemberInfo.MemberName,
-                Phone = EditMember.MemberInfo.Phone,
-                Country = EditMember.MemberInfo.Country,
-                Gender = (int)EditMember.MemberInfo.Gender,
-                BirthDay = EditMember.MemberInfo.BirthDay,
-                TimeZone = EditMember.MemberInfo.TimeZone,
-                LanguageId = (int)EditMember.MemberInfo.LanguageId,
-                Bio = EditMember.MemberInfo.Bio,
-                Email = EditMember.MemberInfo.Email,
-                Password = EditMember.MemberInfo.Password
+                MemberId = EditMember.MemberId,
+                MemberName = EditMember.MemberName,
+                Phone = EditMember.Phone,
+                Country = EditMember.Country,
+                Gender = (int)EditMember.Gender,
+                BirthDay = EditMember.BirthDay,
+                TimeZone = EditMember.TimeZone,
+                LanguageId = (int)EditMember.LanguageId,
+                Bio = EditMember.Bio,
+                Email = EditMember.Email,
+                Password = EditMember.Password
             };
 
             if (ModelState.IsValid)
@@ -364,7 +519,6 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        [Authorize] 
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -388,19 +542,15 @@ namespace Build_School_Project_No_4.Controllers
         public static string LoginUserKey = "UserInfo@CCC";
 
         //Get: Members/Login
-        //[Authorize]
-        //[AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
         //Post: Members/Login
-        //[Authorize]
-        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Login(GroupViewModel loginMember)
+        public ActionResult Login(MemberLoginViewModel loginMember)
         {
             //未通過Model驗證
             if (!ModelState.IsValid)
@@ -409,15 +559,23 @@ namespace Build_School_Project_No_4.Controllers
             }
 
             //驗證登入email.密碼，回傳結果
-            string ValidateStr = _MemberService.LoginCheck(loginMember.MemberLogin.Email, loginMember.MemberLogin.Password);
+            string ValidateStr = _MemberService.LoginCheck(loginMember.Email, loginMember.Password);
 
-            Members user = _MemberService.GetDataByAccount(loginMember.MemberLogin.Email);
+            Members user = _MemberService.GetDataByAccount(loginMember.Email);
 
             if (String.IsNullOrEmpty(ValidateStr))
             {
                 //通過Model驗證後, 使用HtmlEncode將帳密做HTML編碼, 去除有害的字元
-                string email = HttpUtility.HtmlEncode(loginMember.MemberLogin.Email);
+                string email = HttpUtility.HtmlEncode(loginMember.Email);
                 //string password = HashService.MD5Hash(HttpUtility.HtmlEncode(loginVM.Password));
+
+                Members meminfo = new Members()
+                {
+                    MemberId = user.MemberId,
+                    MemberName = user.MemberName,
+                    ProfilePicture = user.ProfilePicture
+                };
+                string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
                 //建立FormsAuthenticationTicket
                 var ticket = new FormsAuthenticationTicket(
@@ -425,8 +583,9 @@ namespace Build_School_Project_No_4.Controllers
                             name: user.Email.ToString(), //可以放使用者Id
                             issueDate: DateTime.UtcNow,//現在UTC時間
                             expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-                            isPersistent: loginMember.MemberLogin.Remember,// 是否要記住我 true or false
-                            userData: user.MemberId.ToString(), //可以放使用者角色名稱
+                            isPersistent: loginMember.Remember,// 是否要記住我 true or false
+                            userData: JsonMeminfo, //可以放使用者角色名稱
+                            //userData: user.MemberId.ToString(), //可以放使用者角色名稱
                             cookiePath: FormsAuthentication.FormsCookiePath);
 
                 //加密Ticket
@@ -454,7 +613,7 @@ namespace Build_School_Project_No_4.Controllers
                 string password = Request["password"];
 
                 //把使用者的資訊儲存在session中
-                Session[LoginUserKey] = loginMember.MemberLogin.Email;
+                Session[LoginUserKey] = loginMember.Email;
 
                 //獲取該頁面url的參數資訊
                 string returnURL = Request.Params["HTTP_REFERER"];
@@ -488,8 +647,9 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        //[AllowAnonymous]
+
         //Get:Members/Register
+        //[AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -499,7 +659,7 @@ namespace Build_School_Project_No_4.Controllers
         //[AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(GroupViewModel newMember)
+        public ActionResult Register(MemberRegisterViewModel newMember)
         {
             if (ModelState.IsValid)
             {
@@ -508,18 +668,18 @@ namespace Build_School_Project_No_4.Controllers
 
                 //註冊成為新會員
                 var member = _MemberService.MemberRigisterData()
-                            .Where(m => m.Email == newMember.MemberRegister.Email)
+                            .Where(m => m.Email == newMember.Email)
                             .FirstOrDefault();
                 if (member == null)
                 {
                     //將密碼Hash
-                    newMember.MemberRegister.Password = _MemberService.HashPassword(newMember.MemberRegister.Password);
+                    newMember.Password = _MemberService.HashPassword(newMember.Password);
 
                     //GroupViewModel -> DM
                     Members emp = new Members
                     {
-                        Email = newMember.MemberRegister.Email,
-                        Password = newMember.MemberRegister.Password,
+                        Email = newMember.Email,
+                        Password = newMember.Password,
                         AuthCode = AuthCode
                     };
                     db.Members.Add(emp);
@@ -539,14 +699,14 @@ namespace Build_School_Project_No_4.Controllers
                 UriBuilder ValidateUrl = new UriBuilder(Request.Url)
                 {
                     Path = Url.Action("EmailValidate", "Members", new{
-                        Email = newMember.MemberRegister.Email,
+                        Email = newMember.Email,
                         AuthCode = AuthCode
                     })
                 };
 
-                string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.MemberRegister.Email, ValidateUrl.ToString().Replace("%3F", "?"));
+                string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
 
-                _MailService.SendRegisterMail(MailBody, newMember.MemberRegister.Email);
+                _MailService.SendRegisterMail(MailBody, newMember.Email);
 
                 //用TempData儲存註冊訊息
                 TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
@@ -556,7 +716,7 @@ namespace Build_School_Project_No_4.Controllers
             }
 
             //未經驗證清空密碼相關欄位
-            newMember.MemberRegister.Password = null;
+            newMember.Password = null;
 
             //獲取使用者登錄中的資訊
             string loginName = Request["email"];
@@ -591,8 +751,11 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-
-
+        //Privacy Policy
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
 
 
 

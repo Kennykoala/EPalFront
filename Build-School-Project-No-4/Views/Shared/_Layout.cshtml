@@ -1,5 +1,4 @@
-﻿@model GroupViewModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,13 +25,19 @@
 
     @*抓到使用者登入的cookie資訊*@
     @{
+        var memberService = new Build_School_Project_No_4.Services.MemberService();
         HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
 
         string userid = "";
+        string avatar = "";
         if (cookie != null)
         {
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-            userid = ticket.UserData;
+
+            var obj = Json.Decode<Members>(ticket.UserData);
+            userid = obj.MemberId.ToString();
+            avatar = memberService.GetEditProfileInfo(obj.MemberId).ProfilePicture;
+            //userid = ticket.UserData;
         }
     }
 
@@ -53,7 +58,7 @@
                         <a class="nav-link text-white navItem" aria-current="page" href="@Url.Action("ePal","ePals",new {id = "1" })">ePal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white navItem" href="@Url.Action("Meet","Chill")">Chill</a>
+                        <a class="nav-link text-white navItem" href="@Url.Action("Live","Chill")">Chill</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link text-white navItem" href="#">Posts</a>
@@ -91,8 +96,8 @@
                             </li>
                             <li class="ultitle">User Agreement</li>
                             <li class="ulitem"><a class="dropdown-item" href="#">Terms of Service</a></li>
-                            <li class="ulitem"><a class="dropdown-item" href="#">Privacy Policy</a></li>
-                            <li class="ulitem"><a class="dropdown-item" href="#">Community</a></li>
+                            <li class="ulitem"><a class="dropdown-item" href="@Url.Action("PrivacyPolicy","Members")">Privacy Policy</a></li>
+                            <li class="ulitem"><a class="dropdown-item" href="@Url.Action("UserAgreement","UserAgreement")">Community</a></li>
                             <li class="ulitem"><a class="dropdown-item" href="#">Multimedia Policy</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -203,20 +208,34 @@
                         //個人帳戶資訊
                         <div class="personal-account">
                             <div class="personal-img">
-                                <img src="~/Assets/images/layout/avatar.png" style="cursor:pointer" onclick="PersonalOpen()">
+                                @if (avatar == null)
+                                {
+                                    <img src="~/Assets/images/layout/avatar.png" style="cursor:pointer" onclick="PersonalOpen()" id="navbarAvatar">
+                                }
+                                else
+                                {
+                                    <img src=@avatar style="cursor:pointer" onclick="PersonalOpen()" id="navbarAvatar">
+                                }
                             </div>
                             <div class="aside-Menu">
                                 <div class="userinfo">
                                     <div class="user-photo">
                                         <a href="~/Members/profile/@userid">
-                                            <img src="~/Assets/images/layout/avatar.png" alt="userphoto">
+                                            @if (avatar == null)
+                                            {
+                                                <img src="~/Assets/images/layout/avatar.png" alt="userphoto">
+                                            }
+                                            else
+                                            {
+                                                <img src=@avatar alt="userphoto">
+                                            }
                                         </a>
                                     </div>
                                     <div class="uesr-account-name">
                                         <a href="~/Members/profile/@userid">
                                             <div style="color:white">@(User.Identity.Name)</div>
                                         </a>
-                                        @Html.HiddenFor(model => model.MemberLogin.MemberId, new { @class = "", id = "memberId" })
+                                        @*@Html.HiddenFor(model => model.MemberLogin.MemberId, new { @class = "", id = "memberId" })*@
                                     </div>
                                     <div class="aside-close">
                                         <button type="button" class="btn-close btn-close-white" aria-label="Close"
@@ -254,14 +273,18 @@
                                 </div>
 
                                 <div class="info-wrapper">
-                                    <div class="infosta" id="followers">
-                                        <div class="num">0</div>
-                                        <div class="txt">Followers</div>
-                                    </div>
-                                    <div class="infosta" id="followings">
-                                        <div class="num">1</div>
-                                        <div class="txt">Folloeings</div>
-                                    </div>
+                                    @*<a href="@Url.Action("Followings","Members")">*@
+                                        <div class="infosta" id="followers">
+                                            <div class="num">0</div>
+                                            <div class="txt">Followers</div>
+                                        </div>
+                                    @*</a>*@
+                                    @*<a href="@Url.Action("Followings","Members")">*@
+                                        <div class="infosta" id="followings">
+                                            <div class="num">1</div>
+                                            <div class="txt">Folloeings</div>
+                                        </div>
+                                    @*</a>*@
                                     <div class="infosta" id="vistors">
                                         <div class="num">2</div>
                                         <div class="txt">Vistors</div>
@@ -274,7 +297,7 @@
 
                                 <div class="money-wrapper">
                                     <div class="money-item" id="order">
-                                        <a href="@Url.Action("Order", "Order")">
+                                        <a href="~/Order/OrderSummary">
                                             <img src="~/Assets/images/layout/ordericon.png" alt="order">
                                             <div class="txt">Order</div>
                                         </a>
@@ -419,31 +442,7 @@
                         <div class="tab-pane fade logsignTabContent" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="wrap">
 
-                                @using (Html.BeginForm("Login", "Members", FormMethod.Post, new { id = "logsignform", @class = "needs-validation", novalidate = "true" }))
-                                {
-
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    //mail
-                                    <div class="maillog logmethod form-group">
-                                        @Html.LabelFor(model => model.MemberLogin.Email, new { @class = "maillabel", @for = "email" })<br />
-                                        @Html.TextBoxFor(model => model.MemberLogin.Email, null, new { @class = "emailinput ellipsis form-control", id = "email", name = "email", placeholder = "Please enter your email", required = "required" })
-                                        @Html.ValidationMessageFor(model => model.MemberLogin.Email, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    //password
-                                    <div class="form-group ">
-                                        @Html.LabelFor(model => model.MemberLogin.Password, new { @for = "password", @class = "passTitle" })<br />
-                                        @Html.PasswordFor(model => model.MemberLogin.Password, new { @class = "passwordinput ellipsis form-control", id = "password", name = "password", placeholder = "Please enter your password", required = "required" })
-                                        <input type="button" class="passwordshow passwordshowLogin" value="show">
-                                        @Html.ValidationMessageFor(model => model.MemberLogin.Password, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    <a href="#" id="forgetpass">Forget your password?</a>
-
-                                    <input type="submit" class="btn btn-secondary loginbutton" id="loginbutton" value="Log In">
-                                
-                                }
+                                @Html.Partial("LoginPartialPage")
 
                             </div>
                         </div>
@@ -454,26 +453,7 @@
 
                             <div class="wrap">
 
-                                @using (Html.BeginForm("Register", "Members", FormMethod.Post, new { id = "logsignform", @class = "needs-validation", novalidate = "true" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    //mail
-                                    <div class="maillog form-group">
-                                        @Html.LabelFor(model => model.MemberRegister.Email, new { @class = "maillabel", @for = "email" })<br>
-                                        @Html.TextBoxFor(model => model.MemberRegister.Email, null, new { @class = "emailinput ellipsis form-control", id = "email", name = "email", placeholder = "Please enter your email", required = "required" })
-                                        @Html.ValidationMessageFor(model => model.MemberRegister.Email, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.MemberRegister.Password, new { @for = "password", @class = "passTitle" })<br>
-                                        @Html.PasswordFor(model => model.MemberRegister.Password, new { @class = "passwordinput ellipsis form-control", id = "password", name = "password", placeholder = "Please enter your password", required = "required" })
-                                        <input type="button" class="passwordshow passwordshowSignup" value="show">
-                                        @Html.ValidationMessageFor(model => model.MemberRegister.Password, "", new { @class = "text-danger", style = "font-size:14px" })
-                                    </div>
-
-                                    <input type="submit" class="btn btn-secondary mt-5 loginbutton" id="loginbutton" value="Sign Up">
-                                }
+                                @Html.Partial("SignupPartialPage")
 
                             </div>
                         </div>
@@ -484,12 +464,26 @@
                 <div class="modalfooter">
                     <p>Or log in with</p>
                     <div class="otherlogin">
-                        <a href="#"><img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google"></a>
-                        <a href="#"><i class="fab fa-twitch"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-apple"></i></a>
+                        <button id="GOOGLE_login" class="btn" style="background-color:transparent;">
+                            <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
+                        </button>
+                        @*<button id="GOOGLE_login" class="btn">
+                                <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
+                            </button>*@
+                        @*<a href="#"><img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google"></a>*@
+                        @*<a href="#"><i class="fab fa-twitch"></i></a>
+                            <a href="#"><i class="fab fa-discord"></i></a>*@
+                        <button id="FB_login" class="btn" style="background-color:transparent;">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                        @*<a href="#"><i class="fab fa-facebook"></i></a>*@
+                        @*<a href="#"><i class="fab fa-apple"></i></a>*@
+                        <button id="Line_login" class="btn" style="background-color:transparent;">
+                            <i class="fab fa-line"></i>
+                        </button>
+                        @*<a href="#"><i class="fab fa-line"></i></a>*@
                     </div>
+                    <span id="GOOGLE_STATUS_2"></span>
                 </div>
 
             </div>
@@ -823,19 +817,24 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
 
     <script type="text/javascript" src="~/Assets/js/layout_afterlogin.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
     @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>*@
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
 
     @RenderSection("endCSS", required: false)
     @RenderSection("endJS", required: false)

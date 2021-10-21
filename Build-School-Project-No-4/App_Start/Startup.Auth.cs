@@ -60,8 +60,8 @@ namespace Build_School_Project_No_4
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
-            //    ClientId = "",
-            //    ClientSecret = ""
+            //    ClientId = "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com",
+            //    ClientSecret = "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"
             //});
         }
     }

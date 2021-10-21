@@ -11,7 +11,7 @@ using Build_School_Project_No_4.ViewModels;
 
 namespace Build_School_Project_No_4.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    
     public class JsonApiController : ApiController
     {
         private readonly ProductService _productService;
@@ -23,6 +23,7 @@ namespace Build_School_Project_No_4.Controllers
             _apiFilterSevice = new ApiFilterService();
         }
 
+        
         [AcceptVerbs("GET", "POST")]
         public string getAllCardsJson(int id)
         {

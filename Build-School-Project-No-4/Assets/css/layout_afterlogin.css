@@ -414,6 +414,8 @@ body {
 
 .modal .modalfooter .otherlogin {
     justify-content: space-around;
+    position:absolute;
+    right:50px;
 }
 
 .modal .modalfooter .otherlogin a {
@@ -425,7 +427,8 @@ body {
     height: 40px;
     display: inline-block;
     position: absolute;
-    left: 230px;
+    left: -60px;
+    bottom:-25px;
 }
 
 .modal .modalfooter .otherlogin .fab {
@@ -437,8 +440,21 @@ body {
     text-align: center;
     padding: 8px 0;
 }
+.modal .modalfooter .otherlogin .fa-facebook {
+    color: #1877F2;
+    position: absolute;
+    left: -5px;
+    bottom:-25px;
+}
 
-.modal .modalfooter .otherlogin .fa-twitch {
+.modal .modalfooter .otherlogin .fa-line {
+    color: #06C755;
+    position: absolute;
+    left: 50px;
+    bottom: -25px;
+}
+
+/*.modal .modalfooter .otherlogin .fa-twitch {
     color: #9146FF;
 }
 
@@ -448,7 +464,7 @@ body {
 
 .modal .modalfooter .otherlogin .fa-apple {
     color: black;
-}
+}*/
 
 /*登入後不顯示login/signup*/
 
@@ -763,6 +779,8 @@ footer #address {
         top: 0;
         bottom: 0;
         border-radius: 50%;
+        max-width:40px;
+        height:40px;
     }
 
     .navbar-right .personal-account .aside-Menu {
@@ -785,10 +803,14 @@ footer #address {
         margin-right: 10px;
     }
 
-    .aside-Menu .userinfo .user-photo img {
-        width: 100%;
-        border-radius: 50%;
-    }
+        .aside-Menu .userinfo .user-photo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
 
     .aside-Menu .userinfo .uesr-account-name {
         margin-top: auto;

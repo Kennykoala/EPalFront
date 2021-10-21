@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.DataModels;
-using Build_School_Project_No_4.Repositories;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -18,9 +14,9 @@ namespace Build_School_Project_No_4.Services
             _ctx = new EPalContext();
         }
 
-        public Orders CreateUnpaidOrder(GroupViewModel AddCartVM, string startTime, int id)
+        public Orders CreateUnpaidOrder(DetailViewModel AddCartVM, string startTime, int id)
         {
-            var cart = AddCartVM.AddCart;
+            //var cart = AddCartVM;
             var timeNow = DateTime.Now;
             var utcTimeNow = timeNow.ToUniversalTime();
             var timestamp = UtcDateTimeToUnix(utcTimeNow);
@@ -30,8 +26,8 @@ namespace Build_School_Project_No_4.Services
             {
                 CustomerId = customerId,
                 ProductId = id,
-                Quantity = cart.Rounds,
-                UnitPrice = cart.UnitPrice,
+                Quantity = AddCartVM.Rounds,
+                UnitPrice = (decimal)AddCartVM.UnitPrice,
                 OrderDate = utcTimeNow,
                 DesiredStartTime = Convert.ToDateTime(startTime),
                 OrderStatusId = 1,

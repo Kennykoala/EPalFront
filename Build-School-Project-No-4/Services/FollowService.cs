@@ -16,27 +16,60 @@ namespace Build_School_Project_No_4.Services
             _Repo = new Repository();
         }
 
-        public List<FollowViewModel> GetFollowMember()
+        //取得Follow對應的會員資料
+        public List<FollowViewModel> GetMemberFollow()
         {
+            var followings = _Repo.GetAll<Followings>();
+            var members = _Repo.GetAll<Members>();
 
-            List<Members> membersAll = _Repo.GetAll<Members>().ToList();
-            List<Followings> follows = _Repo.GetAll<Followings>().ToList();
-
-            int testFollowID = 1;
-            int testFollowID2 = 16;
-            var selectMemberID = membersAll.Where(x => x.MemberId == testFollowID || x.MemberId == testFollowID2).ToList();
+            //demoId
+            int ownId = 60;
+            var ownfollow = followings.Where(x => x.MemberId == ownId);
 
             List<FollowViewModel> result = new List<FollowViewModel>();
-            foreach (var item in selectMemberID)
+            foreach (var item in ownfollow)
             {
-                result.Add(new FollowViewModel
+                var y = members.First(x => x.MemberId == item.FollowingId);
+
+                var m = new FollowViewModel
                 {
-                    MemberId = item.MemberId,
-                    MemberName = item.MemberName,
-                    Gender = item.Gender,
-                    //LineStatus = item.LineStatus,
-                    ProfilePicture = item.ProfilePicture
-                });
+                    MemberId = y.MemberId,
+                    MemberName = y.MemberName,
+                    ProfilePicture = y.ProfilePicture,
+                    Gender = y.Gender
+
+                };
+                result.Add(m);
+
+            }
+            return result;
+        }
+
+        //取得Follow自己對應的會員資料
+        public List<FollowViewModel> GetMemberFollowers()
+        {
+            var followings = _Repo.GetAll<Followings>();
+            var members = _Repo.GetAll<Members>();
+
+            //demoId
+            int ownId = 60;
+            var followers = followings.Where(x => x.FollowingId == ownId);
+
+            List<FollowViewModel> result = new List<FollowViewModel>();
+            foreach (var item in followers)
+            {
+                var y = members.First(x => x.MemberId == item.MemberId);
+
+                var m = new FollowViewModel
+                {
+                    MemberId = y.MemberId,
+                    MemberName = y.MemberName,
+                    ProfilePicture = y.ProfilePicture,
+                    Gender = y.Gender
+
+                };
+                result.Add(m);
+
             }
             return result;
         }

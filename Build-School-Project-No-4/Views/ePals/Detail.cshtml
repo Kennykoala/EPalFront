@@ -1,4 +1,4 @@
-﻿@model Build_School_Project_No_4.ViewModels.GroupViewModel
+﻿@model DetailViewModel
 @{
     ViewBag.Title = "DetailPage";
 }
@@ -8,10 +8,10 @@
     <style>
 
     .game-backdrop{
-    background-image: url('@Model.Deets.GameBackdrop');
+    background-image: url('@Model.GameBackdrop');
     }
     .main-profile-img {
-        background-image: url('@Model.Deets.PlayerPic');
+        background-image: url('@Model.PlayerPic');
     }
     </style>
 
@@ -21,10 +21,10 @@
     <div class="row">
         <div class="col-12 col-md-9">
             <div class="detail-header detail-title">
-                <h1 class="heading1">@Model.Deets.GameName</h1>
+                <h1 class="heading1">@Model.GameName</h1>
                 <div class="price-header">
                     <img src="~/Assets/images/detail/currency.png" />
-                    <span class="game-price">@Model.Deets.UnitPrice.ToString("N2")</span>/Game
+                    <span class="game-price">@Model.UnitPrice.ToString("N2")</span>/Game
                 </div>
             </div>
         </div>
@@ -46,9 +46,9 @@
                 </div>
                 <div class="col-6 col-md-12">
                     <div class="main-profile basic-info">
-                        <h2 class="name heading2">@Model.Deets.MemberName</h2>
+                        <h2 class="name heading2">@Model.MemberName</h2>
                         <div class="language">
-                            <span class="language-label">Language: </span>@Model.Deets.LanguageName
+                            <span class="language-label">Language: </span>@Model.LanguageName
                         </div>
                         <div class="status">ONLINE</div>
                     </div>
@@ -60,7 +60,7 @@
                         <p class="greyish">Book this ePal for</p>
                         <div class="ppg">
                             <img src="~/Assets/images/detail/currency.png" />
-                            <div class="game-price">@Model.Deets.UnitPrice.ToString("N2")</div>
+                            <div class="game-price">@Model.UnitPrice.ToString("N2")</div>
                             /Game
                         </div>
                         <div class="ppg-btns">
@@ -107,7 +107,7 @@
             </div>
             <div class="row">
                 <div class="game-screenshot">
-                    <img src="@Model.Deets.GameScreenshot" />
+                    <img src="@Model.GameScreenshot" />
                 </div>
             </div>
             <div class="row">
@@ -120,12 +120,12 @@
 
                         <div class="detail-entry">
                             <div class="detail-name rank whitish">Rank</div>
-                            <div class="detail-value greyish">@Model.Deets.RankName</div>
+                            <div class="detail-value greyish">@Model.RankName</div>
 
                         </div>
                         <div class="detail-entry">
                             <div class="detail-name server whitish">Server(s)</div>
-                            <div class="detail-value greyish">@Model.Deets.ServerName</div>
+                            <div class="detail-value greyish">@Model.ServerName</div>
                         </div>
                         <div class="detail-entry">
                             <div class="detail-name platform whitish">Platform(s)</div>
@@ -135,7 +135,7 @@
                             Introduction
                         </div>
                         <div class="intro-text greyish">
-                            @Model.Deets.Intro
+                            @Model.Intro
                         </div>
                     </div>
                 </div>
@@ -199,7 +199,7 @@
                 </div>
                 @using (Html.BeginForm())
                 {
-                    var prod = Model.Deets;
+                    var prod = Model;
                     @Html.AntiForgeryToken()
                     <div class="modal-body">
                         <div class="container whitish">
@@ -207,7 +207,7 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="col-3 ">
                                     <div class="game-img">
-                                        <img src="@Model.Deets.MobileGameImg" />
+                                        <img src="@Model.MobileGameImg" />
                                     </div>
                                 </div>
                                 <div class="col-9 ">
@@ -217,7 +217,7 @@
                                         <div class="price-per-game">
                                             <img src="~/Assets/images/detail/currency.png" />
                                             <span id="price">@prod.UnitPrice.ToString("N2")</span>
-                                            @Html.EditorFor(model => model.AddCart.UnitPrice, new { htmlAttributes = new { @class = "form-control", @Value = Model.Deets.UnitPrice, type = "hidden" } })
+                                            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control", @Value = Model.UnitPrice, type = "hidden" } })
                                             /Game
                                         </div>
                                     </div>
@@ -229,7 +229,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <div class="rounds">
-                                            <span>@Html.LabelFor(x => x.AddCart.Rounds)</span>
+                                            <span>@Html.LabelFor(x => x.Rounds)</span>
                                             <div class="rounds-div">
                                                 <button type="button" class="round-subtract"><span>-</span></button>
                                                 @*<input type="number"  value="1" onfocus="setOldVal(this.value)" onkeyup="PriceChange(undefined, this.value)">*@
@@ -238,9 +238,9 @@
                                                 @*@Html.EditorFor(x => x.AddCart.Rounds, new { htmlAttributes = new { @class = "round-number" } })*@
                                                 @*@Html.EditorFor(x => x.AddCart.Rounds, null, new { htmlAttributes = new { onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })*@
                                                 @*@Html.EditorFor(x => x.AddCart.Rounds, null,"sadfs",new { htmlAttributes = new { @class = "asdf", onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })*@
-                                                @Html.EditorFor(x => x.AddCart.Rounds, new { htmlAttributes = new { @class = "round-number", Value = "1", onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })
+                                                @Html.EditorFor(x => x.Rounds, new { htmlAttributes = new { @class = "round-number", Value = "1", onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })
                                                 @*@Html.EditorFor(x => x.AddCart.Rounds, new { @class = "round-number" })*@
-                                                @Html.ValidationMessageFor(x => x.AddCart.Rounds, "", new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(x => x.Rounds, "", new { @class = "text-danger" })
                                                 <button type="button" class="round-add"><span>+</span></button>
                                             </div>
                                         </div>
@@ -259,7 +259,7 @@
                                         <span>Subtotal</span>
                                         <div class="subtotal-div2">
                                             <img src="~/Assets/images/detail/currency.png" />
-                                            <span class="subtotal">@Model.Deets.UnitPrice.ToString("N2")</span>
+                                            <span class="subtotal">@Model.UnitPrice.ToString("N2")</span>
                                         </div>
                                     </div>
 
@@ -278,7 +278,7 @@
 
                                             <span class="rounds-final">1</span> Round(s) total
                                             <img src="~/Assets/images/detail/currency.png" />
-                                            <span class="final-amount">@Model.Deets.UnitPrice.ToString("N2")</span>
+                                            <span class="final-amount">@Model.UnitPrice.ToString("N2")</span>
                                         </div>
                                     </div>
 

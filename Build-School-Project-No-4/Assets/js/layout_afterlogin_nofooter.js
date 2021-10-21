@@ -45,49 +45,251 @@ let passerror = document.getElementById('myinput-error');
 let valerror = document.querySelectorAll(".field-validation-error");
 //let isRequestAuthenticated = ' @Request.IsAuthenticated';
 
+let logoutbtn = document.querySelector('#logoutbutton')
+
+
+
+
 window.onload = function () {
 
-    ////BS validation
-    //// Example starter JavaScript for disabling form submissions if there are invalid fields
-    //(function () {
-    //    'use strict'
+    //google進行登入程序，使用gapi.auth2.init()方法的client_id參數指定應用程序的客戶端ID
+    var startApp = function () {
+        gapi.load("auth2", function () {
+            auth2 = gapi.auth2.init({
+                client_id: "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com", // 用戶端ID
+                cookiepolicy: "single_host_origin"
+            });
 
-    //    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    //    var forms = document.querySelectorAll('.needs-validation')
-
-    //    // Loop over them and prevent submission
-    //    Array.prototype.slice.call(forms)
-    //        .forEach(function (form) {
-    //            form.addEventListener('submit', function (event) {
-    //                if (!form.checkValidity()) {
-    //                    event.preventDefault()
-    //                    event.stopPropagation()
-    //                }
-
-    //                form.classList.add('was-validated')
-    //            }, false)
-    //        })
-    //})()
+            //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            attachSignin(document.getElementById("GOOGLE_login"));
+        });
+    };
 
 
+    function attachSignin(element) {
+        auth2.attachClickHandler(element, {},
+            // 登入成功
+            function (googleUser) {
+                // Useful data for your client-side scripts:
+                var profile = googleUser.getBasicProfile();
+                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log("Image URL: " + profile.getImageUrl());
+                console.log("Email: " + profile.getEmail());
 
-    //// Validate Email
-    //const email = document.getElementById('email');
-    //email.addEventListener('blur', () => {
-    //    let regex =
-    //        /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
-    //    let s = email.value;
-    //    if (regex.test(s)) {
-    //        email.classList.remove(
-    //            'is-invalid');
-    //        emailError = true;
-    //    }
-    //    else {
-    //        email.classList.add(
-    //            'is-invalid');
-    //        emailError = false;
-    //    }
-    //})
+                // The ID token you need to pass to your backend:
+                var id_token = googleUser.getAuthResponse().id_token;
+                console.log("ID Token: " + id_token);
+                var OauthId = profile.getId();
+                var OauthName = profile.getName();
+                var OauthEmail = profile.getEmail();
+                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
+                //var LoginMethod = "1";
+
+                $.ajax({
+                    url: '/Members/GoogleLogin',
+                    method: "post",
+                    data: {
+                        id_token: id_token,
+                        OauthId: OauthId,
+                        OauthName: OauthName,
+                        OauthEmail: OauthEmail,
+                        AuthResponse: AuthResponse,
+                        //LoginMethod: "1"
+                    },
+                    success: function (msg) {
+                        $("#myModal").modal('hide');
+
+                        console.log(msg);
+                        swal.fire({
+                            title: "Welcome to Epal",
+                            icon: "success",
+                            //buttons: true,
+                            //dangerMode: true
+                        });
+
+                        if (msg == true) {
+                            window.location.href = '/'
+                        }
+                    }
+                });//end $.ajax
+
+
+                ////v1
+                //var profile = googleUser.getBasicProfile(),
+                //    $target = $("#GOOGLE_STATUS_2"),
+                //    html = "";
+
+                //html += "ID: " + profile.getId() + "<br/>";
+                //html += "會員暱稱： " + profile.getName() + "<br/>";
+                //html += "會員頭像：" + profile.getImageUrl() + "<br/>";
+                //html += "會員 email：" + profile.getEmail() + "<br/>";
+                //html += "id token：" + googleUser.getAuthResponse().id_token + "<br/>";
+                //html += "access token：" + googleUser.getAuthResponse(true).access_token + "<br/>";
+                //$target.html(html);
+            },
+            // 登入失敗
+            function (error) {
+                $("#GOOGLE_STATUS_2").html("");
+                alert(JSON.stringify(error, undefined, 2));
+            });
+    }
+
+    startApp();
+
+    // 點擊登入
+    $("#GOOGLE_login").click(function () {
+        // 進行登入程序
+        startApp();
+    });
+
+    //// 點擊登出
+    //$("#GOOGLE_logout").click(function () {
+    //    var auth2 = gapi.auth2.getAuthInstance();
+    //    auth2.signOut().then(function () {
+    //        // 登出後的動作
+    //        $("#GOOGLE_STATUS_2").html("");
+    //    });
+    //});
+
+
+
+
+
+
+
+    //FB thirdparty
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '241958394640265', // 填入FB APP ID
+            cookie: true,
+            xfbml: true,
+            version: 'v12.0'
+        });
+
+        //FB.getLoginStatus(function (response) {
+        //    statusChangeCallback(response);
+        //});
+    };
+
+    // 處理各種登入身份
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback/authResponse:');
+        console.log(response);
+        //var target = document.getElementById("FB_STATUS_2"),
+            //html = "";
+
+        // 登入 FB 且已加入會員
+        if (response.status === 'connected') {
+            html = "已登入FB，並加入epal<br/>";
+
+            FB.api('/me?fields=id,name,email', function (response) {
+
+                console.log('fbapi');
+                console.log(response);
+                //html += "會員暱稱：" + response.name + "<br/>";
+                //html += "會員 email：" + response.email;
+                //target.innerHTML = html;
+
+                var fbemail = response.email;
+                var fbname = response.name;
+
+                FBPassToServer(fbemail, fbname);
+            });
+
+        }
+
+        // 登入 FB, 未偵測到加入會員
+        else if (response.status === "not_authorized") {
+            //target.innerHTML = "已登入 FB，但未加入epal";
+        }
+
+        // 未登入 FB
+        else {
+            //target.innerHTML = "未登入 FB";
+        }
+    }
+
+
+    //資料傳到後端
+    function FBPassToServer(fbemail,fbname) {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+
+        var Data = JSON.stringify({
+            Fbemail: `${fbemail}`,
+            Fbname: `${fbname}`
+        });
+
+        $.ajax({
+            url: '/Members/FBLogin',
+            method: 'POST',
+            data: Data,
+            contentType: 'application/json; charset=utf-8',
+            success: function (msg) {
+                $("#myModal").modal('hide');
+
+                //console.log(msg);
+                swal.fire({
+                    title: "Welcome to Epal",
+                    icon: "success",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+
+                if (msg == true) {
+                    window.location.href = '/'
+                }
+
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+        //原本的function testAPI()
+        // console.log('Welcome!  Fetching your information.... ');
+        // FB.api('/me', function (response) {
+        //     console.log('Successful login for: ' + response.name);
+        //     document.getElementById('status').innerHTML =
+        //         'Thanks for logging in, ' + response.name + '!';
+        // });
+    }
+
+    // 點擊登入
+    $("#FB_login").click(function () {
+        // 進行登入程序
+        FB.login(function (response) {
+            statusChangeCallback(response);
+        }, {
+            scope: 'public_profile,email'
+        });
+    });
+
+    //// 點擊登出
+    //$("#FB_logout").click(function () {
+    //    FB.logout(function (response) {
+    //        statusChangeCallback(response);
+    //    });
+    //});
+
+    // 載入 FB SDK
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+
+
+
+
 
 
 
