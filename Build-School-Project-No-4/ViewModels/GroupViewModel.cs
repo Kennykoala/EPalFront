@@ -12,8 +12,8 @@ namespace Build_School_Project_No_4.ViewModels
 
         //public IEnumerable<MemberViewModel> MeetLikes { get; set; }
         //public IEnumerable<ProductViewModel> EPalIndex { get; set; }
-        public ProductViewModel ProductCards { get; set; }
-        public CategoryViewModel GamesDetails{ get; set; }
+        //public ProductViewModel ProductCards { get; set; }
+        //public CategoryViewModel GamesDetails{ get; set; }
         public IEnumerable<ProductViewModel> EPalIndex { get; set; }
         //public IEnumerable<ChillMeetViewModel> ChillMeetResult { get; set; }
         //public IEnumerable<MemberViewModel> Matches { get; set; }
@@ -30,6 +30,7 @@ namespace Build_School_Project_No_4.ViewModels
         //public MemberLoginViewModel MemberLogin { get; set; }
         //public MemberInfoViewModel MemberInfo { get; set; }
 
+        public OrderViewModel Order { get; set; }
 
         public DetailViewModel Deets { get; set; }
         public AddToCartViewModel AddCart { get; set; }

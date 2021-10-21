@@ -425,8 +425,8 @@ body {
     height: 40px;
     display: inline-block;
     position: absolute;
-    left: -18px;
-    bottom:0px;
+    left: -60px;
+    bottom:-25px;
 }
 .modal .modalfooter .otherlogin .fab {
     font-size: 25px;
@@ -437,11 +437,21 @@ body {
     text-align: center;
     padding: 8px 0;
 }
-.modal .modalfooter .otherlogin .fa-line {
-    color: #06C755;
+.modal .modalfooter .otherlogin .fa-facebook {
+    color: #1877F2;
+    position: absolute;
+    left: -5px;
+    bottom:-25px;
 }
 
-.modal .modalfooter .otherlogin .fa-twitch {
+.modal .modalfooter .otherlogin .fa-line {
+    color: #06C755;
+    position: absolute;
+    left: 50px;
+    bottom: -25px;
+}
+
+/*.modal .modalfooter .otherlogin .fa-twitch {
     color: #9146FF;
 }
 
@@ -451,7 +461,7 @@ body {
 
 .modal .modalfooter .otherlogin .fa-apple {
     color: black;
-}
+}*/
 
 /*登入後不顯示login/signup*/
 

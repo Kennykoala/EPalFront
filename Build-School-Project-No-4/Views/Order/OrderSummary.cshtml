@@ -1,13 +1,10 @@
-﻿
+﻿@model GroupViewModel
 @{
     ViewBag.Title = "OrderSummary";
 }
 @section topCSS{
     <link href="~/Assets/css/orders.css" rel="stylesheet" />
-
 }
-
-
 
 <div class="container-fluid">
     <div class="row">
@@ -15,12 +12,21 @@
             <div class="order-list col-md-2">
                 <div class="greyish title">Purchased Orders</div>
                 <div class="categories">
-                    <div class="stat-category selected">Unpaid</div>
+                  @foreach(var m in Model.Order.Order)
+                      {
+                         <a href="@Url.Action("OrderSummary","Order",new { id = m.Id })">
+                           <span>
+                             @m.Name
+                             <i class="stat-category"></i>
+                            </span>
+                          </a>
+                      }
+                    @*<div class="stat-category selected">Unpaid</div>
                     <div class="stat-category">Pending</div>
                     <div class="stat-category">Not Started</div>
                     <div class="stat-category">Started</div>
                     <div class="stat-category">Cancelled</div>
-                    <div class="stat-category">Completed</div>
+                    <div class="stat-category">Completed</div>*@
                 </div>
             </div>
         </div>
@@ -65,164 +71,165 @@
                             </div>
                         </a>
                     </div>
-
                 </div>
-
                 <div class="cards-list">
-                    <div class="order-card-lg">
-                        <div class="card-info greyish">
-                            <div class="order-id">Order ID: 2021092514502029041440</div>
-                            <div class="order-status">Completed</div>
+                    @foreach (var m in Model.Order.OrderCards)
+                    {
+                        <div class="order-card-lg">
+                            <div class="card-info greyish">
+                                <div class="order-id">@Html.DisplayFor(x => m.OrderId) </div>
+                                <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
+                            </div>
+                            <div class="card-body">
+                                <a href="#">
+                                    <div class="u-details">
+                                        <div class="user-img"></div>
+                                        <div class="name">@Html.DisplayFor(x => m.GameName)</div>
+                                    </div>
+                                </a>
+                                <div class="order-game">
+                                    <div class="game-name">Among Us</div>
+                                </div>
+                                <div class="order-details">
+                                    <div class="rounds greyish">2 round(s) total</div>
+                                    <div class="start-time greyish">
+                                        Start at Sep 25, 3:00PM
+                                    </div>
+                                </div>
+                                <div class="order-total">
+                                    <img src="~/Assets/images/Orders/currency.png" />10.00
+                                </div>
+                                <div class="order-actions">
+                                    <div class="report">
+                                        <i class="far fa-flag"></i>
+                                    </div>
+                                    <div class="message">
+                                        <i class="far fa-comment-dots"></i>
+                                    </div>
+                                    <div class="details">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <a href="#">
-                                <div class="u-details">
-                                    <div class="user-img"></div>
-                                    <div class="name">Jolie</div>
-                                </div>
-                            </a>
-                            <div class="order-game">
-                                <div class="game-name">Among Us</div>
-                            </div>
-                            <div class="order-details">
-                                <div class="rounds greyish">2 round(s) total</div>
-                                <div class="start-time greyish">
-                                    Start at Sep 25, 3:00PM
-                                </div>
-                            </div>
-                            <div class="order-total">
-                                <img src="~/Assets/images/Orders/currency.png" />10.00
-                            </div>
-                            <div class="order-actions">
-                                <div class="report">
-                                    <i class="far fa-flag"></i>
-                                </div>
-                                <div class="message">
-                                    <i class="far fa-comment-dots"></i>
-                                </div>
-                                <div class="details">
-                                    <i class="fas fa-chevron-right"></i>
-                                </div>
-                            </div>
-                        </div>
+                    }
+                    <!--
+        <div class="order-card-lg">
+            <div class="card-info greyish">
+                <div class="order-id">Order ID: 2021092514502029041440</div>
+                <div class="order-status">Completed</div>
+            </div>
+            <div class="card-body">
+                <a href="#">
+                    <div class="u-details">
+                        <div class="user-img"></div>
+                        <div class="name">Jolie</div>
                     </div>
-
-                    <div class="order-card-lg">
-                        <div class="card-info greyish">
-                            <div class="order-id">Order ID: 2021092514502029041440</div>
-                            <div class="order-status">Completed</div>
-                        </div>
-                        <div class="card-body">
-                            <a href="#">
-                                <div class="u-details">
-                                    <div class="user-img"></div>
-                                    <div class="name">Jolie</div>
-                                </div>
-                            </a>
-                            <div class="order-game">
-                                <div class="game-name">Among Us</div>
-                            </div>
-                            <div class="order-details">
-                                <div class="rounds greyish">2 round(s) total</div>
-                                <div class="start-time greyish">
-                                    Start at Sep 25, 3:00PM
-                                </div>
-                            </div>
-                            <div class="order-total">
-                                <img src="~/Assets/images/Orders/currency.png" />10.00
-                            </div>
-                            <div class="order-actions">
-                                <div class="report">
-                                    <i class="far fa-flag"></i>
-                                </div>
-                                <div class="message">
-                                    <i class="far fa-comment-dots"></i>
-                                </div>
-                                <div class="details">
-                                    <i class="fas fa-chevron-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="order-card-lg">
-                        <div class="card-info greyish">
-                            <div class="order-id">Order ID: 2021092514502029041440</div>
-                            <div class="order-status">Completed</div>
-                        </div>
-                        <div class="card-body">
-                            <a href="#">
-                                <div class="u-details">
-                                    <div class="user-img"></div>
-                                    <div class="name">Jolie</div>
-                                </div>
-                            </a>
-                            <div class="order-game">
-                                <div class="game-name">Among Us</div>
-                            </div>
-                            <div class="order-details">
-                                <div class="rounds greyish">2 round(s) total</div>
-                                <div class="start-time greyish">
-                                    Start at Sep 25, 3:00PM
-                                </div>
-                            </div>
-                            <div class="order-total">
-                                <img src="~/Assets/images/Orders/currency.png" />10.00
-                            </div>
-                            <div class="order-actions">
-                                <div class="report">
-                                    <i class="far fa-flag"></i>
-                                </div>
-                                <div class="message">
-                                    <i class="far fa-comment-dots"></i>
-                                </div>
-                                <div class="details">
-                                    <i class="fas fa-chevron-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="order-card-lg">
-                        <div class="card-info greyish">
-                            <div class="order-id">Order ID: 2021092514502029041440</div>
-                            <div class="order-status">Completed</div>
-                        </div>
-                        <div class="card-body">
-                            <a href="#">
-                                <div class="u-details">
-                                    <div class="user-img"></div>
-                                    <div class="name">Jolie</div>
-                                </div>
-                            </a>
-                            <div class="order-game">
-                                <div class="game-name">Among Us</div>
-                            </div>
-                            <div class="order-details">
-                                <div class="rounds greyish">2 round(s) total</div>
-                                <div class="start-time greyish">
-                                    Start at Sep 25, 3:00PM
-                                </div>
-                            </div>
-                            <div class="order-total">
-                                <img src="~/Assets/images/Orders/currency.png" />
-                                10.00
-                            </div>
-                            <div class="order-actions">
-                                <div class="report">
-                                    <i class="far fa-flag"></i>
-                                </div>
-                                <div class="message">
-                                    <i class="far fa-comment-dots"></i>
-                                </div>
-                                <div class="details">
-                                    <i class="fas fa-chevron-right"></i>
-                                </div>
-                            </div>
-                        </div>
+                </a>
+                <div class="order-game">
+                    <div class="game-name">Among Us</div>
+                </div>
+                <div class="order-details">
+                    <div class="rounds greyish">2 round(s) total</div>
+                    <div class="start-time greyish">
+                        Start at Sep 25, 3:00PM
                     </div>
                 </div>
-
-                <div class="no-orders"></div>
+                <div class="order-total">
+                    <img src="~/Assets/images/Orders/currency.png" />10.00
+                </div>
+                <div class="order-actions">
+                    <div class="report">
+                        <i class="far fa-flag"></i>
+                    </div>
+                    <div class="message">
+                        <i class="far fa-comment-dots"></i>
+                    </div>
+                    <div class="details">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-card-lg">
+            <div class="card-info greyish">
+                <div class="order-id">Order ID: 2021092514502029041440</div>
+                <div class="order-status">Completed</div>
+            </div>
+            <div class="card-body">
+                <a href="#">
+                    <div class="u-details">
+                        <div class="user-img"></div>
+                        <div class="name">Jolie</div>
+                    </div>
+                </a>
+                <div class="order-game">
+                    <div class="game-name">Among Us</div>
+                </div>
+                <div class="order-details">
+                    <div class="rounds greyish">2 round(s) total</div>
+                    <div class="start-time greyish">
+                        Start at Sep 25, 3:00PM
+                    </div>
+                </div>
+                <div class="order-total">
+                    <img src="~/Assets/images/Orders/currency.png" />10.00
+                </div>
+                <div class="order-actions">
+                    <div class="report">
+                        <i class="far fa-flag"></i>
+                    </div>
+                    <div class="message">
+                        <i class="far fa-comment-dots"></i>
+                    </div>
+                    <div class="details">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-card-lg">
+            <div class="card-info greyish">
+                <div class="order-id">Order ID: 2021092514502029041440</div>
+                <div class="order-status">Completed</div>
+            </div>
+            <div class="card-body">
+                <a href="#">
+                    <div class="u-details">
+                        <div class="user-img"></div>
+                        <div class="name">Jolie</div>
+                    </div>
+                </a>
+                <div class="order-game">
+                    <div class="game-name">Among Us</div>
+                </div>
+                <div class="order-details">
+                    <div class="rounds greyish">2 round(s) total</div>
+                    <div class="start-time greyish">
+                        Start at Sep 25, 3:00PM
+                    </div>
+                </div>
+                <div class="order-total">
+                    <img src="~/Assets/images/Orders/currency.png" />
+                    10.00
+                </div>
+                <div class="order-actions">
+                    <div class="report">
+                        <i class="far fa-flag"></i>
+                    </div>
+                    <div class="message">
+                        <i class="far fa-comment-dots"></i>
+                    </div>
+                    <div class="details">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+                </div>
+                    <div class="no-orders"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>

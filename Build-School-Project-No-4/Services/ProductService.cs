@@ -17,44 +17,6 @@ namespace Build_School_Project_No_4.Services
             _repo = new Repository();
         }
 
-        public ProductViewModel GetProductCardsData(int categoryId)
-        {
-            var result = new ProductViewModel()
-            {
-                ProductCards = new List<ProductCard>()
-            };
-            var category = _repo.GetAll<GameCategories>().FirstOrDefault(x => x.GameCategoryId == categoryId);
-            if (category == null)
-            {
-                return result;
-            }
-            var products = _repo.GetAll<Products>().Where(x => x.GameCategoryId == category.GameCategoryId).ToList();
-            var CommentDetails = _repo.GetAll<CommentDetails>().ToList();
-            var ProductPositions = _repo.GetAll<ProductPosition>().ToList();
-            var Positions = _repo.GetAll<Position>().ToList();
-            var Ranks = _repo.GetAll<Rank>().ToList();
-            var Members = _repo.GetAll<Members>().ToList();
-            var LineStatus = _repo.GetAll<LineStatus>().ToList();
-
-            var productCards = products.Select(p => new ProductCard {
-                UnitPrice = p.UnitPrice,
-                CreatorImg = p.CreatorImg,
-                Introduction = p.Introduction,
-                RecommendationVoice = p.RecommendationVoice,
-                LineStatus = LineStatus.First(y => y.LineStatusId == (Members.First(x => x.MemberId == p.CreatorId).LineStatusId)).LineStatusImg,
-                CreatorName = Members.First(x => x.MemberId == p.CreatorId).MemberName,
-                StarLevel = CommentDetails.First(x => x.ProductId == p.ProductId).StarLevel,
-                Rank = Ranks.FirstOrDefault(x => x.RankId == p.RankId) == null ? "No Rank" : Ranks.First(x => x.RankId == p.RankId).RankName,
-                Position = Positions.First(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
-                ProductId = p.ProductId
-            }).ToList();
-     
-
-            result.ProductCards = productCards;
-            result.CategoryId = categoryId;
-            return result;
-        }
-
         public CategoryViewModel GetGamesAllAndDeatils(int categoryId)
         {
             var result = new CategoryViewModel();
@@ -104,17 +66,12 @@ namespace Build_School_Project_No_4.Services
                 CreatorImg = p.CreatorImg,
                 Introduction = p.Introduction,
                 RecommendationVoice = p.RecommendationVoice,
-                LineStatus = LineStatus.FirstOrDefault(y => y.LineStatusId == (Members.FirstOrDefault(x => x.MemberId == p.CreatorId).LineStatusId)).LineStatusImg,
-                CreatorName = Members.FirstOrDefault(x => x.MemberId == p.CreatorId).MemberName,
-                StarLevel = CommentDetails.FirstOrDefault(x => x.ProductId == p.ProductId) is null ? 0 : CommentDetails.FirstOrDefault(x => x.ProductId == p.ProductId).StarLevel,
-                Rank = Ranks.FirstOrDefault(x => x.RankId == p.RankId) == null ? "No Rank" : Ranks.FirstOrDefault(x => x.RankId == p.RankId).RankName,
-                Position = Positions.FirstOrDefault(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
+                LineStatus = LineStatus.First(y => y.LineStatusId == (Members.First(x => x.MemberId == p.CreatorId).LineStatusId)).LineStatusImg,
+                CreatorName = Members.First(x => x.MemberId == p.CreatorId).MemberName,
+               // StarLevel = CommentDetails.FirstOrDefault(x => x.ProductId == p.ProductId).StarLevel,
+                Rank = Ranks.FirstOrDefault(x => x.RankId == p.RankId) == null ? "No Rank" : Ranks.First(x => x.RankId == p.RankId).RankName,
+                Position = Positions.First(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
                 ProductId = p.ProductId,
-                Server = Servers.FirstOrDefault(s => s.ServerId == ((ProductServers.FirstOrDefault(y => y.ProductId == p.ProductId).ServerId))).ServerName,
-                Language = LanguageName.FirstOrDefault(L => L.LanguageId == (int)Members.FirstOrDefault(x => x.MemberId == p.CreatorId).LanguageId).LanguageName,
-                //GenderId = (int)Members.FirstOrDefault(x => x.MemberId == p.CreatorId).Gender,
-                //Age = todayYear - DateTime.Parse(Members.FirstOrDefault(x => x.MemberId == p.CreatorId).BirthDay.ToString()).Year,
-                StatusName = LineStatus.FirstOrDefault(y => y.LineStatusId == (Members.FirstOrDefault(x => x.MemberId == p.CreatorId).LineStatusId)).LineStatusName
             }).ToList();
             result.CategoryId = categoryId;
             result.ProductCards = productCards;

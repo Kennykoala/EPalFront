@@ -365,7 +365,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\DetailRepositioy.cs" />
     <Compile Include="Services\AddToCartService.cs" />
     <Compile Include="Services\ApiFilterService.cs" />
     <Compile Include="Services\CheckoutService.cs" />
@@ -865,6 +864,7 @@
     <Content Include="Views\Shared\LoginPartialPage.cshtml" />
     <Content Include="Views\Shared\SignupPartialPage.cshtml" />
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
+    <Content Include="Views\Members\FBLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
