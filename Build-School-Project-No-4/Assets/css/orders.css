@@ -28,6 +28,7 @@ a:active {
 }
 
 .categories {
+    padding: 10px 10px 15px;
     -ms-overflow-style: none;
     scrollbar-width: none;
     flex-direction: row;
@@ -108,6 +109,15 @@ a:active {
     width: 30px;
     height: 30px;
     background-image: url('../images/Orders/default_avatar.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 8px;
+    border-radius: 5px;
+}
+.user-imgs{
+    width: 10px;
+    height: 10px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

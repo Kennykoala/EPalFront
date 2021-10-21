@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Build_School_Project_No_4.ViewModels;
 using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace Build_School_Project_No_4.Controllers
 {
@@ -18,9 +19,11 @@ namespace Build_School_Project_No_4.Controllers
         private readonly AddToCartService _cartService;
         private readonly CheckoutService _checkoutService;
         private readonly OrderService _orderService;
+        private readonly MemberService _memberService;
 
         public OrderController()
         {
+            _memberService = new MemberService();
             _productService = new ProductService();
             _detailService = new DetailServices();
             _ctx = new EPalContext();
@@ -34,6 +37,7 @@ namespace Build_School_Project_No_4.Controllers
         //    return View();
         //}
 
+        //取得登入者的memberId
         public string GetMemberId()
         {
             var cookie = HttpContext.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
@@ -42,34 +46,42 @@ namespace Build_School_Project_No_4.Controllers
             if (cookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-                userid = ticket.UserData;
+
+                var obj = JsonConvert.DeserializeObject<Members>(ticket.UserData);
+                userid = obj.MemberId.ToString();
                 return userid;
             }
             return null;
         }
         public ActionResult OrderSummary(int? id)
         {
-            if (!id.HasValue)
-            {
-                return RedirectToAction( "OrderSummary", "Order", new { id = 1 });
-            }
-            //if (!id.HasValue)
-            //{
-            //    return RedirectToAction("Index");
-            //}
-            var order = new OrderService();
-            var abc = order.GetOrderCardData(id.Value);
-            // var ordercards = _orderService.GetOrderCardData(id.Value);
-            GroupViewModel result = new GroupViewModel
-            {
-                Order = abc
-            };
 
+            var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
+            var mems = mem.MemberId;
 
+            //Orders cusid = _ctx.Orders.Find(id);
 
+            //if (mems == cusid.CustomerId)
 
-
-            return View(result);
+                if (!id.HasValue)
+                {
+                    return RedirectToAction("OrderSummary", "Order", new { id = 1 });
+                }
+                //if (!id.HasValue)
+                //{
+                //    return RedirectToAction("Index");
+                //}
+                var order = new OrderService();
+                var abc = order.GetOrderCardData(id.Value, mems);
+                // var ordercards = _orderService.GetOrderCardData(id.Value);
+                //GroupViewModel result = new GroupViewModel
+                //{
+                //    Order = abc
+                //};
+            
+                return View(abc);
+            
+          
         }
        
     }

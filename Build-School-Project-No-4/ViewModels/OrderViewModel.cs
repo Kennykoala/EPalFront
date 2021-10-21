@@ -20,7 +20,7 @@ namespace Build_School_Project_No_4.ViewModels
         public int Id { get; set; }
     }
     public class OrderCard
-    {     
+    {
         public int OrderId { get; set; }
         public int PlayerId { get; set; }
         public int ProductId { get; set; }
@@ -33,7 +33,8 @@ namespace Build_School_Project_No_4.ViewModels
         public DateTime UpdateDateTime { get; set; }
         public string OrderStatusName { get; set; }
         public decimal TotalPrice { get; set; }
-
+        public string ProfilePicture { get; set; }
+        public string MemberName { get; set; }
         public string GameName { get; set; }
     }
 

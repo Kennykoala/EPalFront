@@ -18,7 +18,7 @@ namespace Build_School_Project_No_4.Services
             _repo = new Repository();
         }
 
-        public OrderViewModel GetOrderCardData(int OrderStatusId)
+        public OrderViewModel GetOrderCardData(int OrderStatusId,int mems)
         {
             var result = new OrderViewModel()
             {
@@ -30,11 +30,11 @@ namespace Build_School_Project_No_4.Services
             {
                 return result;
             }
-            var orders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId);
+            var orders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId && x.CustomerId== mems);
             var GameCat = _repo.GetAll<GameCategories>().ToList();
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var products = _repo.GetAll<Products>().ToList();
-
+            var members = _repo.GetAll<Members>().ToList();
 
             var OrderCards = orders.Select(o => new OrderCard
             {
@@ -43,7 +43,10 @@ namespace Build_School_Project_No_4.Services
                 OrderDate = o.OrderDate,
                 TotalPrice = o.UnitPrice * o.Quantity,
                 OrderId = o.OrderId,
-                GameName = o.Products.GameCategories.GameName
+                GameName = o.Products.GameCategories.GameName,
+                MemberName=o.Members.MemberName,
+                ProfilePicture=o.Members.ProfilePicture
+                //ProductId =o.Products.ProductId
                 //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
 
             }).ToList();
@@ -59,7 +62,6 @@ namespace Build_School_Project_No_4.Services
             return result;
 
         }
-
 
         ////private OrderRepository _OrderRepo;
         //private readonly Repository _Repo;

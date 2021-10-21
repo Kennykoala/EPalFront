@@ -30,7 +30,7 @@ namespace Build_School_Project_No_4.ViewModels
         //public MemberLoginViewModel MemberLogin { get; set; }
         //public MemberInfoViewModel MemberInfo { get; set; }
 
-        public OrderViewModel Order { get; set; }
+        //public OrderViewModel Order { get; set; }
 
         public DetailViewModel Deets { get; set; }
         public AddToCartViewModel AddCart { get; set; }
