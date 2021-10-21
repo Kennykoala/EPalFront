@@ -1,0 +1,132 @@
+﻿@model  IEnumerable<Build_School_Project_No_4.ViewModels.MemberViewModel>
+
+@{
+    ViewBag.Title = "MeetMatches";
+}
+
+<h2>MeetMatches</h2>
+
+<div class="container meet-title">
+    <div class="row">
+        <h3>MyMeet</h3>
+    </div>
+</div>
+
+<div class="container  meet-pcTopNav">
+    <div class="row meet-title-Select col-md-12">
+        <div class="col-md-1 ">
+            <a href="@Url.Action("MeetLikes","ChillMeetLike")">Likes</a>
+        </div>
+        <div class="col-md-1 matchBorder ">
+            <a href="@Url.Action("MeetMatches","ChillMeetLike")">Matches</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- 同個頁面選擇導覽列 -->
+<div class="container">
+    <!-- Matches -->
+    <div class="container match-container">
+        <div class="row match-container-item">
+            <img src="~/Assets/MeetImages/MeetLike/here.png" />
+        </div>
+        <div class="row match-content">
+            <p>Wow, nobody is here</p>
+        </div>
+        <div class="row">
+            <div class="match-btn">
+                <a href="@Url.Action("Meet", "ChillMeet")">
+                    <button type="button" class="btn btn-primary">Meet Now</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section topCSS {
+
+    <style>
+        /* 標題部分 */
+        .meet-title {
+            padding-top: 80px;
+            color: white;
+        }
+
+            .meet-title h3 {
+                font-size: 24px;
+                padding: 0 20px;
+            }
+
+        .meet-pcTopNav {
+            text-align: left;
+        }
+
+        .meet-title-Select {
+            margin: 20px 0;
+        }
+
+            .meet-title-Select a {
+                text-decoration: none;
+                padding-bottom: 3px;
+                font-size: 18px;
+                color: white;
+                /*margin-bottom:20px;*/
+            }
+
+        .match-container-item {
+            justify-content: center;
+        }
+
+        .matchBorder a {
+            border-bottom: 6px solid #7041e6;
+        }
+
+        .match-content {
+            text-align: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .match-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .match-btn button {
+                border-radius: 30px;
+                background-color: #7041e6;
+                border-color: #7041e6;
+            }
+
+        /* 卡片部分 */
+        body {
+            background-color: black;
+        }
+
+        .match-container-item img {
+            width: 50%;
+        }
+
+        @@media screen and (max-width:767px) {
+            .meet-card-btn {
+                display: none;
+            }
+        }
+
+        @@media screen and (min-width:768px) {
+        }
+
+        @@media screen and (min-width:996px) {
+        }
+
+        @@media screen and (min-width:1200px) {
+        }
+    </style>
+
+
+
+
+
+}
+

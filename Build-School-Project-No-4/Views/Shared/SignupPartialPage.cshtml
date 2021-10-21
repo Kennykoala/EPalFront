@@ -1,0 +1,23 @@
+﻿@model MemberRegisterViewModel
+@using (Html.BeginForm("Register", "Members", FormMethod.Post, new { id = "logsignform", @class = "needs-validation", novalidate = "true" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    //mail
+    <div class="maillog form-group">
+        @Html.LabelFor(model => model.Email, new { @class = "maillabel", @for = "email" })<br>
+        @Html.TextBoxFor(model => model.Email, null, new { @class = "emailinput ellipsis form-control", id = "email", name = "email", placeholder = "Please enter your email", required = "required" })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", style = "font-size:14px" })
+    </div>
+
+    //password
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, new { @for = "password", @class = "passTitle" })<br>
+        @Html.PasswordFor(model => model.Password, new { @class = "passwordinput ellipsis form-control", id = "password", name = "password", placeholder = "Please enter your password", required = "required" })
+        <input type="button" class="passwordshow passwordshowSignup" value="show">
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", style = "font-size:14px" })
+    </div>
+
+    <input type="submit" class="btn btn-secondary mt-5 loginbutton" id="loginbutton" value="Sign Up">
+}

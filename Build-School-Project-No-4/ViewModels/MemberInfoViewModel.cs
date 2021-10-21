@@ -50,8 +50,8 @@ namespace Build_School_Project_No_4.ViewModels
         public string Password { get; set; }
 
 
-        [Display(Name = "Avatar")]
-        [DataType(DataType.ImageUrl)]
+        //[Display(Name = "Avatar")]
+        //[DataType(DataType.ImageUrl)]
         public string ProfilePicture { get; set; }
     }
 

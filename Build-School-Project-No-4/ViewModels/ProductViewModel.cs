@@ -9,10 +9,9 @@ namespace Build_School_Project_No_4.ViewModels
     {
         public int CategoryId { get; set; }
 
-        
-
         public List<ProductCard> ProductCards { get; set; }
     }
+
 
     public class ProductCard 
     {
@@ -65,30 +64,5 @@ namespace Build_School_Project_No_4.ViewModels
         /// ProductId
         /// </summary>
         public int ProductId { get; set; }
-
-        /// <summary>
-        /// 不顯示但filter需要條件
-        /// </summary>
-        public string Server{ get; set; }
-
-        /// <summary>
-        /// 不顯示但filter需要條件
-        /// </summary>
-        public string Language { get; set; }
-
-        /// <summary>
-        /// 不顯示但filter需要條件
-        /// </summary>
-        public int GenderId { get; set; }
-
-        /// <summary>
-        /// 不顯示但filter需要條件
-        /// </summary>
-        public string StatusName { get; set; }
-
-        /// <summary>
-        /// 不顯示但filter需要條件
-        /// </summary>
-        public int Age { get; set; }
     }
 }

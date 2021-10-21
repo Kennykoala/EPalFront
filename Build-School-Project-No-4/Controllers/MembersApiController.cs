@@ -6,9 +6,13 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Security;
 using Build_School_Project_No_4.DataModels;
+using Build_School_Project_No_4.ViewModels;
+using Newtonsoft.Json;
 
 namespace Build_School_Project_No_4.Controllers
 {
@@ -17,16 +21,27 @@ namespace Build_School_Project_No_4.Controllers
         private EPalContext db = new EPalContext();
 
 
-        [HttpPost]
-        public IHttpActionResult PostAvatarToDB(int MemberId, string ProfilePicture)
+
+        public IHttpActionResult PostAvatar([FromBody] MemberAvatarViewModel Data)
         {
-            Members member = db.Members.First(x => x.MemberId == MemberId);
+            // = MemberAvatar.MemberAvatar.MemberId;
+            //int MemberId, string ProfilePicture
+
+            //string aaa = JsonConvert.DeserializeObject(data);
+
+            Members member = db.Members.First(x => x.MemberId == Data.MemberId);
 
             using (var tran = db.Database.BeginTransaction())
             {
                 try
                 {
-                    member.ProfilePicture = ProfilePicture;
+                    //Members result = new Members()
+                    //{
+                    //    ProfilePicture = Data.ProfilePicture
+                    //};
+
+                    member.ProfilePicture = Data.ProfilePicture;
+                    //db.Members.Add();
                     db.SaveChanges();
                     tran.Commit();
 

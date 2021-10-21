@@ -8,7 +8,7 @@
         <div class="anepal-item">
             <h1>Become an ePal Now!</h1>
             <h3>High income·0% Commission·Flexible·Make Friends</h3>
-            <button><a href="#" onclick="location.href='@Url.Action("ChooseAService","ChooseAService")'">Apply for free</a></button>
+            <button onclick="location.href='@Url.Action("addgame","becomeepal")'">Apply for free</button>
         </div>
     </div>
     <div class="row" id="what">
@@ -61,7 +61,7 @@
     <div class="row" id="about">
         <h2>About E-Pal</h2>
         <p>Our platform provides authentic and personalized gaming and life companionship. We are the first and best in the industry with a clear set goal, putting an end to loneliness and bringing fun and warmth to young people all over the world. Get carried, game and life.</p>
-        <button><a href="#">Apply for free</a></button>
+        <button onclick="location.href='@Url.Action("addgame","becomeepal")'">Apply for free</button>
     </div>
 </div>
 
@@ -69,366 +69,412 @@
 @section topCSS{
     <style>
         body {
-    font-family: Poppins, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
-    color: white;
-}
-
-#become-an-ePal {
-    padding-top: 66px;
-}
-
-#become-an-ePal #anepal {
-    text-align: center;
-    background: url('/Assets/images/becomeEPal/becomebg.png') 50% no-repeat;
-    background-size: cover;
-    position: relative;
-    height: 320px;
-    padding-top: 80px;
-}
-
-#become-an-ePal #anepal h1 {
-    font-size: 48px;
-    font-weight: 600;
-    text-align: center;
-}
-
-#become-an-ePal #anepal h3 {
-    font-size: 20px;
-    font-weight: 300;
-    text-align: center;
-    padding-top: 30px;
-}
-
-#become-an-ePal #anepal button {
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-    background-color: white;
-    color: #7D5CE7;
-    border-radius: 50px;
-    padding: 10px 40px;
-    border: 0;
-    margin: 30px auto 60px;
-    display: block;
-}
-
-#become-an-ePal #anepal button:hover {
-    background-color: rgb(226, 222, 222);
-}
-
-#become-an-ePal #anepal a{
-    text-decoration: none;
-    color: #7D5CE7;
-}
-
-
-
-#become-an-ePal #what {
-    display: flex;
-    background-color: black;
-}
-#become-an-ePal #what-img {
-    text-align: center;
-    margin: auto 0;
-}
-#become-an-ePal #what-img #whatsEpal {
-    width: 70%;
-}
-#become-an-ePal #what-txt {
-    margin: auto 0;
-    padding: 0 30px 20px;
-}
-#become-an-ePal #what-txt h2 {
-    font-size: 20px;
-    font-weight: 600;
-    position: relative;
-}
-#become-an-ePal #what-txt h2::after {
-    content: "";
-    width: 48px;
-    height: 4px;
-    background: linear-gradient(270deg, #c86398, #7e53f4);
-    position: absolute;
-    top: 35px;
-    left: 0px;
-}
-#become-an-ePal #what-txt p {
-    padding-top: 25px;
-    color: #a58ce0;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-
-
-
-#become-an-ePal .why {
-    background-color: #21212C;
-    /* height: 280px; */
-    padding: 40px 30px;
-}
-#become-an-ePal .why h2 {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    padding-bottom: 30px;
-}
-#become-an-ePal .why-item {
-    display: flex;
-}
-#become-an-ePal .why-item img {
-    width: 100%;
-}
-#become-an-ePal .why p {
-    font-size: 14px;
-    text-align: center;
-}
-
-
-
-
-#become-an-ePal #who {
-    display: flex;
-    background-color: black;
-    padding: 25px 0 25px;
-}
-#become-an-ePal #who-img {
-    text-align: center;
-    margin: auto 0;
-}
-#become-an-ePal #who-img img {
-    width: 50%;
-}
-#become-an-ePal #who-txt {
-    margin: auto 0;
-    padding: 0 30px 20px;
-}
-#become-an-ePal #who-txt h2 {
-    font-size: 20px;
-    font-weight: 600;
-    position: relative;
-}
-#become-an-ePal #who-txt h2::after {
-    content: "";
-    width: 48px;
-    height: 4px;
-    background: linear-gradient(270deg, #c86398, #7e53f4);
-    position: absolute;
-    top: 35px;
-    left: 0px;
-}
-#become-an-ePal #who-txt {
-    padding: 0 12vw;
-}
-#become-an-ePal #who-txt .who-txet {
-    padding-top: 30px;
-}
-#become-an-ePal #who-txt p {
-    color: #a58ce0;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-
-#become-an-ePal #about  {
-    background-color: #21212C;
-    padding: 40px 11vw;
-}
-#become-an-ePal #about h2 {
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-    padding-bottom: 30px;
-}
-#become-an-ePal #about p {
-    line-height: 1.5;
-    color: #a58ce0;
-    font-size: 14px;
-}
-#become-an-ePal #about button {
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-    background-color: #6E45E9;
-    color: white;
-    border-radius: 50px;
-    padding: 10px 40px;
-    border: 0;
-    margin: 30px auto 0;
-    display: block;
-    width: 200px;
-}
-#become-an-ePal #about button:hover {
-    background-color: #4e2ead;
-}
-#become-an-ePal #about a{
-    text-decoration: none;
-    color: white;
-}
-
-
-
-@@media screen and (max-width:767px) {
-    #become-an-ePal {
-        padding-top: 0px;
-    }
-    #become-an-ePal #anepal h1 {
-        font-size: 28px;
-    }
-    #become-an-ePal #anepal h3 {
-        font-size: 14px;
-    }
-    #become-an-ePal #anepal {
-        height: 280px;
-    }
-
-
-    #become-an-ePal #what-img {
-        margin: 20px 0;
-    }
-    #become-an-ePal #what-img #whatsEpal {
-        width: 55%;
-    }
-    #become-an-ePal #what-txt {
-        margin: auto 0;
-        padding: 0 12vw 30px;
-    }
-
-
-
-    #become-an-ePal .why h2 {
-        font-size: 20px;
-    }
-    #become-an-ePal .why-item .why-img {
-        display: flex;
-        flex-direction: column;
-    }
-    #become-an-ePal .why-item img {
-        width: 100%;
-    }
-    #become-an-ePal .why-item span {
-        flex-grow: 1;
-    }
-    #become-an-ePal .why p {
-        font-size: 14px;
-        text-align: center;
-    }
-        #become-an-ePal #about {
-            background-color: #21212C;
-            padding: 40px 11vw 120px;
+            font-family: Poppins, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
+            color: white;
         }
 
-}
+        #become-an-ePal {
+            padding-top: 66px;
+        }
+
+            #become-an-ePal #anepal {
+                text-align: center;
+                background: url('/Assets/images/becomeEPal/becomebg.png') 50% no-repeat;
+                background-size: cover;
+                position: relative;
+                height: 320px;
+                padding-top: 80px;
+            }
+
+                #become-an-ePal #anepal h1 {
+                    font-size: 48px;
+                    font-weight: 600;
+                    text-align: center;
+                }
+
+                #become-an-ePal #anepal h3 {
+                    font-size: 20px;
+                    font-weight: 300;
+                    text-align: center;
+                    padding-top: 30px;
+                }
+
+                #become-an-ePal #anepal button {
+                    font-size: 20px;
+                    font-weight: 500;
+                    text-align: center;
+                    background-color: white;
+                    color: #7D5CE7;
+                    border-radius: 50px;
+                    padding: 10px 40px;
+                    border: 0;
+                    margin: 30px auto 60px;
+                    display: block;
+                }
+
+                    #become-an-ePal #anepal button:hover {
+                        background-color: rgb(226, 222, 222);
+                    }
+
+                #become-an-ePal #anepal a {
+                    text-decoration: none;
+                    color: #7D5CE7;
+                }
 
 
-@@media screen and (min-width:768px) {
-    #become-an-ePal #anepal {
-        text-align: center;
-        background: url('/Assets/images/becomeEPal/becomebg.png') 70% no-repeat;
-        background-size: cover;
-        position: relative;
-        height: 320px;
-        padding-top: 80px;
-    }
-    #become-an-ePal #what {
-        padding: 40px 0;
-    }
-    #become-an-ePal #what-img {
-        text-align: end;
-        margin: auto 0;
-    }
-    #become-an-ePal #what-txt {
-        padding: 0 90px 0 0;
-    }
-    #become-an-ePal #what-txt h2 {
-        font-size: 24px;
-    }
-    #become-an-ePal .why p {
-        font-size: 18px;
-        text-align: center;
-    }
+
+            #become-an-ePal #what {
+                display: flex;
+                background-color: black;
+            }
+
+            #become-an-ePal #what-img {
+                text-align: center;
+                margin: auto 0;
+            }
+
+                #become-an-ePal #what-img #whatsEpal {
+                    width: 70%;
+                }
+
+            #become-an-ePal #what-txt {
+                margin: auto 0;
+                padding: 0 30px 20px;
+            }
+
+                #become-an-ePal #what-txt h2 {
+                    font-size: 20px;
+                    font-weight: 600;
+                    position: relative;
+                }
+
+                    #become-an-ePal #what-txt h2::after {
+                        content: "";
+                        width: 48px;
+                        height: 4px;
+                        background: linear-gradient(270deg, #c86398, #7e53f4);
+                        position: absolute;
+                        top: 35px;
+                        left: 0px;
+                    }
+
+                #become-an-ePal #what-txt p {
+                    padding-top: 25px;
+                    color: #a58ce0;
+                    font-size: 16px;
+                    line-height: 1.5;
+                }
 
 
-    #become-an-ePal #who {
-        flex-direction: row-reverse;
-        padding: 50px 0 50px;
-    }
-    #become-an-ePal #who-img {
-        text-align:left;
-        margin: auto 0;
-    }
-    #become-an-ePal #who-img img {
-        width: 70%;
-    }
-    #become-an-ePal #who-txt {
-        padding-left: 17vw;
-        padding-right: 0;
-    }
-    #become-an-ePal #who-txt h2 {
-        font-size: 24px;
-    }
 
 
-    #become-an-ePal #about h2 {
-        font-size: 24px;
-    }
-    #become-an-ePal #about p {
-        font-size: 16px;
-    }
-}
+            #become-an-ePal .why {
+                background-color: #21212C;
+                /* height: 280px; */
+                padding: 40px 30px;
+            }
 
-@@media screen and (min-width:992px) {
-    #become-an-ePal #anepal {
-        text-align: center;
-        background: url('/Assets/images/becomeEPal/becomebg.png') 70% no-repeat;
-        background-size: cover;
-        position: relative;
-        height: 320px;
-        padding-top: 80px;
-    }
-    #become-an-ePal #who {
-        flex-direction: row-reverse;
-        padding: 25px 0;
-    }
+                #become-an-ePal .why h2 {
+                    font-size: 24px;
+                    font-weight: 600;
+                    text-align: center;
+                    padding-bottom: 30px;
+                }
 
-}
+            #become-an-ePal .why-item {
+                display: flex;
+            }
 
-@@media screen and (min-width:1200px) {
-    #become-an-ePal #anepal {
-        text-align: center;
-        background: url('/Assets/images/becomeEPal/becomebg.png') 50% no-repeat;
-        background-size: cover;
-        position: relative;
-        height: 320px;
-        padding-top: 80px;
-    }
+                #become-an-ePal .why-item img {
+                    width: 100%;
+                }
 
-    #become-an-ePal #what-img #whatsEpal {
-        width: 50%;
-    }
-    #become-an-ePal #what-txt {
-        margin: auto 0;
-    }
-    #become-an-ePal #what-txt h2 {
-        font-size: 24px;
-    }
-    #become-an-ePal #what-txt p {
-        font-size: 18px;
-    }
+            #become-an-ePal .why p {
+                font-size: 14px;
+                text-align: center;
+            }
 
 
-    #become-an-ePal .why-item {
-        display: flex;
-        padding: 0 200px;
-    }
 
-    #become-an-ePal #who-img img {
-        width: 50%;
-    }
-    #become-an-ePal #who-txt {
-        padding-left: 25vw;
-        padding-right: 0;
-    }
-}
+
+            #become-an-ePal #who {
+                display: flex;
+                background-color: black;
+                padding: 25px 0 25px;
+            }
+
+            #become-an-ePal #who-img {
+                text-align: center;
+                margin: auto 0;
+            }
+
+                #become-an-ePal #who-img img {
+                    width: 50%;
+                }
+
+            #become-an-ePal #who-txt {
+                margin: auto 0;
+                padding: 0 30px 20px;
+            }
+
+                #become-an-ePal #who-txt h2 {
+                    font-size: 20px;
+                    font-weight: 600;
+                    position: relative;
+                }
+
+                    #become-an-ePal #who-txt h2::after {
+                        content: "";
+                        width: 48px;
+                        height: 4px;
+                        background: linear-gradient(270deg, #c86398, #7e53f4);
+                        position: absolute;
+                        top: 35px;
+                        left: 0px;
+                    }
+
+            #become-an-ePal #who-txt {
+                padding: 0 12vw;
+            }
+
+                #become-an-ePal #who-txt .who-txet {
+                    padding-top: 30px;
+                }
+
+                #become-an-ePal #who-txt p {
+                    color: #a58ce0;
+                    font-size: 16px;
+                    line-height: 1.5;
+                }
+
+
+            #become-an-ePal #about {
+                background-color: #21212C;
+                padding: 40px 11vw;
+            }
+
+                #become-an-ePal #about h2 {
+                    font-size: 20px;
+                    font-weight: 600;
+                    text-align: center;
+                    padding-bottom: 30px;
+                }
+
+                #become-an-ePal #about p {
+                    line-height: 1.5;
+                    color: #a58ce0;
+                    font-size: 14px;
+                }
+
+                #become-an-ePal #about button {
+                    font-size: 20px;
+                    font-weight: 500;
+                    text-align: center;
+                    background-color: #6E45E9;
+                    color: white;
+                    border-radius: 50px;
+                    padding: 10px 40px;
+                    border: 0;
+                    margin: 30px auto 0;
+                    display: block;
+                    width: 200px;
+                }
+
+                    #become-an-ePal #about button:hover {
+                        background-color: #4e2ead;
+                    }
+
+                #become-an-ePal #about a {
+                    text-decoration: none;
+                    color: white;
+                }
+
+
+
+        @@media screen and (max-width:767px) {
+            #become-an-ePal {
+                padding-top: 0px;
+            }
+
+                #become-an-ePal #anepal h1 {
+                    font-size: 28px;
+                }
+
+                #become-an-ePal #anepal h3 {
+                    font-size: 14px;
+                }
+
+                #become-an-ePal #anepal {
+                    height: 280px;
+                }
+
+
+                #become-an-ePal #what-img {
+                    margin: 20px 0;
+                }
+
+                    #become-an-ePal #what-img #whatsEpal {
+                        width: 55%;
+                    }
+
+                #become-an-ePal #what-txt {
+                    margin: auto 0;
+                    padding: 0 12vw 30px;
+                }
+
+
+
+                #become-an-ePal .why h2 {
+                    font-size: 20px;
+                }
+
+                #become-an-ePal .why-item .why-img {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                #become-an-ePal .why-item img {
+                    width: 100%;
+                }
+
+                #become-an-ePal .why-item span {
+                    flex-grow: 1;
+                }
+
+                #become-an-ePal .why p {
+                    font-size: 14px;
+                    text-align: center;
+                }
+
+                #become-an-ePal #about {
+                    background-color: #21212C;
+                    padding: 40px 11vw 120px;
+                }
+        }
+
+
+        @@media screen and (min-width:768px) {
+            #become-an-ePal #anepal {
+                text-align: center;
+                background: url('/Assets/images/becomeEPal/becomebg.png') 70% no-repeat;
+                background-size: cover;
+                position: relative;
+                height: 320px;
+                padding-top: 80px;
+            }
+
+            #become-an-ePal #what {
+                padding: 40px 0;
+            }
+
+            #become-an-ePal #what-img {
+                text-align: end;
+                margin: auto 0;
+            }
+
+            #become-an-ePal #what-txt {
+                padding: 0 90px 0 0;
+            }
+
+                #become-an-ePal #what-txt h2 {
+                    font-size: 24px;
+                }
+
+            #become-an-ePal .why p {
+                font-size: 18px;
+                text-align: center;
+            }
+
+
+            #become-an-ePal #who {
+                flex-direction: row-reverse;
+                padding: 50px 0 50px;
+            }
+
+            #become-an-ePal #who-img {
+                text-align: left;
+                margin: auto 0;
+            }
+
+                #become-an-ePal #who-img img {
+                    width: 70%;
+                }
+
+            #become-an-ePal #who-txt {
+                padding-left: 17vw;
+                padding-right: 0;
+            }
+
+                #become-an-ePal #who-txt h2 {
+                    font-size: 24px;
+                }
+
+
+            #become-an-ePal #about h2 {
+                font-size: 24px;
+            }
+
+            #become-an-ePal #about p {
+                font-size: 16px;
+            }
+        }
+
+        @@media screen and (min-width:992px) {
+            #become-an-ePal #anepal {
+                text-align: center;
+                background: url('/Assets/images/becomeEPal/becomebg.png') 70% no-repeat;
+                background-size: cover;
+                position: relative;
+                height: 320px;
+                padding-top: 80px;
+            }
+
+            #become-an-ePal #who {
+                flex-direction: row-reverse;
+                padding: 25px 0;
+            }
+        }
+
+        @@media screen and (min-width:1200px) {
+            #become-an-ePal #anepal {
+                text-align: center;
+                background: url('/Assets/images/becomeEPal/becomebg.png') 50% no-repeat;
+                background-size: cover;
+                position: relative;
+                height: 320px;
+                padding-top: 80px;
+            }
+
+            #become-an-ePal #what-img #whatsEpal {
+                width: 50%;
+            }
+
+            #become-an-ePal #what-txt {
+                margin: auto 0;
+            }
+
+                #become-an-ePal #what-txt h2 {
+                    font-size: 24px;
+                }
+
+                #become-an-ePal #what-txt p {
+                    font-size: 18px;
+                }
+
+
+            #become-an-ePal .why-item {
+                display: flex;
+                padding: 0 200px;
+            }
+
+            #become-an-ePal #who-img img {
+                width: 50%;
+            }
+
+            #become-an-ePal #who-txt {
+                padding-left: 25vw;
+                padding-right: 0;
+            }
+        }
     </style>
-    }
+}

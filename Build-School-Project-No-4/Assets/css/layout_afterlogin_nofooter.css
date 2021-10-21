@@ -412,6 +412,8 @@ body {
 
 .modal .modalfooter .otherlogin {
     justify-content: space-around;
+    position:absolute;
+    right:50px;
 }
 
 .modal .modalfooter .otherlogin a {
@@ -423,9 +425,9 @@ body {
     height: 40px;
     display: inline-block;
     position: absolute;
-    left: 230px;
+    left: -18px;
+    bottom:0px;
 }
-
 .modal .modalfooter .otherlogin .fab {
     font-size: 25px;
     background-color: white;
@@ -434,6 +436,9 @@ body {
     border-radius: 50%;
     text-align: center;
     padding: 8px 0;
+}
+.modal .modalfooter .otherlogin .fa-line {
+    color: #06C755;
 }
 
 .modal .modalfooter .otherlogin .fa-twitch {
@@ -597,6 +602,7 @@ body {
 }
 
 
+
 footer {
     display:none;
 }
@@ -678,6 +684,7 @@ footer {
 
     .message.dropdown {
         display: none;
+        margin-left: 16px;
     }
 
     .navbar-right .loginbtn {
@@ -723,6 +730,10 @@ footer {
         top: 0;
         bottom: 0;
         border-radius: 50%;
+        max-width:40px;
+        height:40px;
+/*        myimg:expression(onload=function(){
+        this.style.width=(this.offsetWidth > 50)?"50px":"auto"});*/
     }
 
     .navbar-right .personal-account .aside-Menu {
@@ -740,15 +751,21 @@ footer {
         margin: 25px 25px 10px;
     }
 
-    .aside-Menu .userinfo .user-photo {
-        width: 50px;
-        margin-right: 10px;
-    }
+        .aside-Menu .userinfo .user-photo {
+            width: 50px;
+            margin-right: 10px;
+            height:50px;
+            position: relative;
+        }
 
-    .aside-Menu .userinfo .user-photo img {
-        width: 100%;
-        border-radius: 50%;
-    }
+        .aside-Menu .userinfo .user-photo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
 
     .aside-Menu .userinfo .uesr-account-name {
         margin-top: auto;

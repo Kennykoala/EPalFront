@@ -15,12 +15,17 @@ namespace Build_School_Project_No_4.ViewModels
 
         public List<string> Level { get; set; }
 
-        public List<decimal> UnitPrice { get; set; }
+        public string HighAge { get; set; }
 
-        public List<int> Age { get; set; }
+        public string LowAge { get; set; }
 
-        public List<int> Gender { get; set; }
+        public string HighPrice { get; set; }
 
-        public List<string> Status { get; set; }
+        public string LowPrice { get; set; }
+
+        public string Gender { get; set; }
+
+        public string Status { get; set; }
+
     }
 }

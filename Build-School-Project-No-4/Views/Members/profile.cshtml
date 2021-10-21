@@ -1,4 +1,4 @@
-﻿@model  GroupViewModel
+﻿@model  IEnumerable<ProfileViewModel>
 
 @{
     ViewBag.Title = "profile";
@@ -17,7 +17,7 @@
 
 
     <div class="row">
-        @foreach (var item in Model.Profiles)
+        @foreach (var item in Model)
         {
             <div class="col-12 col-md-3">
                 <div class="profile-pic">
@@ -34,7 +34,7 @@
         <div class="col-12 col-md-9">
             <div class="profile-info">
                 <div class="profile-top">
-                    @foreach (var item in Model.Profiles)
+                    @foreach (var item in Model)
                     {<span class="profile-name">@item.MemberName</span>
                     if (@item.Gender == 0)
                     { <div class="gender"><img class="gender" src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632833966/Profile/gender-m_msytvi.png" alt=""></div>}
@@ -46,7 +46,7 @@
                         <span class="dots">• • •</span>
                         </butt>
                 </div><div class="a-col">
-                    @foreach (var item in Model.Profiles)
+                    @foreach (var item in Model)
                     {
 
                         @*<a href="@Url.Action("Followings","FollowController")" class="a-title">*@
@@ -56,21 +56,22 @@
                         <a href="#" class="a-title">
                             <span class="following-count">@item.FollingsNumber</span> Following <i class="fas fa-chevron-right"></i>
                         </a>
-                        <a href="#" class="a-title">
+                        @*<a href="#" class="a-title">
                             <span class="visitors-count">@item.VistorsNumber</span> Visitors <i class="fas fa-chevron-right"></i>
-                        </a>
+                        </a>*@
                         <a href="#" class="a-title">
                             <span class="medals-count">0</span> Medals <i class="fas fa-chevron-right"></i>
                         </a>
                     }
 
                 </div><div class="profile-details greyish">
-                    @foreach (var item in Model.Profiles)
+                    @foreach (var item in Model)
                     {
                         <div class="profile-id">ID: <span class="id-num">@item.MemberId</span></div>
                         <div class="profile-language">Language: <span class="lang-name">@item.LanguageName</span></div>
                         <div class="profile-bio">
-                            Hii my name is @item.MemberName :)
+                            @*Hii my name is @item.MemberName :)*@
+                            @item.Bio
                         </div>
                     }
                 </div>
@@ -114,7 +115,7 @@
                     <div class="avatar-img">
                         @*<img src="img/default_avatar.png" alt="avatar">*@
                         @*<img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632809097/Profile/default_avatar_f231pc.png" alt="avatar">*@
-                        @foreach (var item in Model.Profiles)
+                        @foreach (var item in Model)
                         {<img src="@item.ProfilePicture" alt="avatar">}
 
                     </div>
@@ -152,20 +153,20 @@
                                             <div class="average-score services-txt">
                                                 <i class="fas fa-star gold-star"></i>
                                                 @*<span class="service-score">4.6</span>*@
-                                                @foreach (var item in Model.Profiles)
+                                                @foreach (var item in Model)
                                                 {<span class="service-score">@item.StarAvg</span>}
                                                 /5.0
                                             </div>
                                         </div>
                                         <div class="served-div">
                                             <div class="overview-title greyish">Served</div>
-                                            @foreach (var item in Model.Profiles)
+                                            @foreach (var item in Model)
                                             {<div class="number-served service-score">@item.serverNumber</div>}
                                             @*<div class="number-served service-score">8</div>*@
                                         </div>
                                         <div class="recommended-div">
                                             <div class="overview-title greyish">Recommended</div>
-                                            @foreach (var item in Model.Profiles)
+                                            @foreach (var item in Model)
                                             {<div class="number-served service-score">@item.commentNumber</div>}
                                             @*<div class="number-recommended service-score">8</div>*@
                                         </div>
@@ -980,8 +981,9 @@
 
                 .profile-pic img {
                     border-radius: 10px;
-                    width: auto;
-                    height: 250px;
+             /*       width: auto;*/
+                    width:100%;
+                   /* height: 250px;*/
                 }
 
             .profile-name {

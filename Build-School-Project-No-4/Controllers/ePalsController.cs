@@ -29,16 +29,10 @@ namespace Build_School_Project_No_4.Controllers
             {
                 return RedirectToAction("ePal", "ePals", new { id = 1 });
             }
-            //var ProductCards = _productService.GetProductCardsData(id.Value);
             var GamesDeatils = _productService.GetGamesAllAndDeatils(id.Value);
 
-            GroupViewModel result = new GroupViewModel
-            {
-                GamesDetails = GamesDeatils,
-                //ProductCards = ProductCards
-            };
-            //ViewBag.ProductCard = _productService.GetProductCardsJson(id.Value);
-            return View("ePal",result);
+           
+            return View("ePal", GamesDeatils);
         }
 
         public ActionResult GamesJson(int id)
@@ -47,8 +41,6 @@ namespace Build_School_Project_No_4.Controllers
 
             return View();
         }
-
-
 
         /// <summary>
         /// Sonias shit don't touch

@@ -17,6 +17,7 @@ namespace Build_School_Project_No_4.ViewModels
         public string LanguageName { get; set; }
         public int RecentVistorId { get; set; }
         public string ProfilePicture { get; set; }
+        public string Bio { get; set; }
 
         public int FollowsNumber { get; set; }
         public int FollingsNumber { get; set; }

@@ -32,7 +32,6 @@ namespace Build_School_Project_No_4.DataModels
         [StringLength(50)]
         public string MemberName { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? RegistrationDate { get; set; }
 
         [Required]
@@ -69,6 +68,10 @@ namespace Build_School_Project_No_4.DataModels
         public string AuthCode { get; set; }
 
         public bool? IsAdmin { get; set; }
+
+        public string MeetPicture { get; set; }
+
+        public int? LoginMethod { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chatlist> Chatlist { get; set; }

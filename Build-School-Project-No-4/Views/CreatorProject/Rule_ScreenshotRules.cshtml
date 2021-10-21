@@ -1,0 +1,283 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Pal: Redefining Lifestyle, game, chat, live</title>
+    <link rel="stylesheet" href="Rule_ ScreenshotRules.css">
+    <!-- font-family -->
+    @*<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">*@
+    <!-- Bootstrap CSS -->
+    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">*@
+</head>
+
+<body style="background-color: #120E1B;">
+
+    <!-- ruleLC -->
+    <div class="ruleSR">
+        <div class="ruleSRWrapper">
+            <div class="content">
+                <div class="titleContent">
+                    <button type="button" class="btn btn-dark" onclick="location.href='@Url.Action("GameInformation","CreatorProject")'">
+                        <
+                    </button>
+                    <div class="title">
+                        Screenshot Rules
+                    </div>
+                </div>
+
+                <!-- ruleSRLoading -->
+                <div class="ruleSRLoading">
+                    <div class="ruleSRContainer">
+                        <div class="addForm">
+                            <p class="desc">
+                                Epal.gg is dedicated to creating a social gaming platform where users can
+                                safely and creatively express themselves. To reach this goal, please observe our
+                                Multimedia Policy when uploading images to your game application. You can read the full
+                                policy here
+                                <a href="https://policies.epal.gg/multimedia-policy.html?theme=dark">
+                                    Multimedia
+                                    Policy
+                                </a> These policies apply to all genders.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List Cover Photos: -->
+                <div class="listCover">
+                    <h6>List Cover Photos:</h6>
+                    <p>1. Screenshots must display information of an account of which you are the sole owner;</p>
+                    <p>
+                        2. You must display some form of game-skill. Level, Rank, Match History, an Ingame Scoreboard,
+                        BattlePass level, etc. If you have a rank listed, your screenshot must display your rank;
+                    </p>
+                    <p>3. Skill screenshot images must abide by our platform’s Guidelines and Policies;</p>
+                    <p>
+                        4. Any text or captions must adhere to the platforms Guidelines and Policies. They must also be
+                        relevant to Epal.gg based advertising or the games a user is offering;
+                    </p>
+                </div>
+
+                <!-- Examples of good images & bad images -->
+                <div class="exampleImg">
+                    <h6>Examples of good images & bad images</h6>
+                    <div class="exContainer">
+
+                        <div class="card">
+                            <img src="~/Assets/images/GameInformation/a.png" class="card-img-top"
+                                 alt="...">
+                            <div class="card-body">
+                                <div class="btnImg">
+                                    <img src="~/Assets/images/GameInformation/green.png" alt="">
+                                    <p class="card-title">A screenshot that clearly shows your game skills</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="~/Assets/images/GameInformation/good.png" class="card-img-top"
+                                 alt="...">
+                            <div class="card-body">
+                                <div class="btnImg">
+                                    <img src="~/Assets/images/GameInformation/green.png" alt="">
+                                    <p class="card-title">No skill display - i.e. no level, rank, etc.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="~/Assets/images/GameInformation/c.png" class="card-img-top"
+                                 alt="...">
+                            <div class="card-body">
+                                <div class="btnImg">
+                                    <img src="~/Assets/images/GameInformation/red.png" alt="">
+                                    <p class="card-title">Non-game related image</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="~/Assets/images/GameInformation/d.png" class="card-img-top"
+                                 alt="...">
+                            <div class="card-body">
+                                <div class="btnImg">
+                                    <img src="~/Assets/images/GameInformation/red.png" alt="">
+                                    <p class="card-title">NSFW text</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+@section topCSS{
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        /* ruleSR */
+        .ruleSR {
+            height: 100%;
+            overflow: auto;
+            position: relative;
+        }
+
+        .ruleSRWrapper {
+            width: 100%;
+            background-position: 50%;
+            background-size: cover;
+        }
+
+        .content {
+            padding: 100px 20px;
+        }
+
+        .titleContent {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .btn {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 30% !important;
+        }
+
+        .title {
+            margin-left: 15px;
+            margin-bottom: 24px;
+            line-height: 1;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        /* ruleSRLoading */
+        .ruleSRLoading {
+            position: relative;
+        }
+
+        .ruleSRContainer {
+            transition: opacity .3s;
+        }
+
+        .addForm {
+            width: 100%;
+        }
+
+        .desc {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 14px;
+            color: #c4c3e6;
+            margin-bottom: 24px;
+        }
+
+        a {
+            color: #7041e6 !important;
+        }
+
+        p {
+            font-size: 12px;
+            color: #c4c3e6;
+        }
+
+        /* List Cover Photos: */
+        .listCover {
+            margin-top: 35px;
+        }
+
+        /* Examples of good images & bad images */
+        .exampleImg {
+            margin-top: 35px;
+        }
+
+        .exContainer {
+            display: grid !important;
+            grid-template-columns: repeat(2,50%) !important;
+        }
+
+        .card {
+            width: 100% !important;
+            color: #c4c3e6 !important;
+            background-color: #21212C !important;
+        }
+
+        .btnImg {
+            display: flex;
+        }
+
+            .btnImg img {
+                width: 15px !important;
+                height: 15px !important;
+            }
+
+        .card-title {
+            margin-left: 5px;
+            font-size: 12px !important;
+            color: white !important;
+        }
+
+        .card img {
+            width: 100%;
+        }
+
+        .card-body {
+            width: 100%;
+        }
+
+        .card-body {
+            padding: 0.5rem 0.5rem !important;
+        }
+
+        @@media screen and (max-width:767px) {
+        }
+
+        @@media screen and (min-width:768px) {
+
+            .ruleSR {
+                width: 650px;
+            }
+
+            .titleContent {
+                align-items: baseline;
+            }
+        }
+
+        @@media screen and (min-width:996px) {
+
+            .ruleSR {
+                width: 650px;
+            }
+
+            .titleContent {
+                align-items: baseline;
+            }
+        }
+
+        @@media screen and (min-width:1200px) {
+
+            .ruleSR {
+                width: 650px;
+            }
+
+            .titleContent {
+                align-items: baseline;
+            }
+        }
+    </style>
+
+}
+

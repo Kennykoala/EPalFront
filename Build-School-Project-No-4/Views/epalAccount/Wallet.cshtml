@@ -1,4 +1,7 @@
-﻿<div class="container topContent">
+﻿
+@model GroupViewModel
+
+<div class="container topContent">
     <div class="row navBarPhone">
         <div class="col leftNavbar">
             <i class="fas fa-angle-left"></i>
@@ -50,24 +53,22 @@
     </div>
 </div>
 
-
-
-
 <!-- 桌機版(End) -->
 
 <div class="container table">
     <div class="row orderCalender">
-        <div class="col-4 col-md-1 selectCalender">
-            <div class="calenderItem">Sep</div>
-            <div class="calenderItem">,</div>
-            <div class="calenderItem">2021</div>
-            <i class="fas fa-angle-down"></i>
-        </div>
+
+        <input type="month" class="monthCalender" id="start" name="start" min="2021-10" value="2021-10">
+
+        @*<div class="col-4 col-md-1 selectCalender">
+                <input type="month" id="start" name="start" min="2018-03" value="2018-05">
+            </div>*@
+
         <div class="col-12 col-md-1 orderIncome">
             <div class="expensePhone co-6">Expense 0.00</div>
             <div class="pcIncome col-6">
-                <div>Income</div>
-                <div>0.00</div>
+                <div class="incomeDesc">Income</div>
+                <div class="incomeDesc">0.00</div>
             </div>
         </div>
     </div>
@@ -94,12 +95,44 @@
             Status
         </div>
     </div>
+
+    @foreach (var m in Model.wallets)
+    {
+        <div class="row orderField">
+            <div class="col">
+                @*Item*@
+            </div>
+            <div class="col">
+                @*Order*@
+                <span>@Html.DisplayFor(x => m.OrderId)</span>
+            </div>
+            <div class="col">
+                @*Time*@
+                <span>@Html.DisplayFor(x => m.OrderDate)</span>
+            </div>
+            <div class="col">
+                @*User*@
+                <span>@Html.DisplayFor(x => m.MemberName)</span>
+            </div>
+            <div class="col-2">
+                @*Payment Gateway*@
+            </div>
+            <div class="col">
+                @*Amount*@
+                <span>@Html.DisplayFor(x => m.TotalPrice)</span>
+            </div>
+            <div class="col">
+                @*Status*@
+                <span>@Html.DisplayFor(x => m.OrderStatusName)</span>
+            </div>
+        </div>
+    }
+
     <div class="row walletDetail">
         <img src="~/Assets/WalletImages/wallet.png" />
-        <p>No details now~</p>
+        <p>Show me the money !</p>
     </div>
 </div>
-    </div>
 
 @section topCSS{
 
@@ -111,16 +144,18 @@
             font-size: 20px;
         }
 
-        .navBarPhone:nth-child(1) div{
-            /* background-color: gray; */
-        }
+            .navBarPhone:nth-child(1) div {
+                /* background-color: gray; */
+            }
 
         .leftNavbar {
             text-align: left;
         }
+
         .centerNavbar {
             text-align: center;
         }
+
         .rightNavbar {
             text-align: right;
         }
@@ -133,6 +168,7 @@
         }
 
         .liveContent {
+            margin-top: 30px;
             background-color: rgb(25, 17, 104);
         }
 
@@ -141,20 +177,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
         }
-
 
         .incomeText {
             background-color: #7692ce;
             color: white;
-            padding: 10px 5px;
+            padding: 10px 20px;
         }
 
-
-        .incomeText p {
-            font-size: 5px;
-        }
+            .incomeText p {
+                font-size: 5px;
+            }
 
         .incomeHead img {
             background-color: rgb(69, 72, 99);
@@ -167,20 +200,24 @@
             justify-content: space-between;
         }
 
-        .incomeFare img {
-            width: 30%;
-        }
+            .incomeFare img {
+                width: 30%;
+            }
 
-        .incomeFare a {
-            text-decoration: none;
-            color: white;
-        }
+            .incomeFare a {
+                text-decoration: none;
+                color: white;
+            }
 
-        .incomeFare span {
-            font-weight: bolder;
-        }
+            .incomeFare span {
+                /*font-weight: bolder;*/
+            }
 
         .incomeMoney {
+        }
+
+        .incomeItem {
+            margin-top: 20px;
         }
 
         .topContent {
@@ -206,23 +243,25 @@
             background-color: #302f3d;
             display: flex;
             justify-content: center;
-
+            flex-direction: column;
+            align-items: center;
         }
 
-        .walletDetail img {
-            width: 50%;
-            margin: 50px 0;
-        }
+            .walletDetail img {
+                width: 30%;
+                margin: 50px 0;
+            }
 
             .walletDetail p {
                 color: white;
                 text-align: center;
                 margin-bottom: 200px;
             }
+
         .pcIncome {
-                display: flex;
-                /* margin: 0px; */
-            }
+            display: flex;
+            /* margin: 0px; */
+        }
 
         /* 寫手機版(End) */
 
@@ -249,7 +288,7 @@
             }
 
             .selectCalender {
-                display: flex;
+                /*display: flex;*/
             }
 
             .orderIncome {
@@ -258,15 +297,12 @@
                 justify-content: space-between;
             }
 
-
             .selectCalender div {
-            padding: 2px;
+                /*padding: 2px;*/
             }
 
             .orderIncome .expensePhone {
             }
-
-
         }
 
         @@media screen and (min-width:768px) {
@@ -294,16 +330,16 @@
                 display: none;
             }
 
-
             .pcTitle {
                 color: white;
-                margin-top: 60px;
+                margin-top: 70px;
                 margin-bottom: 20px;
             }
 
-            .pcTitle p {
-                font-size: 24px;
-            }
+                .pcTitle p {
+                    font-size: 24px;
+                    text-align: left;
+                }
 
             .pcItemName {
                 margin-bottom: 20px;
@@ -312,53 +348,63 @@
                 .pcItemName a {
                     text-decoration: none;
                     color: white;
-                    font-size: 24px;
+                    font-size: 20px;
                     border-bottom: 6px solid #7041e6;
                 }
-
 
             .incomeHead {
                 background-color: #302f3d;
             }
 
-            .incomeHead img {
-                background-color: #302f3d;
-                width: 80%;
-            }
+                .incomeHead img {
+                    background-color: #302f3d;
+                    width: 50%;
+                }
 
             .incomeText {
                 background-color: #302f3d;
                 display: flex;
-
-
             }
 
             .incomeFare {
                 display: inline;
                 margin: 30px 0;
-
             }
 
-            .incomeFare img {
-                width: 20%;
-            }
+                .incomeFare img {
+                    width: 15%;
+                }
 
             .fareTitle {
-                font-size: 18px;
+                font-size: 20px;
             }
-
-
 
             .incomeText p {
                 display: none;
             }
 
+            .incomeDesc {
+                margin-top: 10px;
+                font-size: 14px;
+                color: #c4c3e6;
+                margin-bottom: 10px;
+                margin-left: 5px;
+            }
+
+            .col-md-8 {
+                width: 50% !important;
+            }
+
+            .col-md-2 {
+                width: 25% !important;
+            }
+
             .IntegerNumber {
-                font-size: 48px;
+                font-size: 60px;
             }
 
             .pointNumber {
-                font-size: 24px;
+                font-size: 35px;
             }
 
             .incomeWithdraw {
@@ -368,32 +414,47 @@
                 align-items: center;
             }
 
-            .incomeWithdraw button {
-                font-size: 20px;
-                border-radius: 30px;
-                background: #7041e6;
-                border-color: #7041e6;
+                .incomeWithdraw button {
+                    width: 180px;
+                    font-size: 16px;
+                    color: white !important;
+                    position: relative !important;
+                    border: 0 !important;
+                    outline: 0 !important;
+                    margin-top: 5% !important;
+                    margin-bottom: 5% !important;
+                    padding: 6px !important;
+                    text-align: center !important;
+                    text-decoration: none !important;
+                    font-weight: 500 !important;
+                    box-sizing: border-box !important;
+                    background: linear-gradient( 90deg, #625cff, #7041e6) !important;
+                    background-size: 100% !important;
+                    border-radius: 400px !important;
+                }
+
+            .btn-primary:hover {
+                color: #fff;
+                background: linear-gradient( 90deg, #625cff, #7041e6) !important;
+                border-color: #625cff;
             }
 
             .table {
-                padding: 30px;
+                padding: 5px 30px;
             }
 
             .orderIncome {
-                margin: 0 50px;
+                /*margin: 0 50px;*/
             }
 
             .selectCalender {
-                display: flex;
                 margin: 5px;
                 font-size: 18px;
             }
 
-            .selectCalender div {
-                padding: 2px;
-            }
-
-
+                .selectCalender div {
+                    padding: 2px;
+                }
 
             .pcIncome {
                 display: flex;
@@ -403,25 +464,42 @@
                 background-color: #21212c;
                 color: #ffff;
                 padding: 16px;
+                font-size: 14px;
+                text-align: center;
             }
 
             .walletDetail img {
-                width: 30%;
+                width: 20%;
             }
 
             .walletDetail p {
                 color: white;
+                font-size: 14px;
                 text-align: center;
                 margin-bottom: 50px;
             }
+
+            .row > * {
+                width: 20%;
+                color: white !important;
+                font-size: medium !important;
+                text-align: center !important;
+                border-block: none !important;
+                border-block-color: #302f3d !important;
+                border-right: unset !important;
+            }
+
+            .monthCalender {
+                background-color: #302f3d !important;
+            }
         }
 
-        @@media screen and (min-width:996px) {}
+        @@media screen and (min-width:996px) {
+        }
 
 
-        @@media screen and (min-width:1200px) {}
+        @@media screen and (min-width:1200px) {
+        }
     </style>
-
-
 
 }

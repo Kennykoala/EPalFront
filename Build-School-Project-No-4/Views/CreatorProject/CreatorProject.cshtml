@@ -1,137 +1,114 @@
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- CSS -->
-    <link rel="stylesheet" href="CreatorProject.css">
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- title -->
-    <title>E-Pal: Redefining Lifestyle, game, chat, live</title>
-</head>
-<body>
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    <!-- html -->
-    <div class="wrapper">
-        <!-- header -->
-        <div class="header">
-            <img class="headerImg" src="~/Assets/images/CreatorProject/CPH_01.png">
-            <img class="shadowImg" src="~/Assets/images/CreatorProject/shadow.png">
-            <h1>Become a Creator Now!</h1>
-            <p>More exposure | More orders</p>
-            <div class="epalButtonWrapper">
-                <button type="button" class="btn btn-outline-secondary"
-                        onclick="location.href='@Url.Action("ChooseAService","ChooseAService")'">
-                    Apply For Free
-                </button>
-            </div>
+<div class="wrapper">
+    <!-- header -->
+    <div class="header">
+        <img class="headerImg" src="~/Assets/images/CreatorProject/CPH_01.png">
+        <img class="shadowImg" src="~/Assets/images/CreatorProject/shadow.png">
+        <h1>Become a Creator Now!</h1>
+        <p>More exposure | More orders</p>
+        <div class="epalButtonWrapper">
+            <button type="button" class="btn btn-outline-secondary"
+                    onclick="location.href='@Url.Action("ChooseAService","CreatorProject")'">
+                Apply For Free
+            </button>
         </div>
-        <!-- firstCard -->
-        <div class="firstCard">
-            <div class="firstCardContent">
-                <div class="whatIsACreator">
-                    <img src="~/Assets/images/CreatorProject/CPH_02.png">
-                    <div class="whatIsACreator_info">
-                        <div class="whatIsACreator_title">What is a Creator?</div>
-                        <div class="whatIsACreator_content">
-                            A Content Creator is a certified ePal who livestreams gaming
-                            and entertainment content on a regular basis, while also accepting orders as an ePal.
-                        </div>
+    </div>
+    <!-- firstCard -->
+    <div class="firstCard">
+        <div class="firstCardContent">
+            <div class="whatIsACreator">
+                <img src="~/Assets/images/CreatorProject/CPH_02.png">
+                <div class="whatIsACreator_info">
+                    <div class="whatIsACreator_title">What is a Creator?</div>
+                    <div class="whatIsACreator_content">
+                        A Content Creator is a certified ePal who livestreams gaming
+                        and entertainment content on a regular basis, while also accepting orders as an ePal.
                     </div>
                 </div>
             </div>
         </div>
-        <!-- secondCard -->
-        <div class="secondCard">
-            <div class="secondCardContent">
-                <div class="secondCardPrivilege">
-                    <div class="privilegeTitle">Why become a Creator?</div>
-                    <div class="privilegeImgs">
-                        <div class="items">
-                            <div class="itemImg">
-                                <img src="~/Assets/images/CreatorProject/CPH_03.png">
-                            </div>
-                            <div class="itemText">
-                                <div class="title">Livestream and get paid</div>
-                                <div class="content">Increase your income by $100 per day</div>
-                            </div>
+    </div>
+    <!-- secondCard -->
+    <div class="secondCard">
+        <div class="secondCardContent">
+            <div class="secondCardPrivilege">
+                <div class="privilegeTitle">Why become a Creator?</div>
+                <div class="privilegeImgs">
+                    <div class="items">
+                        <div class="itemImg">
+                            <img src="~/Assets/images/CreatorProject/CPH_03.png">
                         </div>
-                        <div class="items">
-                            <div class="itemImg">
-                                <img src="~/Assets/images/CreatorProject/CPH_04.png">
-                            </div>
-                            <div class="itemText">
-                                <div class="title">Sync your livestream to get more followers</div>
-                                <div class="content">
-                                    Sync your stream onto E-Pal and get more than 20 followers per day
-                                </div>
-                            </div>
+                        <div class="itemText">
+                            <div class="title">Livestream and get paid</div>
+                            <div class="content">Increase your income by $100 per day</div>
                         </div>
-                        <div class="items">
-                            <div class="itemImg">
-                                <img src="~/Assets/images/CreatorProject/CPH_05.png">
-                            </div>
-                            <div class="itemText">
-                                <div class="title">Extra ePal points to level up</div>
-                                <div class="content">Additional 5% more ePal points than normal ePals</div>
-                            </div>
+                    </div>
+                    <div class="items">
+                        <div class="itemImg">
+                            <img src="~/Assets/images/CreatorProject/CPH_04.png">
                         </div>
-                        <div class="items">
-                            <div class="itemImg">
-                                <img src="~/Assets/images/CreatorProject/CPH_06.png">
-                            </div>
-                            <div class="itemText">
-                                <div class="title">Invites for money</div>
-                                <div class="content">
-                                    10 USD cash for each successfully verified creator you invite.
-                                    Payments are sent to your wallet on the 5th of each month
-                                </div>
-                            </div>
-                        </div>
-                        <div class="items">
-                            <div class="itemImg">
-                                <img src="~/Assets/images/CreatorProject/CPH_07.png">
-                            </div>
-                            <div class="itemText">
-                                <div class="title">Official Twitch Team</div>
-                                <div class="content">
-                                    You will have the opportunity to be invited into the Official E-Pal
-                                    Twitch Team and receive special promotion by the platform
-                                </div>
+                        <div class="itemText">
+                            <div class="title">Sync your livestream to get more followers</div>
+                            <div class="content">
+                                Sync your stream onto E-Pal and get more than 20 followers per day
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- thirdCard -->
-        <div class="thirdCard">
-            <div class="thirdCardContent">
-                <div class="whoCanBecomeACreator">
-                    <img src="~/Assets/images/CreatorProject/CPH_08.png">
-                    <div class="whoCanBecomeACreator_info">
-                        <div class="whoCanBecomeACreator_title">Who can become a Creator?</div>
-                        <div class="whoCanBecomeACreator_content">
-                            <p>1. Average concurrent viewer of 10 or above in the past 30 days.</p>
-                            <p>2. Streamed at least 10 times in the past 30 days.</p>
-                            <p>3. You must add a panel with a link to E-Pal.</p>
-                            <p>4. Looking to monetize their content through E-Pal.</p>
+                    <div class="items">
+                        <div class="itemImg">
+                            <img src="~/Assets/images/CreatorProject/CPH_05.png">
+                        </div>
+                        <div class="itemText">
+                            <div class="title">Extra ePal points to level up</div>
+                            <div class="content">Additional 5% more ePal points than normal ePals</div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="itemImg">
+                            <img src="~/Assets/images/CreatorProject/CPH_06.png">
+                        </div>
+                        <div class="itemText">
+                            <div class="title">Invites for money</div>
+                            <div class="content">
+                                10 USD cash for each successfully verified creator you invite.
+                                Payments are sent to your wallet on the 5th of each month
+                            </div>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <div class="itemImg">
+                            <img src="~/Assets/images/CreatorProject/CPH_07.png">
+                        </div>
+                        <div class="itemText">
+                            <div class="title">Official Twitch Team</div>
+                            <div class="content">
+                                You will have the opportunity to be invited into the Official E-Pal
+                                Twitch Team and receive special promotion by the platform
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+    <!-- thirdCard -->
+    <div class="thirdCard">
+        <div class="thirdCardContent">
+            <div class="whoCanBecomeACreator">
+                <img src="~/Assets/images/CreatorProject/CPH_08.png">
+                <div class="whoCanBecomeACreator_info">
+                    <div class="whoCanBecomeACreator_title">Who can become a Creator?</div>
+                    <div class="whoCanBecomeACreator_content">
+                        <p>1. Average concurrent viewer of 10 or above in the past 30 days.</p>
+                        <p>2. Streamed at least 10 times in the past 30 days.</p>
+                        <p>3. You must add a panel with a link to E-Pal.</p>
+                        <p>4. Looking to monetize their content through E-Pal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section topCSS{
 

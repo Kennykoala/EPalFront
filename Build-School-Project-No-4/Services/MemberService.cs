@@ -6,6 +6,8 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System;
+using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -15,8 +17,9 @@ namespace Build_School_Project_No_4.Services
         private readonly Repository _Repo;
         public MemberService()
         {
-            _Repo = new Repository();            
+            _Repo = new Repository();
         }
+
 
 
         public List<MemberViewModel> GetMember()
@@ -61,8 +64,7 @@ namespace Build_School_Project_No_4.Services
                     RegistrationDate = item.RegistrationDate,
                     Email = item.Email,
                     Password = item.Password,
-                    AuthCode = item.AuthCode,
-                    IsAdmin = item.IsAdmin
+                    AuthCode = item.AuthCode
                 });
             }
             return result;
@@ -81,7 +83,9 @@ namespace Build_School_Project_No_4.Services
                     MemberId = item.MemberId,
                     RegistrationDate = item.RegistrationDate,
                     Email = item.Email,
-                    Password = item.Password
+                    Password = item.Password,
+                    ProfilePicture = item.ProfilePicture,
+                    MemberName = item.MemberName                    
                 });
             }
             return result;
@@ -115,6 +119,7 @@ namespace Build_School_Project_No_4.Services
                 Data.Password = member.Password;
                 Data.AuthCode = member.AuthCode;
                 Data.IsAdmin = member.IsAdmin;
+                Data.ProfilePicture = member.ProfilePicture;
             }
             catch (Exception ex)
             {
@@ -205,18 +210,49 @@ namespace Build_School_Project_No_4.Services
         }
 
 
-        //判斷會員權限角色
-        public string GetRole(string Email)
+
+        public MemberInfoViewModel GetEditProfileInfo(int memberid)
         {
-            string Role = "User";
-            Members loginMember = GetDataByAccount(Email);
-            if (loginMember.IsAdmin != null && loginMember.IsAdmin == true)
+            var emp = _Repo.GetAll<Members>().FirstOrDefault(x=> x.MemberId == memberid);
+
+            //Members emp = db.Members.Find(memberid);
+            if (emp == null)
             {
-                Role += ",Admin"; 
-                return Role;
+                throw new NotImplementedException();
             }
-            return null;
+
+            if (emp.Gender == null)
+            {
+                emp.Gender = 0;
+            }
+            if (emp.LanguageId == null)
+            {
+                emp.LanguageId = 0;
+            }
+
+            //DM -> MemberInfoViewModel -> GroupViewModel
+            MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
+            {
+                MemberId = emp.MemberId,
+                MemberName = emp.MemberName,
+                Phone = emp.Phone,
+                Country = emp.Country,
+                Gender = (Genders)emp.Gender,
+                BirthDay = emp.BirthDay,
+                TimeZone = emp.TimeZone,
+                LanguageId = (LanguageCategories)emp.LanguageId,
+                Bio = emp.Bio,
+                Email = emp.Email,
+                Password = emp.Password,
+                ProfilePicture = emp.ProfilePicture
+            };
+
+            return MemberInfo;
+
         }
+
+
+
 
     }
 }
