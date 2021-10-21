@@ -39,7 +39,18 @@ namespace Build_School_Project_No_4.Services
             var selectRecommend = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
             //var RecommendList = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
 
-            string languageNames = selectlanguage.LanguageName;
+            //加上判斷避免系統錯誤
+            string languageNames;
+            if (selectlanguage == null)
+            {
+                languageNames = string.Empty;
+            }
+            else
+            {
+                languageNames = selectlanguage.LanguageName;
+            }
+
+
             int commentCal = selectRecommend.Count;
 
             //計算評分平均
