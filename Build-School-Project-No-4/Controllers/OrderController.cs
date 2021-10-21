@@ -53,6 +53,7 @@ namespace Build_School_Project_No_4.Controllers
             }
             return null;
         }
+        [Authorize]
         public ActionResult OrderSummary(int? id)
         {
 
