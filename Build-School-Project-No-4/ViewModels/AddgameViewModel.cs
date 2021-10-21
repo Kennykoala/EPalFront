@@ -178,8 +178,8 @@ namespace Build_School_Project_No_4.ViewModels
 
     public enum GameCategoryList
     {
-        LOL = 1,
-        eChat = 2,
+        lol = 1,
+        echat = 2,
         movie = 3,
         valorant = 4,
         custom = 5,

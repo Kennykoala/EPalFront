@@ -40,21 +40,24 @@ namespace Build_School_Project_No_4.Controllers
             if (cookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-                userid = ticket.UserData;
+
+                var obj = JsonConvert.DeserializeObject<Members>(ticket.UserData);
+                userid = obj.MemberId.ToString();
                 return userid;
             }
             return null;
         }
 
 
+
         [Authorize]
         [HttpGet]
         public ActionResult addgame()
         {
-            GroupViewModel addgame = new GroupViewModel()
-            {
-                addgame = new AddgameViewModel()
-            };
+            //GroupViewModel addgame = new GroupViewModel()
+            //{
+            //    addgame = new AddgameViewModel()
+            //};
 
             AddgameViewModel addVM = new AddgameViewModel()
             {
@@ -112,32 +115,32 @@ namespace Build_School_Project_No_4.Controllers
 
 
             //addgame.addgame.planset = AvailabledayList;
-            addgame.addgame.ServerItems = ServerList;
-            addgame.addgame.ServerSelectedId = defaultServer;
-            addgame.addgame.PositionItems = PositionList;
-            addgame.addgame.PositionSelectedId = defaultPosition;
-            addgame.addgame.StyleItems = StyleList;
-            addgame.addgame.StyleSelectedId = defaultStyle;
+            addVM.ServerItems = ServerList;
+            addVM.ServerSelectedId = defaultServer;
+            addVM.PositionItems = PositionList;
+            addVM.PositionSelectedId = defaultPosition;
+            addVM.StyleItems = StyleList;
+            addVM.StyleSelectedId = defaultStyle;
 
-            addgame.addgame.GameAvailableDay1 = "Monday";
-            addgame.addgame.GameAvailableDay2 = "Tuesday";
-            addgame.addgame.GameAvailableDay3 = "Wednesday";
-            addgame.addgame.GameAvailableDay4 = "Thursday";
-            addgame.addgame.GameAvailableDay5 = "Friday";
-            addgame.addgame.GameAvailableDay6 = "Saturday";
-            addgame.addgame.GameAvailableDay7 = "Sunday";
+            addVM.GameAvailableDay1 = "Monday";
+            addVM.GameAvailableDay2 = "Tuesday";
+            addVM.GameAvailableDay3 = "Wednesday";
+            addVM.GameAvailableDay4 = "Thursday";
+            addVM.GameAvailableDay5 = "Friday";
+            addVM.GameAvailableDay6 = "Saturday";
+            addVM.GameAvailableDay7 = "Sunday";
 
             //string JsonDay = JsonConvert.SerializeObject(AvailabledayList);
             //ViewBag.JsonLocations = JsonDay;
 
-            return View(addgame);
+            return View(addVM);
             //return View("_GameDayPartial", addgame);
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult addgame(GroupViewModel registerVM)
+        public ActionResult addgame(AddgameViewModel registerVM)
         {
 
                 using (var tran = _ctx.Database.BeginTransaction())
@@ -158,15 +161,15 @@ namespace Build_School_Project_No_4.Controllers
                         //VM -> DM
                         Products product = new Products
                         {
-                            GameCategoryId = (int)registerVM.addgame.GameCategoryId,
+                            GameCategoryId = (int)registerVM.GameCategoryId,
                             CreatorId = int.Parse(GetMemberId()),
-                            UnitPrice = registerVM.addgame.UnitPrice,
-                            ProductImg = registerVM.addgame.ProductImg,
-                            Introduction = registerVM.addgame.Introduction,
-                            CreatorImg = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-girl-cat-names-1606245046.jpg",
+                            UnitPrice = registerVM.UnitPrice,
+                            ProductImg = registerVM.ProductImg,
+                            Introduction = registerVM.Introduction,
+                            CreatorImg = registerVM.CreatorImg,
                             //CreatorImg = registerVM.addgame.CreatorImg,
-                            RecommendationVoice = registerVM.addgame.RecommendationVoice,
-                            RankId = (int)registerVM.addgame.RankId
+                            RecommendationVoice = registerVM.RecommendationVoice,
+                            RankId = (int)registerVM.RankId
                         };
 
                         _ctx.Products.Add(product);
@@ -176,7 +179,7 @@ namespace Build_School_Project_No_4.Controllers
 
                         //server
                         ProductServer serverDB = new ProductServer();
-                        var serverSelected = registerVM.addgame.ServerSelectedId;
+                        var serverSelected = registerVM.ServerSelectedId;
                         foreach (var item in serverSelected)
                         {
                             //.username = comboUserName3.SelectedValue.ToString();
@@ -194,7 +197,7 @@ namespace Build_School_Project_No_4.Controllers
 
                         //position
                         ProductPosition positionDB = new ProductPosition();
-                        var positionSelected = registerVM.addgame.PositionSelectedId;
+                        var positionSelected = registerVM.PositionSelectedId;
                         foreach (var item in positionSelected)
                         {
                             //.username = comboUserName3.SelectedValue.ToString();
@@ -212,7 +215,7 @@ namespace Build_School_Project_No_4.Controllers
 
                         //style
                         ProductStyle styleDB = new ProductStyle();
-                        var styleSelected = registerVM.addgame.StyleSelectedId;
+                        var styleSelected = registerVM.StyleSelectedId;
                         foreach (var item in styleSelected)
                         {
                             //.username = comboUserName3.SelectedValue.ToString();
@@ -233,9 +236,9 @@ namespace Build_School_Project_No_4.Controllers
                         {
                             //.ToShortTimeString()
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay1,
-                            GameStartTime = registerVM.addgame.GameStartTime1,
-                            GameEndTime = registerVM.addgame.GameEndTime1,
+                            GameAvailableDay = registerVM.GameAvailableDay1,
+                            GameStartTime = registerVM.GameStartTime1,
+                            GameEndTime = registerVM.GameEndTime1,
                         };
                         if (productplan1 != null) 
                         {
@@ -247,9 +250,9 @@ namespace Build_School_Project_No_4.Controllers
                         ProductPlans productplan2 = new ProductPlans
                         {
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay2,
-                            GameStartTime = registerVM.addgame.GameStartTime2,
-                            GameEndTime = registerVM.addgame.GameEndTime2,
+                            GameAvailableDay = registerVM.GameAvailableDay2,
+                            GameStartTime = registerVM.GameStartTime2,
+                            GameEndTime = registerVM.GameEndTime2,
                         };
                         if (productplan2 != null)
                         {
@@ -261,9 +264,9 @@ namespace Build_School_Project_No_4.Controllers
                         ProductPlans productplan3 = new ProductPlans
                         {
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay3,
-                            GameStartTime = registerVM.addgame.GameStartTime3,
-                            GameEndTime = registerVM.addgame.GameEndTime3,
+                            GameAvailableDay = registerVM.GameAvailableDay3,
+                            GameStartTime = registerVM.GameStartTime3,
+                            GameEndTime = registerVM.GameEndTime3,
                         };
                         if (productplan3 != null)
                         {
@@ -275,9 +278,9 @@ namespace Build_School_Project_No_4.Controllers
                         ProductPlans productplan4 = new ProductPlans
                         {
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay4,
-                            GameStartTime = registerVM.addgame.GameStartTime4,
-                            GameEndTime = registerVM.addgame.GameEndTime4,
+                            GameAvailableDay = registerVM.GameAvailableDay4,
+                            GameStartTime = registerVM.GameStartTime4,
+                            GameEndTime = registerVM.GameEndTime4,
                         };
                         if (productplan4 != null)
                         {
@@ -289,9 +292,9 @@ namespace Build_School_Project_No_4.Controllers
                         ProductPlans productplan5 = new ProductPlans
                         {
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay5,
-                            GameStartTime = registerVM.addgame.GameStartTime5,
-                            GameEndTime = registerVM.addgame.GameEndTime5,
+                            GameAvailableDay = registerVM.GameAvailableDay5,
+                            GameStartTime = registerVM.GameStartTime5,
+                            GameEndTime = registerVM.GameEndTime5,
                         };
                         if (productplan5 != null)
                         {
@@ -303,9 +306,9 @@ namespace Build_School_Project_No_4.Controllers
                         ProductPlans productplan6 = new ProductPlans
                         {
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay6,
-                            GameStartTime = registerVM.addgame.GameStartTime6,
-                            GameEndTime = registerVM.addgame.GameEndTime6,
+                            GameAvailableDay = registerVM.GameAvailableDay6,
+                            GameStartTime = registerVM.GameStartTime6,
+                            GameEndTime = registerVM.GameEndTime6,
                         };
                         if (productplan6 != null)
                         {
@@ -317,9 +320,9 @@ namespace Build_School_Project_No_4.Controllers
                         ProductPlans productplan7 = new ProductPlans
                         {
                             ProductId = product.ProductId,
-                            GameAvailableDay = registerVM.addgame.GameAvailableDay7,
-                            GameStartTime = registerVM.addgame.GameStartTime7,
-                            GameEndTime = registerVM.addgame.GameEndTime7,
+                            GameAvailableDay = registerVM.GameAvailableDay7,
+                            GameStartTime = registerVM.GameStartTime7,
+                            GameEndTime = registerVM.GameEndTime7,
                         };
                         if (productplan7 != null)
                         {
@@ -354,7 +357,7 @@ namespace Build_School_Project_No_4.Controllers
                         //var planItems2 = registerVM.addgame.planset[1].GameStartTime;
                         //var planIteme2 = registerVM.addgame.planset[1].GameEndTime;
 
-                                                tran.Commit();
+                        tran.Commit();
 
                         //ViewData["Message"] = "使用者儲存成功";
                         return Content("創建商品成功");

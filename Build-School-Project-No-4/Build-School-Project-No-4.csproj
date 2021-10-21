@@ -865,6 +865,7 @@
     <Content Include="Views\Shared\SignupPartialPage.cshtml" />
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Members\FBLogin.cshtml" />
+    <Content Include="Views\Shared\_AddgamePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
