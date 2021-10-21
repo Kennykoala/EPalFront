@@ -37,7 +37,7 @@ namespace Build_School_Project_No_4.Services
             var vistorCal = vistorAll.Where(x => x.MemberId == assignMemberId).ToList().Count();
             var serversCal = products.Where(x => x.CreatorId == assignMemberId).ToList().Count();
             var selectRecommend = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
-            var RecommendList = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
+            //var RecommendList = commentAll.Where(x => x.MemberId == assignMemberId).ToList();
 
             string languageNames = selectlanguage.LanguageName;
             int commentCal = selectRecommend.Count;

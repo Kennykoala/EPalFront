@@ -132,8 +132,6 @@ window.onload = function () {
                         if (msg == true) {
                             window.location.href = '/'
                         }
-
-
                     }
                 });//end $.ajax
 
@@ -166,8 +164,6 @@ window.onload = function () {
         startApp();
     });
 
-
-
     //// 點擊登出
     //$("#GOOGLE_logout").click(function () {
     //    var auth2 = gapi.auth2.getAuthInstance();
@@ -176,6 +172,142 @@ window.onload = function () {
     //        $("#GOOGLE_STATUS_2").html("");
     //    });
     //});
+
+
+
+
+
+
+
+    //FB thirdparty
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '241958394640265', // 填入FB APP ID
+            cookie: true,
+            xfbml: true,
+            version: 'v12.0'
+        });
+
+        //FB.getLoginStatus(function (response) {
+        //    statusChangeCallback(response);
+        //});
+    };
+
+    // 處理各種登入身份
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback/authResponse:');
+        console.log(response);
+        //var target = document.getElementById("FB_STATUS_2"),
+            //html = "";
+
+        // 登入 FB 且已加入會員
+        if (response.status === 'connected') {
+            html = "已登入FB，並加入epal<br/>";
+
+            FB.api('/me?fields=id,name,email', function (response) {
+
+                console.log('fbapi');
+                console.log(response);
+                //html += "會員暱稱：" + response.name + "<br/>";
+                //html += "會員 email：" + response.email;
+                //target.innerHTML = html;
+
+                var fbemail = response.email;
+                var fbname = response.name;
+
+                FBPassToServer(fbemail, fbname);
+            });
+
+        }
+
+        // 登入 FB, 未偵測到加入會員
+        else if (response.status === "not_authorized") {
+            //target.innerHTML = "已登入 FB，但未加入epal";
+        }
+
+        // 未登入 FB
+        else {
+            //target.innerHTML = "未登入 FB";
+        }
+    }
+
+
+    //資料傳到後端
+    function FBPassToServer(fbemail,fbname) {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+
+        var Data = JSON.stringify({
+            Fbemail: `${fbemail}`,
+            Fbname: `${fbname}`
+        });
+
+        $.ajax({
+            url: '/Members/FBLogin',
+            method: 'POST',
+            data: Data,
+            contentType: 'application/json; charset=utf-8',
+            success: function (msg) {
+                $("#myModal").modal('hide');
+                //$("#loginmodal").style.display="none";
+                //$("#signupmodal").style.display="none";
+
+                //console.log(msg);
+                swal.fire({
+                    title: "Welcome to Epal",
+                    icon: "success",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+
+                ////logbtn.style.display="none";
+                ////signbtn.style.display = "none";
+                ////logoutbtn.style.display = "block";
+
+                if (msg == true) {
+                    window.location.href = '/'
+                }
+
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+        //原本的function testAPI()
+        // console.log('Welcome!  Fetching your information.... ');
+        // FB.api('/me', function (response) {
+        //     console.log('Successful login for: ' + response.name);
+        //     document.getElementById('status').innerHTML =
+        //         'Thanks for logging in, ' + response.name + '!';
+        // });
+    }
+
+    // 點擊登入
+    $("#FB_login").click(function () {
+        // 進行登入程序
+        FB.login(function (response) {
+            statusChangeCallback(response);
+        }, {
+            scope: 'public_profile,email'
+        });
+    });
+
+    //// 點擊登出
+    //$("#FB_logout").click(function () {
+    //    FB.logout(function (response) {
+    //        statusChangeCallback(response);
+    //    });
+    //});
+
+    // 載入 FB SDK
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
 
 

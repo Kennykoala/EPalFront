@@ -114,70 +114,193 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        public ActionResult FBtest()
-        {
-            return View();
-        }
 
-        public ActionResult LoginProcess()
-        {
-            return View();
-        }
 
+        //public ActionResult LoginProcess()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult> LoginProcess(string token)
+        //{
+
+        //    string msg = "ok";
+        //    GoogleJsonWebSignature.Payload payload = null;
+        //    try
+        //    {
+        //        payload = await GoogleJsonWebSignature.ValidateAsync(token, new GoogleJsonWebSignature.ValidationSettings()
+        //        {
+        //            Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
+        //        });
+        //        string email = payload.Email;
+        //        string Id = payload.JwtId;
+        //        string name = payload.Name;
+        //    }
+        //    catch (Google.Apis.Auth.InvalidJwtException ex)
+        //    {
+        //        msg = ex.Message;
+        //    }
+        //    catch (Newtonsoft.Json.JsonReaderException ex)
+        //    {
+        //        msg = ex.Message;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        msg = ex.Message;
+        //    }
+
+        //    if (msg == "ok" && payload != null)
+        //    {//都成功
+        //        string user_id = payload.Subject;//取得user_id
+        //        msg = $@"您的 user_id :{user_id}";
+        //    }
+
+        //    return Content(msg);
+
+        //    ////// Nuget套件 System.IdentityModel.Tokens.Jwt
+        //    ////var user = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(token);
+
+        //    //// 除此之外，也可以透過Google API 取得
+        //    //var url = $"https://oauth2.googleapis.com/tokeninfo?id_token={token}";
+        //    //var client = _clientFactory.CreateClient();
+        //    //var response = await client.GetAsync(url);
+        //    //if (response.IsSuccessStatusCode)
+        //    //{
+        //    //    var responseContent = await response.Content.ReadAsStringAsync();
+        //    //    // 略...
+        //    //}
+
+        //    //return View();
+        //}
+
+
+
+
+        //FB  
         [HttpPost]
-        public async Task<ActionResult> LoginProcess(string token)
+        public ActionResult FBLogin(string Fbemail, string Fbname)
         {
-
             string msg = "ok";
-            GoogleJsonWebSignature.Payload payload = null;
-            try
+            string email;
+            string fullname;
+
+            if (msg == "ok" && Fbemail != null)
             {
-                payload = await GoogleJsonWebSignature.ValidateAsync(token, new GoogleJsonWebSignature.ValidationSettings()
+                email = Fbemail;
+                fullname = Fbname;
+                //確認是否已註冊FB
+                //var memberDM = _MemberService.MemberLoginData()
+                //            .Where(m => m.Email == email   )
+                //            .FirstOrDefault();
+                var memberRVM = _MemberService.MemberRigisterData()
+                            .Where(m => m.Email == email)
+                            .FirstOrDefault();
+
+                if (memberRVM == null)
                 {
-                    Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
-                });
-                string email = payload.Email;
-                string Id = payload.JwtId;
-                string name = payload.Name;
-            }
-            catch (Google.Apis.Auth.InvalidJwtException ex)
-            {
-                msg = ex.Message;
-            }
-            catch (Newtonsoft.Json.JsonReaderException ex)
-            {
-                msg = ex.Message;
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
+                    Random rnd = new Random(Guid.NewGuid().GetHashCode());
+                    string rndnumber = rnd.Next(0, 100).ToString();
+                    //將密碼Hash
+                    rndnumber = _MemberService.HashPassword(rndnumber);
 
-            if (msg == "ok" && payload != null)
-            {//都成功
-                string user_id = payload.Subject;//取得user_id
-                msg = $@"您的 user_id :{user_id}";
-            }
+                    //GroupViewModel -> DM
+                    Members emp = new Members
+                    {
+                        Email = email,
+                        Password = rndnumber,
+                        //LoginMethod = "2"
+                    };
+                    db.Members.Add(emp);
+                    db.SaveChanges();
 
+
+                    //var getmeminfo = _MemberService.MemberLoginData()
+                    //                .Where(m => m.Email == email   )
+                    //                .FirstOrDefault();
+
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = fullname,
+                        //ProfilePicture = memberRVM.ProfilePicture
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+
+
+                    //msg = "新增會員成功";
+                    //return Content(msg);
+                    //return RedirectToAction("HomePage", "Home");
+                }
+                else
+                {
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        MemberName = memberRVM.MemberName,
+                        ProfilePicture = memberRVM.ProfilePicture
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: email.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+                    ////4.取得original URL.
+                    //var url = FormsAuthentication.GetRedirectUrl(email, true);
+
+                    ////5.導向original URL
+                    //return Redirect(url);
+
+
+
+                    ////都成功
+                    //string user_id = payload.Subject;//取得user_id
+                    //msg = $@"您的 user_id :{user_id}";
+                    //return Content(msg);
+
+                }
+
+                //return Json(email);
+                return Json(true);
+            }
+            msg = "error";
             return Content(msg);
 
-            ////// Nuget套件 System.IdentityModel.Tokens.Jwt
-            ////var user = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(token);
-
-            //// 除此之外，也可以透過Google API 取得
-            //var url = $"https://oauth2.googleapis.com/tokeninfo?id_token={token}";
-            //var client = _clientFactory.CreateClient();
-            //var response = await client.GetAsync(url);
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await response.Content.ReadAsStringAsync();
-            //    // 略...
-            //}
-
-            //return View();
         }
-
-
 
 
 
