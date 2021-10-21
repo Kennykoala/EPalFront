@@ -131,11 +131,6 @@ window.onload = function () {
                             window.location.href = '/'
                         }
 
-                        //return User.Identity.IsAuthenticated;
-
-                        //logbtn.style.display="none";
-                        //signbtn.style.display = "none";
-                        //logoutbtn.style.display = "block";
 
                     }
                 });//end $.ajax

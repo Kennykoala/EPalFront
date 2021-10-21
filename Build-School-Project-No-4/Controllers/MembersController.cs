@@ -280,7 +280,7 @@ namespace Build_School_Project_No_4.Controllers
 
                     //msg = "新增會員成功";
                     //return Content(msg);
-                    //return RedirectToAction("HoemPage", "Home");
+                    //return RedirectToAction("HomePage", "Home");
                 }
                 else
                 {
