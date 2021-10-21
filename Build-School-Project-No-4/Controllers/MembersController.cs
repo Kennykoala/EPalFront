@@ -240,11 +240,6 @@ namespace Build_School_Project_No_4.Controllers
                     var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(cookie);
 
-
-
-                    //msg = "新增會員成功";
-                    //return Content(msg);
-                    //return RedirectToAction("HomePage", "Home");
                 }
                 else
                 {
@@ -277,7 +272,6 @@ namespace Build_School_Project_No_4.Controllers
 
                 }
 
-                //return Json(email);
                 return Json(true);
             }
             msg = "error";
@@ -407,19 +401,6 @@ namespace Build_School_Project_No_4.Controllers
                     var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(cookie);
 
-                    ////4.取得original URL.
-                    //var url = FormsAuthentication.GetRedirectUrl(email, true);
-
-                    ////5.導向original URL
-                    //return Redirect(url);
-
-
-
-                    ////都成功
-                    //string user_id = payload.Subject;//取得user_id
-                    //msg = $@"您的 user_id :{user_id}";
-                    //return Content(msg);
-
                 }
 
                 return Json(true);
@@ -427,83 +408,10 @@ namespace Build_School_Project_No_4.Controllers
             msg = "error";
             return Content(msg);
 
-            //if (msg == "ok" && payload != null)
-            //{   
-            //    //都成功
-            //    string user_id = payload.Subject;//取得user_id
-            //    msg = $@"您的 user_id :{user_id}";
-            //}
-            //return Content(msg);
-
         }
 
 
 
-
-
-
-
-
-
-
-
-
-        //[HttpGet]
-        //[Authorize]
-        //public ActionResult GetAvatar()
-        //{
-        //    Members emp = db.Members.Find(int.Parse(GetMemberId()));
-        //    if (emp == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    GroupViewModel groupMember = new GroupViewModel()
-        //    {
-        //        MemberInfo = new MemberInfoViewModel()
-        //    };
-
-        //    //DM -> MemberInfoViewModel -> GroupViewModel
-        //    MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
-        //    {
-        //        //MemberId = emp.MemberId,
-        //        ProfilePicture = emp.ProfilePicture
-        //    };
-
-        //    groupMember.MemberInfo = MemberInfo;
-        //    ViewBag.Avatar = groupMember;
-
-        //    return View("EditProfile");
-        //}
-
-
-        //[HttpGet]
-        //[Authorize]
-        //public ActionResult GetAvatarForLayout()
-        //{
-        //    Members emp = db.Members.Find(int.Parse(GetMemberId()));
-        //    if (emp == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    GroupViewModel groupMember = new GroupViewModel()
-        //    {
-        //        MemberInfo = new MemberInfoViewModel()
-        //    };
-
-        //    //DM -> MemberInfoViewModel -> GroupViewModel
-        //    MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
-        //    {
-        //        //MemberId = emp.MemberId,
-        //        ProfilePicture = emp.ProfilePicture
-        //    };
-
-        //    groupMember.MemberInfo = MemberInfo;
-        //    ViewBag.Avatar = groupMember;
-
-        //    return View("_Layout_nofooter", groupMember);
-        //}
 
 
 
