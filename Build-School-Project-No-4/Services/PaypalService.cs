@@ -106,11 +106,11 @@ namespace Build_School_Project_No_4.Services
             return this.payment.Create(apiContext);
         }
 
-        public bool PaymentTransaction(int paymentId)
-        {
-            //change primary key and foreign key in payments and order
-            return true;
-        }
+        //public bool PaymentTransaction(int paymentId)
+        //{
+        //    //change primary key and foreign key in payments and order
+        //    return true;
+        //}
 
     }
 }

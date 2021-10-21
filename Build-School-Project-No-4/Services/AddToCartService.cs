@@ -14,7 +14,7 @@ namespace Build_School_Project_No_4.Services
             _ctx = new EPalContext();
         }
 
-        public Orders CreateUnpaidOrder(DetailViewModel AddCartVM, string startTime, int id)
+        public Orders CreateUnpaidOrder(AddToCartViewModel AddCartVM, string startTime, int id)
         {
             //var cart = AddCartVM;
             var timeNow = DateTime.Now;

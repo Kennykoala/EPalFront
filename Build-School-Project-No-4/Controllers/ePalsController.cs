@@ -74,7 +74,7 @@ namespace Build_School_Project_No_4.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Detail(GroupViewModel AddCartVM, string startTime, int id)
+        public ActionResult Detail(AddToCartViewModel AddCartVM, string startTime, int id)
         {
 
             string currentUrl = Request.Url.AbsoluteUri;
@@ -116,17 +116,18 @@ namespace Build_School_Project_No_4.Controllers
             return View(checkoutVM);
         }
         [HttpPost]
-        public ActionResult Checkout(GroupViewModel x, string confirmation, string payType)
+        public ActionResult Checkout(CheckoutViewModel x, string confirmation, string payType)
         {
-            
+            TempData["confirmation"] = confirmation;
             //add 判斷 for routing to right payment action
-            if (payType == "payal")
+            if (payType == "paypal")
             {
                 return RedirectToAction("PaymentWithPaypal", "Checkout");
             }
             else
             {
-                return RedirectToAction("PaymentWithEcPay", "Checkout");
+                //return RedirectToAction("PaymentWithEcPay", "Checkout");
+                return Content("hi");
             }
             
             
