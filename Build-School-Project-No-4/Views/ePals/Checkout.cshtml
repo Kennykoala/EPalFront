@@ -1,8 +1,8 @@
-﻿@model GroupViewModel
+﻿@model CheckoutViewModel
 @{
     ViewBag.Title = "Checkout";
     //var ck = Model.Checkout;
-    var startTime = Model.Checkout.StartTime.ToString("MM/dd/yyyy hh:mm tt");
+    var startTime = Model.StartTime.ToString("MM/dd/yyyy hh:mm tt");
 }
 @section topCSS{
     <link href="~/Assets/css/checkout.css" rel="stylesheet" />
@@ -20,13 +20,13 @@
                 <div class="cart-summary">
                     <div class="order-info">
                         <div class="order-id greyish">OrderID:</div>
-                        <div class="order-id-value greyish">@Model.Checkout.OrderConfirmation</div>
+                        <div class="order-id-value greyish">@Model.OrderConfirmation</div>
                     </div>
                     <hr>
 
                     <div class="game-info">
-                        <div class="game-play">Play @Model.Checkout.GameName with @Model.Checkout.PlayerName</div>
-                        <img src="@Model.Checkout.PlayerPic" />
+                        <div class="game-play">Play @Model.GameName with @Model.PlayerName</div>
+                        <img src="@Model.PlayerPic" />
                     </div>
 
                     <div class="start-info">
@@ -36,17 +36,17 @@
 
                     <div class="unit-price">
                         <div class="greyish">Unit Price:</div>
-                        <div class="price desc">$@Model.Checkout.UnitPrice.ToString("N2")/G</div>
+                        <div class="price desc">$@Model.UnitPrice.ToString("N2")/G</div>
                     </div>
 
                     <div class="rounds-info">
                         <div class="greyish">Rounds:</div>
-                        <div class="rounds-value desc">@Model.Checkout.Rounds</div>
+                        <div class="rounds-value desc">@Model.Rounds</div>
                     </div>
                     <hr>
                     <div class="subtotal-info">
                         <div class="greyish">Subtotal:</div>
-                        <div class="subtotal desc">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
+                        <div class="subtotal desc">$@((Model.Rounds * Model.UnitPrice).ToString("N2"))</div>
                     </div>
                     <div class="promotion">
                         <div class="greyish">ePal Promotion: </div>
@@ -55,13 +55,14 @@
                     <hr>
                     <div class="final-price-div">
                         <div class="greyish">Final Price:</div>
-                        <div class="rounds-total greyish">@Model.Checkout.Rounds Round(s) total</div>
-                        <div class="price-total price-summary">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
+                        <div>@Model.Rounds Round(s) total</div>
+                        <div class="price-total price-summary">$@((Model.Rounds * Model.UnitPrice).ToString("N2"))</div>
                     </div>
-                    <div class="timer-div greyish">
-                        Please complete the payment within <span class="time-left" id="counter"></span><span class="testtest"></span>, otherwise the order will be cancelled automatically
+                    
+                </div>
+                <div class="timer-div greyish">
+                    Please complete the payment within <span class="time-left" id="counter"></span><span class="testtest"></span>, otherwise the order will be cancelled automatically
 
-                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-8">
@@ -83,6 +84,8 @@
 
             </div>
         </div>
+           
+        </div>
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -90,7 +93,7 @@
                 <div class="col-12">
                     <div class="total-div">
                         <div class="total-price">Total Price</div>
-                        <div class="price-total price-total-txt">$@((Model.Checkout.Rounds * Model.Checkout.UnitPrice).ToString("N2"))</div>
+                        <div class="price-total price-total-txt">$@((Model.Rounds * Model.UnitPrice).ToString("N2"))</div>
                         <div class="checkout-btn-div">
                             <button class="checkout-btn" type="submit">Checkout</button>
                         </div>
@@ -101,7 +104,7 @@
         }
 
     </div>
-</div>
+
 
 @section endJS{
     
@@ -131,7 +134,7 @@
     else {
         timer.innerText = "---";
         alert('Session has timed out, please try placing a new order');
-        window.location = `/detail/detailpage/@Model.Checkout.ProductId`;
+        window.location = `/detail/detailpage/@Model.ProductId`;
     }
 
 
@@ -149,7 +152,7 @@
 
             clearInterval(setTime);
             alert('Session has timed out, please try placing a new order');
-            window.location = `/detail/detailpage/@Model.Checkout.ProductId`;
+            window.location = `/detail/detailpage/@Model.ProductId`;
         } else {
             timer.innerText = `${min}m ${sec}s`;
         }

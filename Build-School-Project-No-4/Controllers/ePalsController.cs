@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Build_School_Project_No_4.Services;
 using Build_School_Project_No_4.ViewModels;
-using Build_School_Project_No_4.Repositories;
 using Build_School_Project_No_4.DataModels;
 
 
@@ -34,16 +29,10 @@ namespace Build_School_Project_No_4.Controllers
             {
                 return RedirectToAction("ePal", "ePals", new { id = 1 });
             }
-            //var ProductCards = _productService.GetProductCardsData(id.Value);
             var GamesDeatils = _productService.GetGamesAllAndDeatils(id.Value);
 
-            GroupViewModel result = new GroupViewModel
-            {
-                GamesDetails = GamesDeatils,
-                //ProductCards = ProductCards
-            };
-            //ViewBag.ProductCard = _productService.GetProductCardsJson(id.Value);
-            return View("ePal",result);
+           
+            return View("ePal", GamesDeatils);
         }
 
         public ActionResult GamesJson(int id)
@@ -52,8 +41,6 @@ namespace Build_School_Project_No_4.Controllers
 
             return View();
         }
-
-
 
         /// <summary>
         /// Sonias shit don't touch
@@ -80,15 +67,12 @@ namespace Build_School_Project_No_4.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            GroupViewModel groupVM = new GroupViewModel
-            {
-                Deets = playerListing
-            };
-            return View(groupVM);
+
+            return View(playerListing);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DetailPage(GroupViewModel AddCartVM, string startTime, int id)
+        public ActionResult DetailPage(DetailViewModel AddCartVM, string startTime, int id)
         {
             var unpaid = _cartService.CreateUnpaidOrder(AddCartVM, startTime, id);
             var isSuccess = _cartService.AddCartSuccess(unpaid);
@@ -113,14 +97,15 @@ namespace Build_School_Project_No_4.Controllers
             }
             var checkoutVM = _checkoutService.GetCheckoutDetails(confirmation);
 
-            GroupViewModel groupVM = new GroupViewModel
-            {
-                Checkout = checkoutVM
-            };
-            return View(groupVM);
+            //GroupViewModel groupVM = new GroupViewModel
+            //{
+            //    Checkout = checkoutVM
+            //};
+
+            return View(checkoutVM);
         }
         [HttpPost]
-        public ActionResult Checkout(GroupViewModel x, string confirmation)
+        public ActionResult Checkout(CheckoutViewModel x, string confirmation)
         {
             TempData["confirmation"] = confirmation;
             return RedirectToAction("PaymentWithPaypal", "Checkout");

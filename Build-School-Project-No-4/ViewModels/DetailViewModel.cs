@@ -21,5 +21,15 @@ namespace Build_School_Project_No_4.ViewModels
         public string RankName { get; set; }
         public string LanguageName { get; set; }
         public string MobileGameImg { get; set; }
+
+
+
+        public int Rounds { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        //public decimal CartUnitPrice { get; set; }
+        public int OrderId { get; set; }
+        //public int PlayerId { get; set; }
     }
 }

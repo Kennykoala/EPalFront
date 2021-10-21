@@ -1,4 +1,4 @@
-﻿@model GroupViewModel
+﻿@model CategoryViewModel
 <div class="wrapper">
     <div class="section">
         <div id="root">
@@ -10,7 +10,7 @@
                         <!-- Main-Body-Header-Title -->
                         <div class="body-Header-Title">
                             <div class="title-Text">
-                                <h1>@Model.GamesDetails.GameTitle</h1>
+                                <h1>@Model.GameTitle</h1>
                                 <div class="start-Icon">
                                     <i class="fas fa-star gold-star"></i>
                                 </div>
@@ -37,293 +37,107 @@
                             <div class="filter-Game">
                                 <div class="filter-Game-Left">
                                     <div class="filter-Game-Text">Filter</div>
-                                    <div class="btn-Box">
+                                    @*<div class="btn-Box">
                                         <button id="group-Btn" class="btn" type="button">Click me</button>
-                                    </div>
+                                    </div>*@
                                     <div class="filter-Game-Group">
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Server
+                                            </div>
 
+                                            <ul class="dropdown-menu server-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">OCE</span></li>
+                                                <li><span class="dropdown-item">NA</span></li>
+                                                <li><span class="dropdown-item">LAN</span></li>
+                                                <li><span class="dropdown-item">BR</span></li>
+                                                <li><span class="dropdown-item">EU West</span></li>
+                                                <li><span class="dropdown-item">EU NorthEast</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Language
+                                            </div>
 
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-1">
-                                            <label for="filter-Item-check-1">
-                                                <div class="filter-Item-Text">Server</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List server-list">
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>OCE</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>NA</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>LAN</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>BR</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>EU West</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>EU North East</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                            <ul class="dropdown-menu language-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">Nederlands</span></li>
+                                                <li><span class="dropdown-item">Deutsch</span></li>
+                                                <li><span class="dropdown-item">English</span></li>
+                                                <li><span class="dropdown-item">Français</span></li>
+                                                <li><span class="dropdown-item">Español_AR</span></li>
+                                                <li><span class="dropdown-item">日本語</span></li>
+                                                <li><span class="dropdown-item">繁體中文</span></li>
+                                            </ul>
                                         </div>
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-2">
-                                            <label for="filter-Item-check-2">
-                                                <div class="filter-Item-Text">Language</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List language-list">
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>English</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Deutsch</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Nederlands</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Français</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Español (AR)</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Gender
+                                            </div>
+                                            <ul class="dropdown-menu gender-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">Male</span></li>
+                                                <li><span class="dropdown-item">Female</span></li>
+                                            </ul>
                                         </div>
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-3">
-                                            <label for="filter-Item-check-3">
-                                                <div class="filter-Item-Text">Gender</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List gender-list">
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Male</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Female</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Nonconforming</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Status
+                                            </div>
+
+                                            <ul class="dropdown-menu status-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">OnLine</span></li>
+                                                <li><span class="dropdown-item">OffLine</span></li>
+                                            </ul>
                                         </div>
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-4">
-                                            <label for="filter-Item-check-4">
-                                                <div class="filter-Item-Text">All Status</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List status-list">
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>All Status</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Online</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Offline</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Level
+                                            </div>
+
+                                            <ul class="dropdown-menu level-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">Iron</span></li>
+                                                <li><span class="dropdown-item">Bronze</span></li>
+                                                <li><span class="dropdown-item">Silver</span></li>
+                                                <li><span class="dropdown-item">Gold</span></li>
+                                                <li><span class="dropdown-item">Platinum</span></li>
+                                                <li><span class="dropdown-item">Diamond</span></li>
+                                            </ul>
                                         </div>
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-5" name="Iron">
-                                            <label for="filter-Item-check-5">
-                                                <div class="filter-Item-Text">Level</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List level-list">
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Iron</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Bronze</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Silver</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Gold</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Platinum</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>Diamond</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Price
+                                            </div>
+
+                                            <ul class="dropdown-menu price-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">1-5</span></li>
+                                                <li><span class="dropdown-item">5.0 - 10</span></li>
+                                                <li><span class="dropdown-item">10.0 - 20</span></li>
+                                                <li><span class="dropdown-item">20.0 - 999</span></li>
+
+                                            </ul>
                                         </div>
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-6">
-                                            <label for="filter-Item-check-6">
-                                                <div class="filter-Item-Text">Price</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List price-list">
-                                                        <a href="#">
-                                                            <div class="list-Item d-flex align-items-center">
-                                                                <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg" Alternate Text" />
-                                                                <p>1-5</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item d-flex align-items-center">
-                                                                <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg" Alternate Text" />
-                                                                <p>5.0 - 10</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item d-flex align-items-center">
-                                                                <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg" Alternate Text" />
-                                                                <p>10.0 - 20</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item d-flex align-items-center">
-                                                                <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg" Alternate Text" />
-                                                                <p>20+</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <div class="filter-Game-Item">
-                                            <input type="checkbox" id="filter-Item-check-7">
-                                            <label for="filter-Item-check-7">
-                                                <div class="filter-Item-Text">Age</div>
-                                                <div class="filter-Icon">
-                                                    <i class="fas fa-caret-down"></i>
-                                                </div>
-                                                <div class="gameFilter-Item-SelectWrapper">
-                                                    <div class="selectWrapper-List age-list">
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>18 - 25</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>26 - 30</p>
-                                                            </div>
-                                                        </a>
-                                                        <a href="#">
-                                                            <div class="list-Item">
-                                                                <p>30+</p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                        <div class="dropdown">
+                                            <div class="btn btn-secondary dropdown-toggle" role="button"
+                                                 id="server" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Age
+                                            </div>
+
+                                            <ul class="dropdown-menu age-list" aria-labelledby="server" id="abc">
+                                                <li><span class="dropdown-item">18 - 25</span></li>
+                                                <li><span class="dropdown-item">26 - 30</span></li>
+                                                <li><span class="dropdown-item">30 - 60</span></li>
+                                            </ul>
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="filter-Game-Right">
-                                    <div class="filter-Game-Text">
-                                        Sort by
-                                    </div>
-                                    <div class="filter-Game-Item">
-                                        <input type="checkbox" id="filter-Item-check-10">
-                                        <label for="filter-Item-check-10">
-                                            <div class="filter-Item-Text">Score</div>
-                                            <div class="filter-Icon">
-                                                <i class="fas fa-caret-down"></i>
-                                            </div>
-                                            <div class="gameFilter-Item-SelectWrapper">
-                                                <div class="selectWrapper-List">
-                                                    <a href="#">
-                                                        <div class="list-Item">
-                                                            <p>General</p>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="list-Item">
-                                                            <p>Orders</p>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#">
-                                                        <div class="list-Item">
-                                                            <p>Score</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
+                                <div class="filter-Game-Right"></div>
                             </div>
                         </div>
                     </div>
@@ -331,79 +145,7 @@
                     <div class="main-Body-CardArea">
                         <div class="container-fluid">
                             <div class="row card-Row">
-                                <template id='cardCreator'>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 my-3">
-                                        <div class="item-Card">
-                                            <a href="..." id="card">
-                                                <div class="card">
-                                                    <div class="card-Head">
-                                                        <div class="head-Person-Pic">
-                                                            <img src="" alt="">
-                                                            <div class="head-Status">
-                                                                <div class="status-Pic">
-                                                                    <img src="" alt="">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-Body">
-                                                        <div class="user-Info">
-                                                            <div class="user-Info-Name">
-                                                                <span></span>
-                                                            </div>
-                                                            <div class="uesr-Info-Icon">
-                                                                <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
-                                                                     alt="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="user-Title">
-                                                            <div class="user-Title-Item">
-                                                                <span></span>
-                                                                <span></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="user-Voice">
-                                                            <div class="voice-Left">
-                                                                <span class="w-15"></span>
-                                                                <span class="w-10"></span>
-                                                                <span class="w-15"></span>
-                                                            </div>
-                                                            <div class="voice-Right">
-                                                                <i class="fas fa-play"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-Footer">
-                                                        <div class="footer-Discound">
-                                                            <p>1st ORDER FREE</p>
-                                                        </div>
-                                                        <div class="footer-Price">
-                                                            <div class="price">
-                                                                <div class="price-Icon">
-                                                                    <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg"
-                                                                         alt="">
-                                                                </div>
-                                                                <div class="price-Text">
-                                                                    <p>
-                                                                        <span class="price-Span"></span>.00/G
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="rate">
-                                                                <div class="rate-Icon">
-                                                                    <i class="fas fa-star"></i>
-                                                                </div>
-                                                                <div class="rate-Text">
-                                                                    <p>5.0<span>(85)</span></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </template>
+
                             </div>
                             <div class="row">
                                 <div class="recommendWapper col-12">
@@ -446,14 +188,87 @@
                                         </div>
                                     </a>
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <template id='cardCreator'>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 my-3">
+            <div class="item-Card">
+                <a href="..." id="card">
+                    <div class="card">
+                        <div class="card-Head">
+                            <div class="head-Person-Pic">
+                                <img src="" alt="">
+                                <div class="head-Status">
+                                    <div class="status-Pic">
+                                        <img src="" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-Body">
+                            <div class="user-Info">
+                                <div class="user-Info-Name">
+                                    <span></span>
+                                </div>
+                                <div class="uesr-Info-Icon">
+                                    <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
+                                         alt="">
+                                </div>
+                            </div>
+                            <div class="user-Title">
+                                <div class="user-Title-Item">
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="user-Voice">
+                                <div class="voice-Left">
+                                    <span class="w-15"></span>
+                                    <span class="w-10"></span>
+                                    <span class="w-15"></span>
+                                </div>
+                                <div class="voice-Right">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-Footer">
+                            <div class="footer-Discound">
+                                <p>1st ORDER FREE</p>
+                            </div>
+                            <div class="footer-Price">
+                                <div class="price">
+                                    <div class="price-Icon">
+                                        <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg"
+                                             alt="">
+                                    </div>
+                                    <div class="price-Text">
+                                        <p>
+                                            <span class="price-Span"></span>.00/G
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="rate">
+                                    <div class="rate-Icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="rate-Text">
+                                        <p>5.0<span>(85)</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </template>
 
     <!-- SideBar -->
     <div class="sidebar">
@@ -477,7 +292,7 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            @foreach (var m in Model.GamesDetails.GameAll)
+                            @foreach (var m in Model.GameAll)
                             {
                                 <a href="@Url.Action("ePal","ePals",new {id = m.GameId})">
                                     <span>
@@ -539,9 +354,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-
         /* 手機直向 */
-
         @@media screen and (max-width:767px) {
             #root {
                 margin-top: 0px;
@@ -809,7 +622,7 @@
             margin-top: 60px;
             margin: auto;
             height: 300px;
-            background-image: url("@Model.GamesDetails.GameCoverImg");
+            background-image: url("@Model.GameCoverImg");
             background-size: cover;
             background-position: center center;
         }
@@ -937,7 +750,78 @@
 
 
         /* Game */
+        .dropdown{
+            margin:10px 0;
+        }
+        .dropdown .btn {
+            padding: 0 10px;
+            font-size: 14px;
+            margin-right: 10px;
+            border-radius: 10px;
+            color: #c4c3e6;
+            background-color: #302F3D;
+            border: none;
+        }
 
+
+            .dropdown .btn:focus,
+            .btn-check:active + .btn-secondary:focus,
+            .btn-check:checked + .btn-secondary:focus,
+            .btn-secondary.active:focus,
+            .btn-secondary:active:focus,
+            .show > .btn-secondary.dropdown-toggle:focus {
+                box-shadow: none;
+            }
+
+        .btn-check:active + .btn-secondary,
+        .btn-check:checked + .btn-secondary,
+        .btn-secondary.active,
+        .btn-secondary:active,
+        .show > .btn-secondary.dropdown-toggle {
+            background-color: #302F3D;
+        }
+
+
+        .dropdown-toggle::after {
+            vertical-align: 0.155em;
+        }
+
+        .dropdown-menu span {
+            padding: 10px;
+            color: #fff;
+            margin: 0 5px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            background-color: #302F3D;
+            border-radius: 10px;
+        }
+
+        .dropdown-item {
+            width: auto;
+        }
+
+            .dropdown-item:active {
+                background-color: #120E1B;
+            }
+
+            .dropdown-item:hover {
+                background-color: #120E1B;
+                color: #fff;
+            }
+
+
+        .bg-black1 {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAeFBMVEUAAACqgP+Sbf+VavSOZu6Qae6QaO2NZuuOZ+qNZuuOZeuOZeqNZeuOZeuOZuuNZeuOZuqNZeqNZeqPaOqQaeqUbuuWceubeOyefe2ffe2lhe6lhu7GsvTPvvbQv/bUxffZy/jd0fjq4/vx7Pz08P308f349f3///9W78FDAAAAEnRSTlMABgcYLS5HgpWWv8fZ4/Hy8/TT2gOVAAAA7UlEQVQ4y4WT20LDIBBEl6AECIlhvNQLXmqr+/9/6AM0DQnIPHIGWJZZokVCaevm2VmtBO0lzYRFk5Eb3PUemXzfZdsH7DSsDrkdUdB4s+wvcmBMZ3QDKhpiHT2q6omIpK8bvCQig39kiMRUJPepY4JUkX8ck0ORLnLm4wMAQJMtc+ZPAIAlV+HnZwCAozmtHr7fChzzxXA48e/rnuMuXfF4Yo6OnMNdigwcHe85h12eGR1fzMznl2vB+tqowEk/Kw61anUo8EmsPyvsOEz+3WHLvdwEJuQ8BiaL3FMpcs3QtmPfHpz26LWHtz7+f42dP2nUknWiAAAAAElFTkSuQmCC');
+            background-repeat: no-repeat;
+            background-position: 120px;
+            background-size: 20px;
+        }
+
+
+        /*----------------------------------*/
         .filter-Game-Text {
             color: #fff;
             margin-left: 10px;
@@ -960,7 +844,6 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            padding: auto;
         }
 
         .filter-Game-Item {
@@ -990,25 +873,35 @@
 
         .selectWrapper-List .list-Item {
             list-style: none;
-            width: 118px;
+            width: 130px;
             padding: 5px 12px;
             margin: 5px;
             border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
         }
-
-        #filter-Item-check-1,
-        #filter-Item-check-2,
-        #filter-Item-check-3,
-        #filter-Item-check-4,
-        #filter-Item-check-5,
-        #filter-Item-check-6,
-        #filter-Item-check-7,
-        #filter-Item-check-8,
-        #filter-Item-check-9,
-        #filter-Item-check-10 {
-            position: absolute;
-            opacity: 0;
-        }
+            .selectWrapper-List .list-Item:hover{
+                background-color:#120E1B;
+            }
+            .selectWrapper-List .list-Item span {
+                width: 10px;
+                height: 10px;
+                line-height: 10px;
+            }
+            #filter-Item-check-1,
+            #filter-Item-check-2,
+            #filter-Item-check-3,
+            #filter-Item-check-4,
+            #filter-Item-check-5,
+            #filter-Item-check-6,
+            #filter-Item-check-7,
+            #filter-Item-check-8,
+            #filter-Item-check-9,
+            #filter-Item-check-10 {
+                position: absolute;
+                opacity: 0;
+            }
 
         #filter-Item-check-1 ~ label,
         #filter-Item-check-2 ~ label,
@@ -1564,94 +1457,160 @@
         let listItem = document.querySelectorAll('.list-Item');
 
         var filterObj = {};
-        var ageArr = [];
         var serverArr = [];
-        var genderArr = [];
         var languageArr = [];
-        var priceArr = [];
-        var statusArr = [];
         var levelArr = [];
-
+        var highAge;
+        var lowAge;
+        var highPrice;
+        var lowPrice;
+        var gender;
+        var status;
         filterObj = {
             CategoryId: lastId,
-            Age: ageArr,
+            HighAge: highAge,
+            LowAge: lowAge,
+            HighPrice : highPrice,
+            LowPrice : lowPrice,
             Server: serverArr,
-            Gender: genderArr,
+            Gender: gender,
             Language: languageArr,
-            UnitPrice: priceArr,
-            Status: statusArr,
+            Status: status,
             level:levelArr
         }
         
-        let status = document.querySelectorAll('.status-list a .list-Item')
-        console.log(status)
-        let language = document.querySelectorAll('.language-list a .list-Item')
-        let age = document.querySelectorAll('.age-list a .list-Item')
-        let price = document.querySelectorAll('.price-list a .list-Item')
-        let server = document.querySelectorAll('.server-list a .list-Item')
-        let gender = document.querySelectorAll('.gender-list a .list-Item')
-        let level = document.querySelectorAll('.level-list a .list-Item')
-        status.forEach(x => {
+        let statuslist = document.querySelectorAll('.status-list li > .dropdown-item')
+        console.log(statuslist)
+        let languagelist = document.querySelectorAll('.language-list li > .dropdown-item')
+        let agelist = document.querySelectorAll('.age-list li > .dropdown-item')
+        let pricelist = document.querySelectorAll('.price-list li > .dropdown-item')
+        let serverlist = document.querySelectorAll('.server-list li > .dropdown-item')
+        let genderlist = document.querySelectorAll('.gender-list li > .dropdown-item')
+        console.log(genderlist)
+        let levellist = document.querySelectorAll('.level-list li > .dropdown-item')
+
+        statuslist.forEach(x => {
             x.addEventListener('click', () => {
-                updateVegetablesCollection(statusArr, x.innerText)
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                if (filterObj.status === undefined) {
+                    filterObj.status = x.innerText;
+                    console.log(filterObj.status)
+                }
+                else if (filterObj.status == x.innerText) {
+                    delete (filterObj.status)
+                    console.log(filterObj.status)
+                }
+                else {
+                    y.classList.add('d-none')
+                    filterObj.status = x.innerText;
+                    console.log(filterObj.status)
+                }
+               
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
             })
         })
 
-        language.forEach(x => {
+        languagelist.forEach(x => {
             x.addEventListener('click', () => {
-                updateVegetablesCollection(languageArr, x.innerText)
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                addOrRemove(languageArr, x.innerText)
                 console.log(JSON.stringify(filterObj))
                 sendfilter(filterObj)
             })
         })
-        age.forEach(x => {
+        agelist.forEach(x => {
             x.addEventListener('click', () => {
-                updateVegetablesCollection(ageArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
-            })
-        })
-        price.forEach(x => {
-            x.addEventListener('click', () => {
-                updateVegetablesCollection(priceArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
-            })
-        })
-        server.forEach(x => {
-            x.addEventListener('click', () => {
-                updateVegetablesCollection(serverArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
-            })
-        })
-        gender.forEach(x => {
-            x.addEventListener('click', () => {
-                updateVegetablesCollection(genderArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
-            })
-        })
-        level.forEach(x => {
-            x.addEventListener('click', () => {
-                updateVegetablesCollection(levelArr, x.innerText)
-                console.log(JSON.stringify(filterObj))
-                sendfilter(filterObj)
-            })
-        })
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                let temp = x.innerText;
+                let result = temp.split(/- /g).slice(0);
 
+                if (filterObj.lowAge ===  undefined) {
+                    filterObj.lowAge = result[0]
+                }
+                else {
+                    delete (filterObj.lowAge)
+                }
+                if (filterObj.highAge === undefined) {
+                    filterObj.highAge = result[1]   
+                }
+                else {
+                    delete (filterObj.highAge)
+                }
+                             
+                console.log(JSON.stringify(filterObj))
+                sendfilter(filterObj)
+            })
+        })
+        pricelist.forEach(x => {
+            x.addEventListener('click', () => {
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                let temp = x.innerText;
+                let result = temp.split(/-/g).slice(0);
+
+                if (filterObj.lowPrice === undefined) {
+                    filterObj.lowPrice = result[0]
+                }
+                else {
+                    delete (filterObj.lowPrice)
+                }
+                if (filterObj.highPrice === undefined) {
+                    filterObj.highPrice = result[1]
+                }
+                else {
+                    delete (filterObj.highPrice)
+                }
+                console.log(JSON.stringify(filterObj))
+                sendfilter(filterObj)
+            })
+        })
+        serverlist.forEach(x => {
+            x.addEventListener('click', () => {
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                addOrRemove(serverArr, x.innerText)
+                console.log(JSON.stringify(filterObj))
+                sendfilter(filterObj)
+            })
+        })
+        genderlist.forEach(x => {
+            x.addEventListener('click', () => {
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                if (filterObj.gender === undefined) {
+                    filterObj.gender = x.innerText;
+                }
+                else {
+                    delete (filterObj.gender)
+                }
+                console.log(JSON.stringify(filterObj))
+                sendfilter(filterObj)
+            })
+        })
+        levellist.forEach(x => {
+            x.addEventListener('click', () => {
+                row.innerHTML = "";
+                x.classList.toggle('bg-black1')
+                addOrRemove(levelArr, x.innerText)
+                console.log(JSON.stringify(filterObj))
+                sendfilter(filterObj)
+            })
+        })
         // 檢查陣列內容無重複就加入
-        function updateVegetablesCollection(veggies, veggie) {
-            if (veggies.indexOf(veggie) === -1) {
-                veggies.push(veggie);
-            } else if (veggies.indexOf(veggie) > -1) {
-                console.log(veggie + ' already exists in the veggies collection.');
-            }
+        function addOrRemove(array, value) {
+            var index = array.indexOf(value);
+                if (index === -1) {
+                    array.push(value);
+                } else {
+                    array.splice(index, 1);
+                }          
         }
 
-        axios.get(`https://localhost:44322/api/jsonapi/${lastId}`)
+        axios.get(`/api/jsonapi/${lastId}`)
             .then(function (response) {
                 let CardArray = JSON.parse(response.data).ProductCards
 
@@ -1663,10 +1622,6 @@
             .catch(ex => {
                 console.log(ex)
             })
-
-
-
-        
 
          //Create ProductCards
         function CreateProducts(item) {
@@ -1684,13 +1639,13 @@
 
         //post filter
         function sendfilter(filterObj) {
-            axios.post('https://localhost:44322/api/jsonapi', filterObj).then(res =>
+            axios.post('/api/jsonapi', filterObj).then(res =>
                 JSON.parse(res.data).ProductCards.forEach(x => {
                     CreateProducts(x)
                 })
+                
             )
         }
-
 
         // sideBar
         let left = document.querySelector('.left');
@@ -1738,15 +1693,6 @@
                 }, 400)
             })
         })
-
-
-
-
-
-
-
-
-
     </script>
 }
 
