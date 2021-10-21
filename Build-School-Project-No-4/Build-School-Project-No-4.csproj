@@ -361,6 +361,7 @@
     <Compile Include="Services\EcPayService.cs" />
     <Compile Include="Services\FollowService.cs" />
     <Compile Include="Services\GetCustomerIdService.cs" />
+    <Compile Include="Services\LinePayService.cs" />
     <Compile Include="Services\MailService.cs" />
     <Compile Include="Services\becomeepalService.cs" />
     <Compile Include="Services\MemberService.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="Services\TimestampService.cs" />
     <Compile Include="Services\WalletService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\AddToCartViewModel.cs" />
@@ -383,6 +385,7 @@
     <Compile Include="ViewModels\FilterItemViewModel.cs" />
     <Compile Include="ViewModels\AddgameViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
+    <Compile Include="ViewModels\LinePayViewModel.cs" />
     <Compile Include="ViewModels\MemberAvatarViewModel.cs" />
     <Compile Include="ViewModels\MemberInfoViewModel.cs" />
     <Compile Include="ViewModels\MemberLoginViewModel.cs" />
