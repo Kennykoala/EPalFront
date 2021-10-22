@@ -359,11 +359,16 @@ namespace Build_School_Project_No_4.Controllers
 
                         tran.Commit();
 
-                        //ViewData["Message"] = "使用者儲存成功";
-                        //return Content("創建商品成功");
+                    //ViewData["Message"] = "使用者儲存成功";
+                    //return Content("創建商品成功");
 
                     TempData["message"] = "創建商品成功";
                     return RedirectToAction("BecomeEPalPage", "becomeepal");
+
+
+                    //string script = "window.onload = function () {swal.fire({title: 'Create Game Success', icon: 'success'}); }";
+                    //return JavaScript(script);
+
                 }
                     catch (Exception ex)
                     {

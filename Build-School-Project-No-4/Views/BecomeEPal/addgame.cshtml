@@ -17,6 +17,8 @@
             integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 
@@ -29,6 +31,21 @@
 
     </div>
 
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal.fire({
+                    title: "Create Game Success",
+                    icon: "success",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+                //window.location.href = '/'
+            }
+        </script>
+    }
 
 </body>
 
@@ -494,24 +511,6 @@
         });
 
     </script>
-
-
-    @if (TempData["message"] != null)
-    {
-        <script type="text/javascript">
-            window.onload = function () {
-                swal.fire({
-                    title: "Create Game Success",
-                    icon: "success",
-                    //buttons: true,
-                    //dangerMode: true
-                });
-
-                //window.location.href = '/'
-            }
-        </script>
-    }
-
 
 }
 
