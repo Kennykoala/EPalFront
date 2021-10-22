@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.DataModels;
+using System;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -45,6 +46,45 @@ namespace Build_School_Project_No_4.Services
             }
 
             return result;
+        }
+
+        public bool ValidCheckoutTime(string confirmation)
+        {
+            var orders = _repo.GetAll<Orders>();
+            var members = _repo.GetAll<Members>();
+            var products = _repo.GetAll<Products>();
+            var gameCategories = _repo.GetAll<GameCategories>();
+
+            var result = (from o in orders
+                          join p in products on o.ProductId equals p.ProductId
+                          join m in members on p.CreatorId equals m.MemberId
+                          join g in gameCategories on p.GameCategoryId equals g.GameCategoryId
+                          where o.OrderConfirmation == confirmation
+                          select new CheckoutViewModel
+                          {
+                              //OrderConfirmation = confirmation,
+                              //StartTime = o.DesiredStartTime,
+                              OrderDateTime = o.OrderDate,
+                              //UnitPrice = o.UnitPrice,
+                              //Rounds = o.Quantity,
+                              //PlayerId = p.CreatorId,
+                              //PlayerName = m.MemberName,
+                              //GameName = g.GameName,
+                              //PlayerPic = p.CreatorImg,
+                              //ProductId = p.ProductId
+                          }).SingleOrDefault();
+
+            bool isValid;
+            var dateTimeNow = DateTime.UtcNow;
+            var timeOut = result.OrderDateTime.AddMinutes(15);
+            if (dateTimeNow > timeOut)
+            {
+                return isValid = false;
+            }
+            else
+            {
+                return isValid = true;
+            }
         }
     }
 }

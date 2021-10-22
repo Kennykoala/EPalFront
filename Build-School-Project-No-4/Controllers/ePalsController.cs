@@ -119,18 +119,27 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult Checkout(CheckoutViewModel x, string confirmation, string payType)
         {
             TempData["confirmation"] = confirmation;
-            //add 判斷 for routing to right payment action
-            if (payType == "paypal")
+
+            bool canCheckout = _checkoutService.ValidCheckoutTime(confirmation);
+            if (canCheckout == false)
             {
-                return RedirectToAction("PaymentWithPaypal", "Checkout");
+                return Content("Checkout timeout");
             }
             else
             {
-                return RedirectToAction("PaymentWithLinePay", "Checkout");
-                return Content("hi");
+                if (payType == "paypal")
+                {
+                    return RedirectToAction("PaymentWithPaypal", "Checkout");
+                }
+                else
+                {
+                    return RedirectToAction("PaymentWithLinePay", "Checkout");
+                }
+
             }
-            
-            
+
+
+
         }
     }
 }

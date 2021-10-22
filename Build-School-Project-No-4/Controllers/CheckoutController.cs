@@ -98,55 +98,57 @@ namespace Build_School_Project_No_4.Controllers
 
         public ActionResult PaymentWithLinePay()
         {
+            //{
 
 
-            string ValueInToken = JsonConvert.SerializeObject(payin);
-            string apiurl = "/v3/payments/request";
-            string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-            string ChannelId = "1656554768";
-            string nonce = Guid.NewGuid().ToString();
-            string Signature = LinePayService.LinePayHMACSHA256((ChannelSecret + apiurl + ValueInToken + nonce), ChannelSecret);
-                var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            request.Headers.Add("X-LINE-ChannelId", ChannelId);
-            request.Headers.Add("X-LINE-Authorization-Nonce", nonce);
-            request.Headers.Add("X-LINE-Authorization", Signature);
+            //    string ValueInToken = JsonConvert.SerializeObject(payin);
+            //    string apiurl = "/v3/payments/request";
+            //    string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
+            //    string ChannelId = "1656554768";
+            //    string nonce = Guid.NewGuid().ToString();
+            //    string Signature = LinePayService.LinePayHMACSHA256((ChannelSecret + apiurl + ValueInToken + nonce), ChannelSecret);
+            //        var request = (HttpWebRequest)WebRequest.Create(url);
+            //    request.Method = "POST";
+            //    request.ContentType = "application/json";
+            //    request.Headers.Add("X-LINE-ChannelId", ChannelId);
+            //    request.Headers.Add("X-LINE-Authorization-Nonce", nonce);
+            //    request.Headers.Add("X-LINE-Authorization", Signature);
 
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-            }
+            //    using (var stream = request.GetRequestStream())
+            //    {
+            //        stream.Write(data, 0, data.Length);
+            //    }
 
-            var response = (HttpWebResponse)request.GetResponse();
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            //    var response = (HttpWebResponse)request.GetResponse();
+            //    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
-            //底下取得line回傳資訊 這邊我是建立一個model LinePayOut 去包
-            var backModel = JsonConvert.DeserializeObject<LinePayOut>(responseString);
+            //    //底下取得line回傳資訊 這邊我是建立一個model LinePayOut 去包
+            //    var backModel = JsonConvert.DeserializeObject<LinePayOut>(responseString);
 
-            if (backModel.returnCode == "0000")
-            {
-                return Redirect(backModel.info.paymentUrl.web);
-            }
-            else
-            {
-                return Content(backModel.returnMessage);
-            }
+            //    if (backModel.returnCode == "0000")
+            //    {
+            //        return Redirect(backModel.info.paymentUrl.web);
+            //    }
+            //    else
+            //    {
+            //        return Content(backModel.returnMessage);
+            //    }
+            return Content("LINE PAY");
         }
 
 
-        //[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-        //public class NoDirectAccessAttribute : ActionFilterAttribute
-        //{
-        //    public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //    {
-        //        if (filterContext.HttpContext.Request.UrlReferrer == null ||
-        //                    filterContext.HttpContext.Request.Url.Host != filterContext.HttpContext.Request.UrlReferrer.Host)
-        //        {
-        //            filterContext.Result = new RedirectToRouteResult(new
-        //                           RouteValueDictionary(new { controller = "Home", action = "Index", area = "" }));
-        //        }
-        //    }
-        //}
-    }
+    //[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    //public class NoDirectAccessAttribute : ActionFilterAttribute
+    //{
+    //    public override void OnActionExecuting(ActionExecutingContext filterContext)
+    //    {
+    //        if (filterContext.HttpContext.Request.UrlReferrer == null ||
+    //                    filterContext.HttpContext.Request.Url.Host != filterContext.HttpContext.Request.UrlReferrer.Host)
+    //        {
+    //            filterContext.Result = new RedirectToRouteResult(new
+    //                           RouteValueDictionary(new { controller = "Home", action = "Index", area = "" }));
+    //        }
+    //    }
+    //}
+}
 }
