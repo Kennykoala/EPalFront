@@ -62,13 +62,12 @@ namespace Build_School_Project_No_4.Services
         }
 
         //取得LikeID對應的會員資料
-        public List<MemberViewModel> GetMemberLike()
+        public List<MemberViewModel> GetMemberLike(int ownId)
         {
             var meetLikes = _Repo.GetAll<MeetLikes>();
             var members = _Repo.GetAll<Members>();
 
             //demoId
-            int ownId = 60;
             var ownLike = meetLikes.Where(x => x.MemberId == ownId);
 
             List<MemberViewModel> result = new List<MemberViewModel>();
@@ -82,7 +81,8 @@ namespace Build_School_Project_No_4.Services
                     MemberName = y.MemberName,
                     Bio = y.Bio,
                     ProfilePicture = y.ProfilePicture,
-                    Gender = y.Gender
+                    Gender = y.Gender,
+                    UserId = ownId
                 };
                 result.Add(m);
 

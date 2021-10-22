@@ -121,8 +121,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="listButton">
-                                                    <div class="followButton">
-                                                        <button class="btnfollowing" id="followButton">Following</button>
+                                                    <div class="followBotton">
+                                                        <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btn btn-outline-dark">
+                                                            Following
+                                                        </button>
+                                                        @*<p class="getMemberId" style="display:none">@item.MemberId</p>*@
                                                     </div>
                                                     <div class="chatBotton">
                                                         <button type="button" class="btn btn-outline-dark">Chat</button>
@@ -256,6 +259,100 @@
     </div>
 </div>
 
+<script>
+
+    //let testItem = document.querySelectorAll('.getMemberId');
+    //let aa = testItem[1].innerHTML;
+    //console.log(aa);
+
+
+    function myMsg(myObj) {
+        alert("id 為:" + myObj.id);    //memberId
+        alert("id 為:" + myObj.value); //UserId
+
+        SaveImageViaAjax(myObj.value, myObj.id)
+
+    }
+
+    //for (int i = 0; i < aa.length; i++) {
+    //    document.querySelector('testItem[i]').onclick = function () {
+
+    //        var getFollowId = document.querySelectorAll('.getMemberId');
+    //        var bb = getFollowId[4].textContent
+    //        console.log(bb);
+
+    //        //let cardUserId = 60;
+    //        //let cardId = 41;
+    //        //SaveImageViaAjax(cardUserId, cardId);
+
+    //    }
+    //}
+    //document.querySelector('.getMemberId').onclick = function () {
+
+    //    var getFollowId = document.querySelectorAll('.getMemberId');
+    //    var bb = getFollowId[4].textContent
+    //    console.log(bb);
+
+    //    //let cardUserId = 60;
+    //    //let cardId = 41;
+    //    //SaveImageViaAjax(cardUserId, cardId);
+
+    //}
+
+
+
+    //document.querySelector('#btn666').onclick = function () {
+
+    //    var getFollowId = document.querySelectorAll('.getMemberId');
+    //    var bb = getFollowId[4].textContent
+    //    console.log(bb);
+
+    //    //let cardUserId = 60;
+    //    //let cardId = 41;
+    //    //SaveImageViaAjax(cardUserId, cardId);
+
+    //}
+
+    function SaveImageViaAjax(cardUserId, cardId) {
+
+
+        let CardIDs = cardId;
+        let usersId = cardUserId;
+
+        console.log(CardIDs);
+        console.log(usersId);
+        console.log('==========');
+
+
+        var Data = JSON.stringify({
+            /*     CardUserId: 555,*/
+            UserId: `${usersId}`,
+            FollowingId: `${CardIDs}`,
+        });
+
+
+        $.ajax({
+            url: "https://localhost:44322/api/MemberFollowApi/",
+            type: "POST",
+            data: Data,
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            processData: false,
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+
+    }
+
+
+
+
+</script>
 
 
 @section topCSS{
@@ -721,6 +818,9 @@
                 margin: 0 23px 24px 0;
             }
 
+            .followBotton {
+                margin: 0 10px;
+            }
             .nobody {
                 margin-left: 130px;
             }

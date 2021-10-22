@@ -324,6 +324,7 @@
     <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeForPhoneController.cs" />
+    <Compile Include="Controllers\MemberFollowApiController.cs" />
     <Compile Include="Controllers\MembersApiController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OrderController.cs" />

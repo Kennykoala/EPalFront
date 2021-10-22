@@ -54,6 +54,16 @@ namespace Build_School_Project_No_4.ViewModels
 
         public bool? IsAdmin { get; set; }
 
+        /// <summary>
+        /// ChillMeetLike的追隨使用
+        /// </summary>
+        public int FollowingId { get; set; }
+        /// <summary>
+        /// ChillMeetLike的追隨的使用者Id
+        /// </summary>
+        public int UserId { get; set; }
+
+
     }
 
 
