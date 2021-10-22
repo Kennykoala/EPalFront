@@ -10,6 +10,7 @@ using System.Web.Routing;
 using ECPay.Payment.Integration;
 using Newtonsoft.Json;
 using System.Net;
+using System.IO;
 
 namespace Build_School_Project_No_4.Controllers
 {
@@ -17,6 +18,7 @@ namespace Build_School_Project_No_4.Controllers
     {
         private readonly PaypalService _paypalService;
         private readonly OrderConfirmationService _orderConfirmService;
+        //private readonly LinePayViewModel _linepayVM;
         //private readonly EcPayService _ecPayService;
         //private readonly LinePayService _linePayService;
         private string trId;
@@ -24,6 +26,7 @@ namespace Build_School_Project_No_4.Controllers
         {
             _paypalService = new PaypalService();
             _orderConfirmService = new OrderConfirmationService();
+            //_linepayVM = new LinePayViewModel();
             //_ecPayService = new EcPayService();
             //_linePayService = new LinePayService();
         }
@@ -93,41 +96,43 @@ namespace Build_School_Project_No_4.Controllers
         }
 
 
-//        public ActionResult PaymentWithEcPay()
-//        {
-//            string ValueInToken = JsonConvert.SerializeObject(payin);
-//            string apiurl = "/v3/payments/request";
-//            string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-//            string ChannelId = "1656554768";
-//            string nonce = Guid.NewGuid().ToString();
-//            string Signature = LinePayService.HmacSHA256((ChannelSecret + apiurl + ValueInToken + nonce), ChannelSecret)
-//                var request = (HttpWebRequest)WebRequest.Create(url);
-//            request.Method = "POST";
-//            request.ContentType = "application/json";
-//            request.Headers.Add("X-LINE-ChannelId", ChannelId);
-//            request.Headers.Add("X-LINE-Authorization-Nonce", nonce);
-//            request.Headers.Add("X-LINE-Authorization", Signature);
+        public ActionResult PaymentWithLinePay()
+        {
 
-//            using (var stream = request.GetRequestStream())
-//            {
-//                stream.Write(data, 0, data.Length);
-//            }
 
-//            var response = (HttpWebResponse)request.GetResponse();
-//            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            string ValueInToken = JsonConvert.SerializeObject(payin);
+            string apiurl = "/v3/payments/request";
+            string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
+            string ChannelId = "1656554768";
+            string nonce = Guid.NewGuid().ToString();
+            string Signature = LinePayService.LinePayHMACSHA256((ChannelSecret + apiurl + ValueInToken + nonce), ChannelSecret);
+                var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.Headers.Add("X-LINE-ChannelId", ChannelId);
+            request.Headers.Add("X-LINE-Authorization-Nonce", nonce);
+            request.Headers.Add("X-LINE-Authorization", Signature);
 
-//            //底下取得line回傳資訊 這邊我是建立一個model LinePayOut 去包
-//var backModel = JsonConvert.DeserializeObject<LinePayOut>(responseString);
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
 
-//            if (backModel.returnCode == "0000")
-//            {
-//                return Redirect(backModel.info.paymentUrl.web);
-//            }
-//            else
-//            {
-//                return Content(backModel.returnMessage);
-//            }
-//        }
+            var response = (HttpWebResponse)request.GetResponse();
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            //底下取得line回傳資訊 這邊我是建立一個model LinePayOut 去包
+            var backModel = JsonConvert.DeserializeObject<LinePayOut>(responseString);
+
+            if (backModel.returnCode == "0000")
+            {
+                return Redirect(backModel.info.paymentUrl.web);
+            }
+            else
+            {
+                return Content(backModel.returnMessage);
+            }
+        }
 
 
         //[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

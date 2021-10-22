@@ -24,12 +24,17 @@ namespace Build_School_Project_No_4.ViewModels
         }
         public class LineForm
         {
-            public int amount { get; set; }
+            public decimal amount { get; set; }
             public string currency { get; set; }
             public string orderId { get; set; }
             public Product product { get; set; }
             public RedirectUrls redirectUrls { get; set; }
         }
+        //public int Amount { get; set; }
+        //public string currency { get; set; }
+        //public string orderId { get; set; }
+        //public Product product { get; set; }
+        //public RedirectUrls redirectUrls { get; set; }
 
     }
 }

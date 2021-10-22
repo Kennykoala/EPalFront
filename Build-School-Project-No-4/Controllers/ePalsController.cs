@@ -126,7 +126,7 @@ namespace Build_School_Project_No_4.Controllers
             }
             else
             {
-                //return RedirectToAction("PaymentWithEcPay", "Checkout");
+                return RedirectToAction("PaymentWithLinePay", "Checkout");
                 return Content("hi");
             }
             
