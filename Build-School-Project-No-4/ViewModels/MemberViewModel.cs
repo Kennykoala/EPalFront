@@ -47,7 +47,7 @@ namespace Build_School_Project_No_4.ViewModels
 
         public string ProfilePicture { get; set; }
 
-        public string LineStatus { get; set; }
+        public int? LineStatusId { get; set; }
 
         [StringLength(10)]
         public string AuthCode { get; set; }
