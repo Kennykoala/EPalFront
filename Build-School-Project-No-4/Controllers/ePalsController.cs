@@ -121,15 +121,21 @@ namespace Build_School_Project_No_4.Controllers
             TempData["confirmation"] = confirmation;
 
             bool canCheckout = _checkoutService.ValidCheckoutTime(confirmation);
+            int ePalId = _checkoutService.GetPlayerIdFromConfirmation(confirmation).ProductId;
+            int id = ePalId;
             if (canCheckout == false)
             {
-                return Content("Checkout timeout");
+                return RedirectToAction("Detail", new { id = id});
             }
             else
             {
                 if (payType == "paypal")
                 {
                     return RedirectToAction("PaymentWithPaypal", "Checkout");
+                }
+                else if (payType == "ecPay")
+                {
+                    return RedirectToAction("PaymentWithEcPay", "Checkout");
                 }
                 else
                 {

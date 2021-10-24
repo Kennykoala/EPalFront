@@ -5,6 +5,7 @@
     var startTime = Model.StartTime.ToString("MM/dd/yyyy hh:mm tt");
 }
 @section topCSS{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link href="~/Assets/css/checkout.css" rel="stylesheet" />
 }
 
@@ -86,8 +87,8 @@
 
                     <div class="payment">
                         <div class="payment-label">
-                            <label class="payment-check-label" for="ecPay">
-                                <input class="form-check-input" type="radio" name="payType" id="ecPay" value="ecpay">
+                            <label class="payment-check-label" for="linePay">
+                                <input class="form-check-input" type="radio" name="payType" id="linePay" value="linePay">
                                 <span>LinePay</span>
                                 <span class="ecpay-img">
                                     @*<img src="~/Assets/images/checkout/ecpay_logo.png" />*@
@@ -104,7 +105,7 @@
                         <div class="total-price">Total Price</div>
                         <div class="price-total price-total-txt">$@((Model.Rounds * Model.UnitPrice).ToString("N2"))</div>
                         <div class="checkout-btn-div">
-                            <button class="checkout-btn" type="submit">Checkout</button>
+                            <button class="checkout-btn" type="submit" id="checkoutButton">Checkout</button>
                         </div>
                     </div>
 
@@ -113,17 +114,37 @@
 
         </div>
     }
+
+    <div class="modal " tabindex="-1" id="timeoutModal">
+        <div class="modal-dialog .modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
 @section endJS{
-    
+
     @*<script src="~/Assets/js/checkout.js"></script>*@
-    @{ 
+   
+    @{
         var unixDateTime = Model.OrderDateTime;
     }
 
-<script>
+    <script>
 
 let timer = document.getElementById('counter')
     let dateTimeNow = new Date();
@@ -168,10 +189,18 @@ let timer = document.getElementById('counter')
         }
         else { let setTime = setInterval(countdown, 1000)};
     }
-
+    let modalTest = document.getElementById('testmodal');
     function PaymentTimeout() {
         timer.innerText = "-----";
-        window.location = `/epals/detail/@Model.ProductId`;
+        //window.location = `/epals/detail/@Model.ProductId`;
+        //$('exampleModal').modal('show')
+        //$('#asdf').modal('show');
+        var timeoutModal = new bootstrap.Modal(document.getElementById('timeoutModal'), { backdrop: 'static' });
+        timeoutModal.toggle();
+
+        var checkoutBtn = document.getElementById('checkoutButton');
+        checkoutBtn.setAttribute("disabled", "disabled");
+
     }
-</script>
+    </script>
 }

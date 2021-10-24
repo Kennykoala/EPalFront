@@ -36,7 +36,8 @@ namespace Build_School_Project_No_4.Services
                               PlayerName = m.MemberName,
                               GameName = g.GameName,
                               PlayerPic = p.CreatorImg,
-                              ProductId = p.ProductId
+                              ProductId = p.ProductId,
+                              OrderStatus = o.OrderStatusId
                           }).SingleOrDefault();
 
 
@@ -62,29 +63,46 @@ namespace Build_School_Project_No_4.Services
                           where o.OrderConfirmation == confirmation
                           select new CheckoutViewModel
                           {
-                              //OrderConfirmation = confirmation,
-                              //StartTime = o.DesiredStartTime,
                               OrderDateTime = o.OrderDate,
-                              //UnitPrice = o.UnitPrice,
-                              //Rounds = o.Quantity,
-                              //PlayerId = p.CreatorId,
-                              //PlayerName = m.MemberName,
-                              //GameName = g.GameName,
-                              //PlayerPic = p.CreatorImg,
-                              //ProductId = p.ProductId
                           }).SingleOrDefault();
 
-            bool isValid;
             var dateTimeNow = DateTime.UtcNow;
             var timeOut = result.OrderDateTime.AddMinutes(15);
             if (dateTimeNow > timeOut)
             {
-                return isValid = false;
+                try
+                {
+                    var orderResult = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
+                    orderResult.OrderStatusId = 6;
+                    _repo.Update(orderResult);
+                    _repo.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    var err = ex.ToString();
+                    
+                }
+                return false;
             }
             else
             {
-                return isValid = true;
+                return true;
             }
+        }
+        public CheckoutViewModel GetPlayerIdFromConfirmation(string confirmation)
+        {
+            var orders = _repo.GetAll<Orders>();
+            var products = _repo.GetAll<Products>();
+            var result = (from o in orders
+                          join p in products on o.ProductId equals p.ProductId
+                          where o.OrderConfirmation == confirmation
+                          select new CheckoutViewModel
+                          {
+                              ProductId = p.ProductId,
+                              OrderConfirmation = o.OrderConfirmation
+                          }).SingleOrDefault();
+
+            return result;
         }
     }
 }

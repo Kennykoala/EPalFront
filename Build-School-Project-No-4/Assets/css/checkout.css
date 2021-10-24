@@ -169,6 +169,12 @@ div.game-play{
     display: flex;
     align-items: center;
 }
+#timeoutModal .modal-header, #timeoutModal .modal-footer, #timeoutModal .modal-body {
+    background-color: #302F3D;
+    border-top: none;
+    border-bottom: none;
+}
+
 
 @media screen and (min-width: 576px) {
   .checkout-header {

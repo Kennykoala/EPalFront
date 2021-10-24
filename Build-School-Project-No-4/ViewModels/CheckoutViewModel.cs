@@ -18,6 +18,7 @@ namespace Build_School_Project_No_4.ViewModels
         public string PlayerPic { get; set; }
         public int ProductId { get; set; }
         public int SelectedPayment { get; set; }
+        public int OrderStatus { get; set; }
 
     }
 }
