@@ -546,10 +546,33 @@ function changeShort() {
 
 
 //online/offline change
+let linestatusId;
 statuslistbtn.forEach((stabtn, idx) => {
-    // statusbar.innerHTML = `<img src="online.png" alt="">ONLINE`;
+
     stabtn.addEventListener('click', function () {
         statusbar.innerHTML = stabtn.innerHTML;
+
+        linestatusId = stabtn.value;
+        var Data = JSON.stringify({
+            //MemberId: `${memberId}`,
+            LineStatusId: `${linestatusId}`
+        });
+
+        $.ajax({
+            url: "/Members/MemberStatus",
+            type: "POST",
+            data: Data,
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            processData: false,
+            //dataType: "json",
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
 
     })
 })

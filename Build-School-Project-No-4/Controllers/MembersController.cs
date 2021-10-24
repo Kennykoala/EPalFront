@@ -116,6 +116,12 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
+
+
+
+
+
+
         //public ActionResult LoginProcess()
         //{
         //    return View();
@@ -412,7 +418,33 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
+        //[HttpPut]
+        [HttpPost]
+        public ActionResult MemberStatus(int LineStatusId)
+        {
+            int memberid = int.Parse(GetMemberId());
 
+            using (var tran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var memberdata = db.Members.First(x => x.MemberId == memberid);
+                    memberdata.LineStatusId = LineStatusId;
+                    //db.Entry(emp).State = EntityState.Modified;
+                    db.SaveChanges();
+                    tran.Commit();
+
+                    return Content("更新linestatus成功");
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+
+                    return Content("更新linestatus失敗:" + ex.ToString());
+                }
+            }
+            //return View();
+        }
 
 
 
@@ -680,7 +712,8 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         Email = newMember.Email,
                         Password = newMember.Password,
-                        AuthCode = AuthCode
+                        AuthCode = AuthCode,
+                        LineStatusId = 1
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();

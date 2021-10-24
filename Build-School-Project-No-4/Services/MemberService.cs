@@ -251,7 +251,26 @@ namespace Build_School_Project_No_4.Services
 
         }
 
+        public LinestatusViewModel GetStatus(int memberid)
+        {
+            var emp = _Repo.GetAll<Members>().FirstOrDefault(x => x.MemberId == memberid);
 
+            //Members emp = db.Members.Find(memberid);
+            if (emp == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            //DM -> MemberInfoViewModel 
+            LinestatusViewModel MemberInfo = new LinestatusViewModel()
+            {
+                MemberId = emp.MemberId,
+                LineStatusId = emp.LineStatusId
+            };
+
+            return MemberInfo;
+
+        }
 
 
     }

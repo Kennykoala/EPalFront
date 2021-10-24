@@ -30,6 +30,7 @@
 
         string userid = "";
         string avatar = "";
+        int? status = 1;
         if (cookie != null)
         {
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
@@ -37,7 +38,7 @@
             var obj = Json.Decode<Members>(ticket.UserData);
             userid = obj.MemberId.ToString();
             avatar = memberService.GetEditProfileInfo(obj.MemberId).ProfilePicture;
-            //userid = ticket.UserData;
+            status = memberService.GetStatus(obj.MemberId).LineStatusId;
         }
     }
 
@@ -245,22 +246,52 @@
                                 </div>
 
 
-                                @Html.Partial("_LinestatusPartial", new LinestatusViewModel())
+                                @*@Html.Partial("_LinestatusPartial", new LinestatusViewModel())*@
+                                <div class="online-wrapper dropstart">
+                                    @if(status == 2)
+                                    {
+                                        <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                        </a>
+                                    }
 
+                                    <ul class="dropdown-menu">
+
+                                        <li>
+                                            <button class="dropdown-item statusbtn" type="button" value="1">
+                                                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                                @*<img src="~/Assets/images/layout/online.png" alt="">@Model.LineStatusId*@
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item statusbtn" type="button" value="2">
+                                                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                                @*<img src="~/Assets/images/layout/offline.png" alt="">@Model.LineStatusId*@
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </div>
 
 
                                 <div class="info-wrapper">
                                     @*<a href="@Url.Action("Followings","Members")">*@
-                                        <div class="infosta" id="followers">
-                                            <div class="num">0</div>
-                                            <div class="txt">Followers</div>
-                                        </div>
+                                    <div class="infosta" id="followers">
+                                        <div class="num">0</div>
+                                        <div class="txt">Followers</div>
+                                    </div>
                                     @*</a>*@
                                     @*<a href="@Url.Action("Followings","Members")">*@
-                                        <div class="infosta" id="followings">
-                                            <div class="num">1</div>
-                                            <div class="txt">Folloeings</div>
-                                        </div>
+                                    <div class="infosta" id="followings">
+                                        <div class="num">1</div>
+                                        <div class="txt">Folloeings</div>
+                                    </div>
                                     @*</a>*@
                                     <div class="infosta" id="vistors">
                                         <div class="num">2</div>
