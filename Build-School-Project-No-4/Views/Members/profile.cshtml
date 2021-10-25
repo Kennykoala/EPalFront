@@ -3,6 +3,23 @@
 @{
     ViewBag.Title = "profile";
 }
+@{
+    HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
+
+    string userid = "";
+    //string avatar = "";
+    if (cookie != null)
+    {
+        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+        var obj = Json.Decode<Members>(ticket.UserData);
+        userid = obj.MemberId.ToString();
+
+        //avatar = obj.ProfilePicture;
+
+    }
+}
+
 
 
 <div class="container-fluid p-0 mobile-hide">
@@ -57,8 +74,8 @@
                             <span class="following-count">@item.FollingsNumber</span> Following <i class="fas fa-chevron-right"></i>
                         </a>
                         @*<a href="#" class="a-title">
-                            <span class="visitors-count">@item.VistorsNumber</span> Visitors <i class="fas fa-chevron-right"></i>
-                        </a>*@
+                                <span class="visitors-count">@item.VistorsNumber</span> Visitors <i class="fas fa-chevron-right"></i>
+                            </a>*@
                         <a href="#" class="a-title">
                             <span class="medals-count">0</span> Medals <i class="fas fa-chevron-right"></i>
                         </a>
@@ -97,7 +114,7 @@
             <div class="modal-content">
                 <div class="modal-body p-0">
                     <a href="#">Edit profile</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#changeAvatarModal">Edit avatar</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#changeAvatarModal">Edit Meet</a>
                     <a data-bs-dismiss="modal">Cancel</a>
                 </div>
             </div>
@@ -115,17 +132,32 @@
                     <div class="avatar-img">
                         @*<img src="img/default_avatar.png" alt="avatar">*@
                         @*<img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632809097/Profile/default_avatar_f231pc.png" alt="avatar">*@
-                        @foreach (var item in Model)
-                        {<img src="@item.ProfilePicture" alt="avatar">}
+                        @*@foreach (var item in Model)
+        {<img src="@item.ProfilePicture" alt="avatar" id="imgPriview">}*@
+                        <img src="https://res.cloudinary.com/johnson1990hitachi1/image/upload/v1632809097/Profile/default_avatar_f231pc.png" alt="avatar" id="imgPriview">
+
+                        @*加入上傳功能*@
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="avatar" style="display:none" />
+                        <label for="imageUpload">
+                            <i class="fas fa-camera"></i>
+                        </label>
+
 
                     </div>
                 </div>
                 <div class="modal-footer">
+                    @*<div class="avatar-size-req">
+                            *Avatar must be JPG, GPEG, GIF, or PNG and cannot exceed 5MB
+                        </div>
+
+                        <button type="button" class="btn change-avatar-btn">Change Avatar</button>*@
                     <div class="avatar-size-req">
                         *Avatar must be JPG, GPEG, GIF, or PNG and cannot exceed 5MB
                     </div>
-
-                    <button type="button" class="btn change-avatar-btn">Change Avatar</button>
+                    <div id="imagePreview">
+                        @*<button type="button" class="btn change-avatar-btn">Change111 Avatar</button>*@
+                        <input type="submit" class="btn btn-danger" value="Upload" id="btnSubmit">
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,11 +207,11 @@
                                 <div class="col-12 col-md-5 col-lg-6">
                                     <div class="tags-div">
                                         @*<div class="tag carry">Carry in Game(<span>6</span>)</div>
-                                        <div class="tag sweet-voice">Sweet Voice(<span>4</span>)</div>
-                                        <div class="tag fast-response">Fast Response(<span>3</span>)</div>
-                                        <div class="tag interactive">Interactive(<span>3</span>)</div>
-                                        <div class="tag cooperative">Cooperative(<span>3</span>)</div>
-                                        <div class="tag humorous">Humorous(<span>2</span>)</div>*@
+                                            <div class="tag sweet-voice">Sweet Voice(<span>4</span>)</div>
+                                            <div class="tag fast-response">Fast Response(<span>3</span>)</div>
+                                            <div class="tag interactive">Interactive(<span>3</span>)</div>
+                                            <div class="tag cooperative">Cooperative(<span>3</span>)</div>
+                                            <div class="tag humorous">Humorous(<span>2</span>)</div>*@
                                         <div class="tag carry">Carry in Game</div>
                                         <div class="tag sweet-voice">Sweet Voice</div>
                                         <div class="tag fast-response">Fast Response</div>
@@ -220,7 +252,115 @@
 
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
+@*//上傳照片*@
+<script>
+      //save avatar to Cloudinary、DB
+        let photoUrl = "";
+        let memberId = parseInt(@userid);
 
+        var cloud_url = 'https://api.cloudinary.com/v1_1/djamumruo/image/upload'
+        var cloud_upload_preset = 'roldewr6'
+
+        var imgPreview = document.getElementById('imagePreview');
+        var fileUpload = document.getElementById('btnSubmit');
+
+    fileUpload.addEventListener("click", function (event) {
+
+        var file = document.getElementById('imageUpload').files[0];
+        var formData = new FormData();
+
+        formData.append('file', file);
+        formData.append('upload_preset', cloud_upload_preset);
+
+        axios({
+            url: cloud_url,
+            method: 'POST',
+            Headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data: formData
+        }).then(function (res) {
+            console.log(res);
+            photoUrl = res.data.secure_url;
+            $("#imageUpload").change(function () {
+                readURL(photoUrl);
+            });
+            SaveImageViaAjax(memberId, photoUrl);
+
+
+        }).catch(function (err) {
+            console.error(err);
+
+        });
+
+
+    });
+
+    //image preview
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+                document.getElementById("imgPriview").src = e.target.result;
+            }
+
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function () {
+        readURL(this);
+    });
+
+    //save avatar to Cloudinary、DB
+        function SaveImageViaAjax(memberId, photoUrl) {
+
+            var Data = JSON.stringify({
+                MemberId: `${memberId}`,
+                ProfilePicture: `${photoUrl}`
+            });
+
+            $.ajax({
+                url: "/api/ChillMeetPicApi/",
+                type: "POST",
+                data: Data,
+                async: true,
+                contentType: 'application/json; charset=utf-8',
+                processData: false,
+                //dataType: "json",
+                success: function (res) {
+                    swal.fire({
+                        title: "Update Success",
+                        icon: "success",
+                    });
+                        console.log(res);
+                },
+                error: function (err) {
+                    swal.fire({
+                        title: "Update Failure",
+                        icon: "error",
+
+                    });
+                        console.log(err);
+                }
+            });
+
+        }
+
+        //display avatar
+        @*document.getElementById('imagePreview').style.backgroundImage = "url('@ViewBag.Avatar')";
+
+
+        $(function () {
+            $("<br/>").insertAfter(".form-group");
+        });*@
+
+</script>
 
 
 <script>
@@ -902,6 +1042,7 @@
             }
 
             #changeAvatarModal .avatar-img {
+                text-align:center;
                 height: 300px;
                 width: auto;
             }
@@ -981,9 +1122,9 @@
 
                 .profile-pic img {
                     border-radius: 10px;
-             /*       width: auto;*/
-                    width:100%;
-                   /* height: 250px;*/
+                    /*       width: auto;*/
+                    width: 100%;
+                    /* height: 250px;*/
                 }
 
             .profile-name {

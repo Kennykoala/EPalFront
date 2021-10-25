@@ -389,6 +389,7 @@
     <Compile Include="Controllers\ChillController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ChillMeetApiController.cs" />
+    <Compile Include="Controllers\ChillMeetPicApiController.cs" />
     <Compile Include="Controllers\ChooseAServiceController.cs" />
     <Compile Include="Controllers\CouponsController.cs" />
     <Compile Include="Controllers\CreatorProjectController.cs" />
