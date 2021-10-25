@@ -9,12 +9,23 @@ namespace Build_School_Project_No_4.Controllers
 {
     public class LinePayApiController : ApiController
     {
+        [HttpGet]
+        [Authorize]
+        //[Route("api/linepaycompleted/{transactionId}/{orderId}")]
         [AcceptVerbs("GET", "POST")]
-        public string Confirm(string something)
+        // public IHttpActionResult linepaycompleted(long? transactionId, string orderId)
+        public string linepaycompleted(long? transactionId, string orderId)
         {
-            var idk = something;
+            ////var idk = something;
+            //if (transactionId != null)
+            //{
+            //    var response = new HttpResponseMessage(HttpStatusCode.Redirect);
+            //    response.Headers.Location = new Uri
+            //    return Redirect()
+            //}
 
-            return something;
+            return "abc";
+
         }
 
 

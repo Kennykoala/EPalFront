@@ -30,7 +30,7 @@ namespace Build_School_Project_No_4.Services
                     oPayment.Send.MerchantTradeDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");//廠商的交易時間
                     oPayment.Send.TotalAmount = Decimal.Parse("3280");//交易總金額
                     oPayment.Send.TradeDesc = "交易描述";//交易描述
-                    oPayment.Send.ChoosePayment = PaymentMethod.ALL;//使用的付款方式
+                    oPayment.Send.ChoosePayment = PaymentMethod.Credit;//使用的付款方式
                     oPayment.Send.Remark = "";//備註欄位
                     oPayment.Send.ChooseSubPayment = PaymentMethodItem.None;//使用的付款子項目
                     oPayment.Send.NeedExtraPaidInfo = ExtraPaymentInfo.Yes;//是否需要額外的付款資訊

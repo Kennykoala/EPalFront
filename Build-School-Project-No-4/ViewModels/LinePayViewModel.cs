@@ -40,6 +40,38 @@ namespace Build_School_Project_No_4.ViewModels
         //public string orderId { get; set; }
         //public Product product { get; set; }
         //public RedirectUrls redirectUrls { get; set; }
+        public class LinePayResponse
 
+        {
+
+            public string returnCode { get; set; }
+
+            public string returnMessage { get; set; }
+
+            public Info info { get; set; }
+
+        }
+
+        public class Info
+
+        {
+
+            public Paymenturl paymentUrl { get; set; }
+
+            public long transactionId { get; set; }
+
+            public string paymentAccessToken { get; set; }
+
+        }
+
+        public class Paymenturl
+
+        {
+
+            public string web { get; set; }
+
+            public string app { get; set; }
+
+        }
     }
 }

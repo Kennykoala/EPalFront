@@ -34,8 +34,20 @@ namespace Build_School_Project_No_4.Services
 			//注意他原本的公式是直接轉為string
 			return Convert.ToBase64String(hashmessage);
 		}
-
-		public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
+        public static string HashLinePayRequest(string channelSecret, string apiUrl, string body, string orderId, string key)
+        {
+            var request = channelSecret + apiUrl + body + orderId;
+            key = key ?? "";
+            var encoding = new System.Text.UTF8Encoding();
+            byte[] keyByte = encoding.GetBytes(key);
+            byte[] messageBytes = encoding.GetBytes(request);
+            using (var hmacsha256 = new HMACSHA256(keyByte))
+            {
+                byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+                return Convert.ToBase64String(hashmessage);
+            }
+        }
+        public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
         {
             var orders = _repo.GetAll<Orders>();
             var members = _repo.GetAll<Members>();
@@ -54,7 +66,7 @@ namespace Build_School_Project_No_4.Services
                               redirectUrls = new LinePayViewModel.RedirectUrls()
                               {
                                   cancelUrl = "https://facebook.com",
-                                  confirmUrl = "https://localhost:44322/api/linepayapi/confirm"
+                                  confirmUrl = "https://localhost:44322/api/linepayapi/linepaycompleted"
                               },
                               packages = new List<LinePayViewModel.Package>
                              {
