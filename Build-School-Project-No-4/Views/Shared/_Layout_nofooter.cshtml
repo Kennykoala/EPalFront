@@ -244,34 +244,10 @@
                                     </div>
                                 </div>
 
-                                <div class="online-wrapper dropstart">
-                                    <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <!-- 用JS控制 -->
-                                        <img src="~/Assets/images/layout/online.png" alt="">ONLINE
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <button class="dropdown-item" type="button">
-                                                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="dropdown-item" type="button">
-                                                <img src="~/Assets/images/layout/inorder.png" alt="">IN AN ORDER
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="dropdown-item" type="button">
-                                                <img src="~/Assets/images/layout/resting.png" alt="">RESTING
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="dropdown-item" type="button">
-                                                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
+
+                                @Html.Partial("_LinestatusPartial", new LinestatusViewModel())
+
+
 
                                 <div class="info-wrapper">
                                     @*<a href="@Url.Action("Followings","Members")">*@

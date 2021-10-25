@@ -1,0 +1,32 @@
+﻿@model LinestatusViewModel
+<div class="online-wrapper dropstart">
+    <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+        <!-- 用JS控制 -->
+        <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+    </a>
+    <ul class="dropdown-menu">
+        @*@Html.LabelFor(model => model.RankId, htmlAttributes: new { @class = "col-md-6 control-label" })
+            @Html.EnumDropDownListFor(model => model.RankId, new { @class = "form-controlform-select", style = "background-color:#21212C; color:white; margin-top:5px;" })*@
+        <li>
+            <button class="dropdown-item" type="button">
+                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+            </button>
+        </li>
+        <li>
+            <button class="dropdown-item" type="button">
+                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+            </button>
+        </li>
+        @*<li>
+            <button class="dropdown-item" type="button">
+                <img src="~/Assets/images/layout/inorder.png" alt="">IN AN ORDER
+            </button>
+        </li>
+        <li>
+            <button class="dropdown-item" type="button">
+                <img src="~/Assets/images/layout/resting.png" alt="">RESTING
+            </button>
+        </li>*@
+
+    </ul>
+</div>

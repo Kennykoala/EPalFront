@@ -43,9 +43,10 @@ namespace Build_School_Project_No_4.Services
                 OrderDate = o.OrderDate,
                 TotalPrice = o.UnitPrice * o.Quantity,
                 OrderId = o.OrderId,
+                ProductId = o.ProductId,
                 GameName = o.Products.GameCategories.GameName,
                 MemberName=o.Members.MemberName,
-                ProfilePicture=o.Members.ProfilePicture
+                ProfilePicture=o.Products.Members.ProfilePicture
                 //ProductId =o.Products.ProductId
                 //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
 

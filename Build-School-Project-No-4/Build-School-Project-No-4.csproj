@@ -403,6 +403,7 @@
     <Compile Include="ViewModels\FilterItemViewModel.cs" />
     <Compile Include="ViewModels\AddgameViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
+    <Compile Include="ViewModels\LinestatusViewModel.cs" />
     <Compile Include="ViewModels\LinePayViewModel.cs" />
     <Compile Include="ViewModels\MemberAvatarViewModel.cs" />
     <Compile Include="ViewModels\MemberInfoViewModel.cs" />
@@ -770,6 +771,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <None Include="Properties\PublishProfiles\epal - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -879,7 +881,6 @@
     <Content Include="Views\Shared\SignupPartialPage.cshtml" />
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
-    <Content Include="Views\Checkout\PaymentWithEcPay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
