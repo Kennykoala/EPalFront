@@ -1,0 +1,579 @@
+﻿@model CategoryViewModel
+<div>
+    <div class="navBar "></div>
+    <div class="container-fulid main">
+        <div class="main-Header">
+            <div class="main-Box">
+                <div class="row">
+                    <div class="header-Title col-12">
+                        <span>Discounts</span>
+                    </div>
+                    <div class="header-Select col-12">
+                        <div class="select-Box">
+                            <select>
+                                @foreach (var m in Model.GameAll)
+                                {
+                                    <option value="@m.GameId">@m.GameName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="row main-Card-Area">
+            </div>
+            <template id='cardCreator'>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 my-3">
+                    <div class="item-Card">
+                        <a href="..." id="card">
+                            <div class="card">
+                                <div class="card-Head">
+                                    <div class="head-Person-Pic">
+                                        <img src="" alt="">
+                                        <div class="head-Status">
+                                            <div class="status-Pic">
+                                                <img src="" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-Body">
+                                    <div class="user-Info">
+                                        <div class="user-Info-Name">
+                                            <span></span>
+                                        </div>
+                                        <div class="uesr-Info-Icon">
+                                            <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
+                                                 alt="">
+                                        </div>
+                                    </div>
+                                    <div class="user-Title">
+                                        <div class="user-Title-Item">
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="user-Voice">
+                                        <div class="voice-Left">
+                                            <span class="w-15"></span>
+                                            <span class="w-10"></span>
+                                            <span class="w-15"></span>
+                                        </div>
+                                        <div class="voice-Right">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-Footer">
+                                    <div class="footer-Discound">
+                                        <p>1st ORDER FREE</p>
+                                    </div>
+                                    <div class="footer-Price">
+                                        <div class="price">
+                                            <div class="price-Icon">
+                                                <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg"
+                                                     alt="">
+                                            </div>
+                                            <div class="price-Text">
+                                                <p>
+                                                    <span class="price-Span"></span>.00/G
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="rate">
+                                            <div class="rate-Icon">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <div class="rate-Text">
+                                                <p>5.0<span>(85)</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</div>
+@section topCSS{
+    <style>
+        * {
+            font-family: Poppins, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
+        }
+
+
+        /* 手機直向 xs*/
+
+        @@media screen and (max-width: 767px) {
+            .main-Header {
+                height: 80px;
+                background-position: 54%;
+            }
+
+            .header-Title {
+                font-size: 32px;
+                line-height: 2px;
+                padding-top: 24px;
+            }
+
+            .select-Box {
+                margin-top: 17px;
+            }
+
+            .main-Card-Area {
+                margin: 78px auto;
+            }
+
+            .navBar {
+                height: 0px;
+            }
+        }
+
+
+        /* 手機橫向 md*/
+
+        @@media screen and (min-width: 768px) {
+            .main-Header {
+                height: 100px;
+                background-position: 50%;
+            }
+
+            .header-Title {
+                font-size: 35px;
+                line-height: 0px;
+                padding-top: 35px;
+            }
+
+            .select-Box {
+                margin-top: 25px;
+            }
+
+            .main-Card-Area {
+                margin: 78px auto;
+            }
+
+            .navBar {
+                height: 60px;
+            }
+        }
+
+
+        /* iPad橫向 lg*/
+
+        @@media screen and (min-width: 1024px) {
+            .main-Header {
+                height: 150px;
+            }
+
+            .header-Title {
+                font-size: 48px;
+                line-height: 48px;
+            }
+
+            .select-Box {
+                margin-top: 10px;
+            }
+
+            .main-Card-Area {
+                margin: 78px auto;
+            }
+
+            .navBar {
+                height: 60px;
+            }
+        }
+
+
+        /* iPad Pro橫向 & 桌機 xl*/
+
+        @@media screen and (min-width: 1366px) {
+            .main-Header {
+                height: 200px;
+            }
+
+            .header-Title {
+                font-size: 48px;
+                line-height: 48px;
+            }
+
+            .select-Box {
+                margin-top: 30px;
+            }
+
+            .main-Card-Area {
+                margin: 78px auto;
+            }
+
+            .navBar {
+                height: 60px;
+            }
+        }
+
+        body {
+            background-color: #120E1B;
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-Box {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .main-Header {
+            background-image: url("https://g.epal.gg/entry/us/static/discountBig.ef7c2639.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .select-Box {
+            width: 176px;
+            height: 30px;
+        }
+
+            .select-Box select {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                border-radius: 16px;
+                background-color: #21212C;
+                font-size: 14px;
+                font-weight: 500;
+                color: #7041e6;
+                outline: none;
+                -moz-appearance: none;
+                padding: 5px 3px;
+            }
+
+                .select-Box select option {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #7041e6;
+                    text-align: center;
+                    border-radius: 5px;
+                }
+
+        select option:hover {
+            background: #ff9500 -webkit-linear-gradient(bottom, #ff9500 0%, #ff9500 100%);
+            color: #fff;
+        }
+
+        .header-Title {
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .navBar {
+            width: 100%;
+        }
+
+        .main-Card {
+            width: 100%;
+            background-color: goldenrod;
+        }
+
+        .row {
+            --bs-gutter-x: 0px
+        }
+
+        .main-Card-Area {
+            max-width: 1300px;
+        }
+
+        #card {
+            text-decoration: none;
+        }
+
+        .card {
+            background-color: #302F3D;
+            border-radius: 8px;
+        }
+
+        .item-Card {
+            width: auto;
+            height: auto;
+            margin: 0 10px;
+            border-radius: 8px;
+        }
+
+        .head-Person-Pic {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            left: 15px;
+            top: -20px;
+        }
+
+            .head-Person-Pic img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                border-radius: 5px;
+            }
+
+        .head-Status {
+            position: absolute;
+            bottom: 0;
+            right: -5px;
+        }
+
+        .status-Pic {
+            display: flex;
+            align-items: center;
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+            font-size: 18px;
+        }
+
+            .status-Pic img {
+                width: 100%;
+                height: 100%;
+            }
+
+
+        /* cardBody */
+
+        .user-Info {
+            display: flex;
+            padding: 10px 0;
+        }
+
+        .uesr-Info-Icon {
+            width: 20px;
+            height: 20px;
+        }
+
+            .uesr-Info-Icon img {
+                width: 100%;
+                height: 100%;
+            }
+
+        .user-Info-Name {
+            padding-right: 5px;
+            padding-left: 16px;
+        }
+
+            .user-Info-Name span {
+                color: #fff;
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+        .user-Title-Item {
+            color: #C4C3E6;
+            padding: 1px 15px;
+        }
+
+        .user-Title {
+            margin-bottom: 20px;
+        }
+
+        .user-Title-Item span {
+            background-color: #21212C;
+            padding: 5px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .user-Voice {
+            height: 30px;
+            width: 67px;
+            display: flex;
+            background: linear-gradient(90deg, #625cff, #7041e6);
+            border-radius: 0 8px 0 8px;
+            position: absolute;
+            bottom: 0;
+            right: -1px;
+            top: -1px;
+            justify-content: space-evenly;
+        }
+
+            .user-Voice:hover {
+                background: #8d65ea;
+            }
+
+        .voice-Left {
+            width: 14px;
+            height: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            transform: rotate(90deg);
+            margin: auto;
+        }
+
+        .w-15 {
+            width: 15px;
+            transition: 0.5s ease-in;
+        }
+
+        .w-10 {
+            width: 10px;
+            transition: 0.5s ease-in;
+        }
+
+        .voice-Left span {
+            height: 1.5px;
+            background-color: #fff;
+            /* width: 15px; */
+        }
+
+        .voice-Right {
+            color: #fff;
+            font-size: 12px;
+            margin: auto;
+        }
+
+
+        /* cardFooter */
+
+        .card-Footer {
+            background-color: #21212C;
+            padding: 5px 16px; /* * */
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        .footer-Discound p {
+            color: #AF93EF;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            display: flex;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .price-Text {
+            margin: auto;
+        }
+
+            .price-Text p {
+                margin: auto;
+            }
+
+        .price span {
+            font-size: 24px;
+        }
+
+        .price-Icon {
+            width: 16px;
+            height: 16px;
+            margin: auto 2px;
+        }
+
+            .price-Icon img {
+                width: 100%;
+                height: 100%;
+            }
+
+        .rate {
+            display: flex;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .footer-Price {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .rate-Icon {
+            margin: auto;
+        }
+
+        .rate-Text {
+            margin: auto;
+        }
+
+            .rate-Text p {
+                margin: auto;
+            }
+
+        .rate .fas {
+            font-size: 16px;
+            background: -webkit-linear-gradient(#ff894c, #ffd839);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-right: 5px;
+        }
+
+        .rate-Text span {
+            margin-left: 5px;
+            color: #C4C3E6;
+        }
+    </style>
+}
+@section endJS{
+    <script>
+        let row = document.querySelector('.main-Card-Area');
+          //Create ProductCards
+
+       
+
+
+        var select = document.querySelector('.select-Box select');
+
+        select.addEventListener('change', (event) => {
+            var lastId = event.target.value;
+
+            axios.get(`/api/jsonapi/${lastId}`)
+                .then(function (response) {
+                    row.innerText = "";
+                    let CardArray = JSON.parse(response.data).ProductCards
+
+                    //sideBar
+                    CardArray.forEach(x => {
+                        CreateProducts(x)
+                    })
+                })
+                .catch(ex => {
+                    console.log(ex)
+                })
+        })
+        var lastId = select.options[select.selectedIndex].value;
+
+        axios.get(`/api/jsonapi/${lastId}`)
+            .then(function (response) {
+                row.innerText = "";
+                let CardArray = JSON.parse(response.data).ProductCards
+
+                //sideBar
+                CardArray.forEach(x => {
+                    CreateProducts(x)
+                })
+            })
+            .catch(ex => {
+                console.log(ex)
+            })
+
+        function CreateProducts(item) {
+            let card = document.querySelector('#cardCreator')
+            let cloneContent = card.content.cloneNode(true);
+            cloneContent.querySelector('.item-Card a').href = '@Url.Action("DetailPage","ePals", new {id = "ID"})'.replace("ID", item.ProductId);
+            cloneContent.querySelectorAll('.user-Title-Item span')[0].innerText = item.Rank;
+            cloneContent.querySelectorAll('.user-Title-Item span')[1].innerText = item.Position;
+            cloneContent.querySelector('.head-Person-Pic img').src = item.CreatorImg;
+            cloneContent.querySelector('.status-Pic img').src = item.LineStatus;
+            cloneContent.querySelector('.user-Info-Name span').innerText = item.CreatorName;
+            cloneContent.querySelector('.price-Span').innerText = item.UnitPrice;
+            row.appendChild(cloneContent);
+        }
+    </script>
+}
