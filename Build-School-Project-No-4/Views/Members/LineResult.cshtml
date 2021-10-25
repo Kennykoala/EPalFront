@@ -1,0 +1,18 @@
+﻿
+@{
+    Layout = null;
+}
+
+<h2>LineResult</h2>
+
+<div class="form-group">
+    <label>取回的token:</label>
+    <input name="Token" class="form-control" value="@ViewBag.access_token" /><br />
+    <label>取回的email: (申請的LINE Login Channel必須支援OpenID Connect/email)</label>
+    <input name="Email" class="form-control" value="@ViewBag.email" /><br />
+
+    @*<input type="submit" class="btn btn-primary" name="GetUserProfile" value="取得用戶資訊" />*@
+    <br />
+    <textarea rows="5" class="form-control" name="TextArea">@ViewBag.UserProfileJSON</textarea>
+</div>
+

@@ -290,6 +290,64 @@ window.onload = function () {
 
 
 
+    //Line Login
+    //建立OAuth 身分驗證頁面並導入
+    function AuthWithEmail() {
+        var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
+        URL += 'response_type=code';
+        URL += '&client_id=1656564684';   //TODO:這邊要換成你的client_id
+        URL += '&redirect_uri=https://localhost:44322/Members/Callback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+        URL += '&scope=openid%20profile%20email';
+        URL += '&state=abcde';
+        window.location.href = URL;
+    }
+    //Button2 click
+    function Button2_click() {
+        AuthWithEmail();
+
+        $('.linesavetodb').trigger('click');
+
+        //var Data = JSON.stringify({
+        //    Fbemail: `${fbemail}`,
+        //    Fbname: `${fbname}`
+        //});
+
+        //$.ajax({
+        //    url: '/Members/GetUserProfile',
+        //    method: 'POST',
+        //    data: Data,
+        //    contentType: 'application/json; charset=utf-8',
+        //    success: function (msg) {
+        //        $("#myModal").modal('hide');
+
+        //        //console.log(msg);
+        //        swal.fire({
+        //            title: "Welcome to Epal",
+        //            icon: "success",
+        //            //buttons: true,
+        //            //dangerMode: true
+        //        });
+
+
+        //        if (msg == true) {
+        //            window.location.href = '/'
+        //        }
+
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
+
+
+    }
+    $('#Line_login').click(Button2_click);
+
+
+
+
+
+
 
 
 
