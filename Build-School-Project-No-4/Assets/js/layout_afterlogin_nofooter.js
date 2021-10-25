@@ -305,37 +305,39 @@ window.onload = function () {
     function Button2_click() {
         AuthWithEmail();
 
-        var Data = JSON.stringify({
-            Fbemail: `${fbemail}`,
-            Fbname: `${fbname}`
-        });
+        $('.linesavetodb').trigger('click');
 
-        $.ajax({
-            url: '/Members/GetUserProfile',
-            method: 'POST',
-            data: Data,
-            contentType: 'application/json; charset=utf-8',
-            success: function (msg) {
-                $("#myModal").modal('hide');
+        //var Data = JSON.stringify({
+        //    Fbemail: `${fbemail}`,
+        //    Fbname: `${fbname}`
+        //});
 
-                //console.log(msg);
-                swal.fire({
-                    title: "Welcome to Epal",
-                    icon: "success",
-                    //buttons: true,
-                    //dangerMode: true
-                });
+        //$.ajax({
+        //    url: '/Members/GetUserProfile',
+        //    method: 'POST',
+        //    data: Data,
+        //    contentType: 'application/json; charset=utf-8',
+        //    success: function (msg) {
+        //        $("#myModal").modal('hide');
+
+        //        //console.log(msg);
+        //        swal.fire({
+        //            title: "Welcome to Epal",
+        //            icon: "success",
+        //            //buttons: true,
+        //            //dangerMode: true
+        //        });
 
 
-                if (msg == true) {
-                    window.location.href = '/'
-                }
+        //        if (msg == true) {
+        //            window.location.href = '/'
+        //        }
 
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
 
 
     }

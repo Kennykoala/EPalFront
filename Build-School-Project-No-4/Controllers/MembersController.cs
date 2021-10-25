@@ -217,14 +217,14 @@ namespace Build_School_Project_No_4.Controllers
                 email = JwtSecurityToken.Claims.First(c => c.Type == "email").Value;
 
             //ViewBag
-            //ViewBag.email = email;
-            TempData["lineemail"] = email;
-            //ViewBag.access_token = token.access_token;
-            //ViewBag.displayName = user.displayName;
-            TempData["linename"] = user.displayName;
+            ViewBag.email = email;
+            ViewBag.access_token = token.access_token;
+            ViewBag.displayName = user.displayName;
+            //TempData["lineemail"] = email;
+            //TempData["linename"] = user.displayName;
 
-            //return View("LineResult");
-            return RedirectToAction("GetUserProfile");
+            return View("LineResult");
+            //return RedirectToAction("GetUserProfile");
 
 
             ////獲取該頁面url的參數資訊
@@ -242,125 +242,122 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        //[HttpPost]
-        //public ActionResult GetUserProfile()
-        //{
-        //    ////透過token取得用戶資料
-        //    //var user = Utility.GetUserProfile(Token);
-        //    //ViewBag.UserProfileJSON = Newtonsoft.Json.JsonConvert.SerializeObject(user);
-        //    ////ViewBag
-        //    //ViewBag.email = email;
-        //    //ViewBag.access_token = Token;
-        //    //return View("index");
+        [HttpPost]
+        public ActionResult GetUserProfile(string Token, string email)
+        {
+            //透過token取得用戶資料
+            var user = Utility.GetUserProfile(Token);
+            ViewBag.UserProfileJSON = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+            //ViewBag
+            ViewBag.email = email;
+            ViewBag.access_token = Token;
+            return View("LineResult");
+
+            //string lineemail = TempData["lineemail"].ToString();
+            //string linename = TempData["linename"].ToString();
+            //string msg = "ok";
+            ////string email;
+            ////string fullname;
+
+            //if (msg == "ok" && lineemail != null)
+            //{
+            //    //確認是否已註冊Line
+            //    //var memberDM = _MemberService.MemberLoginData()
+            //    //            .Where(m => m.Email == email   )
+            //    //            .FirstOrDefault();
+            //    var memberRVM = _MemberService.MemberRigisterData()
+            //                .Where(m => m.Email == lineemail)
+            //                .FirstOrDefault();
+
+            //    if (memberRVM == null)
+            //    {
+            //        Random rnd = new Random(Guid.NewGuid().GetHashCode());
+            //        string rndnumber = rnd.Next(0, 100).ToString();
+            //        //將密碼Hash
+            //        rndnumber = _MemberService.HashPassword(rndnumber);
+
+            //        //GroupViewModel -> DM
+            //        Members emp = new Members
+            //        {
+            //            Email = lineemail,
+            //            Password = rndnumber,
+            //            LoginMethod = 3
+            //        };
+            //        db.Members.Add(emp);
+            //        db.SaveChanges();
 
 
+            //        Members meminfo = new Members()
+            //        {
+            //            MemberId = memberRVM.MemberId,
+            //            MemberName = linename,
+            //            //ProfilePicture = memberRVM.ProfilePicture
+            //        };
+            //        string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
+            //        //建立FormsAuthenticationTicket
+            //        var ticket = new FormsAuthenticationTicket(
+            //                    version: 1,
+            //                    name: lineemail.ToString(), //可以放使用者Id
+            //                    issueDate: DateTime.UtcNow,//現在UTC時間
+            //                    expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+            //                    isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+            //                    userData: JsonMeminfo, //可以放使用者角色名稱
+            //                    cookiePath: FormsAuthentication.FormsCookiePath);
 
-        //    string lineemail = TempData["lineemail"].ToString();
-        //    string linename = TempData["linename"].ToString();
-        //    string msg = "ok";
-        //    //string email;
-        //    //string fullname;
+            //        //加密Ticket
+            //        var encryptedTicket = FormsAuthentication.Encrypt(ticket);
 
-        //    if (msg == "ok" && lineemail != null)
-        //    {
-        //        //確認是否已註冊Line
-        //        //var memberDM = _MemberService.MemberLoginData()
-        //        //            .Where(m => m.Email == email   )
-        //        //            .FirstOrDefault();
-        //        var memberRVM = _MemberService.MemberRigisterData()
-        //                    .Where(m => m.Email == lineemail)
-        //                    .FirstOrDefault();
+            //        //Create the cookie.
+            //        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+            //        Response.Cookies.Add(cookie);
 
-        //        if (memberRVM == null)
-        //        {
-        //            Random rnd = new Random(Guid.NewGuid().GetHashCode());
-        //            string rndnumber = rnd.Next(0, 100).ToString();
-        //            //將密碼Hash
-        //            rndnumber = _MemberService.HashPassword(rndnumber);
+            //    }
+            //    else
+            //    {
+            //        Members meminfo = new Members()
+            //        {
+            //            MemberId = memberRVM.MemberId,
+            //            MemberName = memberRVM.MemberName,
+            //            ProfilePicture = memberRVM.ProfilePicture,
+            //            LoginMethod = 3
+            //        };
+            //        string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
-        //            //GroupViewModel -> DM
-        //            Members emp = new Members
-        //            {
-        //                Email = lineemail,
-        //                Password = rndnumber,
-        //                LoginMethod = 3
-        //            };
-        //            db.Members.Add(emp);
-        //            db.SaveChanges();
+            //        //建立FormsAuthenticationTicket
+            //        var ticket = new FormsAuthenticationTicket(
+            //                    version: 1,
+            //                    name: lineemail.ToString(), //可以放使用者Id
+            //                    issueDate: DateTime.UtcNow,//現在UTC時間
+            //                    expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+            //                    isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+            //                    userData: JsonMeminfo, //可以放使用者角色名稱
+            //                    cookiePath: FormsAuthentication.FormsCookiePath);
 
+            //        //加密Ticket
+            //        var encryptedTicket = FormsAuthentication.Encrypt(ticket);
 
-        //            Members meminfo = new Members()
-        //            {
-        //                MemberId = memberRVM.MemberId,
-        //                MemberName = linename,
-        //                //ProfilePicture = memberRVM.ProfilePicture
-        //            };
-        //            string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+            //        //Create the cookie.
+            //        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+            //        Response.Cookies.Add(cookie);
 
-        //            //建立FormsAuthenticationTicket
-        //            var ticket = new FormsAuthenticationTicket(
-        //                        version: 1,
-        //                        name: lineemail.ToString(), //可以放使用者Id
-        //                        issueDate: DateTime.UtcNow,//現在UTC時間
-        //                        expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //                        isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //                        userData: JsonMeminfo, //可以放使用者角色名稱
-        //                        cookiePath: FormsAuthentication.FormsCookiePath);
+            //    }
 
-        //            //加密Ticket
-        //            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+            //    return Json(true);
+            //    ////獲取該頁面url的參數資訊
+            //    //string returnURL = Request.Params["HTTP_REFERER"];
+            //    //int index = returnURL.IndexOf('=');
+            //    //returnURL = returnURL.Substring(index + 1);
 
-        //            //Create the cookie.
-        //            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //            Response.Cookies.Add(cookie);
-
-        //        }
-        //        else
-        //        {
-        //            Members meminfo = new Members()
-        //            {
-        //                MemberId = memberRVM.MemberId,
-        //                MemberName = memberRVM.MemberName,
-        //                ProfilePicture = memberRVM.ProfilePicture,
-        //                LoginMethod = 3
-        //            };
-        //            string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //            //建立FormsAuthenticationTicket
-        //            var ticket = new FormsAuthenticationTicket(
-        //                        version: 1,
-        //                        name: lineemail.ToString(), //可以放使用者Id
-        //                        issueDate: DateTime.UtcNow,//現在UTC時間
-        //                        expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //                        isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //                        userData: JsonMeminfo, //可以放使用者角色名稱
-        //                        cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //            //加密Ticket
-        //            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //            //Create the cookie.
-        //            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //            Response.Cookies.Add(cookie);
-
-        //        }
-
-        //        return Json(true);
-        //        ////獲取該頁面url的參數資訊
-        //        //string returnURL = Request.Params["HTTP_REFERER"];
-        //        //int index = returnURL.IndexOf('=');
-        //        //returnURL = returnURL.Substring(index + 1);
-
-        //        ////如果參數為空，則跳轉到首頁，否則切回原頁面
-        //        //if (string.IsNullOrEmpty(returnURL))
-        //        //    return Redirect("/Home/HomePage");
-        //        //else
-        //        //    return Redirect(returnURL);
-        //    }
-        //    msg = "error";
-        //    return Content(msg);
-        //}
+            //    ////如果參數為空，則跳轉到首頁，否則切回原頁面
+            //    //if (string.IsNullOrEmpty(returnURL))
+            //    //    return Redirect("/Home/HomePage");
+            //    //else
+            //    //    return Redirect(returnURL);
+            //}
+            //msg = "error";
+            //return Content(msg);
+        }
 
 
 
