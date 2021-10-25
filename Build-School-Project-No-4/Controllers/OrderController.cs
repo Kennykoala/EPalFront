@@ -38,6 +38,7 @@ namespace Build_School_Project_No_4.Controllers
         //}
 
         //取得登入者的memberId
+       
         public string GetMemberId()
         {
             var cookie = HttpContext.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
@@ -46,13 +47,13 @@ namespace Build_School_Project_No_4.Controllers
             if (cookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-
                 var obj = JsonConvert.DeserializeObject<Members>(ticket.UserData);
                 userid = obj.MemberId.ToString();
                 return userid;
             }
             return null;
         }
+        [Authorize]
         public ActionResult OrderSummary(int? id)
         {
 

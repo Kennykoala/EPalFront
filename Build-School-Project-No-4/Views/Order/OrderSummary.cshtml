@@ -31,10 +31,10 @@
         </div>
         <div class="col-12 col-md-10">
             <div class="order-summary">
-                <div class="status">Completed</div>
+                <div class="status">@Model.Title</div>
                 <div class="status-header greyish">
                     <div class="details">Details</div>
-                    <div>Quantity/Order Time</div>
+                    <div>Quantity/OrderTime</div>
                     <div>Total Price </div>
                     <div class="options">Options</div>
                 </div>
@@ -95,7 +95,7 @@
                                         }
                                         @*<div class="user-img"></div>*@
                                         <div class="name">
-                                            <span>  @Html.DisplayFor(x => m.MemberName)</span><br>
+                                            <span>  @Html.DisplayFor(x => m.ProductId)</span><br>
 
                                             <span> @Html.DisplayFor(x => m.GameName)</span>
 

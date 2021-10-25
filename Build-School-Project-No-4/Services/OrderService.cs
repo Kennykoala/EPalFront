@@ -35,7 +35,7 @@ namespace Build_School_Project_No_4.Services
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var products = _repo.GetAll<Products>().ToList();
             var members = _repo.GetAll<Members>().ToList();
-
+            
             var OrderCards = orders.Select(o => new OrderCard
             {
                 OrderStatusName = category.OrderStatusName,
@@ -43,9 +43,12 @@ namespace Build_School_Project_No_4.Services
                 OrderDate = o.OrderDate,
                 TotalPrice = o.UnitPrice * o.Quantity,
                 OrderId = o.OrderId,
+                ProductId = o.ProductId,
                 GameName = o.Products.GameCategories.GameName,
                 MemberName=o.Members.MemberName,
-                ProfilePicture=o.Members.ProfilePicture
+                //ProfilePicture=o.Members.ProfilePicture
+                ProfilePicture = o.Products.Members.ProfilePicture
+              
                 //ProductId =o.Products.ProductId
                 //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
 
@@ -59,6 +62,7 @@ namespace Build_School_Project_No_4.Services
             result.Order = Orders;
             result.OrderCards = OrderCards;
             result.OrderStatusId = OrderStatusId;
+            result.Title = category.OrderStatusName;
             return result;
 
         }
