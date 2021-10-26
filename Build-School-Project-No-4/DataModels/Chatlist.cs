@@ -13,14 +13,13 @@ namespace Build_School_Project_No_4.DataModels
 
         public int SenderId { get; set; }
 
-        public int ReceiverId { get; set; }
+        public int? ReceiverId { get; set; }
 
         public int MessageTypeId { get; set; }
 
-        [Required]
         public string MessageContent { get; set; }
 
-        public DateTime SendOrReceiveDateTime { get; set; }
+        public DateTime? SendOrReceiveDateTime { get; set; }
 
         public virtual MessageType MessageType { get; set; }
 

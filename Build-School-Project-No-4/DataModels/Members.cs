@@ -73,6 +73,12 @@ namespace Build_School_Project_No_4.DataModels
 
         public int? LoginMethod { get; set; }
 
+        public string GoogleId { get; set; }
+
+        public string FBId { get; set; }
+
+        public string LineId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chatlist> Chatlist { get; set; }
 
