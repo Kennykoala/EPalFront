@@ -22,7 +22,6 @@ namespace Build_School_Project_No_4.Controllers
     {
         private readonly PaypalService _paypalService;
         private readonly OrderConfirmationService _orderConfirmService;
-        //private readonly LinePayViewModel _linepayVM;
         private readonly EcPayService _ecPayService;
         private readonly LinePayService _linePayService;
         private string trId;
@@ -30,7 +29,6 @@ namespace Build_School_Project_No_4.Controllers
         {
             _paypalService = new PaypalService();
             _orderConfirmService = new OrderConfirmationService();
-            //_linepayVM = new LinePayViewModel();
             _ecPayService = new EcPayService();
             _linePayService = new LinePayService();
         }
@@ -38,32 +36,22 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
             string confirmation = TempData["confirmation"] as string;
+            if (Cancel == "true")
+            {
+                return RedirectToAction("Checkout", "ePals", new { Confirmation = confirmation });
+            }
             APIContext apiContext = PaypalConfiguration.GetAPIContext();
             try
             {
                 string payerId = Request.Params["PayerID"];
                 if (string.IsNullOrEmpty(payerId))
                 {
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Checkout/PaymentWithPayPal?";
-                    var guid = Convert.ToString((new Random()).Next(100000));
-                    var createdPayment = _paypalService.CreatePayment(apiContext, baseURI + "guid=" + guid, confirmation);
-                    var links = createdPayment.links.GetEnumerator();
-                    string paypalRedirectUrl = null;
-                    while (links.MoveNext())
-                    {
-                        Links lnk = links.Current;
-                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
-                        {
-                            paypalRedirectUrl = lnk.href;
-                        }
-                    }
-                    Session.Add(guid, createdPayment.id);
+                    var paypalRedirectUrl = _paypalService.GetRedirectUrl(confirmation, apiContext);
                     return Redirect(paypalRedirectUrl);
                 }
                 else
                 {
                     var guid = Request.Params["guid"];
-
                     var executedPayment = _paypalService.ExecutePayment(apiContext, payerId, Session[guid] as string);
                     trId = executedPayment.transactions[0].related_resources[0].sale.id;
                     if (executedPayment.state.ToLower() != "approved")
@@ -96,20 +84,17 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        public async Task<ActionResult> PaymentWithLinePay()
+        public async Task<ActionResult> PaymentWithLinePay(string Cancel = null)
         {
             string confirmation = TempData["confirmation"] as string;
-            //string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
-            //var result = _linePayService.RequestLinePay(confirmation, baseURI);
-            
-
-            
+            if (Cancel == "true")
+            {
+                return RedirectToAction("Checkout", "ePals", new { Confirmation = confirmation });
+            }
 
             using (var client = new HttpClient())
             {
-
                 var requestBody = _linePayService.LinePayCreateOrder(confirmation);
-
                 var body = JsonConvert.SerializeObject(requestBody);
                 string apiurl = "/v3/payments/request";
                 var baseUri = "https://sandbox-api-pay.line.me";
@@ -129,9 +114,23 @@ namespace Build_School_Project_No_4.Controllers
                 var response =  await client.PostAsync(baseUri + apiurl, content);
                 var result = await response.Content.ReadAsStringAsync();
 
-                return Redirect(JsonConvert.DeserializeObject<LinePayViewModel.LinePayResponse>(result).info.paymentUrl.web);
+                var linepayapi = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web);
+
+
+
+                return Redirect(JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web);
             }
         }
+
+
+
+
+
+
+
+
+
+
 
         //public ActionResult PaymentWithEcPay()
         //{

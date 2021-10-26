@@ -1,14 +1,10 @@
 ﻿using Build_School_Project_No_4.DataModels;
 using Build_School_Project_No_4.ViewModels;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -16,24 +12,13 @@ namespace Build_School_Project_No_4.Services
     {
         private readonly Repository _repo;
         private readonly LinePayViewModel _linePayVM;
+        private readonly OrderUtility _orderUtil;
         public LinePayService()
         {
             _repo = new Repository();
             _linePayVM = new LinePayViewModel();
+            _orderUtil = new OrderUtility();
         }
-		public static string LinePayHMACSHA256(string key, string message)
-		{
-			System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-			byte[] keyByte = encoding.GetBytes(key);
-
-			HMACSHA256 hmacsha256 = new HMACSHA256(keyByte);
-
-			byte[] messageBytes = encoding.GetBytes(message);
-			byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
-
-			//注意他原本的公式是直接轉為string
-			return Convert.ToBase64String(hashmessage);
-		}
         public static string HashLinePayRequest(string channelSecret, string apiUrl, string body, string orderId, string key)
         {
             var request = channelSecret + apiUrl + body + orderId;
@@ -47,50 +32,48 @@ namespace Build_School_Project_No_4.Services
                 return Convert.ToBase64String(hashmessage);
             }
         }
+
         public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
         {
+            var redirectUrl = HttpContext.Current.Request.Url.Host + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
+            var order = _orderUtil.GetOrder(confirmation);
+
             var orders = _repo.GetAll<Orders>();
             var members = _repo.GetAll<Members>();
             var products = _repo.GetAll<Products>();
             var gameCat = _repo.GetAll<GameCategories>();
-            var result = (from o in orders
-                          join p in products on o.ProductId equals p.ProductId
-                          join m in members on p.CreatorId equals m.MemberId
-                          join g in gameCat on p.GameCategoryId equals g.GameCategoryId
-                          where o.OrderConfirmation == confirmation
-                          select new LinePayViewModel.LinePayRequest
-                          {
-                              amount = 1,
-                              currency = "TWD",
-                              orderId = confirmation,
-                              redirectUrls = new LinePayViewModel.RedirectUrls()
-                              {
-                                  cancelUrl = "https://facebook.com",
-                                  confirmUrl = "https://localhost:44322/api/linepayapi/linepaycompleted"
-                              },
-                              packages = new List<LinePayViewModel.Package>
-                             {
-                                 new LinePayViewModel.Package()
-                                 {
-                                     id = "package-1",
-                                     amount = 1,
-                                     name = "test-name",
-                                     
-                                     products = new List<LinePayViewModel.Product>()
-                                     {
-                                         new LinePayViewModel.Product()
-                                         {
-                                             name = "prod-1",
-                                             quantity = 1,
-                                             price = 1
-                                         }
-                                     }
-                             },
+            var linePayRequest = new LinePayViewModel.LinePayRequest
+            {
+                amount = (int)Math.Round(order.UnitPrice * order.Rounds, 0),
+                currency = "TWD",
+                orderId = confirmation,
+                redirectUrls = new LinePayViewModel.RedirectUrls()
+                {
+                    cancelUrl = redirectUrl + "&Cancel=true",
+                    confirmUrl = redirectUrl
+                },
+                packages = new List<LinePayViewModel.Package>
+                {
+                    new LinePayViewModel.Package()
+                    {
+                        id = confirmation,
+                        amount = (int)Math.Round(order.UnitPrice * order.Rounds, 0),
 
-                          }
-                          }
-                              ).SingleOrDefault();
-            return result;
+                        products = new List<LinePayViewModel.Product>()
+                        {
+                            new LinePayViewModel.Product()
+                            {
+                                name = $"{order.Rounds} round(s) of {order.GameName} with {order.ePalName}",
+                                quantity = order.Rounds,
+                                price = (int)Math.Round(order.UnitPrice, 0),
+                                imageUrl = order.ePalImg
+                            }
+                        }
+                    },
+                }
+            }; 
+
+            return linePayRequest;
         }
 
         //public  Task RequestLinePay(string confirmation, string baseUri)

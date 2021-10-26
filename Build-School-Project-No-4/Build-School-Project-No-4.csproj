@@ -320,7 +320,6 @@
     <Compile Include="Controllers\ChooseAServiceController.cs" />
     <Compile Include="Controllers\CouponsController.cs" />
     <Compile Include="Controllers\CreatorProjectController.cs" />
-    <Compile Include="Controllers\ECPayController.cs" />
     <Compile Include="Controllers\epalAccountController.cs" />
     <Compile Include="Controllers\ePalsController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
@@ -384,7 +383,6 @@
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Services\OrderConfirmationService.cs" />
-    <Compile Include="Services\PaymentUIDService.cs" />
     <Compile Include="Services\PaypalService.cs" />
     <Compile Include="Services\PaypalConfiguration.cs" />
     <Compile Include="Services\ProductService.cs" />
@@ -393,8 +391,10 @@
     <Compile Include="Services\TimestampService.cs" />
     <Compile Include="Services\WalletService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\OrderUtility.cs" />
+    <Compile Include="Utilities\PaymentStatusUtil.cs" />
     <Compile Include="ViewModels\ChillMeetViewModel.cs" />
-    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Utilities\PaymentUtility.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\AddToCartViewModel.cs" />
@@ -444,6 +444,8 @@
     <Content Include="Assets\images\checkout\check.png" />
     <Content Include="Assets\images\checkout\ecpay_logo.png" />
     <Content Include="Assets\images\checkout\heyhinaa.jpg" />
+    <Content Include="Assets\images\checkout\linepay-logo.png" />
+    <Content Include="Assets\images\checkout\linepay.png" />
     <Content Include="Assets\images\checkout\paypal.png" />
     <Content Include="Assets\images\ChooseAService\CAS01.jpg" />
     <Content Include="Assets\images\ChooseAService\CAS01c.jpg" />

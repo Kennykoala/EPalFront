@@ -90,8 +90,8 @@
                             <label class="payment-check-label" for="linePay">
                                 <input class="form-check-input" type="radio" name="payType" id="linePay" value="linePay">
                                 <span>LinePay</span>
-                                <span class="ecpay-img">
-                                    @*<img src="~/Assets/images/checkout/ecpay_logo.png" />*@
+                                <span class="linepay-img">
+                                    <img src="~/Assets/images/checkout/linepay.png" />
                                 </span>
                             </label>
                         </div>
@@ -137,9 +137,6 @@
 
 
 @section endJS{
-
-    @*<script src="~/Assets/js/checkout.js"></script>*@
-   
     @{
         var unixDateTime = Model.OrderDateTime;
     }

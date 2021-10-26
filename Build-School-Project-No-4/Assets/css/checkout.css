@@ -117,13 +117,13 @@ div.game-play{
 .paypal-img img {
   width: 100%;
 }
-.ecpay-img {
+.linepay {
     width: 130px;
     height: auto;
     margin: 20px 27px;
     display: flex;
 }
-.ecpay-img img {
+.linepay-img img {
     width: 100%;
 }
 .total-div {

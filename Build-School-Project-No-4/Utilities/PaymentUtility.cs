@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Build_School_Project_No_4.Utilities
 {
-    public static class Utilities
+    public static class PaymentUtility
     {
         public static string CreateTransactionUID(string id)
         {
