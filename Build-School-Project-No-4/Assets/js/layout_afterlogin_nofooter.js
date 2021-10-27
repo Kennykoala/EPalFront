@@ -73,12 +73,12 @@ window.onload = function () {
             function (googleUser) {
                 // Useful data for your client-side scripts:
                 var profile = googleUser.getBasicProfile();
-                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-                console.log('Full Name: ' + profile.getName());
-                console.log('Given Name: ' + profile.getGivenName());
-                console.log('Family Name: ' + profile.getFamilyName());
-                console.log("Image URL: " + profile.getImageUrl());
-                console.log("Email: " + profile.getEmail());
+                //console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                //console.log('Full Name: ' + profile.getName());
+                //console.log('Given Name: ' + profile.getGivenName());
+                //console.log('Family Name: ' + profile.getFamilyName());
+                //console.log("Image URL: " + profile.getImageUrl());
+                //console.log("Email: " + profile.getEmail());
 
                 // The ID token you need to pass to your backend:
                 var id_token = googleUser.getAuthResponse().id_token;
@@ -135,6 +135,12 @@ window.onload = function () {
             function (error) {
                 $("#GOOGLE_STATUS_2").html("");
                 alert(JSON.stringify(error, undefined, 2));
+                swal.fire({
+                    title: "Login Fail",
+                    icon: "error",
+                    //buttons: true,
+                    //dangerMode: true
+                });
             });
     }
 
@@ -196,8 +202,9 @@ window.onload = function () {
 
                 var fbemail = response.email;
                 var fbname = response.name;
+                var fbid = response.id;
 
-                FBPassToServer(fbemail, fbname);
+                FBPassToServer(fbemail, fbname, fbid);
             });
 
         }
@@ -215,11 +222,12 @@ window.onload = function () {
 
 
     //資料傳到後端
-    function FBPassToServer(fbemail,fbname) {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    function FBPassToServer(fbemail,fbname, fbid) {                      
 
         var Data = JSON.stringify({
             Fbemail: `${fbemail}`,
-            Fbname: `${fbname}`
+            Fbname: `${fbname}`,
+            FBId: `${fbid}`
         });
 
         $.ajax({
@@ -246,6 +254,13 @@ window.onload = function () {
             },
             error: function (err) {
                 console.log(err);
+
+                swal.fire({
+                    title: "Login Fail",
+                    icon: "error",
+                    //buttons: true,
+                    //dangerMode: true
+                });
             }
         })
 
@@ -402,45 +417,19 @@ window.onload = function () {
     //Button2 click
     function Button2_click() {
         AuthWithEmail();
-
-        //$('.linesavetodb').trigger('click');
-
-        //var Data = JSON.stringify({
-        //    Fbemail: `${fbemail}`,
-        //    Fbname: `${fbname}`
-        //});
-
-        //$.ajax({
-        //    url: '/Members/GetUserProfile',
-        //    method: 'POST',
-        //    data: Data,
-        //    contentType: 'application/json; charset=utf-8',
-        //    success: function (msg) {
-        //        $("#myModal").modal('hide');
-
-        //        //console.log(msg);
-        //        swal.fire({
-        //            title: "Welcome to Epal",
-        //            icon: "success",
-        //            //buttons: true,
-        //            //dangerMode: true
-        //        });
-
-
-        //        if (msg == true) {
-        //            window.location.href = '/'
-        //        }
-
-        //    },
-        //    error: function (err) {
-        //        console.log(err);
-        //    }
-        //})
-
     }
     $('#Line_login').click(Button2_click);
 
-
+    //var strValue = "@((string)ViewBag.msg)";
+    var strValue = TempData["message"];
+    if (strValue != null && strValue != "") {
+        swal.fire({
+            title: strValue,
+            icon: "success",
+            //buttons: true,
+            //dangerMode: true
+        });
+    }
 
 
 

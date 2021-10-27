@@ -121,69 +121,6 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-
-
-
-
-        //public ActionResult LoginProcess()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> LoginProcess(string token)
-        //{
-
-        //    string msg = "ok";
-        //    GoogleJsonWebSignature.Payload payload = null;
-        //    try
-        //    {
-        //        payload = await GoogleJsonWebSignature.ValidateAsync(token, new GoogleJsonWebSignature.ValidationSettings()
-        //        {
-        //            Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
-        //        });
-        //        string email = payload.Email;
-        //        string Id = payload.JwtId;
-        //        string name = payload.Name;
-        //    }
-        //    catch (Google.Apis.Auth.InvalidJwtException ex)
-        //    {
-        //        msg = ex.Message;
-        //    }
-        //    catch (Newtonsoft.Json.JsonReaderException ex)
-        //    {
-        //        msg = ex.Message;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        msg = ex.Message;
-        //    }
-
-        //    if (msg == "ok" && payload != null)
-        //    {//都成功
-        //        string user_id = payload.Subject;//取得user_id
-        //        msg = $@"您的 user_id :{user_id}";
-        //    }
-
-        //    return Content(msg);
-
-        //    ////// Nuget套件 System.IdentityModel.Tokens.Jwt
-        //    ////var user = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(token);
-
-        //    //// 除此之外，也可以透過Google API 取得
-        //    //var url = $"https://oauth2.googleapis.com/tokeninfo?id_token={token}";
-        //    //var client = _clientFactory.CreateClient();
-        //    //var response = await client.GetAsync(url);
-        //    //if (response.IsSuccessStatusCode)
-        //    //{
-        //    //    var responseContent = await response.Content.ReadAsStringAsync();
-        //    //    // 略...
-        //    //}
-
-        //    //return View();
-        //}
-
-
         ////line v2
         //[HttpPost]
         //public ActionResult LineLogin(string id_token)
@@ -312,6 +249,7 @@ namespace Build_School_Project_No_4.Controllers
             return Json("fail", JsonRequestBehavior.AllowGet);
         }
 
+
         //Line login
         [HttpGet]
         public ActionResult LineLoginCallback()
@@ -350,18 +288,16 @@ namespace Build_School_Project_No_4.Controllers
             //TempData["linename"] = user.displayName;
 
             string msg = "ok";
-            //string email;
-            //string fullname;
             if (msg == "ok" && lineemail != null)
             {
-                //確認是否已註冊Line
+                //確認是否已註冊
                 //var memberDM = _MemberService.MemberLoginData()
                 //            .Where(m => m.Email == email   )
                 //            .FirstOrDefault();
                 var memberRVM = _MemberService.MemberRigisterData()
                             .Where(m => m.Email == lineemail)
                             .FirstOrDefault();
-
+                //完全沒註冊過
                 if (memberRVM == null)
                 {
                     Random rnd = new Random(Guid.NewGuid().GetHashCode());
@@ -369,12 +305,13 @@ namespace Build_School_Project_No_4.Controllers
                     //將密碼Hash
                     rndnumber = _MemberService.HashPassword(rndnumber);
 
-                    //GroupViewModel -> DM
+                    //VM -> DM
                     Members emp = new Members
                     {
                         Email = lineemail,
                         Password = rndnumber,
-                        LoginMethod = 3
+                        LoginMethod = 3,
+                        LineId = lineId
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
@@ -383,36 +320,9 @@ namespace Build_School_Project_No_4.Controllers
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
+                        LineId = lineId,
                         //MemberName = linename,
                         //ProfilePicture = memberRVM.ProfilePicture
-                    };
-                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-                    //建立FormsAuthenticationTicket
-                    var ticket = new FormsAuthenticationTicket(
-                                version: 1,
-                                name: lineemail.ToString(), //可以放使用者Id
-                                issueDate: DateTime.UtcNow,//現在UTC時間
-                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-                                userData: JsonMeminfo, //可以放使用者角色名稱
-                                cookiePath: FormsAuthentication.FormsCookiePath);
-
-                    //加密Ticket
-                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-                    //Create the cookie.
-                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                    Response.Cookies.Add(cookie);
-
-                }
-                else
-                {
-                    Members meminfo = new Members()
-                    {
-                        MemberId = memberRVM.MemberId,
-                        MemberName = memberRVM.MemberName,
-                        ProfilePicture = memberRVM.ProfilePicture,
                         LoginMethod = 3
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -435,7 +345,48 @@ namespace Build_School_Project_No_4.Controllers
                     Response.Cookies.Add(cookie);
 
                 }
+                ////系統註冊過，Line未註冊
+                //else if (memberRVM != null && memberRVM.LineId =="")
+                //{
 
+                //}
+                else
+                {
+                    var memberdata = db.Members.First(x => x.Email == lineemail);
+                    memberdata.LineId = lineId;
+                    memberdata.LoginMethod = 3;
+                    //db.Entry(emp).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    Members meminfo = new Members()
+                    {
+                        MemberId = memberRVM.MemberId,
+                        LineId = lineId,
+                        //MemberName = memberRVM.MemberName,
+                        //ProfilePicture = memberRVM.ProfilePicture,
+                        LoginMethod = 3
+                    };
+                    string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
+
+                    //建立FormsAuthenticationTicket
+                    var ticket = new FormsAuthenticationTicket(
+                                version: 1,
+                                name: lineemail.ToString(), //可以放使用者Id
+                                issueDate: DateTime.UtcNow,//現在UTC時間
+                                expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
+                                isPersistent: memberRVM.Remember,// 是否要記住我 true or false
+                                userData: JsonMeminfo, //可以放使用者角色名稱
+                                cookiePath: FormsAuthentication.FormsCookiePath);
+
+                    //加密Ticket
+                    var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+                    //Create the cookie.
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    Response.Cookies.Add(cookie);
+
+                }
+                TempData["message"] = "Welcome to Epal";
                 return Redirect("/");
             }
             msg = "error";
@@ -449,317 +400,22 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        //[HttpPost]
-        //public ActionResult GetUserProfile(string Token, string email)
-        //{
-        //    //透過token取得用戶資料
-        //    var user = Utility.GetUserProfile(Token);
-        //    ViewBag.UserProfileJSON = Newtonsoft.Json.JsonConvert.SerializeObject(user);
-        //    //ViewBag
-        //    ViewBag.email = email;
-        //    ViewBag.access_token = Token;
-        //    return View("LineResult");
-
-        //    //string lineemail = TempData["lineemail"].ToString();
-        //    //string linename = TempData["linename"].ToString();
-        //    //string msg = "ok";
-        //    ////string email;
-        //    ////string fullname;
-
-        //    //if (msg == "ok" && lineemail != null)
-        //    //{
-        //    //    //確認是否已註冊Line
-        //    //    //var memberDM = _MemberService.MemberLoginData()
-        //    //    //            .Where(m => m.Email == email   )
-        //    //    //            .FirstOrDefault();
-        //    //    var memberRVM = _MemberService.MemberRigisterData()
-        //    //                .Where(m => m.Email == lineemail)
-        //    //                .FirstOrDefault();
-
-        //    //    if (memberRVM == null)
-        //    //    {
-        //    //        Random rnd = new Random(Guid.NewGuid().GetHashCode());
-        //    //        string rndnumber = rnd.Next(0, 100).ToString();
-        //    //        //將密碼Hash
-        //    //        rndnumber = _MemberService.HashPassword(rndnumber);
-
-        //    //        //GroupViewModel -> DM
-        //    //        Members emp = new Members
-        //    //        {
-        //    //            Email = lineemail,
-        //    //            Password = rndnumber,
-        //    //            LoginMethod = 3
-        //    //        };
-        //    //        db.Members.Add(emp);
-        //    //        db.SaveChanges();
-
-
-        //    //        Members meminfo = new Members()
-        //    //        {
-        //    //            MemberId = memberRVM.MemberId,
-        //    //            MemberName = linename,
-        //    //            //ProfilePicture = memberRVM.ProfilePicture
-        //    //        };
-        //    //        string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //    //        //建立FormsAuthenticationTicket
-        //    //        var ticket = new FormsAuthenticationTicket(
-        //    //                    version: 1,
-        //    //                    name: lineemail.ToString(), //可以放使用者Id
-        //    //                    issueDate: DateTime.UtcNow,//現在UTC時間
-        //    //                    expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //    //                    isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //    //                    userData: JsonMeminfo, //可以放使用者角色名稱
-        //    //                    cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //    //        //加密Ticket
-        //    //        var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //    //        //Create the cookie.
-        //    //        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //    //        Response.Cookies.Add(cookie);
-
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        Members meminfo = new Members()
-        //    //        {
-        //    //            MemberId = memberRVM.MemberId,
-        //    //            MemberName = memberRVM.MemberName,
-        //    //            ProfilePicture = memberRVM.ProfilePicture,
-        //    //            LoginMethod = 3
-        //    //        };
-        //    //        string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //    //        //建立FormsAuthenticationTicket
-        //    //        var ticket = new FormsAuthenticationTicket(
-        //    //                    version: 1,
-        //    //                    name: lineemail.ToString(), //可以放使用者Id
-        //    //                    issueDate: DateTime.UtcNow,//現在UTC時間
-        //    //                    expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //    //                    isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //    //                    userData: JsonMeminfo, //可以放使用者角色名稱
-        //    //                    cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //    //        //加密Ticket
-        //    //        var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //    //        //Create the cookie.
-        //    //        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //    //        Response.Cookies.Add(cookie);
-
-        //    //    }
-
-        //    //    return Json(true);
-        //    //    ////獲取該頁面url的參數資訊
-        //    //    //string returnURL = Request.Params["HTTP_REFERER"];
-        //    //    //int index = returnURL.IndexOf('=');
-        //    //    //returnURL = returnURL.Substring(index + 1);
-
-        //    //    ////如果參數為空，則跳轉到首頁，否則切回原頁面
-        //    //    //if (string.IsNullOrEmpty(returnURL))
-        //    //    //    return Redirect("/Home/HomePage");
-        //    //    //else
-        //    //    //    return Redirect(returnURL);
-        //    //}
-        //    //msg = "error";
-        //    //return Content(msg);
-        //}
-
-
-
-        ////line v3
-        //public ActionResult LineLoginDirect()
-        //{
-        //    string response_type = "code";
-        //    string client_id = "1656564684";
-        //    string redirect_uri = HttpUtility.UrlEncode("https://localhost:44322");
-        //    string state = "linelogin";
-        //    string LineLoginUrl = string.Format("https://access.line.me/oauth2/v2.1/authorize?response_type={0}&client_id={1}&redirect_uri={2}&state={3}&scope=openid%20profile%20email&nonce=09876xyz",
-        //        response_type,
-        //        client_id,
-        //        redirect_uri,
-        //        state
-        //        );
-        //    return Redirect(LineLoginUrl);
-        //}
-
-        //public ActionResult callback(string code, string state)
-        //{
-        //    if (state == "linelogin")
-        //    {
-        //        #region Api變數宣告
-        //        WebClient wc = new WebClient();
-        //        wc.Encoding = Encoding.UTF8;
-        //        wc.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-        //        string result = string.Empty;
-        //        NameValueCollection nvc = new NameValueCollection();
-        //        #endregion
-
-        //        string displayName;
-        //        string useremail;
-        //        try
-        //        {
-        //            //取回Token
-        //            string ApiUrl_Token = "https://api.line.me/oauth2/v2.1/token";
-        //            nvc.Add("grant_type", "authorization_code");
-        //            nvc.Add("code", code);
-        //            nvc.Add("redirect_uri", "https://localhost:44322");
-        //            nvc.Add("client_id", "1656564684");
-        //            nvc.Add("client_secret", "2af2ca5d39971c612d2a2dbccfdd2e54");
-        //            string JsonStr = Encoding.UTF8.GetString(wc.UploadValues(ApiUrl_Token, "POST", nvc));
-        //            LineLoginToken ToKenObj = JsonConvert.DeserializeObject<LineLoginToken>(JsonStr);
-        //            wc.Headers.Clear();
-
-        //            //取回User Profile
-        //            string ApiUrl_Profile = "https://api.line.me/v2/profile";
-        //            wc.Headers.Add("Authorization", "Bearer " + ToKenObj.access_token);
-        //            string UserProfile = wc.DownloadString(ApiUrl_Profile);
-        //            LineProfile ProfileObj = JsonConvert.DeserializeObject<LineProfile>(UserProfile);
-
-        //            displayName = ProfileObj.displayName;
-        //            useremail = ProfileObj.useremail;
-
-        //            return RedirectToAction("UserProfile", "Home", new { displayName = ProfileObj.displayName, pictureUrl = ProfileObj.pictureUrl });
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            string msg = ex.Message;
-        //            throw;
-        //        }
-        //    }
-
-
-        //    //    if (msg == "ok" && lineemail != null)
-        //    //    {
-        //    //        //確認是否已註冊Line
-        //    //        //var memberDM = _MemberService.MemberLoginData()
-        //    //        //            .Where(m => m.Email == email   )
-        //    //        //            .FirstOrDefault();
-        //    //        var memberRVM = _MemberService.MemberRigisterData()
-        //    //                    .Where(m => m.Email == lineemail)
-        //    //                    .FirstOrDefault();
-
-        //    //        if (memberRVM == null)
-        //    //        {
-        //    //            Random rnd = new Random(Guid.NewGuid().GetHashCode());
-        //    //            string rndnumber = rnd.Next(0, 100).ToString();
-        //    //            //將密碼Hash
-        //    //            rndnumber = _MemberService.HashPassword(rndnumber);
-
-        //    //            //GroupViewModel -> DM
-        //    //            Members emp = new Members
-        //    //            {
-        //    //                Email = lineemail,
-        //    //                Password = rndnumber,
-        //    //                LoginMethod = 3
-        //    //            };
-        //    //            db.Members.Add(emp);
-        //    //            db.SaveChanges();
-
-
-        //    //            Members meminfo = new Members()
-        //    //            {
-        //    //                MemberId = memberRVM.MemberId,
-        //    //                MemberName = linename,
-        //    //                //ProfilePicture = memberRVM.ProfilePicture
-        //    //            };
-        //    //            string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //    //            //建立FormsAuthenticationTicket
-        //    //            var ticket = new FormsAuthenticationTicket(
-        //    //                        version: 1,
-        //    //                        name: lineemail.ToString(), //可以放使用者Id
-        //    //                        issueDate: DateTime.UtcNow,//現在UTC時間
-        //    //                        expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //    //                        isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //    //                        userData: JsonMeminfo, //可以放使用者角色名稱
-        //    //                        cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //    //            //加密Ticket
-        //    //            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //    //            //Create the cookie.
-        //    //            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //    //            Response.Cookies.Add(cookie);
-
-        //    //        }
-        //    //        else
-        //    //        {
-        //    //            Members meminfo = new Members()
-        //    //            {
-        //    //                MemberId = memberRVM.MemberId,
-        //    //                MemberName = memberRVM.MemberName,
-        //    //                ProfilePicture = memberRVM.ProfilePicture,
-        //    //                LoginMethod = 3
-        //    //            };
-        //    //            string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //    //            //建立FormsAuthenticationTicket
-        //    //            var ticket = new FormsAuthenticationTicket(
-        //    //                        version: 1,
-        //    //                        name: lineemail.ToString(), //可以放使用者Id
-        //    //                        issueDate: DateTime.UtcNow,//現在UTC時間
-        //    //                        expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //    //                        isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //    //                        userData: JsonMeminfo, //可以放使用者角色名稱
-        //    //                        cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //    //            //加密Ticket
-        //    //            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //    //            //Create the cookie.
-        //    //            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //    //            Response.Cookies.Add(cookie);
-
-        //    //        }
-
-        //    //        return Json(true);
-        //    //    }
-        //    //    msg = "error";
-        //    //    return Content(msg);
-
-
-
-        //    return View();
-        //}
-
-        public class LineLoginToken
-        {
-            public string access_token { get; set; }
-            public int expires_in { get; set; }
-            public string id_token { get; set; }
-            public string refresh_token { get; set; }
-            public string scope { get; set; }
-            public string token_type { get; set; }
-        }
-
-        public class LineProfile
-        {
-            public string userId { get; set; }
-            public string displayName { get; set; }
-            public string pictureUrl { get; set; }
-            public string statusMessage { get; set; }
-            public string useremail { get; set; }
-        }
-
-
-
-
 
 
         //FB  login
         [HttpPost]
-        public ActionResult FBLogin(string Fbemail, string Fbname)
+        public ActionResult FBLogin(string Fbemail, string Fbname, string FBId)
         {
             string msg = "ok";
             string email;
             string fullname;
+            string fbid;
 
             if (msg == "ok" && Fbemail != null)
             {
                 email = Fbemail;
                 fullname = Fbname;
+                fbid = FBId;
                 //確認是否已註冊FB
                 //var memberDM = _MemberService.MemberLoginData()
                 //            .Where(m => m.Email == email   )
@@ -780,7 +436,8 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         Email = email,
                         Password = rndnumber,
-                        LoginMethod = 2
+                        LoginMethod = 2,
+                        FBId = fbid
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
@@ -789,8 +446,10 @@ namespace Build_School_Project_No_4.Controllers
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
-                        MemberName = fullname,
+                        FBId = fbid,
+                        //MemberName = fullname,
                         //ProfilePicture = memberRVM.ProfilePicture
+                        LoginMethod = 2
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
@@ -814,12 +473,18 @@ namespace Build_School_Project_No_4.Controllers
                 }
                 else
                 {
+                    var memberdata = db.Members.First(x => x.Email == email);
+                    memberdata.FBId = fbid;
+                    memberdata.LoginMethod = 2;
+                    //db.Entry(emp).State = EntityState.Modified;
+                    db.SaveChanges();
 
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
-                        MemberName = memberRVM.MemberName,
-                        ProfilePicture = memberRVM.ProfilePicture,
+                        FBId = fbid,
+                        //MemberName = memberRVM.MemberName,
+                        //ProfilePicture = memberRVM.ProfilePicture,
                         LoginMethod = 2
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -859,6 +524,7 @@ namespace Build_School_Project_No_4.Controllers
             string msg = "ok";
             string email;
             string fullname;
+            string googleid;
             GoogleJsonWebSignature.Payload payload = null;
             try
             {
@@ -888,6 +554,7 @@ namespace Build_School_Project_No_4.Controllers
             {
                 email = payload.Email;
                 fullname = payload.Name;
+                googleid = payload.JwtId;
                 //確認是否已註冊google
                 //var memberDM = _MemberService.MemberLoginData()
                 //            .Where(m => m.Email == email   )
@@ -908,7 +575,8 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         Email = email,
                         Password = rndnumber,
-                        LoginMethod = 1
+                        LoginMethod = 1,
+                        GoogleId = googleid
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
@@ -917,8 +585,10 @@ namespace Build_School_Project_No_4.Controllers
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
-                        MemberName = fullname,
+                        GoogleId = googleid,
+                        //MemberName = fullname,
                         //ProfilePicture = memberRVM.ProfilePicture
+                        LoginMethod = 1
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
@@ -946,11 +616,18 @@ namespace Build_School_Project_No_4.Controllers
                 }
                 else
                 {
+                    var memberdata = db.Members.First(x => x.Email == email);
+                    memberdata.GoogleId = googleid;
+                    memberdata.LoginMethod = 1;
+                    //db.Entry(emp).State = EntityState.Modified;
+                    db.SaveChanges();
+
                     Members meminfo = new Members()
                     {
                         MemberId = memberRVM.MemberId,
-                        MemberName = memberRVM.MemberName,
-                        ProfilePicture = memberRVM.ProfilePicture,
+                        GoogleId = googleid,
+                        //MemberName = memberRVM.MemberName,
+                        //ProfilePicture = memberRVM.ProfilePicture,
                         LoginMethod = 1
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -1170,7 +847,8 @@ namespace Build_School_Project_No_4.Controllers
                 {
                     MemberId = user.MemberId,
                     MemberName = user.MemberName,
-                    ProfilePicture = user.ProfilePicture
+                    ProfilePicture = user.ProfilePicture,
+                    LoginMethod = 0
                 };
                 string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
 
