@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Build_School_Project_No_4.DataModels;
 using Build_School_Project_No_4.ViewModels;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -29,8 +30,7 @@ namespace Build_School_Project_No_4.Services
             try
             {
                 var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-                result.OrderStatusId = 3;
-                //result.UpdateDateTime = DateTime.Now.ToUniversalTime();
+                result.OrderStatusId = (int)PaymentStatusUtil.PaymentStatus.NotStarted;
                 _repo.Update(result);
                 _repo.SaveChanges();
                 return true;

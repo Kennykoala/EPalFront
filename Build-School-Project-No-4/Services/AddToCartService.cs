@@ -1,6 +1,7 @@
 ﻿using System;
 using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.DataModels;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -21,7 +22,7 @@ namespace Build_School_Project_No_4.Services
             var utcTimeNow = timeNow.ToUniversalTime();
             var timestamp = UtcDateTimeToUnix(utcTimeNow);
             var customerId = Int32.Parse(GetCustomerIdService.GetMemberId());
-            var formattedTimestamp = $"GLHF-{customerId}{timestamp}";
+            var orderId = $"GLHF-{customerId}{timestamp}";
             Orders order = new Orders()
             {
                 CustomerId = customerId,
@@ -30,8 +31,8 @@ namespace Build_School_Project_No_4.Services
                 UnitPrice = (decimal)AddCartVM.UnitPrice,
                 OrderDate = utcTimeNow,
                 DesiredStartTime = Convert.ToDateTime(startTime),
-                OrderStatusId = 1,
-                OrderConfirmation = formattedTimestamp
+                OrderStatusId = (int)PaymentStatusUtil.PaymentStatus.Unpaid,
+                OrderConfirmation = orderId
             };
             return order;
         }

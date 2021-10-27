@@ -2,6 +2,7 @@
 using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.DataModels;
 using System;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -19,7 +20,6 @@ namespace Build_School_Project_No_4.Services
             var members = _repo.GetAll<Members>();
             var products = _repo.GetAll<Products>();
             var gameCategories = _repo.GetAll<GameCategories>();
-
             var result = (from o in orders
                           join p in products on o.ProductId equals p.ProductId
                           join m in members on p.CreatorId equals m.MemberId
@@ -39,13 +39,10 @@ namespace Build_School_Project_No_4.Services
                               ProductId = p.ProductId,
                               OrderStatus = o.OrderStatusId
                           }).SingleOrDefault();
-
-
             if (result == null)
             {
                 return null;
             }
-
             return result;
         }
 
@@ -73,21 +70,17 @@ namespace Build_School_Project_No_4.Services
                 try
                 {
                     var orderResult = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-                    orderResult.OrderStatusId = 6;
+                    orderResult.OrderStatusId = (int)PaymentStatusUtil.PaymentStatus.Cancelled;
                     _repo.Update(orderResult);
                     _repo.SaveChanges();
                 }
                 catch (Exception ex)
                 {
                     var err = ex.ToString();
-                    
                 }
                 return false;
             }
-            else
-            {
                 return true;
-            }
         }
         public CheckoutViewModel GetPlayerIdFromConfirmation(string confirmation)
         {

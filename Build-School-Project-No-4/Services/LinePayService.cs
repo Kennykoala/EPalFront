@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Web;
 using Build_School_Project_No_4.Utilities;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Text;
+using System.Net.Http;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -19,10 +23,17 @@ namespace Build_School_Project_No_4.Services
             _linePayVM = new LinePayViewModel();
             _orderUtil = new OrderUtility();
         }
-        public static string HashLinePayRequest(string channelSecret, string apiUrl, string body, string orderId, string key)
+        private static string baseUri = "https://sandbox-api-pay.line.me";
+        private static string channelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
+        private static string channelId = "1656554768";
+        private static string customerId = GetCustomerIdService.GetMemberId();
+        public static string HashLinePayRequest(string orderId, string body)
         {
-            var request = channelSecret + apiUrl + body + orderId;
-            key = key ?? "";
+            string apiurl = "/v3/payments/request";
+            var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
+            var request = channelSecret + apiurl + body + nonce;
+            
+            var key = channelSecret ?? "";
             var encoding = new System.Text.UTF8Encoding();
             byte[] keyByte = encoding.GetBytes(key);
             byte[] messageBytes = encoding.GetBytes(request);
@@ -32,12 +43,11 @@ namespace Build_School_Project_No_4.Services
                 return Convert.ToBase64String(hashmessage);
             }
         }
-
         public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
         {
-            var redirectUrl = HttpContext.Current.Request.Url.Host + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
+            var redirectUrl = "https://facebook.com";
+            //var redirectUrl = HttpContext.Current.Request.Url.Host + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
             var order = _orderUtil.GetOrder(confirmation);
-
             var orders = _repo.GetAll<Orders>();
             var members = _repo.GetAll<Members>();
             var products = _repo.GetAll<Products>();
@@ -58,7 +68,6 @@ namespace Build_School_Project_No_4.Services
                     {
                         id = confirmation,
                         amount = (int)Math.Round(order.UnitPrice * order.Rounds, 0),
-
                         products = new List<LinePayViewModel.Product>()
                         {
                             new LinePayViewModel.Product()
@@ -71,37 +80,59 @@ namespace Build_School_Project_No_4.Services
                         }
                     },
                 }
-            }; 
-
+            };
             return linePayRequest;
         }
 
-        //public  Task RequestLinePay(string confirmation, string baseUri)
-        //{
-        //    using (var httpClient = new HttpClient())
-        //    {
-        //        var requestBody = LinePayCreateOrder(confirmation);
+        public async Task<string> RequestApiPost(string confirmation)
+        {
+            using (var client = new HttpClient())
+            {
+                var requestBody = LinePayCreateOrder(confirmation);
+                var body = JsonConvert.SerializeObject(requestBody);
+                string apiurl = "/v3/payments/request";
+                var baseUri = "https://sandbox-api-pay.line.me";
+                string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
+                string ChannelId = "1656554768";
+                var customerId = GetCustomerIdService.GetMemberId();
+                var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
 
-        //        var body = JsonConvert.SerializeObject(requestBody);
-        //        string apiurl = "/v3/payments/request";
-        //        string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-        //        string ChannelId = "1656554768";
-        //        //string nonce = Guid.NewGuid().ToString();
-        //        string Signature = LinePayService.LinePayHMACSHA256((ChannelSecret + apiurl + body + confirmation), ChannelSecret);
 
-        //        httpClient.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-        //        httpClient.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
-        //        httpClient.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", confirmation);
-        //        httpClient.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
+                string Signature = LinePayService.HashLinePayRequest(confirmation, body);
 
-        //        var content = new StringContent(body, Encoding.UTF8, "application/json");
+                client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
+                client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
+                client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
+                client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
+                client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
 
-        //        //var apiUrl = "https://localhost:44322/api/linepayapi/Confirm";
-        //        HttpContent apiUrl = "https://localhost:44322/api/linepayapi/Confirm";
-        //        var response = httpClient.PostAsync(baseUri, apiUrl, content);
 
-        //    }
 
-        //}
-	}
+                var content = new StringContent(body, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(baseUri + apiurl, content);
+                var result = await response.Content.ReadAsStringAsync();
+
+                var linepayapi = JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web;
+
+                return linepayapi;
+            }
+
+        }
+
+        public async Task<string> ConfirmApiPost(string payRedirectUrl)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync();
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            
+        }
+
+
+
+
+
+    }
 }

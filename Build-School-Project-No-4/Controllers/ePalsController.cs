@@ -59,7 +59,6 @@ namespace Build_School_Project_No_4.Controllers
         [HttpGet]
         public ActionResult Detail(int? id)
         {
-
             if (id == null)
             {
                 return RedirectToAction("Index");
@@ -69,7 +68,6 @@ namespace Build_School_Project_No_4.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-
             return View(playerListing);
         }
         [HttpPost]
@@ -96,23 +94,16 @@ namespace Build_School_Project_No_4.Controllers
                     return Content("Failed to create new order");
                 }
             }
-
-
         }
         [HttpGet]
         public ActionResult Checkout(string confirmation)
         {
             if (confirmation == null)
             {
+                //fixthisshit
                 return Content("Order not found!");
             }
             var checkoutVM = _checkoutService.GetCheckoutDetails(confirmation);
-
-            //GroupViewModel groupVM = new GroupViewModel
-            //{
-            //    Checkout = checkoutVM
-            //};
-
             return View(checkoutVM);
         }
         [HttpPost]
@@ -133,19 +124,11 @@ namespace Build_School_Project_No_4.Controllers
                 {
                     return RedirectToAction("PaymentWithPaypal", "Checkout");
                 }
-                else if (payType == "ecPay")
-                {
-                    return RedirectToAction("PaymentWithEcPay", "Checkout");
-                }
                 else
                 {
                     return RedirectToAction("PaymentWithLinePay", "Checkout");
                 }
-
             }
-
-
-
         }
     }
 }

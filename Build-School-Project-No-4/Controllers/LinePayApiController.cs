@@ -45,7 +45,7 @@ namespace Build_School_Project_No_4.Controllers
                 var nonce = Utilities.PaymentUtility.CreateTransactionUID("1");
 
 
-                string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, nonce, ChannelSecret);
+                string Signature = LinePayService.HashLinePayRequest(nonce, body);
 
                 client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
                 client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);

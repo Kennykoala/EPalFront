@@ -81,9 +81,6 @@ namespace Build_School_Project_No_4.Controllers
                 return Content("order status change didn't go through");
             }
         }
-
-
-
         public async Task<ActionResult> PaymentWithLinePay(string Cancel = null)
         {
             string confirmation = TempData["confirmation"] as string;
@@ -91,47 +88,58 @@ namespace Build_School_Project_No_4.Controllers
             {
                 return RedirectToAction("Checkout", "ePals", new { Confirmation = confirmation });
             }
+            var payRedirectUrl = await _linePayService.RequestApiPost(confirmation);
 
-            using (var client = new HttpClient())
-            {
-                var requestBody = _linePayService.LinePayCreateOrder(confirmation);
-                var body = JsonConvert.SerializeObject(requestBody);
-                string apiurl = "/v3/payments/request";
-                var baseUri = "https://sandbox-api-pay.line.me";
-                string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-                string ChannelId = "1656554768";
+            var idk = await _linePayService.ConfirmApiPost(payRedirectUrl);
 
 
-                string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, confirmation, ChannelSecret);
-
-                client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-                client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-                client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
-                client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", confirmation);
-                client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
-
-                var content = new StringContent(body, Encoding.UTF8, "application/json");
-                var response =  await client.PostAsync(baseUri + apiurl, content);
-                var result = await response.Content.ReadAsStringAsync();
-
-                var linepayapi = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web);
+            int i = 0;
 
 
-
-                return Redirect(JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web);
-            }
+            return Redirect(payRedirectUrl);
         }
+    }
+}
 
 
 
+        //public async Task<ActionResult> PaymentWithLinePay(string Cancel = null)
+        //{
+        //    string confirmation = TempData["confirmation"] as string;
+        //    if (Cancel == "true")
+        //    {
+        //        return RedirectToAction("Checkout", "ePals", new { Confirmation = confirmation });
+        //    }
+
+        //    using (var client = new HttpClient())
+        //    {
+        //        var requestBody = _linePayService.LinePayCreateOrder(confirmation);
+        //        var body = JsonConvert.SerializeObject(requestBody);
+        //        string apiurl = "/v3/payments/request";
+        //        var baseUri = "https://sandbox-api-pay.line.me";
+        //        string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
+        //        string ChannelId = "1656554768";
+        //        var customerId = GetCustomerIdService.GetMemberId();
+        //        var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
 
 
+        //        string Signature = LinePayService.HashLinePayRequest(confirmation, body);
+
+        //        client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
+        //        client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
+        //        client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
+        //        client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
+        //        client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
+        //        var content = new StringContent(body, Encoding.UTF8, "application/json");
+        //        var response =  await client.PostAsync(baseUri + apiurl, content);
+        //        var result = await response.Content.ReadAsStringAsync();
+        //        var linepayapi = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web);
+        //        return Redirect(JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web);
+        //    }
+        //}
 
 
-
-
-
-
+        #region
         //public ActionResult PaymentWithEcPay()
         //{
         //    List<string> enErrors = new List<string>();
@@ -166,7 +174,7 @@ namespace Build_School_Project_No_4.Controllers
         //            oPayment.Send.CustomField3 = "";
         //            oPayment.Send.CustomField4 = "";
         //            oPayment.Send.EncryptType = 1;
-      
+
 
 
 
@@ -243,13 +251,11 @@ namespace Build_School_Project_No_4.Controllers
         //        ViewBag.test = aaa;
         //        return View();
         //        }
-           
+
 
 
 
 
         //}
+        #endregion
 
-
-    }
-}

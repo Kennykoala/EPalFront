@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Build_School_Project_No_4.DataModels;
-using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
@@ -14,11 +12,9 @@ namespace Build_School_Project_No_4.Services
     {
 
         private PayPal.Api.Payment payment;
-        private readonly Repository _repo;
         private readonly OrderUtility _orderUtil;
         public PaypalService()
         {
-            _repo = new Repository();
             _orderUtil = new OrderUtility();
         }
 
