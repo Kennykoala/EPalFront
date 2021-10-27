@@ -37,5 +37,14 @@ namespace Build_School_Project_No_4.ViewModels
         public string MemberName { get; set; }
 
         public string ProfilePicture { get; set; }
+
+
+        public int? LoginMethod { get; set; }
+
+        public string GoogleId { get; set; }
+
+        public string FBId { get; set; }
+
+        public string LineId { get; set; }
     }
 }
