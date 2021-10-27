@@ -827,7 +827,7 @@
     <Content Include="Views\ePals\DetailPage.cshtml" />
     <Content Include="Views\ePals\Index.cshtml" />
     <Content Include="Views\ePals\NotFound.cshtml" />
-    <Content Include="Views\Order\OrderSummary.cshtml" />
+    <Content Include="Views\Order\PurchasedOrderSummary.cshtml" />
     <Content Include="Views\Members\RegisterResult.cshtml" />
     <Content Include="Views\Members\EmailValidate.cshtml" />
     <Content Include="Views\Members\LoginResult.cshtml" />
@@ -867,6 +867,7 @@
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Shared\_LinestatusPartial.cshtml" />
+    <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

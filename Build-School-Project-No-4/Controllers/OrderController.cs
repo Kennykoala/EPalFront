@@ -53,8 +53,9 @@ namespace Build_School_Project_No_4.Controllers
             }
             return null;
         }
+
         [Authorize]
-        public ActionResult OrderSummary(int? id)
+        public ActionResult PurchasedOrderSummary(int? id)
         {
 
             var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
@@ -66,7 +67,7 @@ namespace Build_School_Project_No_4.Controllers
 
                 if (!id.HasValue)
                 {
-                    return RedirectToAction("OrderSummary", "Order", new { id = 1 });
+                    return RedirectToAction("PurchasedOrderSummary", "Order", new { id = 1 });
                 }
                 //if (!id.HasValue)
                 //{
@@ -80,10 +81,42 @@ namespace Build_School_Project_No_4.Controllers
                 //    Order = abc
                 //};
             
-                return View(abc);
-            
-          
+                return View(abc);       
+
         }
-       
+
+        [Authorize]
+        public ActionResult CreatedOrderSummary(int? id)
+        {
+
+            var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
+            var mems = mem.MemberId;
+
+            //Orders cusid = _ctx.Orders.Find(id);
+
+            //if (mems == cusid.CustomerId)
+
+            if (!id.HasValue)
+            {
+                return RedirectToAction("CreatedOrderSummary", "Order", new { id = 1 });
+            }
+            //if (!id.HasValue)
+            //{
+            //    return RedirectToAction("Index");
+            //}
+            var order = new OrderService();
+            var abc = order.GetCreatedOrderCardData(id.Value, mems);
+            // var ordercards = _orderService.GetOrderCardData(id.Value);
+            //GroupViewModel result = new GroupViewModel
+            //{
+            //    Order = abc
+            //};
+
+            return View(abc);
+
+        }
+
+
+
     }
 }

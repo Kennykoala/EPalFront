@@ -18,24 +18,27 @@ namespace Build_School_Project_No_4.Services
             _repo = new Repository();
         }
 
+
+        //Purchased Orders
         public OrderViewModel GetOrderCardData(int OrderStatusId,int mems)
         {
+                    
             var result = new OrderViewModel()
             {
-              OrderCards = new List<OrderCard>(),
+               OrderCards = new List<OrderCard>(),
                Order = new List<Orderstatusall>()
             };
+
+            //訂單狀態
             var category = _repo.GetAll<OrderStatus>().FirstOrDefault(x => x.OrderStatusId == OrderStatusId);
-            if(category == null)
+            if (category == null)
             {
                 return result;
             }
-            var orders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId && x.CustomerId== mems);
-            var GameCat = _repo.GetAll<GameCategories>().ToList();
-            var orderstatu = _repo.GetAll<OrderStatus>().ToList();
-            var products = _repo.GetAll<Products>().ToList();
-            var members = _repo.GetAll<Members>().ToList();
-            
+
+
+            //Purchased Orders
+            var orders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId && x.CustomerId == mems);
             var OrderCards = orders.Select(o => new OrderCard
             {
                 OrderStatusName = category.OrderStatusName,
@@ -45,75 +48,88 @@ namespace Build_School_Project_No_4.Services
                 OrderId = o.OrderId,
                 ProductId = o.ProductId,
                 GameName = o.Products.GameCategories.GameName,
-                MemberName=o.Members.MemberName,
+                MemberName = o.Members.MemberName,
                 //ProfilePicture=o.Members.ProfilePicture
                 ProfilePicture = o.Products.Members.ProfilePicture
-              
+
                 //ProductId =o.Products.ProductId
                 //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
 
             }).ToList();
 
+
+            var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var Orders = orderstatu.Select(g => new Orderstatusall
             {
                 Id = g.OrderStatusId,
                 Name = g.OrderStatusName
             }).ToList();
             result.Order = Orders;
-            result.OrderCards = OrderCards;
+
+            result.OrderCards = OrderCards;            
+
             result.OrderStatusId = OrderStatusId;
             result.Title = category.OrderStatusName;
+
             return result;
 
         }
 
-        ////private OrderRepository _OrderRepo;
-        //private readonly Repository _Repo;
-        //public OrderService()
-        //{
-        //    //_OrderRepo = new OrderRepository();
-        //    _Repo = new Repository();
-        //}
-        ////controller  or  service取得登入者的memberId
 
-        ////public string GetMemberId()
-        ////{
-        ////    var cookie = HttpContext.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
+        //Created Orders
+        public OrderViewModel GetCreatedOrderCardData(int OrderStatusId, int mems)
+        {
 
-        ////    string userid = "";
-        ////    if (cookie != null)
-        ////    {
-        ////        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-        ////        userid = ticket.UserData;
-        ////        return userid;
-        ////    }
-        ////    return null;
-        ////}
+            var result = new OrderViewModel()
+            {
+                CreatedCards = new List<CreatedCard>(),
+                Order = new List<Orderstatusall>()
+            };
 
-        //public List<OrderViewModel> Order()
-        //{
-        //    List<Orders> Orders = _Repo.GetAll<Orders>().ToList();
-        //    List<OrderStatus> OrderStatus = _Repo.GetAll<OrderStatus>().ToList();
+            //訂單狀態
+            var category = _repo.GetAll<OrderStatus>().FirstOrDefault(x => x.OrderStatusId == OrderStatusId);
+            if (category == null)
+            {
+                return result;
+            }
 
-        //    List<OrderViewModel> result = new List<OrderViewModel>();
 
-        //    //var result = (from o in Orders
-        //    //              join os in OrderStatus on o.OrderStatusId equals os.OrderStatusId)
-        //    foreach (var item in Orders)
-        //    {
-        //        result.Add(new OrderViewModel
-        //        {
-        //            //OrderStatus = item.OrderStatus,
-        //            OrderId = item.OrderId,
-        //            PlayerId = item.CustomerId,
-        //            OrderDate = item.OrderDate,
-        //            Quantity = item.Quantity,
-        //            UnitPrice = item.UnitPrice,
-        //            TotalPrice = item.Quantity * item.UnitPrice
-        //        });
-        //    }
-        //    return result;
-        //}
+            //created orders
+            var createorders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId && x.Products.CreatorId == mems);
+            var CreateCards = createorders.Select(c => new CreatedCard
+            {
+                OrderStatusName = category.OrderStatusName,
+                Quantity = c.Quantity,
+                OrderDate = c.OrderDate,
+                TotalPrice = c.UnitPrice * c.Quantity,
+                OrderId = c.OrderId,
+                ProductId = c.ProductId,
+                GameName = c.Products.GameCategories.GameName,
+                MemberName = c.Members.MemberName,
+                //ProfilePicture=o.Members.ProfilePicture
+                ProfilePicture = c.Members.ProfilePicture
+
+            }).ToList();
+
+
+
+
+            var orderstatu = _repo.GetAll<OrderStatus>().ToList();
+            var Orders = orderstatu.Select(g => new Orderstatusall
+            {
+                Id = g.OrderStatusId,
+                Name = g.OrderStatusName
+            }).ToList();
+            result.Order = Orders;
+
+            result.CreatedCards = CreateCards;
+
+            result.OrderStatusId = OrderStatusId;
+            result.Title = category.OrderStatusName;
+
+            return result;
+
+        }
 
     }
 }

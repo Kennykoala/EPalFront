@@ -1,0 +1,352 @@
+﻿@model OrderViewModel
+@{
+    ViewBag.Title = "OrderSummary";
+}
+@section topCSS{
+    <link href="~/Assets/css/orders.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-2 order-statuses">
+            <div class="order-list col-md-2">
+                <div class="greyish title">Purchased Orders</div>
+                <div class="categories" style=" padding: 10px 10px 15px;">
+                    @foreach (var m in Model.Order)
+                    {
+                        <a href="@Url.Action("PurchasedOrderSummary","Order",new { id = m.Id })">
+                            <span >
+                                @m.Name
+                            </span>
+                        </a><br />
+                    }
+                    @*<div class="stat-category selected">Unpaid</div>
+                        <div class="stat-category">Pending</div>
+                        <div class="stat-category">Not Started</div>
+                        <div class="stat-category">Started</div>
+                        <div class="stat-category">Cancelled</div>
+                        <div class="stat-category">Completed</div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-10">
+            <div class="order-summary">
+                <div class="status">@Model.Title</div>
+                <div class="status-header greyish">
+                    <div class="details">Details</div>
+                    <div>Quantity/OrderTime</div>
+                    <div>Total Price </div>
+
+                    @*status =3、4*@
+                    <!--<div> </div>-->
+
+                    <div class="options">Options</div>
+                </div>
+                <div class="cards-list-mobile">
+                    <div class="order-card">
+                        <a href="#">
+                            <div class="card-top">
+                                <div class="user">
+                                    <div class="user-img"></div>
+                                    <div class="name">
+                                        Jolie
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                                <div class="order-status greyish">Cancelled</div>
+                            </div>
+                        </a>
+                        <hr />
+                        <a href="#">
+                            <div class="card-bot">
+                                <div class="info">
+                                    <div class="info-left">
+                                        <div class="game-name">Among Us</div>
+                                        <div class="game- greyish">3 round(s) total</div>
+                                        <div class="start-time greyish">Sep 13, 2:12PM</div>
+                                    </div>
+                                    <div class="info-right">
+                                        <img src="~/Assets/images/Orders/currency.png" />
+                                        15.00
+                                    </div>
+                                </div>
+                                <div class="bot-section">
+                                    <div class="chat">Chat</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="cards-list">
+                    @foreach (var m in Model.OrderCards)
+                    {
+                        <div class="order-card-lg">
+                            <div class="card-info greyish">
+                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)@Html.DisplayFor(x => m.OrderId) </div>
+                                <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
+                            </div>
+                            <div class="card-body">
+                                <a href="#">
+                                    <div class="u-details">
+                                        @if (m.ProfilePicture == null)
+                                        {
+                                            <div class="user-img"></div>
+                                        }
+                                        else
+                                        {
+                                            <img src="@Html.DisplayFor(x => m.ProfilePicture)" style="width: 50px; height: 50px; background-size: contain; background-repeat: no-repeat; background-position: center; margin-right: 10px; border-radius: 20px; " />
+
+                                        }
+                                        @*<div class="user-img"></div>*@
+                                        <div class="name">
+                                            <span>  @Html.DisplayFor(x => m.MemberName)</span><br>
+
+                                            <span> @Html.DisplayFor(x => m.GameName)</span>
+
+                                        </div>
+                                    </div>
+                                </a>
+                                @*<div class="order-game">
+                                        <div class="game-name">Among Us</div>
+                                    </div>*@
+                                <div class="order-details">
+                                    <div class="rounds greyish">@Html.DisplayFor(x => m.Quantity) round(s) total</div>
+                                    <div class="start-time greyish">
+                                        @Html.DisplayFor(x => m.OrderDate)
+                                    </div>
+                                </div>
+                                <div class="order-total">
+                                    <img src="~/Assets/images/Orders/currency.png" />@Html.DisplayFor(x => m.TotalPrice)
+                                </div>
+
+
+                                @*<div class="order-button">
+                                    <input type="submit" name="name" value="start" />
+                                </div>*@
+
+
+                                <div class="order-actions">
+                                    <div class="report">
+                                        <i class="far fa-flag"></i>
+                                    </div>
+                                    <div class="message">
+                                        <i class="far fa-comment-dots"></i>
+                                    </div>
+                                    <div class="details">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!--
+                    <div class="order-card-lg">
+                        <div class="card-info greyish">
+                            <div class="order-id">Order ID: 2021092514502029041440</div>
+                            <div class="order-status">Completed</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#">
+                                <div class="u-details">
+                                    <div class="user-img"></div>
+                                    <div class="name">Jolie</div>
+                                </div>
+                            </a>
+                            <div class="order-game">
+                                <div class="game-name">Among Us</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="rounds greyish">2 round(s) total</div>
+                                <div class="start-time greyish">
+                                    Start at Sep 25, 3:00PM
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <img src="~/Assets/images/Orders/currency.png" />10.00
+                            </div>
+                            <div class="order-actions">
+                                <div class="report">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                <div class="message">
+                                    <i class="far fa-comment-dots"></i>
+                                </div>
+                                <div class="details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-card-lg">
+                        <div class="card-info greyish">
+                            <div class="order-id">Order ID: 2021092514502029041440</div>
+                            <div class="order-status">Completed</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#">
+                                <div class="u-details">
+                                    <div class="user-img"></div>
+                                    <div class="name">Jolie</div>
+                                </div>
+                            </a>
+                            <div class="order-game">
+                                <div class="game-name">Among Us</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="rounds greyish">2 round(s) total</div>
+                                <div class="start-time greyish">
+                                    Start at Sep 25, 3:00PM
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <img src="~/Assets/images/Orders/currency.png" />10.00
+                            </div>
+                            <div class="order-actions">
+                                <div class="report">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                <div class="message">
+                                    <i class="far fa-comment-dots"></i>
+                                </div>
+                                <div class="details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-card-lg">
+                        <div class="card-info greyish">
+                            <div class="order-id">Order ID: 2021092514502029041440</div>
+                            <div class="order-status">Completed</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#">
+                                <div class="u-details">
+                                    <div class="user-img"></div>
+                                    <div class="name">Jolie</div>
+                                </div>
+                            </a>
+                            <div class="order-game">
+                                <div class="game-name">Among Us</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="rounds greyish">2 round(s) total</div>
+                                <div class="start-time greyish">
+                                    Start at Sep 25, 3:00PM
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <img src="~/Assets/images/Orders/currency.png" />
+                                10.00
+                            </div>
+                            <div class="order-actions">
+                                <div class="report">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                <div class="message">
+                                    <i class="far fa-comment-dots"></i>
+                                </div>
+                                <div class="details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </div>
+                <div class="no-orders"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    ////透過Reflection讀取Url Pattern設定值
+    //var route = ViewContext.RouteData.Route;
+    //var UrlPattern = route.GetType().GetProperty("Url").GetValue(route);
+    //var route = Request.RawUrl;
+    
+}
+
+
+
+@section endJS{
+    <script>
+
+
+        let order = document.querySelectorAll('.order-card-lg')
+        order.forEach(x => {
+            console.log(x.childNodes);
+            if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
+                let btn = document.createElement('button')
+                btn.innerText = 'click'
+                x.childNodes[3].appendChild(btn)
+                console.log(x.childNodes[3])
+            }
+        })
+
+
+
+
+
+
+
+
+
+        //let route = Request.RawUrl
+        //let btn1, btn2;
+        //window.onload = function () {
+        //    let status = document.querySelectorAll('.order-status').innerText;
+        //    status.forEach(item => {
+        //        if (item.innerText == 'Unpaid') {
+        //            document.querySelectorAll(".order-button").forEach(item => {
+
+        //                item.style.display = "none";
+        //            })
+        //        }
+        //    })
+
+            //btn1 = document.querySelector(".Unpaid");
+            ////btn2 = document.querySelector(".Started");
+
+            //btn1.addEventListener("click", function () {
+
+            //    document.querySelectorAll(".order-button").forEach(item => {
+
+            //        item.style.display = "none";
+            //    })
+
+            //    //AddElement();
+
+            //});
+
+            //btn2.
+
+        //}
+        //function AddElement() {
+        //    let btndiv = document.createElement('div');
+        //    btndiv.setAttribute('class', 'order-button');
+
+        //    let input = document.createElement('input');
+        //    input.setAttribute('type', 'submit');
+        //    input.setAttribute('value', 'start');
+
+        //    //let ordertotal = document.querySelector('.order-total');
+
+        //    btndiv.appendChild(input);
+        //    $("div").insertAfter($(".order-total"));
+        //    //btndiv.insertAfter($(".order-total"));
+        //}
+
+
+    @*@if((route == "/Order/PurchasedOrderSummary/3") || (route == "/Order/PurchasedOrderSummary/4"))
+    {
+
+        ordertotal.append(btndiv);
+        btndiv.appendChild(input);
+
+    }*@
+
+
+    </script>
+}

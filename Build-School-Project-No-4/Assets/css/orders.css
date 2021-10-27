@@ -326,6 +326,10 @@ hr {
         margin-right: 3px;
     }
 
+    .order-button {
+        font-size: 15px;
+    }
+
     .order-actions {
         display: flex;
 
