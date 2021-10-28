@@ -33,13 +33,15 @@ namespace Build_School_Project_No_4.DataModels
 
         public DateTime? GameEndDateTime { get; set; }
 
-        public int OrderStatusId { get; set; }
+        public int? OrderStatusId { get; set; }
 
         [Required]
         [StringLength(50)]
         public string OrderConfirmation { get; set; }
 
         public DateTime? GameStartTime { get; set; }
+
+        public int? OrderStatusIdCreator { get; set; }
 
         public virtual Members Members { get; set; }
 
