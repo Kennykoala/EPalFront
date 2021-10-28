@@ -61,7 +61,7 @@ namespace Build_School_Project_No_4.Services
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var Orders = orderstatu.Select(g => new Orderstatusall
             {
-                Id = g.OrderStatusId,
+                OrderStatusId = g.OrderStatusId,
                 Name = g.OrderStatusName
             }).ToList();
             result.Order = Orders;
@@ -117,7 +117,7 @@ namespace Build_School_Project_No_4.Services
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var Orders = orderstatu.Select(g => new Orderstatusall
             {
-                Id = g.OrderStatusId,
+                OrderStatusId = g.OrderStatusId,
                 Name = g.OrderStatusName
             }).ToList();
             result.Order = Orders;

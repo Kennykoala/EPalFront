@@ -14,7 +14,7 @@
                 <div class="categories" style=" padding: 10px 10px 15px;">
                     @foreach (var m in Model.Order)
                     {
-                        <a href="@Url.Action("PurchasedOrderSummary","Order",new { id = m.Id })">
+                        <a href="@Url.Action("PurchasedOrderSummary","Order",new { id = m.OrderStatusId })">
                             <span >
                                 @m.Name
                             </span>
@@ -276,18 +276,37 @@
 
         let order = document.querySelectorAll('.order-card-lg')
         order.forEach(x => {
-            console.log(x.childNodes);
+            //console.log(x.childNodes);
             if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
                 let btn = document.createElement('button')
                 btn.innerText = 'click'
                 x.childNodes[3].appendChild(btn)
-                console.log(x.childNodes[3])
+                //console.log(x.childNodes[3])
             }
         })
 
 
 
+        order.forEach(item => {
 
+            item.children[1].children[4].addEventListener("click", function () {
+
+                $.ajax({
+                    url: "/Order/UpdateNotStarted",
+                    type: "Post",
+                    data: { "OrderStatusId": 4 },
+                    success: function (data) {
+                        data = JSON.toString(data);
+                        console.log(data)
+
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+
+            })
+        })
 
 
 

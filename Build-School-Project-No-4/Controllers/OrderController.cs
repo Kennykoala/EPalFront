@@ -117,6 +117,12 @@ namespace Build_School_Project_No_4.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult UpdateNotStarted(int OrderStatusId)
+        {
+            var msg = true;
+            return Json(msg);
+        }
 
     }
 }
