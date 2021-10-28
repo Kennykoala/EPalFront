@@ -131,5 +131,26 @@ namespace Build_School_Project_No_4.Services
 
         }
 
+
+
+        public OrderViewModel GetOrderInfo(int OrderId)
+        {
+            var emp = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
+
+            if (emp == null)
+            {
+                throw new NotImplementedException();
+            }
+            
+            OrderViewModel OrderInfo = new OrderViewModel()
+            {
+                OrderStatusId = emp.OrderStatusId == null? 1 : 3,
+            };
+
+            return OrderInfo;
+
+        }
+
+
     }
 }

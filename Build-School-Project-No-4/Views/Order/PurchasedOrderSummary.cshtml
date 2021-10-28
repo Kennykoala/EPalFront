@@ -82,7 +82,7 @@
                     {
                         <div class="order-card-lg">
                             <div class="card-info greyish">
-                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)@Html.DisplayFor(x => m.OrderId) </div>
+                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)</div>
                                 <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
                             </div>
                             <div class="card-body">
@@ -290,15 +290,20 @@
         order.forEach(item => {
 
             item.children[1].children[4].addEventListener("click", function () {
+                let orderid = item.children[0].children[0].innerText;
+
+                var orderdata = JSON.stringify({
+                    "OrderStatusId": 4,
+                    "OrderId": `${orderid}`
+                });
 
                 $.ajax({
                     url: "/Order/UpdateNotStarted",
                     type: "Post",
-                    data: { "OrderStatusId": 4 },
+                    data: orderdata,
                     success: function (data) {
-                        data = JSON.toString(data);
+                        //data = JSON.toString(data);
                         console.log(data)
-
                     },
                     error: function (err) {
                         console.log(err)

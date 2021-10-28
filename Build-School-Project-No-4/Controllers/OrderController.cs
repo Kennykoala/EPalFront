@@ -118,8 +118,18 @@ namespace Build_School_Project_No_4.Controllers
 
 
         [HttpPost]
-        public ActionResult UpdateNotStarted(int OrderStatusId)
+        public ActionResult UpdateNotStarted(string OrderId, int OrderStatusId)
         {
+
+            var orderinfo = _ctx.Orders.Find(int.Parse(OrderId));
+            if(orderinfo == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            orderinfo.OrderStatusId = OrderStatusId;
+            _ctx.SaveChanges();
+
             var msg = true;
             return Json(msg);
         }
