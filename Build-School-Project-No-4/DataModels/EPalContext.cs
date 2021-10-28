@@ -159,11 +159,6 @@ namespace Build_School_Project_No_4.DataModels
                 .WithRequired(e => e.Orders)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<OrderStatus>()
-                .HasMany(e => e.Orders)
-                .WithRequired(e => e.OrderStatus)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Position>()
                 .HasMany(e => e.ProductPosition)
                 .WithRequired(e => e.Position)
