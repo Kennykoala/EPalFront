@@ -460,6 +460,7 @@
     <Compile Include="Services\ProfileEpalService.cs" />
     <Compile Include="Services\WalletService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChillMeetLikeViewModel.cs" />
     <Compile Include="ViewModels\ChillMeetViewModel.cs" />
     <Compile Include="ViewModels\FollowViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />

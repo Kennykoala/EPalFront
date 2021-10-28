@@ -63,6 +63,12 @@ namespace Build_School_Project_No_4.ViewModels
         /// </summary>
         public int UserId { get; set; }
 
+        /// <summary>
+        /// 判斷是否已經Follow
+        /// </summary>
+        public bool isFollow { get; set; }
+
+
 
     }
 
