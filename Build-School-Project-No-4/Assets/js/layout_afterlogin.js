@@ -308,16 +308,16 @@ window.onload = function () {
     }
     $('#Line_login').click(Button2_click);
 
-    //var strValue = "@((string)ViewBag.msg)";
-    var strValue = TempData["message"];
-    if (strValue != null && strValue != "") {
-        swal.fire({
-            title: strValue,
-            icon: "success",
-            //buttons: true,
-            //dangerMode: true
-        });
-    }
+    ////var strValue = "@((string)ViewBag.msg)";
+    //var strValue = TempData["message"];
+    //if (strValue != null && strValue != "") {
+    //    swal.fire({
+    //        title: strValue,
+    //        icon: "success",
+    //        //buttons: true,
+    //        //dangerMode: true
+    //    });
+    //}
 
 
 

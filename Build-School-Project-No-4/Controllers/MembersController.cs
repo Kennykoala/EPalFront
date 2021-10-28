@@ -118,138 +118,6 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-
-
-
-        ////line v2
-        //[HttpPost]
-        //public ActionResult LineLogin(string id_token)
-        //{
-        //    //利用id_token取得Claim資料
-        //    var JwtSecurityToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(id_token);
-        //    var email = "";
-        //    //如果有email
-        //    if (JwtSecurityToken.Claims.ToList().Find(c => c.Type == "email") != null)
-        //        email = JwtSecurityToken.Claims.First(c => c.Type == "email").Value;
-
-        //    //ViewBag
-        //    ViewBag.email = email;
-        //    //ViewBag.access_token = token.access_token;
-        //    //ViewBag.displayName = user.displayName;
-
-
-        //    //return Json("OK", JsonRequestBehavior.AllowGet);
-        //    //return View("LineResult");
-        //    //return RedirectToAction("GetUserProfile");
-
-        //    string lineemail = TempData["lineemail"].ToString();
-        //    string linename = TempData["linename"].ToString();
-        //    string msg = "ok";
-
-        //    if (msg == "ok" && lineemail != null)
-        //    {
-        //        //確認是否已註冊Line
-        //        //var memberDM = _MemberService.MemberLoginData()
-        //        //            .Where(m => m.Email == email   )
-        //        //            .FirstOrDefault();
-        //        var memberRVM = _MemberService.MemberRigisterData()
-        //                    .Where(m => m.Email == lineemail)
-        //                    .FirstOrDefault();
-
-        //        if (memberRVM == null)
-        //        {
-        //            Random rnd = new Random(Guid.NewGuid().GetHashCode());
-        //            string rndnumber = rnd.Next(0, 100).ToString();
-        //            //將密碼Hash
-        //            rndnumber = _MemberService.HashPassword(rndnumber);
-
-        //            //GroupViewModel -> DM
-        //            Members emp = new Members
-        //            {
-        //                Email = lineemail,
-        //                Password = rndnumber,
-        //                LoginMethod = 3
-        //            };
-        //            db.Members.Add(emp);
-        //            db.SaveChanges();
-
-
-        //            Members meminfo = new Members()
-        //            {
-        //                MemberId = memberRVM.MemberId,
-        //                MemberName = linename,
-        //                //ProfilePicture = memberRVM.ProfilePicture
-        //            };
-        //            string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //            //建立FormsAuthenticationTicket
-        //            var ticket = new FormsAuthenticationTicket(
-        //                        version: 1,
-        //                        name: lineemail.ToString(), //可以放使用者Id
-        //                        issueDate: DateTime.UtcNow,//現在UTC時間
-        //                        expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //                        isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //                        userData: JsonMeminfo, //可以放使用者角色名稱
-        //                        cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //            //加密Ticket
-        //            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //            //Create the cookie.
-        //            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //            Response.Cookies.Add(cookie);
-
-        //        }
-        //        else
-        //        {
-        //            Members meminfo = new Members()
-        //            {
-        //                MemberId = memberRVM.MemberId,
-        //                MemberName = memberRVM.MemberName,
-        //                ProfilePicture = memberRVM.ProfilePicture,
-        //                LoginMethod = 3
-        //            };
-        //            string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
-
-        //            //建立FormsAuthenticationTicket
-        //            var ticket = new FormsAuthenticationTicket(
-        //                        version: 1,
-        //                        name: lineemail.ToString(), //可以放使用者Id
-        //                        issueDate: DateTime.UtcNow,//現在UTC時間
-        //                        expiration: DateTime.UtcNow.AddMinutes(30),//Cookie有效時間=現在時間往後+30分鐘
-        //                        isPersistent: memberRVM.Remember,// 是否要記住我 true or false
-        //                        userData: JsonMeminfo, //可以放使用者角色名稱
-        //                        cookiePath: FormsAuthentication.FormsCookiePath);
-
-        //            //加密Ticket
-        //            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
-
-        //            //Create the cookie.
-        //            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-        //            Response.Cookies.Add(cookie);
-
-        //        }
-
-        //        return Json(true);
-        //    }
-        //    msg = "error";
-        //    return Content(msg);
-        //}
-
-
-
-
-
-
-
-        //line v1
-        public ActionResult LineResult()
-        {
-            //return RedirectToAction("LineLogin");
-            return Json("fail", JsonRequestBehavior.AllowGet);
-        }
-
-
         //Line login
         [HttpGet]
         public ActionResult LineLoginCallback()
@@ -259,7 +127,8 @@ namespace Build_School_Project_No_4.Controllers
             if (code == null)
             {
                 ViewBag.access_token = "沒有正確的code...";
-                return View("LineResult");
+                //return View("LineResult");
+                return Content("未取得登入授權");
             }
 
             //從Code取回token
@@ -743,12 +612,12 @@ namespace Build_School_Project_No_4.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile([Bind(Include = "MemberInfo")] MemberInfoViewModel EditMember)
+        public ActionResult EditProfile(MemberInfoViewModel EditMember)
         {   
             //密碼Hash
             EditMember.Password = _MemberService.HashPassword(EditMember.Password);
 
-            //GroupViewModel -> MemberInfoViewModel -> DM
+            //MemberInfoViewModel -> DM
             Members emp = new Members
             {
                 MemberId = EditMember.MemberId,

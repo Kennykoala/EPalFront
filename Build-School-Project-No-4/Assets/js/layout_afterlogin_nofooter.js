@@ -117,19 +117,6 @@ window.onload = function () {
                     }
                 });//end $.ajax
 
-
-                ////v1
-                //var profile = googleUser.getBasicProfile(),
-                //    $target = $("#GOOGLE_STATUS_2"),
-                //    html = "";
-
-                //html += "ID: " + profile.getId() + "<br/>";
-                //html += "會員暱稱： " + profile.getName() + "<br/>";
-                //html += "會員頭像：" + profile.getImageUrl() + "<br/>";
-                //html += "會員 email：" + profile.getEmail() + "<br/>";
-                //html += "id token：" + googleUser.getAuthResponse().id_token + "<br/>";
-                //html += "access token：" + googleUser.getAuthResponse(true).access_token + "<br/>";
-                //$target.html(html);
             },
             // 登入失敗
             function (error) {
@@ -305,102 +292,6 @@ window.onload = function () {
 
 
 
-    ////line login  v2
-    //var channel_id = "1656564684";
-    //var channel_secret = "2af2ca5d39971c612d2a2dbccfdd2e54";
-    //var uri = "https://localhost:44322";
-
-    //$('#Line_login').on('click', function (e) {
-    //    let client_id = channel_id;
-    //    let redirect_uri = uri;
-    //    let link = 'https://access.line.me/oauth2/v2.1/authorize?';
-    //    link += 'response_type=code';
-    //    link += '&client_id=' + client_id;
-    //    link += '&redirect_uri=' + redirect_uri;
-    //    link += '&state=login';
-    //    link += '&scope=openid%20profile%20email';
-    //    window.location.href = link;
-    //});
-
-    //var url = new URL(window.location.href);
-    //var code = url.searchParams.get("code");
-    //if (code != null) document.write('<br / > code : ' + code + '<br / >');
-
-    //var result = $(".result");
-    //var id_token = "";
-    //$.ajax({
-    //    method: "POST",
-    //    dataType: 'json',
-    //    url: "https://api.line.me/oauth2/v2.1/token",
-    //    async: false,
-    //    data: {
-    //        grant_type: "authorization_code",
-    //        code: code,
-    //        redirect_uri: uri,
-    //        client_id: channel_id,
-    //        client_secret: channel_secret
-    //    },
-    //    success: function (data) {
-    //        id_token = data.id_token;
-    //        console.log(id_token);
-    //        LinePassToServer(id_token);
-    //    }
-    //});
-    //if (id_token.length != 0) document.write('<br / >id_token : ' + id_token + '<br / >');
-
-    ////$.ajax({
-    ////    method: "POST",
-    ////    dataType: 'json',
-    ////    url: "https://api.line.me/oauth2/v2.1/verify",
-    ////    async: false,
-    ////    data: {
-    ////        client_id: channel_id,
-    ////        id_token: id_token
-    ////    },
-    ////    success: function (data) {
-    ////        document.write('<br / ><br / >' + JSON.stringify(data));
-    ////        console.log(JSON.stringify(data));
-    ////    }
-    ////});
-
-
-
-    //function LinePassToServer(id_token) {                    
-
-    //    var Data = JSON.stringify({
-    //        //Fbemail: `${fbemail}`,
-    //        id_token: `${id_token}`
-    //    });
-
-    //    $.ajax({
-    //        url: '/Members/LineLogin',
-    //        method: 'POST',
-    //        data: Data,
-    //        contentType: 'application/json; charset=utf-8',
-    //        success: function (msg) {
-    //            $("#myModal").modal('hide');
-
-    //            console.log(msg);
-    //            swal.fire({
-    //                title: "Welcome to Epal",
-    //                icon: "success",
-    //                //buttons: true,
-    //                //dangerMode: true
-    //            });
-
-
-    //            if (msg == true) {
-    //                window.location.href = '/'
-    //            }
-
-    //        },
-    //        error: function (err) {
-    //            console.log(err);
-    //        }
-    //    })
-    //}
-
-
 
 
     //Line Login  v1
@@ -420,16 +311,16 @@ window.onload = function () {
     }
     $('#Line_login').click(Button2_click);
 
-    //var strValue = "@((string)ViewBag.msg)";
-    var strValue = TempData["message"];
-    if (strValue != null && strValue != "") {
-        swal.fire({
-            title: strValue,
-            icon: "success",
-            //buttons: true,
-            //dangerMode: true
-        });
-    }
+    ////var strValue = "@((string)ViewBag.msg)";
+    //var strValue = TempData["message"];
+    //if (strValue != null && strValue != "") {
+    //    swal.fire({
+    //        title: strValue,
+    //        icon: "success",
+    //        //buttons: true,
+    //        //dangerMode: true
+    //    });
+    //}
 
 
 
@@ -451,9 +342,6 @@ window.onload = function () {
     })
 
 
-
-    //logsigntab[0].classList.add('logsign-purple-border');
-    /*    $('#myModal').modal('show');*/
 
 
 
