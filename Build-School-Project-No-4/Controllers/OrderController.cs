@@ -118,20 +118,34 @@ namespace Build_School_Project_No_4.Controllers
 
 
         [HttpPost]
-        public ActionResult UpdateNotStarted(string OrderId, int OrderStatusId)
+        public ActionResult UpdateNotStarted(OrderViewModel order)        
         {
-
-            var orderinfo = _ctx.Orders.Find(int.Parse(OrderId));
-            if(orderinfo == null)
+            var msg = "";
+            using (var tran = _ctx.Database.BeginTransaction())
             {
-                throw new NotImplementedException();
+                try
+                {
+                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+
+
+                    orderinfo.OrderStatusId = order.OrderStatusId;
+                    _ctx.SaveChanges();
+                    tran.Commit();
+
+                    msg = "OK";
+                    return Json(msg);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return Content("更新linestatus失敗:" + ex.ToString());
+                }
             }
 
-            orderinfo.OrderStatusId = OrderStatusId;
-            _ctx.SaveChanges();
-
-            var msg = true;
-            return Json(msg);
         }
 
     }

@@ -293,17 +293,24 @@
                 let orderid = item.children[0].children[0].innerText;
 
                 var orderdata = JSON.stringify({
-                    "OrderStatusId": 4,
-                    "OrderId": `${orderid}`
+                    OrderStatusId: 4,
+                    OrderId: `${orderid}`
                 });
 
                 $.ajax({
                     url: "/Order/UpdateNotStarted",
                     type: "Post",
                     data: orderdata,
+                    contentType: 'application/json; charset=utf-8',
                     success: function (data) {
                         //data = JSON.toString(data);
                         console.log(data)
+
+                        if (msg == true) {
+
+                            item.children[1].children[4].style.display = "none";
+
+                        }
                     },
                     error: function (err) {
                         console.log(err)
