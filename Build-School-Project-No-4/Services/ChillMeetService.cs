@@ -66,15 +66,35 @@ namespace Build_School_Project_No_4.Services
         {
             var meetLikes = _Repo.GetAll<MeetLikes>();
             var members = _Repo.GetAll<Members>();
+            var followings = _Repo.GetAll<Followings>();
 
             //demoId
             var ownLike = meetLikes.Where(x => x.MemberId == ownId);
+
+            //篩選ownId(Like清單)的followId == memberId
+            //var b = followings.Where(x => x.FollowingId)
+            bool isFollowData;
+
+
 
             List<MemberViewModel> result = new List<MemberViewModel>();
             foreach (var item in ownLike)
             {
                 var y = members.First(x => x.MemberId == item.LikeId);
 
+                //var b = followings.First(x => x.FollowingId == y.MemberId);
+                var b = followings.Where(x => x.MemberId == ownId).FirstOrDefault(h => h.FollowingId == y.MemberId);
+
+                if (b != null)
+                {
+                    isFollowData = true;
+                }
+                else
+                {
+                    isFollowData = false;
+                }
+
+         
                 var m = new MemberViewModel
                 {
                     MemberId = y.MemberId,
@@ -82,7 +102,8 @@ namespace Build_School_Project_No_4.Services
                     Bio = y.Bio,
                     ProfilePicture = y.ProfilePicture,
                     Gender = y.Gender,
-                    UserId = ownId
+                    UserId = ownId,
+                    isFollow = isFollowData
                 };
                 result.Add(m);
 

@@ -1,4 +1,4 @@
-﻿@model  IEnumerable<MemberViewModel>
+﻿@model  IEnumerable<ChillMeetLikeViewModel>
 @{
     ViewBag.Title = "Followings";
 
@@ -102,9 +102,14 @@
                                                 </div>
                                                 <div class="listButton">
                                                     <div class="followBotton">
-                                                        <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btn btn-outline-dark">
-                                                            Following
-                                                        </button>
+
+                                                        @*@item.isFollow*@
+
+                                                     
+                                                            <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btn btn-outline-dark">
+                                                                Following
+                                                            </button>
+                                 
                                                     </div>
                                                     <div class="chatBotton">
                                                         <button type="button" class="btn btn-outline-dark">Chat</button>
@@ -146,7 +151,7 @@
                                                 <div class="listCard">
                                                     <div class="profileAvatar">
                                                         <span class="antAvatar">
-                                                           
+
                                                             <img src="@item.ProfilePicture" alt="avatar">
                                                         </span>
                                                         <div class="antStatus">
@@ -238,9 +243,15 @@
 
 <script>
 
+
+
     function myMsg(myObj) {
-        alert("id 為:" + myObj.id);    //memberId
-        alert("id 為:" + myObj.value); //UserId
+        //alert("memberid 為:" + myObj.id);    //memberId
+        //alert("Userid 為:" + myObj.value);   //UserId
+
+       /* document.getElementById(myObj.id)*/
+        /*document.querySelector('.')*/
+
 
         SaveImageViaAjax(myObj.value, myObj.id)
 
@@ -258,7 +269,6 @@
 
 
         var Data = JSON.stringify({
-            /*     CardUserId: 555,*/
             UserId: `${usersId}`,
             FollowingId: `${CardIDs}`,
         });
@@ -322,7 +332,7 @@
             }
 
         .title {
-            margin-top:20px;
+            margin-top: 20px;
             margin-bottom: 24px;
             line-height: 1;
             font-size: 32px;
@@ -750,6 +760,7 @@
             .followBotton {
                 margin: 0 10px;
             }
+
             .nobody {
                 margin-left: 130px;
             }
