@@ -38,7 +38,11 @@ namespace Build_School_Project_No_4.ViewModels
         {
             public string returnCode { get; set; }
             public string returnMessage { get; set; }
-            public Info info { get; set; }
+            public Info Info { get; set; }
+        }
+        public class Request
+        {
+            public List<LinePayRequestResponse> PayRequest { get; set; }
         }
         public class Info
         { 
