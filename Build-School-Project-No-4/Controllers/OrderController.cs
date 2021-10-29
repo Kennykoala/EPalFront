@@ -11,8 +11,13 @@ using Newtonsoft.Json;
 
 namespace Build_School_Project_No_4.Controllers
 {
+   
     public class OrderController : Controller
     {
+
+
+     
+
         private readonly ProductService _productService;
         private readonly EPalContext _ctx;
         private readonly DetailServices _detailService;
@@ -115,8 +120,32 @@ namespace Build_School_Project_No_4.Controllers
             return View(abc);
 
         }
+        public ActionResult Edit(int CustomerId,int ProductId,int Quantity,
+            decimal UnitPrice,decimal Discount,DateTime OrderDate,DateTime DesiredStartTime,
+            DateTime GameEndDateTime,int OrderStatusId,string OrderConfirmation ,DateTime GamestartTime,int OrderStatusIdCreator)
+        {
+
+            EPalContext db = new EPalContext();
+
+            var model = db.Orders.Where(m => m.OrderStatusId == OrderStatusId).FirstOrDefault();
+            model.CustomerId = CustomerId;
+            model.ProductId = ProductId;
+            model.Quantity = Quantity;
+            model.UnitPrice = UnitPrice;
+            model.Discount = Discount;
+            model.OrderDate = OrderDate;
+            model.DesiredStartTime = DesiredStartTime;
+            model.GameEndDateTime = GameEndDateTime;
+            model.OrderStatusId = OrderStatusId;
+            model.OrderConfirmation = OrderConfirmation;
+            model.GameStartTime = GamestartTime;
+            
+           
+            db.SaveChanges();
+            return View(model);
+        }
 
 
 
-    }
+        }
 }

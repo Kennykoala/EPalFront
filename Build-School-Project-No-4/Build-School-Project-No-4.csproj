@@ -868,6 +868,7 @@
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Shared\_LinestatusPartial.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

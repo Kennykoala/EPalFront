@@ -282,10 +282,15 @@
                 btn.innerText = 'click'
                 x.childNodes[3].appendChild(btn)
                 console.log(x.childNodes[3])
+
+                btn.onclick = function () {
+                    alert("hello world");
+                }
             }
         })
 
 
+        
 
 
 
