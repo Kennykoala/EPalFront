@@ -245,36 +245,10 @@
                                 </div>
 
 
-                                <div class="online-wrapper dropstart">
-                                    @if(status == 2)
-                                    {
-                                        <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="~/Assets/images/layout/online.png" alt="">ONLINE
-                                        </a>
-                                    }
-                                    <ul class="dropdown-menu">
 
-                                        <li>
-                                            <button class="dropdown-item statusbtn" type="button" value="1">
-                                                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
-                                                @*<img src="~/Assets/images/layout/online.png" alt="">@Model.LineStatusId*@
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="dropdown-item statusbtn" type="button" value="2">
-                                                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
-                                                @*<img src="~/Assets/images/layout/offline.png" alt="">@Model.LineStatusId*@
-                                            </button>
-                                        </li>
+                                @Html.Partial("_LinestatusPartial", new LinestatusViewModel())
 
-                                    </ul>
-                                </div>
+
 
 
                                 <div class="info-wrapper">
@@ -302,9 +276,15 @@
 
                                 <div class="money-wrapper">
                                     <div class="money-item" id="order">
-                                        <a href="~/Order/OrderSummary">
+                                        <a href="~/Order/PurchasedOrderSummary/1">
                                             <img src="~/Assets/images/layout/ordericon.png" alt="order">
-                                            <div class="txt">Order</div>
+                                            <div class="txt">Purchased Order</div>
+                                        </a>
+                                    </div>
+                                    <div class="money-item" id="order">
+                                        <a href="~/Order/CreatedOrderSummary/1">
+                                            <img src="~/Assets/images/layout/ordericon.png" alt="order">
+                                            <div class="txt">Created Order</div>
                                         </a>
                                     </div>
                                     <div class="money-item" id="wallet">
@@ -313,12 +293,12 @@
                                             <div class="txt">Wallet</div>
                                         </a>
                                     </div>
-                                    <div class="money-item" id="coupons">
-                                        <a href="#">
-                                            <img src="~/Assets/images/layout/couponicon.png" alt="coupon">
-                                            <div class="txt">Coupons</div>
-                                        </a>
-                                    </div>
+                                    @*<div class="money-item" id="coupons">
+                <a href="#">
+                    <img src="~/Assets/images/layout/couponicon.png" alt="coupon">
+                    <div class="txt">Coupons</div>
+                </a>
+            </div>*@
                                 </div>
 
                                 <div class="member-wrapper">

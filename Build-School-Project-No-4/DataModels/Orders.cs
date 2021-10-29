@@ -47,6 +47,8 @@ namespace Build_School_Project_No_4.DataModels
 
         public virtual OrderStatus OrderStatus { get; set; }
 
+        public virtual OrderStatus OrderStatus1 { get; set; }
+
         public virtual Products Products { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
