@@ -120,7 +120,7 @@ namespace Build_School_Project_No_4.Controllers
         [HttpPost]
         public ActionResult UpdateNotStarted(OrderViewModel order)        
         {
-            var msg = "";
+            //var msg = "";
             using (var tran = _ctx.Database.BeginTransaction())
             {
                 try
@@ -131,13 +131,12 @@ namespace Build_School_Project_No_4.Controllers
                         throw new NotImplementedException();
                     }
 
-
                     orderinfo.OrderStatusId = order.OrderStatusId;
                     _ctx.SaveChanges();
                     tran.Commit();
 
-                    msg = "OK";
-                    return Json(msg);
+                    //msg = "OK";
+                    return Json(true);
                 }
                 catch (Exception ex)
                 {
