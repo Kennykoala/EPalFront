@@ -159,6 +159,16 @@ namespace Build_School_Project_No_4.DataModels
                 .WithRequired(e => e.Orders)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<OrderStatus>()
+                .HasMany(e => e.Orders)
+                .WithOptional(e => e.OrderStatus)
+                .HasForeignKey(e => e.OrderStatusId);
+
+            modelBuilder.Entity<OrderStatus>()
+                .HasMany(e => e.Orders1)
+                .WithOptional(e => e.OrderStatus1)
+                .HasForeignKey(e => e.OrderStatusIdCreator);
+
             modelBuilder.Entity<Position>()
                 .HasMany(e => e.ProductPosition)
                 .WithRequired(e => e.Position)

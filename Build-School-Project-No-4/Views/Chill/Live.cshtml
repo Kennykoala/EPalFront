@@ -28,7 +28,7 @@
 
 <div class="container-fluid liveList">
     <div class="row wrap">
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live1.png" alt=""></a>
@@ -44,7 +44,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live2.png" alt=""></a>
@@ -60,7 +60,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live3.png" alt=""></a>
@@ -76,7 +76,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live4.png" alt=""></a>
@@ -97,7 +97,7 @@
 
 <div class="container-fluid liveList">
     <div class="row wrap">
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live5.png" alt=""></a>
@@ -113,7 +113,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live6.png" alt=""></a>
@@ -129,7 +129,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live7.png" alt=""></a>
@@ -145,7 +145,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live8.png" alt=""></a>
@@ -166,7 +166,7 @@
 
 <div class="container-fluid liveList">
     <div class="row wrap lastWrap">
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live9.png" alt=""></a>
@@ -182,7 +182,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live10.png" alt=""></a>
@@ -198,7 +198,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live11.png" alt=""></a>
@@ -214,7 +214,7 @@
                 </a>
             </div>
         </div>
-        <div class="item col-12 col-md-6 col-lg-3">
+        <div class="itemCard col-12 col-md-6 col-lg-3">
             <div class="LiveIcon"></div>
             <div class="ViewersIcon"></div>
             <a href="#"><img src="~/Assets/LiveImages/live12.png" alt=""></a>
@@ -233,6 +233,7 @@
     </div>
 </div>
 
+@*test1025*@
 
 @section topCSS{
     <style>
@@ -255,7 +256,7 @@
 
 
 
-        .item {
+        .itemCard {
             /* width: 300px; */
             /* margin: auto; */
             position: relative;
@@ -265,11 +266,11 @@
             margin-top: 25px;
         }
 
-            .item img {
+            .itemCard img {
                 width: 100%;
             }
 
-            .item .LiveIcon::before {
+            .itemCard .LiveIcon::before {
                 width: 31px;
                 height: 16px;
                 content: 'LIVE';
@@ -285,7 +286,7 @@
                 text-align: center;
             }
 
-            .item .ViewersIcon::before {
+            .itemCard .ViewersIcon::before {
                 content: '100Viewers';
                 background-color: #21212c;
                 border-radius: 2px;
@@ -423,7 +424,7 @@
                 text-decoration: none;
             }
 
-            .item {
+            .itemCard {
                 margin-top: 20px;
             }
 
@@ -435,7 +436,7 @@
                 margin-bottom: 100px;
             }
             /* 修正手機跑掉問題 */
-            .item .ViewersIcon::before {
+            .itemCard .ViewersIcon::before {
                 top: 150px;
                 left: 10px;
                 text-align: center;
@@ -476,7 +477,7 @@
                 color: #7041e6 !important;
             }
 
-            .item .ViewersIcon::before {
+            .itemCard .ViewersIcon::before {
                 top: 60%;
                 left: 5%;
             }

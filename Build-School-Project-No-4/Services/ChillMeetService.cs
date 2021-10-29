@@ -22,67 +22,88 @@ namespace Build_School_Project_No_4.Services
             var MembersAll = _Repo.GetAll<Members>();
             var LanguagesAll = _Repo.GetAll<Language>();
 
-            //找出like所有的會員Id
-            var filterLikes = MeetLikesAll.Where(x => x.MemberId == assignMemberId);
+            //排除重複的
+            var filterIsLikes = MeetLikesAll.Where(x => x.MemberId == assignMemberId);
 
-
-            //DataModel轉換 (like的table轉為Member的table)
-            //找出重複的memberID (distinct用法只能一個欄位變數)
             List<Members> Memberlikes = new List<Members>();
-            foreach (var item in filterLikes)
+            foreach (var item in filterIsLikes)
             {
                 Memberlikes.Add(new Members { MemberId = item.LikeId });
             }
 
-            //排除重複的
-            var likes = Memberlikes.Select(x => x.MemberId).ToList();
+            var isLike = Memberlikes.Select(x => x.MemberId).ToList();
             var memberAlls = MembersAll.Select(x => x.MemberId).ToList();
-            var MemberDislike = memberAlls.Except(likes);
+            var MemberDislike = memberAlls.Except(isLike);
+
 
             List<Members> resultMembers = new List<Members>();
             List<ChillMeetViewModel> result = new List<ChillMeetViewModel>();
 
             foreach (var dislike in MemberDislike)
             {
-                var y = MembersAll.FirstOrDefault(x => x.MemberId == dislike);
+                var y = MembersAll.FirstOrDefault(x => x.MemberId == dislike && x.MeetPicture != null && x.MemberId != assignMemberId);
 
-                var mem = new ChillMeetViewModel
+                if (y != null)
                 {
-                    MemberId = y.MemberId,
-                    MemberName = y.MemberName,
-                    Gender = y.Gender,
-                    Country = y.Country,
-                    MeetPicture = y.MeetPicture,
-                    UserId = (int)assignMemberId
-                };
-                result.Add(mem);
+                    var mem = new ChillMeetViewModel
+                    {
+                        MemberId = y.MemberId,
+                        MemberName = y.MemberName,
+                        Gender = y.Gender,
+                        Country = y.Country,
+                        MeetPicture = y.MeetPicture,
+                        UserId = (int)assignMemberId
+                    };
+                    result.Add(mem);
+                }
             }
 
             return result;
         }
 
         //取得LikeID對應的會員資料
-        public List<MemberViewModel> GetMemberLike()
+        public List<MemberViewModel> GetMemberLike(int ownId)
         {
             var meetLikes = _Repo.GetAll<MeetLikes>();
             var members = _Repo.GetAll<Members>();
+            var followings = _Repo.GetAll<Followings>();
 
             //demoId
-            int ownId = 60;
             var ownLike = meetLikes.Where(x => x.MemberId == ownId);
+
+            //篩選ownId(Like清單)的followId == memberId
+            //var b = followings.Where(x => x.FollowingId)
+            bool isFollowData;
+
+
 
             List<MemberViewModel> result = new List<MemberViewModel>();
             foreach (var item in ownLike)
             {
                 var y = members.First(x => x.MemberId == item.LikeId);
 
+                //var b = followings.First(x => x.FollowingId == y.MemberId);
+                var b = followings.Where(x => x.MemberId == ownId).FirstOrDefault(h => h.FollowingId == y.MemberId);
+
+                if (b != null)
+                {
+                    isFollowData = true;
+                }
+                else
+                {
+                    isFollowData = false;
+                }
+
+         
                 var m = new MemberViewModel
                 {
                     MemberId = y.MemberId,
                     MemberName = y.MemberName,
                     Bio = y.Bio,
                     ProfilePicture = y.ProfilePicture,
-                    Gender = y.Gender
+                    Gender = y.Gender,
+                    UserId = ownId,
+                    isFollow = isFollowData
                 };
                 result.Add(m);
 
