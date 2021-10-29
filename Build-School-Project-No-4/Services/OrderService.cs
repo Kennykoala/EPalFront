@@ -133,6 +133,41 @@ namespace Build_School_Project_No_4.Services
 
 
 
+
+
+
+
+        //GetOrderInfo
+        public int GetCreatedOrderStatus(int OrderId)
+        {
+            //var result = new OrderViewModel();
+            //{
+            //    CreatedCards = new List<CreatedCard>(),
+            //    Order = new List<Orderstatusall>()
+            //};
+
+
+            var orderinfo = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
+            if (orderinfo == null)
+            {
+                throw new NotImplementedException();
+            }
+            //var ordervm = new OrderViewModel()
+            //{
+            //    OrderStatusIdCreator = orderinfo.OrderStatusIdCreator
+            //};
+
+            if( orderinfo.OrderStatusIdCreator != null)
+            {
+                return (int)orderinfo.OrderStatusIdCreator;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }         
+
+        }
+
         //public OrderViewModel GetOrderInfo(int OrderId)
         //{
         //    var emp = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
@@ -141,7 +176,7 @@ namespace Build_School_Project_No_4.Services
         //    {
         //        throw new NotImplementedException();
         //    }
-            
+
         //    OrderViewModel OrderInfo = new OrderViewModel()
         //    {
         //        OrderStatusId = emp.OrderStatusId == null? 1 : 3,
