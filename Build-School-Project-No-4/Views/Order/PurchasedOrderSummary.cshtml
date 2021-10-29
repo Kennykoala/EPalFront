@@ -36,11 +36,13 @@
                     <div class="details">Details</div>
                     <div>Quantity/OrderTime</div>
                     <div>Total Price </div>
-
-                    @*status =3、4*@
-                    <!--<div> </div>-->
-
                     <div class="options">Options</div>
+
+                    @if (Model.Title == "Not Started" || Model.Title == "Started")
+                    {
+                        <div>Status </div>
+                    }
+
                 </div>
                 <div class="cards-list-mobile">
                     <div class="order-card">
@@ -84,6 +86,9 @@
                             <div class="card-info greyish">
                                 <div class="order-id">@Html.DisplayFor(x => m.OrderId)</div>
                                 <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
+
+                                @*判斷OrderStatusIdCreator是否和OrderStatusId一樣*@
+                                @Html.HiddenFor(x => m.OrderStatusIdCreator)
                             </div>
                             <div class="card-body">
                                 <a href="#">
@@ -260,12 +265,6 @@
     </div>
 </div>
 
-@{
-
-    var orderService = new Build_School_Project_No_4.Services.OrderService();
-    var createdstatus = orderService.GetCreatedOrderStatus(id.Value, mems);
-
-}
 
 
 
@@ -278,68 +277,51 @@
 
     <script>
 
-
-
         let order = document.querySelectorAll('.order-card-lg')
         let orderstatus = document.querySelector('.status')
+
 
         if (orderstatus.innerText == "Not Started") {
 
             order.forEach(x => {
                 //console.log(x.childNodes);
                 if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
-                    let btn = document.createElement('button')
-                    btn.innerText = 'Start'
-                    x.childNodes[3].appendChild(btn)
+                    //button div
+                    let btndiv = document.createElement('div')
+                    btndiv.setAttribute('class', 'order-status')
+                    x.childNodes[3].appendChild(btndiv)
+
+                    //start button
+                    let startbtn = document.createElement('button')
+                    startbtn.innerText = 'Start'
+                    startbtn.setAttribute('class', 'startbutton')
+                    startbtn.setAttribute('style', 'margin-right:10px')
+                    x.childNodes[3].children[4].appendChild(startbtn)
                     //console.log(x.childNodes[3])
+
+                    //delete button
+                    let deletebtn= document.createElement('button')
+                    deletebtn.innerText = 'Delete'
+                    deletebtn.setAttribute('class', 'deletebtn')
+                    x.childNodes[3].children[4].appendChild(deletebtn)
+
                 }
+
+                //和created status都是3，button才開啟
+                if (x.children[0].children[2].value != 3) {
+                    x.children[1].children[4].childNodes[0].disabled = true;
+                }  
+
             })
+
             order.forEach(item => {
-
-                item.children[1].children[4].addEventListener("click", function () {
-
+                //start button
+                item.children[1].children[4].childNodes[0].addEventListener("click", function () {
                     let orderid = item.children[0].children[0].innerText;
-
                     var orderdata = JSON.stringify({
                         OrderStatusId: 4,
                         OrderId: `${orderid}`
                     });
-
-                    @{
-                        @*var js = new System.Web.Script.Serialization.JavaScriptSerializer();
-                        @js.Deserialize(orderdata).OrderId;*@
-                        //var orderid = Json.Decode(orderdata).OrderId;
-                        var orderService = new Build_School_Project_No_4.Services.OrderService();
-                        var createdstatus = orderService.GetCreatedOrderStatus(190);
-                    }
-                    //axios({
-                    //    url: "/Order/UpdateNotStarted",
-                    //    method: 'POST',
-                    //    Headers: {
-                    //        'Content-Type': 'application/json; charset=utf-8'
-                    //    },
-                    //    data: orderdata
-                    //}).then(function (res) {
-
-                    //    console.log(res)
-                    //    if (res == true) {
-                    //        document.querySelectorAll('.order-card-lg')[0].style.display = "none";
-                    //        //item.children[1].children[4].style.display = "none";
-                    //    }
-
-                    //    swal.fire({
-                    //        title: "Update Success",
-                    //        icon: "success",
-                    //        //buttons: true,
-                    //        //dangerMode: true
-                    //    });
-
-                    //    window.location.href = '/Order/PurchasedOrderSummary/3'
-
-                    //}).catch(function (err) {
-                    //        console.error(err);
-                    //    });
-
 
                     $.ajax({
                         url: "/Order/UpdatePurchasedStstus",
@@ -359,18 +341,64 @@
                             //});
 
                             if (data == true) {
-                                //document.querySelectorAll('.order-card-lg')[0].style.display = "none";
-                                //item.children[1].children[4].style.display = "none";
+
                                 window.location.href = '/Order/PurchasedOrderSummary/4';
                             }
 
                         },
                         error: function (err) {
                             console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/3';
+                            }
                         }
                     });
-
                 })
+
+
+                //delete button
+                item.children[1].children[4].childNodes[1].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+                    var orderdata = JSON.stringify({
+                        OrderStatusId: 6,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdatePurchasedStstus",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (res) {
+                            //data = JSON.toString(data);
+                            console.log(res)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (res == true) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/6';
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/3';
+                            }
+                        }
+                    });
+                })
+
+
+
             })
 
 
@@ -385,9 +413,16 @@
                     x.childNodes[3].appendChild(btn)
                     //console.log(x.childNodes[3])
                 }
+
+                //和created status都是4，button才開啟
+                if (x.children[0].children[2].value != 4) {
+                    x.children[1].children[4].disabled = true;
+                }             
+
             })
             order.forEach(item => {
 
+                //finish button
                 item.children[1].children[4].addEventListener("click", function () {
                     let orderid = item.children[0].children[0].innerText;
 
@@ -402,9 +437,9 @@
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',
                         async: true,
-                        success: function (data) {
+                        success: function (res) {
                             //data = JSON.toString(data);
-                            console.log(data)
+                            console.log(res)
 
                             //swal.fire({
                             //    title: "Update Success",
@@ -413,15 +448,17 @@
                             //    //dangerMode: true
                             //});
 
-                            if (data == true) {
-                                //document.querySelectorAll('.order-card-lg')[0].style.display = "none";
-                                //item.children[1].children[4].style.display = "none";
+                            if (res == true) {
+
                                 window.location.href = '/Order/PurchasedOrderSummary/5';
                             }
-
                         },
                         error: function (err) {
                             console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/4';
+                            }
                         }
                     });
 
@@ -432,65 +469,6 @@
         }
 
 
-
-
-
-
-
-
-        //let route = Request.RawUrl
-        //let btn1, btn2;
-        //window.onload = function () {
-        //    let status = document.querySelectorAll('.order-status').innerText;
-        //    status.forEach(item => {
-        //        if (item.innerText == 'Unpaid') {
-        //            document.querySelectorAll(".order-button").forEach(item => {
-
-        //                item.style.display = "none";
-        //            })
-        //        }
-        //    })
-
-            //btn1 = document.querySelector(".Unpaid");
-            ////btn2 = document.querySelector(".Started");
-
-            //btn1.addEventListener("click", function () {
-
-            //    document.querySelectorAll(".order-button").forEach(item => {
-
-            //        item.style.display = "none";
-            //    })
-
-            //    //AddElement();
-
-            //});
-
-            //btn2.
-
-        //}
-        //function AddElement() {
-        //    let btndiv = document.createElement('div');
-        //    btndiv.setAttribute('class', 'order-button');
-
-        //    let input = document.createElement('input');
-        //    input.setAttribute('type', 'submit');
-        //    input.setAttribute('value', 'start');
-
-        //    //let ordertotal = document.querySelector('.order-total');
-
-        //    btndiv.appendChild(input);
-        //    $("div").insertAfter($(".order-total"));
-        //    //btndiv.insertAfter($(".order-total"));
-        //}
-
-
-    @*@if((route == "/Order/PurchasedOrderSummary/3") || (route == "/Order/PurchasedOrderSummary/4"))
-    {
-
-        ordertotal.append(btndiv);
-        btndiv.appendChild(input);
-
-    }*@
 
 
     </script>

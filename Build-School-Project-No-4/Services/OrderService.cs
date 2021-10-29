@@ -50,7 +50,8 @@ namespace Build_School_Project_No_4.Services
                 GameName = o.Products.GameCategories.GameName,
                 MemberName = o.Members.MemberName,
                 //ProfilePicture=o.Members.ProfilePicture
-                ProfilePicture = o.Products.Members.ProfilePicture
+                ProfilePicture = o.Products.Members.ProfilePicture,
+                OrderStatusIdCreator = o.OrderStatusIdCreator
 
                 //ProductId =o.Products.ProductId
                 //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
@@ -137,36 +138,38 @@ namespace Build_School_Project_No_4.Services
 
 
 
-        //GetOrderInfo
-        public int GetCreatedOrderStatus(int OrderId)
-        {
-            //var result = new OrderViewModel();
-            //{
-            //    CreatedCards = new List<CreatedCard>(),
-            //    Order = new List<Orderstatusall>()
-            //};
+        ////GetOrderInfo
+        //public int GetCreatedOrderStatus(int OrderId)
+        //{
+        //    //var result = new OrderViewModel();
+        //    //{
+        //    //    CreatedCards = new List<CreatedCard>(),
+        //    //    Order = new List<Orderstatusall>()
+        //    //};
 
 
-            var orderinfo = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
-            if (orderinfo == null)
-            {
-                throw new NotImplementedException();
-            }
-            //var ordervm = new OrderViewModel()
-            //{
-            //    OrderStatusIdCreator = orderinfo.OrderStatusIdCreator
-            //};
+        //    var orderinfo = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
+        //    if (orderinfo == null)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //    //var ordervm = new OrderViewModel()
+        //    //{
+        //    //    OrderStatusIdCreator = orderinfo.OrderStatusIdCreator
+        //    //};
 
-            if( orderinfo.OrderStatusIdCreator != null)
-            {
-                return (int)orderinfo.OrderStatusIdCreator;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }         
+        //    if( orderinfo.OrderStatusIdCreator != null)
+        //    {
+        //        return (int)orderinfo.OrderStatusIdCreator;
+        //    }
+        //    else
+        //    {
+        //        throw new NotImplementedException();
+        //    }         
 
-        }
+        //}
+
+
 
         //public OrderViewModel GetOrderInfo(int OrderId)
         //{

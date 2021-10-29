@@ -74,14 +74,14 @@ namespace Build_School_Project_No_4.Controllers
                 //    return RedirectToAction("Index");
                 //}
                 var order = new OrderService();
-                var abc = order.GetOrderCardData(id.Value, mems);
+                var PurchasedOrderInfo = order.GetOrderCardData(id.Value, mems);
                 // var ordercards = _orderService.GetOrderCardData(id.Value);
                 //GroupViewModel result = new GroupViewModel
                 //{
                 //    Order = abc
                 //};
             
-                return View(abc);       
+                return View(PurchasedOrderInfo);       
 
         }
 
