@@ -77,7 +77,7 @@ namespace Build_School_Project_No_4.Services
 
 
         //Created Orders
-        public OrderViewModel GetCreatedOrderCardData(int OrderStatusId, int mems)
+        public OrderViewModel GetCreatedOrderCardData(int OrderStatusIdCreator, int mems)
         {
 
             var result = new OrderViewModel()
@@ -87,7 +87,7 @@ namespace Build_School_Project_No_4.Services
             };
 
             //訂單狀態
-            var category = _repo.GetAll<OrderStatus>().FirstOrDefault(x => x.OrderStatusId == OrderStatusId);
+            var category = _repo.GetAll<OrderStatus>().FirstOrDefault(x => x.OrderStatusId == OrderStatusIdCreator);
             if (category == null)
             {
                 return result;
@@ -124,7 +124,7 @@ namespace Build_School_Project_No_4.Services
 
             result.CreatedCards = CreateCards;
 
-            result.OrderStatusId = OrderStatusId;
+            result.OrderStatusId = OrderStatusIdCreator;
             result.Title = category.OrderStatusName;
 
             return result;
@@ -133,23 +133,23 @@ namespace Build_School_Project_No_4.Services
 
 
 
-        public OrderViewModel GetOrderInfo(int OrderId)
-        {
-            var emp = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
+        //public OrderViewModel GetOrderInfo(int OrderId)
+        //{
+        //    var emp = _repo.GetAll<Orders>().FirstOrDefault(x => x.OrderId == OrderId);
 
-            if (emp == null)
-            {
-                throw new NotImplementedException();
-            }
+        //    if (emp == null)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
             
-            OrderViewModel OrderInfo = new OrderViewModel()
-            {
-                OrderStatusId = emp.OrderStatusId == null? 1 : 3,
-            };
+        //    OrderViewModel OrderInfo = new OrderViewModel()
+        //    {
+        //        OrderStatusId = emp.OrderStatusId == null? 1 : 3,
+        //    };
 
-            return OrderInfo;
+        //    return OrderInfo;
 
-        }
+        //}
 
 
     }
