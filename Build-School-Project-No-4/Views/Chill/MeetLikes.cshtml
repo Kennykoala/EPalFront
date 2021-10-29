@@ -105,11 +105,19 @@
 
                                                         @*@item.isFollow*@
 
-                                                     
-                                                            <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btn btn-outline-dark">
-                                                                Following
-                                                            </button>
-                                 
+
+                                                        @if (item.isFollow)
+                                                        {
+                                                            <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#20202e">Following</button>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" onclick="myMsgColorChg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#7041e6">Follow</button>
+                                                        }
+
+
+
                                                     </div>
                                                     <div class="chatBotton">
                                                         <button type="button" class="btn btn-outline-dark">Chat</button>
@@ -249,9 +257,18 @@
         //alert("memberid 為:" + myObj.id);    //memberId
         //alert("Userid 為:" + myObj.value);   //UserId
 
-       /* document.getElementById(myObj.id)*/
-        /*document.querySelector('.')*/
+        //修改顏色為紫色和Follow
+        myObj.style.background = '#7041e6';
+        myObj.innerHTML = "Follow";
 
+        SaveImageViaAjax(myObj.value, myObj.id)
+
+    }
+
+    function myMsgColorChg(myObj) {
+
+        myObj.style.background = '#20202e';
+        myObj.innerHTML = "Following";
 
         SaveImageViaAjax(myObj.value, myObj.id)
 
@@ -695,7 +712,7 @@
             font-weight: 500 !important;
             box-sizing: border-box !important;
             border: 1px solid #21212C !important;
-            background: #21212C !important;
+            background: #21212C ;
             background-size: 100% !important;
             border-radius: 400px !important;
         }
