@@ -84,8 +84,7 @@ namespace Build_School_Project_No_4.Controllers
                 //GroupViewModel result = new GroupViewModel
                 //{
                 //    Order = abc
-                //};
-            
+                //};          
                 return View(abc);       
 
         }
@@ -96,11 +95,8 @@ namespace Build_School_Project_No_4.Controllers
 
             var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
             var mems = mem.MemberId;
-
             //Orders cusid = _ctx.Orders.Find(id);
-
             //if (mems == cusid.CustomerId)
-
             if (!id.HasValue)
             {
                 return RedirectToAction("CreatedOrderSummary", "Order", new { id = 1 });
@@ -116,35 +112,32 @@ namespace Build_School_Project_No_4.Controllers
             //{
             //    Order = abc
             //};
-
             return View(abc);
 
         }
-        public ActionResult Edit(int CustomerId,int ProductId,int Quantity,
-            decimal UnitPrice,decimal Discount,DateTime OrderDate,DateTime DesiredStartTime,
-            DateTime GameEndDateTime,int OrderStatusId,string OrderConfirmation ,DateTime GamestartTime,int OrderStatusIdCreator)
-        {
+        //public ActionResult Edit(int CustomerId,int ProductId,int Quantity,
+        //    decimal UnitPrice,decimal Discount,DateTime OrderDate,DateTime DesiredStartTime,
+        //    DateTime GameEndDateTime,int OrderStatusId,string OrderConfirmation ,DateTime GamestartTime,int OrderStatusIdCreator)
+        //{
 
-            EPalContext db = new EPalContext();
+        //    EPalContext db = new EPalContext();
 
-            var model = db.Orders.Where(m => m.OrderStatusId == OrderStatusId).FirstOrDefault();
-            model.CustomerId = CustomerId;
-            model.ProductId = ProductId;
-            model.Quantity = Quantity;
-            model.UnitPrice = UnitPrice;
-            model.Discount = Discount;
-            model.OrderDate = OrderDate;
-            model.DesiredStartTime = DesiredStartTime;
-            model.GameEndDateTime = GameEndDateTime;
-            model.OrderStatusId = OrderStatusId;
-            model.OrderConfirmation = OrderConfirmation;
-            model.GameStartTime = GamestartTime;
-            
-           
-            db.SaveChanges();
-            return View(model);
-        }
-
+        //    var model = db.Orders.Where(m => m.OrderStatusId == OrderStatusId).FirstOrDefault();
+        //    model.CustomerId = CustomerId;
+        //    model.ProductId = ProductId;
+        //    model.Quantity = Quantity;
+        //    model.UnitPrice = UnitPrice;
+        //    model.Discount = Discount;
+        //    model.OrderDate = OrderDate;
+        //    model.DesiredStartTime = DesiredStartTime;
+        //    model.GameEndDateTime = GameEndDateTime;
+        //    model.OrderStatusId = OrderStatusId;
+        //    model.OrderConfirmation = OrderConfirmation;
+        //    model.GameStartTime = GamestartTime;
+                      
+        //    db.SaveChanges();
+        //    return View(model);
+        //}
 
         [HttpPost]
         public ActionResult UpdateNotStarted(OrderViewModel order)        
@@ -159,11 +152,9 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         throw new NotImplementedException();
                     }
-
                     orderinfo.OrderStatusId = order.OrderStatusId;
                     _ctx.SaveChanges();
                     tran.Commit();
-
                     //msg = "OK";
                     return Json(true);
                 }
@@ -173,8 +164,40 @@ namespace Build_School_Project_No_4.Controllers
                     return Content("更新linestatus失敗:" + ex.ToString());
                 }
             }
+         }
 
+
+
+        [HttpPost]
+        public ActionResult UpdateCreatorNotStarted(OrderViewModel order)
+        {
+            //var msg = "";
+            using (var tran = _ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    orderinfo.OrderStatusIdCreator = order.OrderStatusIdCreator;
+                    _ctx.SaveChanges();
+                    tran.Commit();
+                    //msg = "OK";
+                    return Json(true);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return Content("更新linestatus失敗:" + ex.ToString());
+                }
+            }
         }
 
-        }
+
+
+
+
+    }
 }

@@ -14,7 +14,7 @@
                 <div class="categories" style=" padding: 10px 10px 15px;">
                     @foreach (var m in Model.Order)
                     {
-                        <a href="@Url.Action("CreatedOrderSummary","Order",new { id = m.Id })">
+                        <a href="@Url.Action("CreatedOrderSummary","Order",new { id = m.OrderStatusId })">
                             <span>
                                 @m.Name
                             </span>
@@ -78,7 +78,7 @@
                     {
                         <div class="order-card-lg">
                             <div class="card-info greyish">
-                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)@Html.DisplayFor(x => m.OrderId) </div>
+                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)</div>
                                 <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
                             </div>
                             <div class="card-body">
@@ -248,3 +248,83 @@
         </div>
     </div>
 </div>
+
+@section endJS{
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        let order = document.querySelectorAll('.order-card-lg')
+        order.forEach(x => {
+            console.log(x.childNodes);
+            if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
+                let btn = document.createElement('button')
+                btn.innerText = 'Start'
+                x.childNodes[3].appendChild(btn)
+                console.log(x.childNodes[3])
+            }
+        })
+        order.forEach(item => {
+
+            item.children[1].children[4].addEventListener("click", function () {
+                let orderid = item.children[0].children[0].innerText;
+
+                var orderdata = JSON.stringify({
+                    OrderStatusIdCreator: 4,
+                    OrderId: `${orderid}`
+                });
+
+                $.ajax({
+                    url: "/Order/UpdateCreatorNotStarted",
+                    type: "Post",
+                    data: orderdata,
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    success: function (data) {
+                        //data = JSON.toString(data);
+                        console.log(data)
+
+                        //swal.fire({
+                        //    title: "Update Success",
+                        //    icon: "success",
+                        //    //buttons: true,
+                        //    //dangerMode: true
+                        //});
+
+                        if (data == true) {
+                            //document.querySelectorAll('.order-card-lg')[0].style.display = "none";
+                            //item.children[1].children[4].style.display = "none";
+                            window.location.href = '/Order/CreatedOrderSummary/4';
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+
+            })
+        })
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

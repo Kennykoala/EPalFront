@@ -95,7 +95,7 @@ namespace Build_School_Project_No_4.Services
 
 
             //created orders
-            var createorders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId && x.Products.CreatorId == mems);
+            var createorders = _repo.GetAll<Orders>().Where(x => x.OrderStatusIdCreator == category.OrderStatusId && x.Products.CreatorId == mems);
             var CreateCards = createorders.Select(c => new CreatedCard
             {
                 OrderStatusName = category.OrderStatusName,
