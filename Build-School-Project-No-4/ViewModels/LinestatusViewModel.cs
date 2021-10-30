@@ -10,7 +10,7 @@ namespace Build_School_Project_No_4.ViewModels
 
         public int MemberId { get; set; }
 
-        public int LineStatusId { get; set; }
+        public int? LineStatusId { get; set; }
     }
 
 

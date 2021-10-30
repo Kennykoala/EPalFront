@@ -73,12 +73,12 @@ window.onload = function () {
             function (googleUser) {
                 // Useful data for your client-side scripts:
                 var profile = googleUser.getBasicProfile();
-                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-                console.log('Full Name: ' + profile.getName());
-                console.log('Given Name: ' + profile.getGivenName());
-                console.log('Family Name: ' + profile.getFamilyName());
-                console.log("Image URL: " + profile.getImageUrl());
-                console.log("Email: " + profile.getEmail());
+                //console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                //console.log('Full Name: ' + profile.getName());
+                //console.log('Given Name: ' + profile.getGivenName());
+                //console.log('Family Name: ' + profile.getFamilyName());
+                //console.log("Image URL: " + profile.getImageUrl());
+                //console.log("Email: " + profile.getEmail());
 
                 // The ID token you need to pass to your backend:
                 var id_token = googleUser.getAuthResponse().id_token;
@@ -117,24 +117,17 @@ window.onload = function () {
                     }
                 });//end $.ajax
 
-
-                ////v1
-                //var profile = googleUser.getBasicProfile(),
-                //    $target = $("#GOOGLE_STATUS_2"),
-                //    html = "";
-
-                //html += "ID: " + profile.getId() + "<br/>";
-                //html += "會員暱稱： " + profile.getName() + "<br/>";
-                //html += "會員頭像：" + profile.getImageUrl() + "<br/>";
-                //html += "會員 email：" + profile.getEmail() + "<br/>";
-                //html += "id token：" + googleUser.getAuthResponse().id_token + "<br/>";
-                //html += "access token：" + googleUser.getAuthResponse(true).access_token + "<br/>";
-                //$target.html(html);
             },
             // 登入失敗
             function (error) {
                 $("#GOOGLE_STATUS_2").html("");
                 alert(JSON.stringify(error, undefined, 2));
+                swal.fire({
+                    title: "Login Fail",
+                    icon: "error",
+                    //buttons: true,
+                    //dangerMode: true
+                });
             });
     }
 
@@ -196,8 +189,9 @@ window.onload = function () {
 
                 var fbemail = response.email;
                 var fbname = response.name;
+                var fbid = response.id;
 
-                FBPassToServer(fbemail, fbname);
+                FBPassToServer(fbemail, fbname, fbid);
             });
 
         }
@@ -215,11 +209,12 @@ window.onload = function () {
 
 
     //資料傳到後端
-    function FBPassToServer(fbemail,fbname) {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    function FBPassToServer(fbemail,fbname, fbid) {                      
 
         var Data = JSON.stringify({
             Fbemail: `${fbemail}`,
-            Fbname: `${fbname}`
+            Fbname: `${fbname}`,
+            FBId: `${fbid}`
         });
 
         $.ajax({
@@ -246,6 +241,13 @@ window.onload = function () {
             },
             error: function (err) {
                 console.log(err);
+
+                swal.fire({
+                    title: "Login Fail",
+                    icon: "error",
+                    //buttons: true,
+                    //dangerMode: true
+                });
             }
         })
 
@@ -292,6 +294,39 @@ window.onload = function () {
 
 
 
+    //Line Login  v1
+    //建立OAuth 身分驗證頁面並導入
+    function AuthWithEmail() {
+        var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
+        URL += 'response_type=code';
+        URL += '&client_id=1656564684';   //TODO:這邊要換成你的client_id
+        URL += '&redirect_uri=https://localhost:44322/Members/LineLoginCallback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+        URL += '&scope=openid%20profile%20email';
+        URL += '&state=abcde';
+        window.location.href = URL;
+    }
+    //Button2 click
+    function Button2_click() {
+        AuthWithEmail();
+    }
+    $('#Line_login').click(Button2_click);
+
+    ////var strValue = "@((string)ViewBag.msg)";
+    //var strValue = TempData["message"];
+    //if (strValue != null && strValue != "") {
+    //    swal.fire({
+    //        title: strValue,
+    //        icon: "success",
+    //        //buttons: true,
+    //        //dangerMode: true
+    //    });
+    //}
+
+
+
+
+
+
 
 
 
@@ -307,9 +342,6 @@ window.onload = function () {
     })
 
 
-
-    //logsigntab[0].classList.add('logsign-purple-border');
-    /*    $('#myModal').modal('show');*/
 
 
 
@@ -546,10 +578,33 @@ function changeShort() {
 
 
 //online/offline change
+let linestatusId;
 statuslistbtn.forEach((stabtn, idx) => {
-    // statusbar.innerHTML = `<img src="online.png" alt="">ONLINE`;
+
     stabtn.addEventListener('click', function () {
         statusbar.innerHTML = stabtn.innerHTML;
+
+        linestatusId = stabtn.value;
+        var Data = JSON.stringify({
+            //MemberId: `${memberId}`,
+            LineStatusId: `${linestatusId}`
+        });
+
+        $.ajax({
+            url: "/Members/MemberStatus",
+            type: "POST",
+            data: Data,
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            processData: false,
+            //dataType: "json",
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
 
     })
 })

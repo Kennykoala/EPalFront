@@ -61,9 +61,8 @@ namespace Build_School_Project_No_4.DataModels
 
             modelBuilder.Entity<Members>()
                 .HasMany(e => e.Chatlist)
-                .WithRequired(e => e.Members)
-                .HasForeignKey(e => e.ReceiverId)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.Members)
+                .HasForeignKey(e => e.ReceiverId);
 
             modelBuilder.Entity<Members>()
                 .HasMany(e => e.Chatlist1)
@@ -85,7 +84,7 @@ namespace Build_School_Project_No_4.DataModels
             modelBuilder.Entity<Members>()
                 .HasMany(e => e.Followings1)
                 .WithRequired(e => e.Members1)
-                .HasForeignKey(e => e.FollowingId)
+                .HasForeignKey(e => e.MemberId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Members>()
@@ -162,15 +161,13 @@ namespace Build_School_Project_No_4.DataModels
 
             modelBuilder.Entity<OrderStatus>()
                 .HasMany(e => e.Orders)
-                .WithRequired(e => e.OrderStatus)
-                .HasForeignKey(e => e.OrderStatusId)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.OrderStatus)
+                .HasForeignKey(e => e.OrderStatusId);
 
             modelBuilder.Entity<OrderStatus>()
                 .HasMany(e => e.Orders1)
-                .WithRequired(e => e.OrderStatus1)
-                .HasForeignKey(e => e.OrderStatusId)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.OrderStatus1)
+                .HasForeignKey(e => e.OrderStatusIdCreator);
 
             modelBuilder.Entity<Position>()
                 .HasMany(e => e.ProductPosition)

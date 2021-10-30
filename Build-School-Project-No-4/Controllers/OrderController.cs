@@ -146,6 +146,35 @@ namespace Build_School_Project_No_4.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult UpdateNotStarted(OrderViewModel order)        
+        {
+            //var msg = "";
+            using (var tran = _ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+
+                    orderinfo.OrderStatusId = order.OrderStatusId;
+                    _ctx.SaveChanges();
+                    tran.Commit();
+
+                    //msg = "OK";
+                    return Json(true);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return Content("更新linestatus失敗:" + ex.ToString());
+                }
+            }
+
+        }
 
         }
 }

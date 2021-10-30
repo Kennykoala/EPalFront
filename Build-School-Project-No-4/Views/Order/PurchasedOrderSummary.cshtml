@@ -14,8 +14,8 @@
                 <div class="categories" style=" padding: 10px 10px 15px;">
                     @foreach (var m in Model.Order)
                     {
-                        <a href="@Url.Action("PurchasedOrderSummary","Order",new { id = m.Id })">
-                            <span >
+                        <a href="@Url.Action("PurchasedOrderSummary","Order",new { id = m.OrderStatusId })">
+                            <span>
                                 @m.Name
                             </span>
                         </a><br />
@@ -82,7 +82,7 @@
                     {
                         <div class="order-card-lg">
                             <div class="card-info greyish">
-                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)@Html.DisplayFor(x => m.OrderId) </div>
+                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)</div>
                                 <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
                             </div>
                             <div class="card-body">
@@ -121,8 +121,8 @@
 
 
                                 @*<div class="order-button">
-                                    <input type="submit" name="name" value="start" />
-                                </div>*@
+                                        <input type="submit" name="name" value="start" />
+                                    </div>*@
 
 
                                 <div class="order-actions">
@@ -265,33 +265,105 @@
     //var route = ViewContext.RouteData.Route;
     //var UrlPattern = route.GetType().GetProperty("Url").GetValue(route);
     //var route = Request.RawUrl;
-    
+
 }
 
 
 
 @section endJS{
-    <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
 
         let order = document.querySelectorAll('.order-card-lg')
         order.forEach(x => {
-            console.log(x.childNodes);
+            //console.log(x.childNodes);
             if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
                 let btn = document.createElement('button')
-                btn.innerText = 'click'
+                btn.innerText = 'Start'
                 x.childNodes[3].appendChild(btn)
-                console.log(x.childNodes[3])
-
-                btn.onclick = function () {
-                    alert("hello world");
-                }
+                //console.log(x.childNodes[3])
             }
         })
 
 
-        
 
+        order.forEach(item => {
+
+            item.children[1].children[4].addEventListener("click", function () {
+                let orderid = item.children[0].children[0].innerText;
+
+                var orderdata = JSON.stringify({
+                    OrderStatusId: 4,
+                    OrderId: `${orderid}`
+                });
+
+
+                //axios({
+                //    url: "/Order/UpdateNotStarted",
+                //    method: 'POST',
+                //    Headers: {
+                //        'Content-Type': 'application/json; charset=utf-8'
+                //    },
+                //    data: orderdata
+                //}).then(function (res) {
+
+                //    console.log(res)
+                //    if (res == true) {
+                //        document.querySelectorAll('.order-card-lg')[0].style.display = "none";
+                //        //item.children[1].children[4].style.display = "none";
+                //    }
+
+                //    swal.fire({
+                //        title: "Update Success",
+                //        icon: "success",
+                //        //buttons: true,
+                //        //dangerMode: true
+                //    });
+
+                //    window.location.href = '/Order/PurchasedOrderSummary/3'
+
+                //}).catch(function (err) {
+                //        console.error(err);
+                //    });
+
+
+
+                $.ajax({
+                    url: "/Order/UpdateNotStarted",
+                    type: "Post",
+                    data: orderdata,
+                    contentType: 'application/json; charset=utf-8',
+                    async: true,
+                    success: function (data) {
+                        //data = JSON.toString(data);
+                        console.log(data)
+
+                        //swal.fire({
+                        //    title: "Update Success",
+                        //    icon: "success",
+                        //    //buttons: true,
+                        //    //dangerMode: true
+                        //});
+
+                        if (data == true) {
+                            //document.querySelectorAll('.order-card-lg')[0].style.display = "none";
+                            //item.children[1].children[4].style.display = "none";
+                            window.location.href = '/Order/PurchasedOrderSummary/4';
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+
+            })
+        })
 
 
 

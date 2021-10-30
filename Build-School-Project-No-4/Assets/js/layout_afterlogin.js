@@ -291,6 +291,40 @@ window.onload = function () {
 
 
 
+    //Line Login  v1
+    //建立OAuth 身分驗證頁面並導入
+    function AuthWithEmail() {
+        var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
+        URL += 'response_type=code';
+        URL += '&client_id=1656564684';   //TODO:這邊要換成你的client_id
+        URL += '&redirect_uri=https://localhost:44322/Members/LineLoginCallback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+        URL += '&scope=openid%20profile%20email';
+        URL += '&state=abcde';
+        window.location.href = URL;
+    }
+    //Button2 click
+    function Button2_click() {
+        AuthWithEmail();
+    }
+    $('#Line_login').click(Button2_click);
+
+    ////var strValue = "@((string)ViewBag.msg)";
+    //var strValue = TempData["message"];
+    //if (strValue != null && strValue != "") {
+    //    swal.fire({
+    //        title: strValue,
+    //        icon: "success",
+    //        //buttons: true,
+    //        //dangerMode: true
+    //    });
+    //}
+
+
+
+
+
+
+
 
 
     let navItems = document.querySelectorAll('.navItem');
@@ -607,10 +641,33 @@ function changeShort() {
 
 
 //online/offline change
+let linestatusId;
 statuslistbtn.forEach((stabtn, idx) => {
-    // statusbar.innerHTML = `<img src="online.png" alt="">ONLINE`;
+
     stabtn.addEventListener('click', function () {
         statusbar.innerHTML = stabtn.innerHTML;
+
+        linestatusId = stabtn.value;
+        var Data = JSON.stringify({
+            //MemberId: `${memberId}`,
+            LineStatusId: `${linestatusId}`
+        });
+
+        $.ajax({
+            url: "/Members/MemberStatus",
+            type: "POST",
+            data: Data,
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            processData: false,
+            //dataType: "json",
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
 
     })
 })
