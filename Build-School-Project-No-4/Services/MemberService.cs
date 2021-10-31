@@ -185,6 +185,10 @@ namespace Build_School_Project_No_4.Services
                     {
                         return "";
                     }
+                    else if (loginMember.GoogleId != "" || loginMember.FBId != "" || loginMember.LineId != "")
+                    {
+                        return "此會員帳號尚未註冊";
+                    }
                     else
                     {
                         return "密碼輸入錯誤";
@@ -272,6 +276,24 @@ namespace Build_School_Project_No_4.Services
 
         }
 
+
+        public void UpdateThirdpartyRegister(MemberRegisterViewModel newMember, string AuthCode)
+        {
+            var member = _Repo.GetAll<Members>().FirstOrDefault(m => m.Email == newMember.Email);
+
+            //var member = MemberRigisterData()
+            //            .Where(m => m.Email == newMember.Email)
+            //            .FirstOrDefault();
+
+            //將密碼Hash
+            newMember.Password = HashPassword(newMember.Password);
+            member.Password = newMember.Password;
+            member.AuthCode = AuthCode;
+            member.IsAdmin = true;
+            _Repo.Update(member);
+            _Repo.SaveChanges();
+
+        }
 
     }
 }

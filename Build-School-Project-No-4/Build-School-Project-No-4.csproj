@@ -911,7 +911,6 @@
     <Content Include="Views\Members\EmailValidate.cshtml" />
     <Content Include="Views\Members\LoginResult.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Members\Logout.cshtml" />
     <Content Include="Views\Members\profile.cshtml" />
     <Content Include="Views\Shared\_AvatarPartial.cshtml" />
     <Content Include="Views\Members\EditProfile.cshtml" />
