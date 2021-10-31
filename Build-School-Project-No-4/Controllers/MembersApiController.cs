@@ -22,28 +22,68 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        public IHttpActionResult PostAvatar([FromBody] MemberAvatarViewModel Data)
+        public IHttpActionResult FollowResult([FromBody] ChillMeetLikeViewModel query)
         {
-            Members member = db.Members.First(x => x.MemberId == Data.MemberId);
+            //Create
+            var testFollowId = query.FollowingId;
+            var testOwnId = query.UserId;
+            Followings memberFollow = new Followings();
 
-            using (var tran = db.Database.BeginTransaction())
+
+            //Delete
+            Followings RemoveFollow = db.Followings.FirstOrDefault(x => x.FollowingId == query.FollowingId);
+            var isFollow = db.Followings.FirstOrDefault(x => x.FollowingId == query.FollowingId && x.MemberId == query.UserId);
+
+
+
+            if (isFollow == null)
             {
-                try
+                //Create
+                using (var tran = db.Database.BeginTransaction())
                 {
-                    member.ProfilePicture = Data.ProfilePicture;
+                    try
+                    {
+                        memberFollow.MemberId = testOwnId;
+                        memberFollow.FollowingId = testFollowId;
+                        db.Followings.Add(memberFollow);
+                        db.SaveChanges();
+                        tran.Commit();
 
-                    db.SaveChanges();
-                    tran.Commit();
+                        return Ok(memberFollow);
 
-                    var msg = "OK";
-                    return Json(msg);
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return StatusCode(HttpStatusCode.NoContent);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        return StatusCode(HttpStatusCode.NoContent);
+                    }
                 }
             }
+            else
+            {
+                //Delete
+                using (var tran = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+
+                        db.Entry(RemoveFollow).State = EntityState.Deleted;
+                        db.SaveChanges();
+                        tran.Commit();
+
+                        return Ok(RemoveFollow);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        return StatusCode(HttpStatusCode.NoContent);
+
+                    }
+                }
+            }
+
+
 
         }
 

@@ -76,11 +76,22 @@ namespace Build_School_Project_No_4.Controllers
         
         public ActionResult MeetLikes()
         {
+
+            int memberId;
+            bool IsSuccess = true;
+            string memId = GetMemberId();
+            IsSuccess = int.TryParse(memId, out memberId);
+
+            if (!IsSuccess)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var memberlikeGet = new ChillMeetService();
             var memberMatchGet = new ChillMeetService();
 
             var memberMatch = memberMatchGet.GetMemberMatch();
-            var memberlike = memberlikeGet.GetMemberLike();
+            var memberlike = memberlikeGet.GetMemberLike(memberId);
 
             ViewBag.Match = memberMatch;
             ViewBag.Like = memberlike;

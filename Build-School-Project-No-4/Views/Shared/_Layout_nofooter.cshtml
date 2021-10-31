@@ -30,6 +30,7 @@
 
         string userid = "";
         string avatar = "";
+        int? status = 1;
         if (cookie != null)
         {
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
@@ -37,7 +38,7 @@
             var obj = Json.Decode<Members>(ticket.UserData);
             userid = obj.MemberId.ToString();
             avatar = memberService.GetEditProfileInfo(obj.MemberId).ProfilePicture;
-            //userid = ticket.UserData;
+            status = memberService.GetStatus(obj.MemberId).LineStatusId;
         }
     }
 
@@ -245,21 +246,50 @@
                                 </div>
 
 
-                                @Html.Partial("_LinestatusPartial", new LinestatusViewModel())
+                                <div class="online-wrapper dropstart">
+                                    @if(status == 2)
+                                    {
+                                        <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                        </a>
+                                    }
 
+                                    <ul class="dropdown-menu">
+
+                                        <li>
+                                            <button class="dropdown-item statusbtn" type="button" value="1">
+                                                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                                @*<img src="~/Assets/images/layout/online.png" alt="">@Model.LineStatusId*@
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item statusbtn" type="button" value="2">
+                                                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                                @*<img src="~/Assets/images/layout/offline.png" alt="">@Model.LineStatusId*@
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </div>
 
 
                                 <div class="info-wrapper">
                                     @*<a href="@Url.Action("Followings","Members")">*@
-                                        <div class="infosta" id="followers">
-                                            <div class="num">0</div>
-                                            <div class="txt">Followers</div>
-                                        </div>
+                                    <div class="infosta" id="followers">
+                                        <div class="num">0</div>
+                                        <div class="txt">Followers</div>
+                                    </div>
                                     @*</a>*@
                                     @*<a href="@Url.Action("Followings","Members")">*@
                                         <div class="infosta" id="followings">
                                             <div class="num">1</div>
-                                            <div class="txt">Folloeings</div>
+                                            <div class="txt">Followings</div>
                                         </div>
                                     @*</a>*@
                                     <div class="infosta" id="vistors">
@@ -274,23 +304,29 @@
 
                                 <div class="money-wrapper">
                                     <div class="money-item" id="order">
-                                        <a href="~/Order/OrderSummary">
+                                        <a href="~/Order/PurchasedOrderSummary/1">
                                             <img src="~/Assets/images/layout/ordericon.png" alt="order">
-                                            <div class="txt">Order</div>
+                                            <div class="txt">Purchased Order</div>
                                         </a>
                                     </div>
-                                    <div class="money-item" id="wallet">
+                                    <div class="money-item" id="order">
+                                        <a href="~/Order/CreatedOrderSummary/1">
+                                            <img src="~/Assets/images/layout/ordericon.png" alt="order">
+                                            <div class="txt">Created Order</div>
+                                        </a>
+                                    </div>
+                                    @*<div class="money-item" id="wallet">
                                         <a href="@Url.Action("Wallet", "epalAccount")">
                                             <img src="~/Assets/images/layout/walleticon.png" alt="wallet">
                                             <div class="txt">Wallet</div>
                                         </a>
-                                    </div>
-                                    <div class="money-item" id="coupons">
+                                    </div>*@
+                                    @*<div class="money-item" id="coupons">
                                         <a href="@Url.Action("Coupons", "Coupons")">
                                             <img src="~/Assets/images/layout/couponicon.png" alt="coupon">
                                             <div class="txt">Coupons</div>
                                         </a>
-                                    </div>
+                                    </div>*@
                                 </div>
 
                                 <div class="member-wrapper">
@@ -459,9 +495,10 @@
                         <button id="Line_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-line"></i>
                         </button>
-                        @*<a href="#"><i class="fab fa-line"></i></a>*@
+                        @*<input type="submit" class="btn btn-primary linesavetodb" name="GetUserProfile" value="取得用戶資訊" style="background-color:transparent;" />*@
+                        @*<a href="@Url.Action("LineLoginDirect","Members")" id="Line_login"><i class="fab fa-line"></i></a>*@
                     </div>
-                    <span id="GOOGLE_STATUS_2"></span>
+                    @*<span id="GOOGLE_STATUS_2"></span>*@
                 </div>
 
             </div>
