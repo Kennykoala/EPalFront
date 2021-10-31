@@ -108,23 +108,19 @@ div.game-play{
   font-weight: 600;
   margin-left: 6px;
 }
-.paypal-img {
-  width: 130px;
-  height: auto;
-  margin: 20px 27px;
-  display: block;
+.paypal-img, .linepay-img {
+    width: 130px;
+    height: 45px;
+    margin: 20px 27px;
+    display: block;
 }
 .paypal-img img {
   width: 100%;
 }
-.linepay {
-    width: 130px;
-    height: auto;
-    margin: 20px 27px;
-    display: flex;
-}
+
 .linepay-img img {
-    width: 100%;
+    width: auto;
+    height: 50px;
 }
 .total-div {
   border-top: 1px solid rgb(48, 47, 61);

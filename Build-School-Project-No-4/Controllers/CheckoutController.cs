@@ -15,13 +15,14 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
 using System.Security.Cryptography;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Controllers
 {
     public class CheckoutController : Controller
     {
         private readonly PaypalService _paypalService;
-        private readonly OrderConfirmationService _orderConfirmService;
+        private readonly OrderPaymentService _orderConfirmService;
         private readonly EcPayService _ecPayService;
         private readonly LinePayService _linePayService;
         private string trId;
@@ -29,7 +30,7 @@ namespace Build_School_Project_No_4.Controllers
         public CheckoutController()
         {
             _paypalService = new PaypalService();
-            _orderConfirmService = new OrderConfirmationService();
+            _orderConfirmService = new OrderPaymentService();
             _ecPayService = new EcPayService();
             _linePayService = new LinePayService();
             _linePayVM = new LinePayViewModel();
@@ -72,7 +73,7 @@ namespace Build_School_Project_No_4.Controllers
 
         public ActionResult Success(string confirmation)
         {
-            var isPaid = _orderConfirmService.UpdateOrderStatus(confirmation);
+            var isPaid = _orderConfirmService.UpdateToUnstarted(confirmation);
             if (isPaid == true)
             {
                 var confirmationInfo = _orderConfirmService.GetConfirmationInfo(confirmation);
@@ -83,40 +84,6 @@ namespace Build_School_Project_No_4.Controllers
                 return Content("order status change didn't go through");
             }
         }
-        //public async Task<ActionResult> PaymentWithLinePay(string Cancel = null)
-        //{
-        //    string confirmation = TempData["confirmation"] as string;
-        //    if (Cancel == "true")
-        //    {
-        //        return RedirectToAction("Checkout", "ePals", new { Confirmation = confirmation });
-        //    }
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        var requestBody = _linePayService.LinePayCreateOrder(confirmation);
-        //        var body = JsonConvert.SerializeObject(requestBody);
-        //        string apiurl = "/v3/payments/request";
-        //        var baseUri = "https://sandbox-api-pay.line.me";
-        //        string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-        //        string ChannelId = "1656554768";
-        //        var customerId = GetCustomerIdService.GetMemberId();
-        //        var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
-
-
-        //        string Signature = LinePayService.HashLinePayRequest(confirmation, body);
-
-        //        client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-        //        client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-        //        client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
-        //        client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
-        //        client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
-        //        var content = new StringContent(body, Encoding.UTF8, "application/json");
-        //        var response = await client.PostAsync(baseUri + apiurl, content);
-        //        var result = await response.Content.ReadAsStringAsync();
-        //        var linepayapi = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).Info.paymentUrl.web);
-        //        return Redirect(JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).Info.paymentUrl.web);
-        //    }
-        //}
         public async Task<ActionResult> PaymentWithLinePay(string Cancel = null, string transactionId = null)
         {
             string confirmation = TempData["confirmation"] as string;
@@ -126,16 +93,14 @@ namespace Build_School_Project_No_4.Controllers
             }
             if (transactionId != null)
             {
-                var idk = await _linePayService.ConfirmApiPost(long.Parse(transactionId), confirmation);
-                int i = 0;
-                return Content(":D");
+                var payStatus = await _linePayService.ConfirmApiPost(long.Parse(transactionId), confirmation);
+                if(payStatus == Enums.PayAttempt.Success.ToString())
+                {
+                    return Content(":D");
+                }
+                return Content(":(");
             }
             var payRedirectUrl = await _linePayService.RequestApiPost(confirmation);
-
-            
-
-
-
             return Redirect(payRedirectUrl);
         }
     }

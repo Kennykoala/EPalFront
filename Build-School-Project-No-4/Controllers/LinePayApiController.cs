@@ -43,7 +43,7 @@ namespace Build_School_Project_No_4.Controllers
                 var baseUri = "https://sandbox-api-pay.line.me";
                 string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
                 string ChannelId = "1656554768";
-                var nonce = Utilities.PaymentUtility.CreateTransactionUID("1");
+                var nonce = Utilities.PaymentUtil.CreateTransactionUID("1");
 
 
                 string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, nonce, ChannelSecret);

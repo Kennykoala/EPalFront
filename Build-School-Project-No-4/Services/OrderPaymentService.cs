@@ -8,29 +8,27 @@ using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
-    public class OrderConfirmationService
+    public class OrderPaymentService
     {
         private readonly Repository _repo;
         private readonly EPalContext _ctx;
-        public OrderConfirmationService()
+        public OrderPaymentService()
         {
             _repo = new Repository();
             _ctx = new EPalContext();
         }
 
-        public bool UpdateOrderStatus(string confirmation)
+        public bool UpdateToUnstarted(string confirmation)
         {
             var orders = _repo.GetAll<Orders>();
-
             if (confirmation == null)
             {
                 return false;
             }
-
             try
             {
                 var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-                result.OrderStatusId = (int)PaymentStatusUtil.PaymentStatus.NotStarted;
+                result.OrderStatusId = (int)Enums.PaymentStatus.NotStarted;
                 _repo.Update(result);
                 _repo.SaveChanges();
                 return true;
@@ -40,10 +38,8 @@ namespace Build_School_Project_No_4.Services
                 var err = ex.ToString();
                 return false;
             }
-            
-
         }
-        public OrderConfirmationViewModel GetConfirmationInfo(string confirmationNum)
+        public OrderConfirmationViewModel GetConfirmationInfo(string confirmation)
         {
             var orders = _repo.GetAll<Orders>();
             var products = _repo.GetAll<Products>();
@@ -54,20 +50,24 @@ namespace Build_School_Project_No_4.Services
                           join p in products on o.ProductId equals p.ProductId
                           join g in gameCat on p.GameCategoryId equals g.GameCategoryId
                           join m in members on p.CreatorId equals m.MemberId
-                          where o.OrderConfirmation == confirmationNum
+                          where o.OrderConfirmation == confirmation
                           select new OrderConfirmationViewModel
                           {
-                              OrderConfirmation = confirmationNum,
+                              OrderConfirmation = confirmation,
                               UnitPrice = o.UnitPrice,
                               Rounds = o.Quantity,
                               PlayerName = m.MemberName,
                               GameName = g.GameName,
                               PlayerPic = p.CreatorImg,
                               StartTime = o.DesiredStartTime
-
                           }).FirstOrDefault();
 
             return result;
+        }
+        public void CreatePayment(string confirmation, string transactionUid)
+        {
+
+
         }
     }
 }

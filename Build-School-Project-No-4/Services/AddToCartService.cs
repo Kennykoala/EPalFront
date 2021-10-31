@@ -17,12 +17,11 @@ namespace Build_School_Project_No_4.Services
 
         public Orders CreateUnpaidOrder(AddToCartViewModel AddCartVM, string startTime, int id)
         {
-            //var cart = AddCartVM;
             var timeNow = DateTime.Now;
             var utcTimeNow = timeNow.ToUniversalTime();
-            var timestamp = UtcDateTimeToUnix(utcTimeNow);
-            var customerId = Int32.Parse(GetCustomerIdService.GetMemberId());
-            var orderId = $"GLHF-{customerId}{timestamp}";
+            var timestamp = PaymentUtil.UtcDateTimeToUnix(utcTimeNow);
+            var customerId = Int32.Parse(MemberUtil.GetMemberId());
+            var orderId = $"X-{customerId}{timestamp}";
             Orders order = new Orders()
             {
                 CustomerId = customerId,
@@ -31,7 +30,7 @@ namespace Build_School_Project_No_4.Services
                 UnitPrice = (decimal)AddCartVM.UnitPrice,
                 OrderDate = utcTimeNow,
                 DesiredStartTime = Convert.ToDateTime(startTime),
-                OrderStatusId = (int)PaymentStatusUtil.PaymentStatus.Unpaid,
+                OrderStatusId = (int)Enums.PaymentStatus.Unpaid,
                 OrderConfirmation = orderId
             };
             return order;
@@ -39,42 +38,24 @@ namespace Build_School_Project_No_4.Services
 
         public bool AddCartSuccess(Orders unpaid)
         {
-            using (var tran = _repo._context.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    _repo.Create(unpaid);
-                    _repo.SaveChanges();
-                    tran.Commit();
-                    var confirmation = unpaid.OrderConfirmation;
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    var err = ex.ToString();
-                    return false;
-                }
+                _repo.Create(unpaid);
+                _repo.SaveChanges();
+                //tran.Commit();
+                var confirmation = unpaid.OrderConfirmation;
+                return true;
             }
-        }
+            catch (Exception ex)
+            {
+                //tran.Rollback();
+                var err = ex.ToString();
+                return false;
+            }
+            //using (var tran = _repo._context.Database.BeginTransaction())
+            //{
 
-
-        static long UtcDateTimeToUnix(DateTime x)
-        {
-            DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            long result = (x.ToUniversalTime() - unixStart).Ticks;
-            return result;
+            //}
         }
-        static DateTime UnixToDateTime(long datestamp)
-        {
-            DateTime result = DateTimeOffset.FromUnixTimeMilliseconds(datestamp).DateTime;
-            return result;
-        }
-        static DateTime UnixToLocalDateTime(long datestamp)
-        {
-            DateTime result = DateTimeOffset.FromUnixTimeMilliseconds(datestamp).DateTime.ToLocalTime();
-            return result;
-        }
-
     }
 }

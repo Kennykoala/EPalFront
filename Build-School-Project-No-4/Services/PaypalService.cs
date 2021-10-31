@@ -12,10 +12,10 @@ namespace Build_School_Project_No_4.Services
     {
 
         private PayPal.Api.Payment payment;
-        private readonly OrderUtility _orderUtil;
+        private readonly OrderUtil _orderUtil;
         public PaypalService()
         {
-            _orderUtil = new OrderUtility();
+            _orderUtil = new OrderUtil();
         }
 
         public Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
@@ -65,11 +65,11 @@ namespace Build_School_Project_No_4.Services
                 details = details
             };
             var transactionList = new List<Transaction>();
-            var customerId = GetCustomerIdService.GetMemberId();
+            var customerId = MemberUtil.GetMemberId();
             transactionList.Add(new Transaction()
             {
                 description = $"Order ID: {confirmation}",
-                invoice_number = Utilities.PaymentUtility.CreateTransactionUID(customerId),
+                invoice_number = Utilities.PaymentUtil.CreateTransactionUID(customerId),
                 amount = amount,
                 item_list = itemList
             });

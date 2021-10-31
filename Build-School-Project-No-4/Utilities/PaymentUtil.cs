@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Build_School_Project_No_4.Utilities
 {
-    public static class PaymentUtility
+    public static class PaymentUtil
     {
         public static string CreateTransactionUID(string id)
         {
@@ -13,7 +13,6 @@ namespace Build_School_Project_No_4.Utilities
             string transId = id + utcTimestamp;
             return transId;
         }
-
         public static long UtcDateTimeToUnix(DateTime x)
         {
             DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);

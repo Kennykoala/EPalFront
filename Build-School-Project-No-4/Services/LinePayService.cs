@@ -16,22 +16,22 @@ namespace Build_School_Project_No_4.Services
     {
         private readonly Repository _repo;
         private readonly LinePayViewModel _linePayVM;
-        private readonly OrderUtility _orderUtil;
+        private readonly OrderUtil _orderUtil;
 
         public LinePayService()
         {
             _repo = new Repository();
             _linePayVM = new LinePayViewModel();
-            _orderUtil = new OrderUtility();
+            _orderUtil = new OrderUtil();
         }
         private static string baseUri = "https://sandbox-api-pay.line.me";
         private static string channelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
         private static string channelId = "1656554768";
-        private static string customerId = GetCustomerIdService.GetMemberId();
+        private static string customerId = MemberUtil.GetMemberId();
         public static string HashLinePayRequest(string orderId, string body)
         {
             string apiurl = "/v3/payments/request";
-            var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
+            var nonce = Utilities.PaymentUtil.CreateTransactionUID(customerId);
             var request = channelSecret + apiurl + body + nonce;
 
             var key = channelSecret ?? "";
@@ -60,7 +60,7 @@ namespace Build_School_Project_No_4.Services
         public static string HashLinePayConfirmRequest(string orderId, string body, string apiurl)
         {
             //string apiurl = "/v3/payments/request";
-            var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
+            var nonce = Utilities.PaymentUtil.CreateTransactionUID(customerId);
             var request = channelSecret + apiurl + body + nonce;
 
             var key = channelSecret ?? "";
@@ -76,7 +76,8 @@ namespace Build_School_Project_No_4.Services
         public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
         {
             //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted";
-            var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted/";
+            //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted/";
+            var redirectUrl = "https://localhost:44322/checkout/PaymentWithLinePay?";
 
             //var redirectUrl = HttpContext.Current.Request.Url.Host + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
             var order = _orderUtil.GetOrder(confirmation);
@@ -118,7 +119,7 @@ namespace Build_School_Project_No_4.Services
 
         public async Task<string> RequestApiPost(string confirmation)
         {
-            var linepayapi = "test";
+            //var linepayapi = "test";
             using (var client = new HttpClient())
             {
                 var requestBody = LinePayCreateOrder(confirmation);
@@ -127,11 +128,9 @@ namespace Build_School_Project_No_4.Services
                 var baseUri = "https://sandbox-api-pay.line.me";
                 string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
                 string ChannelId = "1656554768";
-                var customerId = GetCustomerIdService.GetMemberId();
-                var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
-
-
-                string Signature = LinePayService.HashLinePayRequest(confirmation, body);
+                var customerId = MemberUtil.GetMemberId();
+                var nonce = Utilities.PaymentUtil.CreateTransactionUID(customerId);
+                string Signature = HashLinePayRequest(channelSecret, apiurl, body, nonce, channelSecret);
 
                 client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
                 client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
@@ -140,39 +139,10 @@ namespace Build_School_Project_No_4.Services
                 client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(baseUri + apiurl, content);
-                var result = await response.Content.ReadAsStringAsync();
-                linepayapi = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).Info.paymentUrl.web);
+                var result = response.Content.ReadAsStringAsync().Result;
+                var paymentUrl = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).Info.paymentUrl.web);
 
-                return linepayapi;
-                //    using (var client = new HttpClient())
-                //{
-                //    var requestBody = LinePayCreateOrder(confirmation);
-                //    var body = JsonConvert.SerializeObject(requestBody);
-                //    string apiurl = "/v3/payments/request";
-                //    var baseUri = "https://sandbox-api-pay.line.me";
-                //    string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-                //    string ChannelId = "1656554768";
-                //    var customerId = GetCustomerIdService.GetMemberId();
-                //    var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
-
-                //    //string channelSecret, string apiUrl, string body, string orderId, string key
-                //    string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, confirmation, ChannelSecret);
-
-                //    client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-                //    client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-                //    client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
-                //    client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
-                //    client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
-
-
-
-                //    var content = new StringContent(body, Encoding.UTF8, "application/json");
-                //    var response = await client.PostAsync(baseUri + apiurl, content);
-                //    var LinePayRequestResponse = await response.Content.ReadAsStringAsync();
-                //    var asdf = 11;
-                //    var linepayapi = JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(LinePayRequestResponse).Info.paymentUrl.web;
-
-                //    return linepayapi;
+                return paymentUrl;
             }
 
         }
@@ -188,23 +158,18 @@ namespace Build_School_Project_No_4.Services
         {
             using (var client = new HttpClient())
             {
-
                 var requestbody = new
                 {
                     amount = GetOrderTotal(orderId),
                     currency = "TWD"
                 };
-
                 var body = JsonConvert.SerializeObject(requestbody);
                 string apiurl = $"/v3/payments/{transactionId}/confirm";
                 var baseUri = "https://sandbox-api-pay.line.me";
                 string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
                 string ChannelId = "1656554768";
-                var nonce = Utilities.PaymentUtility.CreateTransactionUID("1");
-
-
-                //string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, nonce, ChannelSecret);
-                string Signature = LinePayService.HashLinePayConfirmRequest(orderId, body, apiurl);
+                var nonce = Utilities.PaymentUtil.CreateTransactionUID("1");
+                string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, nonce, ChannelSecret);
 
                 client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
                 client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
@@ -215,79 +180,12 @@ namespace Build_School_Project_No_4.Services
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(baseUri + apiurl, content);
                 var result = await response.Content.ReadAsStringAsync();
-                int i = 0;
-
-
-
-                return JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).returnMessage;
+                if (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).returnMessage == "Success.")
+                {
+                    return Enums.PayAttempt.Success.ToString();
+                }
+                return Enums.PayAttempt.Failed.ToString(); ;
             }
-
-            //public async Task<string> ConfirmApiPost(string orderId, string transactionId)
-            //{
-            //    using (var client = new HttpClient())
-            //    {
-            //        var baseUri = "https://localhost:44322/api";
-            //        string apiurl = $"/linepayapi/linepaycompleted/{transactionId}/{orderId}";
-
-            //        var requestbody = new
-            //        {
-            //            amount = GetOrderTotal(orderId),
-            //            currency = "TWD"
-            //        };
-            //        var body = JsonConvert.SerializeObject(requestbody);
-            //        var content = new StringContent(body, Encoding.UTF8, "application/json");
-            //        var response = await client.PostAsync(baseUri + apiurl, content);
-            //        var result = await response.Content.ReadAsStringAsync();
-
-
-
-            //        //var requestBody = LinePayCreateOrder(orderId);
-
-
-            //        //string apiurl = $"/v3/payments/{transactionId}/confirm";
-            //        //string apiurl = $"/v3/payments/{transactionId}/confirm";
-            //        //var baseUri = "https://sandbox-api-pay.line.me";
-            //        string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-            //        string ChannelId = "1656554768";
-            //        var customerId = GetCustomerIdService.GetMemberId();
-            //        var nonce = Utilities.PaymentUtility.CreateTransactionUID(customerId);
-
-
-            //        string Signature = LinePayService.HashLinePayRequest(orderId, body);
-
-            //        client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-            //        client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-            //        client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
-            //        client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
-            //        client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
-
-
-
-            //        //var content = new StringContent(body, Encoding.UTF8, "application/json");
-            //        //var response = await client.PostAsync(baseUri + apiurl, content);
-            //        //var result = await response.Content.ReadAsStringAsync();
-
-            //        //var linepayapi = JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).info.paymentUrl.web;
-
-            //        return result;
-            //    }
-
-            //}
-            //public async Task<string> ConfirmApiPost(string payRedirectUrl)
-            //{
-            //    using (var client = new HttpClient())
-            //    {
-            //        var response = await client.GetAsync("https://localhost:44322/api/linepayapi/linepaycompleted");
-            //        var result = await response.Content.ReadAsStringAsync();
-            //        return result;
-            //    }
-
-            //}
-
-
-
-
-
         }
     }
 }

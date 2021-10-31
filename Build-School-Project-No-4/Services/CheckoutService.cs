@@ -70,7 +70,7 @@ namespace Build_School_Project_No_4.Services
                 try
                 {
                     var orderResult = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-                    orderResult.OrderStatusId = (int)PaymentStatusUtil.PaymentStatus.Cancelled;
+                    orderResult.OrderStatusId = (int)Enums.PaymentStatus.Cancelled;
                     _repo.Update(orderResult);
                     _repo.SaveChanges();
                 }

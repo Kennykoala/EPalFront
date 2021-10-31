@@ -6,9 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
-namespace Build_School_Project_No_4.Services
+namespace Build_School_Project_No_4.Utilities
 {
-    public class GetCustomerIdService
+    public class MemberUtil
     {
         public static string GetMemberId()
         {

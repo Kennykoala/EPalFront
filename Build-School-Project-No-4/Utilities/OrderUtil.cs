@@ -8,10 +8,10 @@ using Build_School_Project_No_4.ViewModels;
 
 namespace Build_School_Project_No_4.Utilities
 {
-    public class OrderUtility
+    public class OrderUtil
     {
         private readonly Repository _repo;
-        public OrderUtility()
+        public OrderUtil()
         {
             _repo = new Repository();
         }

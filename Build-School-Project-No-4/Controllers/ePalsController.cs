@@ -2,7 +2,7 @@
 using Build_School_Project_No_4.Services;
 using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.DataModels;
-
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Controllers
 {
@@ -13,7 +13,6 @@ namespace Build_School_Project_No_4.Controllers
         private readonly DetailServices _detailService;
         private readonly AddToCartService _cartService;
         private readonly CheckoutService _checkoutService;
-        private readonly GetCustomerIdService _custIdService;
 
         public ePalsController()
         {
@@ -22,7 +21,6 @@ namespace Build_School_Project_No_4.Controllers
             _ctx = new EPalContext();
             _cartService = new AddToCartService();
             _checkoutService = new CheckoutService();
-            _custIdService = new GetCustomerIdService();
         }
 
         public ActionResult ePal(int? id)
@@ -76,7 +74,7 @@ namespace Build_School_Project_No_4.Controllers
         {
 
             string currentUrl = Request.Url.AbsoluteUri;
-            if (GetCustomerIdService.GetMemberId() == null)
+            if (MemberUtil.GetMemberId() == null)
             {
                 return Redirect(currentUrl);
             }
@@ -100,8 +98,7 @@ namespace Build_School_Project_No_4.Controllers
         {
             if (confirmation == null)
             {
-                //fixthisshit
-                return Content("Order not found!");
+                return RedirectToAction("ePal");
             }
             var checkoutVM = _checkoutService.GetCheckoutDetails(confirmation);
             return View(checkoutVM);
