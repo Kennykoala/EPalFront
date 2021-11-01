@@ -294,8 +294,8 @@
                     //start button
                     let startbtn = document.createElement('button')
                     startbtn.innerText = 'Start'
-                    //startbtn.disabled = true;
                     startbtn.setAttribute('class', 'startbutton')
+                    startbtn.disabled = true;
                     x.childNodes[3].children[4].appendChild(startbtn)
                     //console.log(x.childNodes[3])
 
@@ -319,6 +319,7 @@
             })
 
             order.forEach(item => {
+
                 //start button
                 item.children[1].children[4].childNodes[0].addEventListener("click", function () {
                     let orderid = item.children[0].children[0].innerText;
@@ -328,7 +329,7 @@
                     });
 
                     $.ajax({
-                        url: "/Order/UpdatePurchasedStstus",
+                        url: "/Order/UpdatePurchasedStatus",
                         type: "Post",
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',
@@ -344,15 +345,15 @@
                             //    //dangerMode: true
                             //});
 
-                            if ((item.children[0].children[2].value == 3)) {
-                                item.children[1].children[4].childNodes[0].disabled = true;
-                                item.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
-                                //x.children[1].children[4].childNodes[0].disabled = true;
-                                //x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
-                            } else if ((item.children[0].children[2].value == 4)) {
-                                item.children[1].children[4].childNodes[0].disabled = false;
-                                item.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
-                            }
+                            //if ((item.children[0].children[2].value == 3)) {
+                            //    item.children[1].children[4].childNodes[0].disabled = false;
+                            //    item.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                            //    //x.children[1].children[4].childNodes[0].disabled = true;
+                            //    //x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
+                            //} else if ((item.children[0].children[2].value == 4)) {
+                            //    item.children[1].children[4].childNodes[0].disabled = false;
+                            //    item.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                            //}
 
 
 
@@ -382,7 +383,7 @@
                     });
 
                     $.ajax({
-                        url: "/Order/UpdatePurchasedStstus",
+                        url: "/Order/UpdatePurchasedStatus",
                         type: "Post",
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',
@@ -426,14 +427,14 @@
                 if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Started') {
                     let btn = document.createElement('button')
                     btn.innerText = 'Finish'
-                    btn.disabled = true;
                     btn.setAttribute('class', 'finishbtn')
+                    btn.disabled = true;
                     x.childNodes[3].appendChild(btn)
                     //console.log(x.childNodes[3])
                 }
 
                 //和created status都是4或5，button才開啟
-                if ((x.children[0].children[2].value != 4) || (x.children[0].children[2].value != 5)) {
+                if ((x.children[0].children[2].value == 4) || (x.children[0].children[2].value == 5)) {
                     x.children[1].children[4].disabled = false;
                     x.children[1].children[4].setAttribute('style', 'background-color:rgb(112, 65, 230);');
 
@@ -454,7 +455,7 @@
                     });
 
                     $.ajax({
-                        url: "/Order/UpdatePurchasedStstus",
+                        url: "/Order/UpdatePurchasedStatus",
                         type: "Post",
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',
