@@ -66,25 +66,13 @@ namespace Build_School_Project_No_4.Controllers
             var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
             var mems = mem.MemberId;
 
-            //Orders cusid = _ctx.Orders.Find(id);
-
-            //if (mems == cusid.CustomerId)
-
                 if (!id.HasValue)
                 {
                     return RedirectToAction("PurchasedOrderSummary", "Order", new { id = 1 });
                 }
-                //if (!id.HasValue)
-                //{
-                //    return RedirectToAction("Index");
-                //}
+
                 var order = new OrderService();
                 var PurchasedOrderInfo = order.GetOrderCardData(id.Value, mems);
-                // var ordercards = _orderService.GetOrderCardData(id.Value);
-                //GroupViewModel result = new GroupViewModel
-                //{
-                //    Order = abc
-                //};
             
                 return View(PurchasedOrderInfo);       
 
@@ -96,49 +84,19 @@ namespace Build_School_Project_No_4.Controllers
 
             var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
             var mems = mem.MemberId;
-            //Orders cusid = _ctx.Orders.Find(id);
-            //if (mems == cusid.CustomerId)
+
             if (!id.HasValue)
             {
                 return RedirectToAction("CreatedOrderSummary", "Order", new { id = 1 });
             }
-            //if (!id.HasValue)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+
             var order = new OrderService();
-            var abc = order.GetCreatedOrderCardData(id.Value, mems);
-            // var ordercards = _orderService.GetOrderCardData(id.Value);
-            //GroupViewModel result = new GroupViewModel
-            //{
-            //    Order = abc
-            //};
-            return View(abc);
+            var CreatedOrderInfo = order.GetCreatedOrderCardData(id.Value, mems);
+
+            return View(CreatedOrderInfo);
 
         }
-        //public ActionResult Edit(int CustomerId,int ProductId,int Quantity,
-        //    decimal UnitPrice,decimal Discount,DateTime OrderDate,DateTime DesiredStartTime,
-        //    DateTime GameEndDateTime,int OrderStatusId,string OrderConfirmation ,DateTime GamestartTime,int OrderStatusIdCreator)
-        //{
 
-        //    EPalContext db = new EPalContext();
-
-        //    var model = db.Orders.Where(m => m.OrderStatusId == OrderStatusId).FirstOrDefault();
-        //    model.CustomerId = CustomerId;
-        //    model.ProductId = ProductId;
-        //    model.Quantity = Quantity;
-        //    model.UnitPrice = UnitPrice;
-        //    model.Discount = Discount;
-        //    model.OrderDate = OrderDate;
-        //    model.DesiredStartTime = DesiredStartTime;
-        //    model.GameEndDateTime = GameEndDateTime;
-        //    model.OrderStatusId = OrderStatusId;
-        //    model.OrderConfirmation = OrderConfirmation;
-        //    model.GameStartTime = GamestartTime;
-                      
-        //    db.SaveChanges();
-        //    return View(model);
-        //}
 
         [HttpPost]
         public ActionResult UpdatePurchasedStstus(OrderViewModel order)        
@@ -156,13 +114,12 @@ namespace Build_School_Project_No_4.Controllers
                     orderinfo.OrderStatusId = order.OrderStatusId;
                     _ctx.SaveChanges();
                     tran.Commit();
-                    //msg = "OK";
                     return Json(true);
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    return Content("更新linestatus失敗:" + ex.ToString());
+                    return Json(false);
                 }
             }
          }
@@ -185,13 +142,11 @@ namespace Build_School_Project_No_4.Controllers
                     orderinfo.OrderStatusIdCreator = order.OrderStatusIdCreator;
                     _ctx.SaveChanges();
                     tran.Commit();
-                    //msg = "OK";
                     return Json(true);
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    //return Content("更新linestatus失敗:" + ex.ToString());
                     return Json(false);
                 }
             }
