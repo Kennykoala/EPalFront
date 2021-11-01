@@ -66,6 +66,27 @@
 </div>
 
 
+@section endJS{
+
+            @if (TempData["message"] != null)
+    {
+<script type="text/javascript">
+            window.onload = function () {
+                //alert("OK");
+                swal.fire({
+                    title: "Create Game Success",
+                    icon: "success",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+                //window.location.href = '/'
+            }
+</script>
+}
+
+}
+
 @section topCSS{
     <style>
         body {

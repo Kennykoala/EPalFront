@@ -330,51 +330,24 @@ namespace Build_School_Project_No_4.Controllers
                             _ctx.SaveChanges();
                         }
 
-
-
-
-                        ////plan
-                        //var planItem1 = registerVM.addgame.GameAvailableDay1;
-                        //var planItems1 = registerVM.addgame.GameStartTime1;
-                        //var planIteme1 = registerVM.addgame.GameEndTime1;
-                        //_ctx.ProductPositions.Add(positionDB);
-                        //_ctx.SaveChanges();
-
-                        //var planItem2 = registerVM.addgame.GameAvailableDay2;
-                        //var planItems2 = registerVM.addgame.GameStartTime2;
-                        //var planIteme2 = registerVM.addgame.GameEndTime2;
-
-
-
-                        ////plan(test)
-                        //List<ProductPlanSet> planset = new List<ProductPlanSet>();
-                        //ProductPlan planDB = new ProductPlan();
-                        //var planItem = registerVM.addgame.planset[0].GameAvailableDay;
-                        //var planItems = registerVM.addgame.planset[0].GameStartTime;
-                        //var planIteme = registerVM.addgame.planset[0].GameEndTime;
-
-                        //var planItem2 = registerVM.addgame.planset[1].GameAvailableDay;
-                        //var planItems2 = registerVM.addgame.planset[1].GameStartTime;
-                        //var planIteme2 = registerVM.addgame.planset[1].GameEndTime;
-
                         tran.Commit();
+                        //Response.Write("<script language=javascript>alert('123');</" + "script>");
+                        TempData["message"] = "success";
+                        return RedirectToAction("BecomeEPalPage", "becomeepal");
 
-                    //ViewData["Message"] = "使用者儲存成功";
-                    //return Content("創建商品成功");
+                        //string script = "window.onload = function () {swal.fire({title: 'Create Game Success', icon: 'success'}); }";
+                        //return JavaScript(script);
 
-                    TempData["message"] = "創建商品成功";
-                    return RedirectToAction("BecomeEPalPage", "becomeepal");
-
-
-                    //string script = "window.onload = function () {swal.fire({title: 'Create Game Success', icon: 'success'}); }";
-                    //return JavaScript(script);
-
-                }
+                    }
                     catch (Exception ex)
                     {
                         tran.Rollback();
-                        return Content("創建商品失敗:" + ex.ToString());
+                        TempData["msg"] = "fail";
+                        return RedirectToAction("BecomeEPalPage", "becomeepal");
+
+                        //return Content("創建商品失敗:" + ex.ToString());
                     }
+
                 }
 
         }
