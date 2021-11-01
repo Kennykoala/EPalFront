@@ -37,6 +37,10 @@
                     <div>Quantity/OrderTime</div>
                     <div>Total Price </div>
                     <div class="options">Options</div>
+                    @if (Model.Title == "Not Started" || Model.Title == "Started")
+                    {
+                        <div>Status </div>
+                    }
                 </div>
                 <div class="cards-list-mobile">
                     <div class="order-card">
@@ -80,6 +84,10 @@
                             <div class="card-info greyish">
                                 <div class="order-id">@Html.DisplayFor(x => m.OrderId)</div>
                                 <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
+
+                                @*判斷OrderStatusIdCreator是否和OrderStatusId一樣*@
+                                @Html.HiddenFor(x=>m.OrderStatusId)
+
                             </div>
                             <div class="card-body">
                                 <a href="#">
@@ -259,58 +267,411 @@
 
 
     <script>
+
         let order = document.querySelectorAll('.order-card-lg')
-        order.forEach(x => {
-            console.log(x.childNodes);
-            if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
-                let btn = document.createElement('button')
-                btn.innerText = 'Start'
-                x.childNodes[3].appendChild(btn)
-                console.log(x.childNodes[3])
-            }
-        })
-        order.forEach(item => {
+        let orderstatus = document.querySelector('.status')
 
-            item.children[1].children[4].addEventListener("click", function () {
-                let orderid = item.children[0].children[0].innerText;
 
-                var orderdata = JSON.stringify({
-                    OrderStatusIdCreator: 4,
-                    OrderId: `${orderid}`
-                });
+        if (orderstatus.innerText == "Not Started") {
 
-                $.ajax({
-                    url: "/Order/UpdateCreatorNotStarted",
-                    type: "Post",
-                    data: orderdata,
-                    contentType: 'application/json; charset=utf-8',
-                    async: true,
-                    success: function (data) {
-                        //data = JSON.toString(data);
-                        console.log(data)
+            order.forEach(x => {
+                //console.log(x.childNodes);
+                if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
+                    //button div
+                    let btndiv = document.createElement('div')
+                    btndiv.setAttribute('class', 'order-status')
+                    x.childNodes[3].appendChild(btndiv)
 
-                        //swal.fire({
-                        //    title: "Update Success",
-                        //    icon: "success",
-                        //    //buttons: true,
-                        //    //dangerMode: true
-                        //});
+                    //start button
+                    let startbtn = document.createElement('button')
+                    startbtn.innerText = 'Start'
+                    startbtn.setAttribute('class', 'startbutton')
+                    startbtn.setAttribute('style', 'margin-right:10px')
+                    x.childNodes[3].children[4].appendChild(startbtn)
+                    //console.log(x.childNodes[3])
 
-                        if (data == true) {
-                            //document.querySelectorAll('.order-card-lg')[0].style.display = "none";
-                            //item.children[1].children[4].style.display = "none";
-                            window.location.href = '/Order/CreatedOrderSummary/4';
-                        }
+                    //delete button
+                    let deletebtn = document.createElement('button')
+                    deletebtn.innerText = 'Delete'
+                    deletebtn.setAttribute('class', 'deletebtn')
+                    x.childNodes[3].children[4].appendChild(deletebtn)
 
-                    },
-                    error: function (err) {
-                        console.log(err)
-                    }
-                });
+                }
+
+
+                console.log(x);
+                //和created status都是3，button才開啟
+                if (x.children[0].children[2].value != 3) {
+                    x.children[1].children[4].childNodes[0].disabled = true;
+                }
 
             })
-        })
 
+            order.forEach(item => {
+                //start button
+                item.children[1].children[4].childNodes[0].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+                    var orderdata = JSON.stringify({
+                        OrderStatusIdCreator: 4,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdateCreatorNotStarted",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (data) {
+                            //data = JSON.toString(data);
+                            console.log(data)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (data == true) {
+
+                                window.location.href = '/Order/CreatedOrderSummary/4';
+                            }
+
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/CreatedOrderSummary/3';
+                            }
+                        }
+                    });
+                })
+
+
+                //delete button
+                item.children[1].children[4].childNodes[1].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+                    var orderdata = JSON.stringify({
+                        OrderStatusIdCreator: 6,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdateCreatorNotStarted",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (res) {
+                            //data = JSON.toString(data);
+                            console.log(res)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (res == true) {
+
+                                window.location.href = '/Order/CreatedOrderSummary/6';
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/CreatedOrderSummary/3';
+                            }
+                        }
+                    });
+                })
+
+            })
+
+
+        }
+        else if (orderstatus.innerText == "Started") {
+
+            order.forEach(x => {
+                //console.log(x.childNodes);
+                if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Started') {
+                    let btn = document.createElement('button')
+                    btn.innerText = 'Finish'
+                    x.childNodes[3].appendChild(btn)
+                    //console.log(x.childNodes[3])
+                }
+
+                //和created status都是4，button才開啟
+                if (x.children[0].children[2].value != 4) {
+                    x.children[1].children[4].disabled = true;
+                }
+
+            })
+            order.forEach(item => {
+
+                //finish button
+                item.children[1].children[4].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+
+                    var orderdata = JSON.stringify({
+                        OrderStatusIdCreator: 5,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdateCreatorNotStarted",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (res) {
+                            //data = JSON.toString(data);
+                            console.log(res)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (res == true) {
+
+                                window.location.href = '/Order/CreatedOrderSummary/5';
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/CreatedOrderSummary/4';
+                            }
+                        }
+                    });
+
+                })
+            })
+
+
+        }
+
+
+
+        //let order = document.querySelectorAll('.order-card-lg')
+        //let orderstatus = document.querySelector('.status')
+
+        //if (orderstatus.innerText == "Not Started") {
+        //    order.forEach(x => {
+        //        //console.log(x.childNodes);
+        //        if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
+        //            //button div
+        //            let btndiv = document.createElement('div')
+        //            btndiv.setAttribute('class', 'order-status')
+        //            x.childNodes[3].appendChild(btndiv)
+
+        //            //start button
+        //            let startbtn = document.createElement('button')
+        //            startbtn.innerText = 'Start'
+        //            startbtn.setAttribute('class', 'startbutton')
+        //            startbtn.setAttribute('style', 'margin-right:10px')
+        //            x.childNodes[3].children[4].appendChild(startbtn)
+        //            //console.log(x.childNodes[3])
+
+        //            //delete button
+        //            let deletebtn = document.createElement('button')
+        //            deletebtn.innerText = 'Delete'
+        //            deletebtn.setAttribute('class', 'deletebtn')
+        //            x.childNodes[3].children[4].appendChild(deletebtn)
+
+        //        }
+
+        //        //和created status都是3，button才開啟
+        //        if (x.children[0].children[2].value != 3) {
+        //            x.children[1].children[4].childNodes[0].disabled = true;
+        //        }
+
+        //    })
+
+            //order.forEach(x => {
+            //    console.log(x.childNodes);
+            //    if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
+            //        //let btn = document.createElement('button')
+                  
+            //        let btndiv = document.createElement('div')
+            //        btndiv.setAttribute('class', 'order-status')
+            //        x.childNodes[3].appendChild(btndiv)
+
+            //        //start button
+            //        let startbtn = document.createElement('button')
+            //        startbtn.innerText = 'Start'
+            //        startbtn.setAttribute('class', 'startbutton')
+            //        startbtn.setAttribute('style', 'margin-right:10px')
+            //        x.childNodes[3].children[4].appendChild(startbtn)
+            //        //console.log(x.childNodes[3])
+
+            //        //delete button
+            //        let deletebtn = document.createElement('button')
+            //        deletebtn.innerText = 'Delete'
+            //        deletebtn.setAttribute('class', 'deletebtn')
+            //        x.childNodes[3].children[4].appendChild(deletebtn)
+
+
+            //    }
+            //    //和created status都是3，button才開啟
+            //    //if (x.children[0].children[2].value != 3) {
+            //    //    x.children[1].children[4].childNodes[0].disabled = true;
+            //    //}
+            //})
+        //    order.forEach(item => {
+
+        //        item.children[1].children[4].addEventListener("click", function () {
+        //            let orderid = item.children[0].children[0].innerText;
+
+        //            var orderdata = JSON.stringify({
+        //                OrderStatusIdCreator: 4,
+        //                OrderId: `${orderid}`
+        //            });
+
+        //            $.ajax({
+        //                url: "/Order/UpdateCreatorNotStarted",
+        //                type: "Post",
+        //                data: orderdata,
+        //                contentType: 'application/json; charset=utf-8',
+        //                async: true,
+        //                success: function (data) {
+        //                    //data = JSON.toString(data);
+        //                    console.log(data)
+
+        //                    //swal.fire({
+        //                    //    title: "Update Success",
+        //                    //    icon: "success",
+        //                    //    //buttons: true,
+        //                    //    //dangerMode: true
+        //                    //});
+
+        //                    if (data == true) {
+        //                        //document.querySelectorAll('.order-card-lg')[0].style.display = "none";
+        //                        //item.children[1].children[4].style.display = "none";
+        //                        window.location.href = '/Order/CreatedOrderSummary/4';
+        //                    }
+
+        //                },
+        //                error: function (err) {
+        //                    console.log(err)
+        //                }
+        //            });
+
+        //        })
+
+        //        item.children[1].children[4].childNodes[1].addEventListener("click", function () {
+        //            let orderid = item.children[0].children[0].innerText;
+        //            var orderdata = JSON.stringify({
+        //                OrderStatusIdCreator: 6,
+        //                OrderId: `${orderid}`
+        //            });
+
+        //            $.ajax({
+        //                url: "/Order/UpdateCreatorNotStarted",
+        //                type: "Post",
+        //                data: orderdata,
+        //                contentType: 'application/json; charset=utf-8',
+        //                async: true,
+        //                success: function (res) {
+        //                    //data = JSON.toString(data);
+        //                    console.log(res)
+
+        //                    //swal.fire({
+        //                    //    title: "Update Success",
+        //                    //    icon: "success",
+        //                    //    //buttons: true,
+        //                    //    //dangerMode: true
+        //                    //});
+
+        //                    if (res == true) {
+
+        //                        window.location.href = '/Order/CreatedOrderSummary/6';
+        //                    }
+        //                },
+        //                error: function (err) {
+        //                    console.log(err)
+        //                    if (err == false) {
+
+        //                        window.location.href = '/Order/CreatedOrderSummary/3';
+        //                    }
+        //                }
+        //            });
+        //        })
+        //    })
+        //}
+
+        //else if (orderstatus.innerText == "Started") {
+
+        //    order.forEach(x => {
+        //        //console.log(x.childNodes);
+        //        if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Started') {
+        //            let btn = document.createElement('button')
+        //            btn.innerText = 'Finish'
+        //            x.childNodes[3].appendChild(btn)
+        //            //console.log(x.childNodes[3])
+        //        }
+
+        //        //和created status都是4，button才開啟
+        //        if (x.children[0].children[2].value != 4) {
+        //            x.children[1].children[4].disabled = true;
+        //        }
+
+        //    })
+        //    order.forEach(item => {
+
+        //        //finish button
+        //        item.children[1].children[4].addEventListener("click", function () {
+        //            let orderid = item.children[0].children[0].innerText;
+
+        //            var orderdata = JSON.stringify({
+        //                OrderStatusIdCreator: 5,
+        //                OrderId: `${orderid}`
+        //            });
+
+        //            $.ajax({
+        //                url: "/Order/UpdateCreatorNotStarted",
+        //                type: "Post",
+        //                data: orderdata,
+        //                contentType: 'application/json; charset=utf-8',
+        //                async: true,
+        //                success: function (res) {
+        //                    //data = JSON.toString(data);
+        //                    console.log(res)
+
+        //                    //swal.fire({
+        //                    //    title: "Update Success",
+        //                    //    icon: "success",
+        //                    //    //buttons: true,
+        //                    //    //dangerMode: true
+        //                    //});
+
+        //                    if (res == true) {
+
+        //                        window.location.href = '/Order/CreatedOrderSummary/5';
+        //                    }
+        //                },
+        //                error: function (err) {
+        //                    console.log(err)
+        //                    if (err == false) {
+
+        //                        window.location.href = '/Order/CreatedOrderSummary/4';
+        //                    }
+        //                }
+        //            });
+
+        //        })
+        //    })
+
+
+        //}
 
     </script>
 

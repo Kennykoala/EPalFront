@@ -108,7 +108,9 @@ namespace Build_School_Project_No_4.Services
                 GameName = c.Products.GameCategories.GameName,
                 MemberName = c.Members.MemberName,
                 //ProfilePicture=o.Members.ProfilePicture
-                ProfilePicture = c.Members.ProfilePicture
+                ProfilePicture = c.Members.ProfilePicture,
+
+                OrderStatusId = c.OrderStatusId
 
             }).ToList();
 

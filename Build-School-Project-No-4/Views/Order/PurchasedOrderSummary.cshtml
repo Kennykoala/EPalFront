@@ -284,7 +284,7 @@
         if (orderstatus.innerText == "Not Started") {
 
             order.forEach(x => {
-                //console.log(x.childNodes);
+                console.log(x.childNodes);
                 if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
                     //button div
                     let btndiv = document.createElement('div')
@@ -306,7 +306,7 @@
                     x.childNodes[3].children[4].appendChild(deletebtn)
 
                 }
-
+                console.log(x.children);
                 //和created status都是3，button才開啟
                 if (x.children[0].children[2].value != 3) {
                     x.children[1].children[4].childNodes[0].disabled = true;
