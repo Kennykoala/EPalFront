@@ -295,9 +295,12 @@
                     let startbtn = document.createElement('button')
                     startbtn.innerText = 'Start'
                     startbtn.setAttribute('class', 'startbutton')
-                    startbtn.setAttribute('style', 'margin-right:10px')
-                    startbtn.setAttribute('style', 'backgroundColor:#7041E6')
-                    startbtn.setAttribute('style', 'color: white;')
+                    //startbtn.setAttribute('style', 'margin-right:10px')
+                    //startbtn.setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                    //startbtn.setAttribute('style', 'color: white;')
+                    //startbtn.setAttribute('style', 'border-radius: 50px;')
+
+
                     x.childNodes[3].children[4].appendChild(startbtn)
                     //console.log(x.childNodes[3])
 
@@ -312,7 +315,11 @@
                 //和created status都是3，button才開啟
                 if (x.children[0].children[2].value != 3) {
                     x.children[1].children[4].childNodes[0].disabled = true;
-                }  
+                    x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
+                }
+                else {
+                    //startbtn.setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                }
 
             })
 
@@ -412,6 +419,7 @@
                 if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Started') {
                     let btn = document.createElement('button')
                     btn.innerText = 'Finish'
+                    btn.setAttribute('class', 'finishbtn')
                     x.childNodes[3].appendChild(btn)
                     //console.log(x.childNodes[3])
                 }
@@ -419,6 +427,7 @@
                 //和created status都是4，button才開啟
                 if (x.children[0].children[2].value != 4) {
                     x.children[1].children[4].disabled = true;
+                    x.children[1].children[4].setAttribute('style', 'background-color:#6A6973;');
                 }             
 
             })
