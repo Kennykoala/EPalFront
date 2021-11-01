@@ -17,12 +17,14 @@ namespace Build_School_Project_No_4.Services
         private readonly Repository _repo;
         private readonly LinePayViewModel _linePayVM;
         private readonly OrderUtil _orderUtil;
+        private readonly CheckoutService _checkoutService;
 
         public LinePayService()
         {
             _repo = new Repository();
             _linePayVM = new LinePayViewModel();
             _orderUtil = new OrderUtil();
+            _checkoutService = new CheckoutService();
         }
         private static string baseUri = "https://sandbox-api-pay.line.me";
         private static string channelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
@@ -57,34 +59,14 @@ namespace Build_School_Project_No_4.Services
                 return Convert.ToBase64String(hashmessage);
             }
         }
-        public static string HashLinePayConfirmRequest(string orderId, string body, string apiurl)
-        {
-            //string apiurl = "/v3/payments/request";
-            var nonce = Utilities.PaymentUtil.CreateTransactionUID(customerId);
-            var request = channelSecret + apiurl + body + nonce;
 
-            var key = channelSecret ?? "";
-            var encoding = new System.Text.UTF8Encoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            byte[] messageBytes = encoding.GetBytes(request);
-            using (var hmacsha256 = new HMACSHA256(keyByte))
-            {
-                byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
-                return Convert.ToBase64String(hashmessage);
-            }
-        }
         public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
         {
-            //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted";
+            //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted"ttpContext.Current.Request.Url.Scheme ;
             //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted/";
-            var redirectUrl = "https://localhost:44322/checkout/PaymentWithLinePay?";
-
+            var redirectUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/Success";
             //var redirectUrl = HttpContext.Current.Request.Url.Host + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
             var order = _orderUtil.GetOrder(confirmation);
-            var orders = _repo.GetAll<Orders>();
-            var members = _repo.GetAll<Members>();
-            var products = _repo.GetAll<Products>();
-            var gameCat = _repo.GetAll<GameCategories>();
             var linePayRequest = new LinePayViewModel.LinePayRequest
             {
                 amount = (int)Math.Round(order.UnitPrice * order.Rounds, 0),
@@ -119,32 +101,27 @@ namespace Build_School_Project_No_4.Services
 
         public async Task<string> RequestApiPost(string confirmation)
         {
-            //var linepayapi = "test";
             using (var client = new HttpClient())
             {
                 var requestBody = LinePayCreateOrder(confirmation);
                 var body = JsonConvert.SerializeObject(requestBody);
                 string apiurl = "/v3/payments/request";
-                var baseUri = "https://sandbox-api-pay.line.me";
-                string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-                string ChannelId = "1656554768";
                 var customerId = MemberUtil.GetMemberId();
                 var nonce = Utilities.PaymentUtil.CreateTransactionUID(customerId);
+                _checkoutService.CreateTransaction(confirmation, (int)Enums.PaymentType.LinePay, nonce);
                 string Signature = HashLinePayRequest(channelSecret, apiurl, body, nonce, channelSecret);
 
-                client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-                client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-                client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
+                client.BaseAddress = new Uri(baseUri);
+                client.DefaultRequestHeaders.Add("X-LINE-ChannelId", channelId);
+                client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", channelSecret);
                 client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
                 client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(baseUri + apiurl, content);
                 var result = response.Content.ReadAsStringAsync().Result;
                 var paymentUrl = (JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).Info.paymentUrl.web);
-
                 return paymentUrl;
             }
-
         }
 
         public int GetOrderTotal(string confirmation)
@@ -165,15 +142,12 @@ namespace Build_School_Project_No_4.Services
                 };
                 var body = JsonConvert.SerializeObject(requestbody);
                 string apiurl = $"/v3/payments/{transactionId}/confirm";
-                var baseUri = "https://sandbox-api-pay.line.me";
-                string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-                string ChannelId = "1656554768";
-                var nonce = Utilities.PaymentUtil.CreateTransactionUID("1");
-                string Signature = LinePayService.HashLinePayRequest(ChannelSecret, apiurl, body, nonce, ChannelSecret);
+                var nonce = Utilities.PaymentUtil.CreateTransactionUID(customerId);
+                string Signature = LinePayService.HashLinePayRequest(channelSecret, apiurl, body, nonce, channelSecret);
 
-                client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-                client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-                client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
+                client.BaseAddress = new Uri(baseUri);
+                client.DefaultRequestHeaders.Add("X-LINE-ChannelId", channelId);
+                client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", channelSecret);
                 client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
                 client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
 
@@ -184,7 +158,7 @@ namespace Build_School_Project_No_4.Services
                 {
                     return Enums.PayAttempt.Success.ToString();
                 }
-                return Enums.PayAttempt.Failed.ToString(); ;
+                return Enums.PayAttempt.Failed.ToString();
             }
         }
     }

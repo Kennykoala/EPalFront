@@ -22,7 +22,6 @@ namespace Build_School_Project_No_4.Controllers
             _cartService = new AddToCartService();
             _checkoutService = new CheckoutService();
         }
-
         public ActionResult ePal(int? id)
         {
             if (!id.HasValue)
@@ -30,41 +29,21 @@ namespace Build_School_Project_No_4.Controllers
                 return RedirectToAction("ePal", "ePals", new { id = 1 });
             }
             var GamesDeatils = _productService.GetGamesAllAndDeatils(id.Value);
-
-           
             return View("ePal", GamesDeatils);
         }
-
         public ActionResult GamesJson(int id)
         {
             ViewBag.ProductCard = _productService.GetProductCardsJson(id);
 
             return View();
         }
-
-        /// <summary>
-        /// Sonias shit don't touch
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult NotFound()
-        {
-            return View();
-        }
         [HttpGet]
         public ActionResult Detail(int? id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Index");
-            }
             var playerListing = _detailService.FindPlayerListing(id);
-            if (playerListing == null)
+            if (id == null || playerListing == null)
             {
-                return RedirectToAction("NotFound");
+                return RedirectToAction("Detail", new { id = 1 });
             }
             return View(playerListing);
         }
@@ -111,7 +90,8 @@ namespace Build_School_Project_No_4.Controllers
             bool canCheckout = _checkoutService.ValidCheckoutTime(confirmation);
             int ePalId = _checkoutService.GetPlayerIdFromConfirmation(confirmation).ProductId;
             int id = ePalId;
-            if (canCheckout == false)
+            int orderStatus = _checkoutService.GetOrderStatus(confirmation);
+            if (canCheckout == false || orderStatus != (int)Enums.PaymentStatus.Unpaid)
             {
                 return RedirectToAction("Detail", new { id = id});
             }

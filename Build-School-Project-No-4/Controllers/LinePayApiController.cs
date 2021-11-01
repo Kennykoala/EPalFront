@@ -58,7 +58,6 @@ namespace Build_School_Project_No_4.Controllers
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(baseUri + apiurl, content);
                 var result = await response.Content.ReadAsStringAsync();
-                int i = 0;
 
 
 

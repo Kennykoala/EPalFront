@@ -18,8 +18,8 @@ namespace Build_School_Project_No_4.Utilities
         }
         public enum PaymentType
         {
-            PayPal = 1,
-            LinePay = 2
+            PayPal,
+            LinePay
         }
         public enum PayAttempt
         {

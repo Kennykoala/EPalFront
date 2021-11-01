@@ -13,9 +13,11 @@ namespace Build_School_Project_No_4.Services
 
         private PayPal.Api.Payment payment;
         private readonly OrderUtil _orderUtil;
+        private readonly CheckoutService _checkoutService;
         public PaypalService()
         {
             _orderUtil = new OrderUtil();
+            _checkoutService = new CheckoutService();
         }
 
         public Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
@@ -33,7 +35,9 @@ namespace Build_School_Project_No_4.Services
         public Payment CreatePayment(APIContext apiContext, string redirectUrl, string confirmation)
         {
             var order = _orderUtil.GetOrder(confirmation);
-
+            var customerId = MemberUtil.GetMemberId();
+            var orderUID = Utilities.PaymentUtil.CreateTransactionUID(customerId);
+            _checkoutService.CreateTransaction(confirmation, (int)Enums.PaymentType.PayPal, orderUID);
             var itemList = new ItemList()
             {
                 items = new List<Item>()
@@ -65,11 +69,10 @@ namespace Build_School_Project_No_4.Services
                 details = details
             };
             var transactionList = new List<Transaction>();
-            var customerId = MemberUtil.GetMemberId();
             transactionList.Add(new Transaction()
             {
                 description = $"Order ID: {confirmation}",
-                invoice_number = Utilities.PaymentUtil.CreateTransactionUID(customerId),
+                invoice_number = orderUID,
                 amount = amount,
                 item_list = itemList
             });
@@ -101,20 +104,5 @@ namespace Build_School_Project_No_4.Services
             HttpContext.Current.Session.Add(guid, createdPayment.id);
             return paypalRedirectUrl;
         }
-
-        //public string CheckPayApproval(APIContext apiContext, string payerId)
-        //{
-        //    var guid = HttpContext.Current.Request.Params["guid"];
-
-        //    var executedPayment = ExecutePayment(apiContext, payerId, HttpContext.Current.Session[guid] as string);
-        //    var trId = executedPayment.transactions[0].related_resources[0].sale.id;
-        //    if (executedPayment.state.ToLower() != PaymentStatus.approved.ToString())
-        //    {
-        //        return PaymentStatus.failed.ToString();
-        //    }
-        //}
-            
-
-
     }
 }

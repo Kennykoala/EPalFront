@@ -17,8 +17,7 @@ namespace Build_School_Project_No_4.Services
 
         public Orders CreateUnpaidOrder(AddToCartViewModel AddCartVM, string startTime, int id)
         {
-            var timeNow = DateTime.Now;
-            var utcTimeNow = timeNow.ToUniversalTime();
+            var utcTimeNow = DateTime.Now.ToUniversalTime();
             var timestamp = PaymentUtil.UtcDateTimeToUnix(utcTimeNow);
             var customerId = Int32.Parse(MemberUtil.GetMemberId());
             var orderId = $"X-{customerId}{timestamp}";
@@ -31,7 +30,9 @@ namespace Build_School_Project_No_4.Services
                 OrderDate = utcTimeNow,
                 DesiredStartTime = Convert.ToDateTime(startTime),
                 OrderStatusId = (int)Enums.PaymentStatus.Unpaid,
+                OrderStatusIdCreator = (int)Enums.PaymentStatus.Unpaid,
                 OrderConfirmation = orderId
+                
             };
             return order;
         }
@@ -42,20 +43,14 @@ namespace Build_School_Project_No_4.Services
             {
                 _repo.Create(unpaid);
                 _repo.SaveChanges();
-                //tran.Commit();
                 var confirmation = unpaid.OrderConfirmation;
                 return true;
             }
             catch (Exception ex)
             {
-                //tran.Rollback();
                 var err = ex.ToString();
                 return false;
             }
-            //using (var tran = _repo._context.Database.BeginTransaction())
-            //{
-
-            //}
         }
     }
 }

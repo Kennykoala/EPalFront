@@ -17,8 +17,6 @@ namespace Build_School_Project_No_4.Services
         public DetailViewModel FindPlayerListing(int? id)
         {
             var playerData = new DetailViewModel();
-
-
             var products = _repo.GetAll<Products>();
             var gameInfo = _repo.GetAll<GameCategories>();
             var playerInfo = _repo.GetAll<Members>();
@@ -26,12 +24,10 @@ namespace Build_School_Project_No_4.Services
             var server = _repo.GetAll<Server>();
             var rank = _repo.GetAll<Rank>();
             var lang = _repo.GetAll<Language>();
-
             if (id == null)
             {
                 return null ;
             }
-
             var result = (from p in products
                           join pl in playerInfo on p.CreatorId equals pl.MemberId
                           join g in gameInfo on p.GameCategoryId equals g.GameCategoryId
@@ -55,11 +51,7 @@ namespace Build_School_Project_No_4.Services
                               LanguageName = l.LanguageName,
                               PlayerId = p.ProductId,
                               MobileGameImg = g.GameCoverImgMini
-                              
-
-                              
                           }).FirstOrDefault();
-           
 
             return result;
         }
