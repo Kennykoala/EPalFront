@@ -79,13 +79,14 @@ namespace Build_School_Project_No_4.Controllers
                 //    return RedirectToAction("Index");
                 //}
                 var order = new OrderService();
-                var abc = order.GetOrderCardData(id.Value, mems);
+                var PurchasedOrderInfo = order.GetOrderCardData(id.Value, mems);
                 // var ordercards = _orderService.GetOrderCardData(id.Value);
                 //GroupViewModel result = new GroupViewModel
                 //{
                 //    Order = abc
-                //};          
-                return View(abc);       
+                //};
+            
+                return View(PurchasedOrderInfo);       
 
         }
 
@@ -140,7 +141,7 @@ namespace Build_School_Project_No_4.Controllers
         //}
 
         [HttpPost]
-        public ActionResult UpdateNotStarted(OrderViewModel order)        
+        public ActionResult UpdatePurchasedStstus(OrderViewModel order)        
         {
             //var msg = "";
             using (var tran = _ctx.Database.BeginTransaction())
@@ -190,7 +191,8 @@ namespace Build_School_Project_No_4.Controllers
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    return Content("更新linestatus失敗:" + ex.ToString());
+                    //return Content("更新linestatus失敗:" + ex.ToString());
+                    return Json(false);
                 }
             }
         }

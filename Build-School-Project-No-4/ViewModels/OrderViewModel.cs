@@ -8,8 +8,8 @@ namespace Build_School_Project_No_4.ViewModels
     public class OrderViewModel
     {
         public string Title { get; set; }
-        public int OrderStatusId { get; set; }
-        public int OrderStatusIdCreator { get; set; }
+        public int? OrderStatusId { get; set; }
+        public int? OrderStatusIdCreator { get; set; }
         public int OrderId { get; set; }
 
         public List<OrderCard> OrderCards { get; set; }
@@ -43,6 +43,8 @@ namespace Build_School_Project_No_4.ViewModels
         public string ProfilePicture { get; set; }
         public string MemberName { get; set; }
         public string GameName { get; set; }
+
+        public int? OrderStatusIdCreator { get; set; }
     }
 
 
