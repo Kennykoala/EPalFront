@@ -666,15 +666,8 @@ namespace Build_School_Project_No_4.Controllers
         {
             FormsAuthentication.SignOut();
 
-            //獲取該頁面url的參數資訊
-            string returnURL = Request.Params["HTTP_REFERER"];
-            int index = returnURL.IndexOf('=');
-            returnURL = returnURL.Substring(index + 1);
-            //如果參數為空，則跳轉到首頁，否則切回原頁面
-            if (string.IsNullOrEmpty(returnURL))
-                return Redirect("/Home/HomePage");
-            else
-                return Redirect(returnURL);
+            return Redirect("/Home/HomePage");
+
         }
 
 
@@ -814,30 +807,37 @@ namespace Build_School_Project_No_4.Controllers
                 var member = _MemberService.MemberRigisterData()
                             .Where(m => m.Email == newMember.Email)
                             .FirstOrDefault();
+
+                //完全未註冊過
                 if (member == null)
                 {
                     //將密碼Hash
                     newMember.Password = _MemberService.HashPassword(newMember.Password);
 
-                    //GroupViewModel -> DM
+                    //VM -> DM
                     Members emp = new Members
                     {
                         Email = newMember.Email,
                         Password = newMember.Password,
                         AuthCode = AuthCode,
-                        LineStatusId = 1
+                        LineStatusId = 1,
+                        IsAdmin = true
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
                 }
-                //與第三方登入判斷
+                //已透過第三方登入註冊過
                 else if (member != null && (member.GoogleId !="" || member.FBId != "" || member.LineId != ""))
                 {
-                    //將密碼Hash
-                    newMember.Password = _MemberService.HashPassword(newMember.Password);
-                    member.Password = newMember.Password;
-                    member.AuthCode = AuthCode;
-                    db.SaveChanges();
+
+                    _MemberService.UpdateThirdpartyRegister(newMember, AuthCode);
+
+                    ////將密碼Hash
+                    //newMember.Password = _MemberService.HashPassword(newMember.Password);
+                    //member.Password = newMember.Password;
+                    //member.AuthCode = AuthCode;
+                    //member.IsAdmin = true;                    
+                    //db.SaveChanges();
                 }
                 else
                 {
@@ -899,7 +899,7 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult EmailValidate(string Email, string AuthCode)
         {
             ViewData["EmailValidate"] = _MemberService.EmailValidate(Email, AuthCode);
-            return RedirectToAction("ePal", "ePal");
+            return Redirect("/Home/HomePage");
         }
 
 

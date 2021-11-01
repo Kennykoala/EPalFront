@@ -9,7 +9,6 @@ namespace Build_School_Project_No_4.DataModels
     public partial class Payments
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PaymentId { get; set; }
 
         [Required]
@@ -21,7 +20,6 @@ namespace Build_School_Project_No_4.DataModels
 
         public int PayMethod { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
 
         public virtual Orders Orders { get; set; }
