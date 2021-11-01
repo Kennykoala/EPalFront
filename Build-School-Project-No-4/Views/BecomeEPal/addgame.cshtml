@@ -31,37 +31,6 @@
 
     </div>
 
-    @if (TempData["message"] != null)
-    {
-        <script type="text/javascript">
-            window.onload = function () {
-                swal.fire({
-                    title: "Create Game Success",
-                    icon: "success",
-                    //buttons: true,
-                    //dangerMode: true
-                });
-
-                //window.location.href = '/'
-            }
-        </script>
-    }
-    else if (TempData["msg"] != null)
-    {
-        <script type="text/javascript">
-            window.onload = function () {
-                swal.fire({
-                    title: "Create Game Fail",
-                    icon: "error",
-                    //buttons: true,
-                    //dangerMode: true
-                });
-
-                //window.location.href = '/'
-            }
-        </script>
-    }
-
 </body>
 
 

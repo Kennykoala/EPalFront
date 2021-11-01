@@ -68,9 +68,9 @@
 
 @section endJS{
 
-            @if (TempData["message"] != null)
+    @if (TempData["message"] != null)
     {
-<script type="text/javascript">
+        <script type="text/javascript">
             window.onload = function () {
                 //alert("OK");
                 swal.fire({
@@ -82,8 +82,23 @@
 
                 //window.location.href = '/'
             }
-</script>
-}
+        </script>
+    }
+    else if (TempData["msg"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal.fire({
+                    title: "Create Game Fail",
+                    icon: "error",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+                //window.location.href = '/'
+            }
+        </script>
+    }
 
 }
 

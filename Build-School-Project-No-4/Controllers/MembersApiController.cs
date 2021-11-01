@@ -21,71 +21,98 @@ namespace Build_School_Project_No_4.Controllers
         private EPalContext db = new EPalContext();
 
 
-
-        public IHttpActionResult FollowResult([FromBody] ChillMeetLikeViewModel query)
+        public IHttpActionResult PostAvatar([FromBody] MemberAvatarViewModel Data)
         {
-            //Create
-            var testFollowId = query.FollowingId;
-            var testOwnId = query.UserId;
-            Followings memberFollow = new Followings();
+            Members member = db.Members.First(x => x.MemberId == Data.MemberId);
 
-
-            //Delete
-            Followings RemoveFollow = db.Followings.FirstOrDefault(x => x.FollowingId == query.FollowingId);
-            var isFollow = db.Followings.FirstOrDefault(x => x.FollowingId == query.FollowingId && x.MemberId == query.UserId);
-
-
-
-            if (isFollow == null)
+            using (var tran = db.Database.BeginTransaction())
             {
-                //Create
-                using (var tran = db.Database.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        memberFollow.MemberId = testOwnId;
-                        memberFollow.FollowingId = testFollowId;
-                        db.Followings.Add(memberFollow);
-                        db.SaveChanges();
-                        tran.Commit();
+                    member.ProfilePicture = Data.ProfilePicture;
 
-                        return Ok(memberFollow);
+                    db.SaveChanges();
+                    tran.Commit();
 
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        return StatusCode(HttpStatusCode.NoContent);
-                    }
+                    var msg = "OK";
+                    return Json(msg);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return StatusCode(HttpStatusCode.NoContent);
                 }
             }
-            else
-            {
-                //Delete
-                using (var tran = db.Database.BeginTransaction())
-                {
-                    try
-                    {
-
-                        db.Entry(RemoveFollow).State = EntityState.Deleted;
-                        db.SaveChanges();
-                        tran.Commit();
-
-                        return Ok(RemoveFollow);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        tran.Rollback();
-                        return StatusCode(HttpStatusCode.NoContent);
-
-                    }
-                }
-            }
-
-
 
         }
+
+
+
+
+        //public IHttpActionResult FollowResult([FromBody] ChillMeetLikeViewModel query)
+        //{
+        //    //Create
+        //    var testFollowId = query.FollowingId;
+        //    var testOwnId = query.UserId;
+        //    Followings memberFollow = new Followings();
+
+
+        //    //Delete
+        //    Followings RemoveFollow = db.Followings.FirstOrDefault(x => x.FollowingId == query.FollowingId);
+        //    var isFollow = db.Followings.FirstOrDefault(x => x.FollowingId == query.FollowingId && x.MemberId == query.UserId);
+
+
+
+        //    if (isFollow == null)
+        //    {
+        //        //Create
+        //        using (var tran = db.Database.BeginTransaction())
+        //        {
+        //            try
+        //            {
+        //                memberFollow.MemberId = testOwnId;
+        //                memberFollow.FollowingId = testFollowId;
+        //                db.Followings.Add(memberFollow);
+        //                db.SaveChanges();
+        //                tran.Commit();
+
+        //                return Ok(memberFollow);
+
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                tran.Rollback();
+        //                return StatusCode(HttpStatusCode.NoContent);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Delete
+        //        using (var tran = db.Database.BeginTransaction())
+        //        {
+        //            try
+        //            {
+
+        //                db.Entry(RemoveFollow).State = EntityState.Deleted;
+        //                db.SaveChanges();
+        //                tran.Commit();
+
+        //                return Ok(RemoveFollow);
+
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                tran.Rollback();
+        //                return StatusCode(HttpStatusCode.NoContent);
+
+        //            }
+        //        }
+        //    }
+
+
+
+        //}
 
 
 
