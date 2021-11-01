@@ -2,7 +2,7 @@
 using Build_School_Project_No_4.Services;
 using Build_School_Project_No_4.ViewModels;
 using Build_School_Project_No_4.DataModels;
-
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Controllers
 {
@@ -22,7 +22,6 @@ namespace Build_School_Project_No_4.Controllers
             _cartService = new AddToCartService();
             _checkoutService = new CheckoutService();
         }
-
         public ActionResult ePal(int? id)
         {
             if (!id.HasValue)
@@ -30,85 +29,83 @@ namespace Build_School_Project_No_4.Controllers
                 return RedirectToAction("ePal", "ePals", new { id = 1 });
             }
             var GamesDeatils = _productService.GetGamesAllAndDeatils(id.Value);
-
-           
             return View("ePal", GamesDeatils);
         }
-
         public ActionResult GamesJson(int id)
         {
             ViewBag.ProductCard = _productService.GetProductCardsJson(id);
 
             return View();
         }
-
-        /// <summary>
-        /// Sonias shit don't touch
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult NotFound()
-        {
-            return View();
-        }
         [HttpGet]
-        public ActionResult DetailPage(int? id)
+        public ActionResult Detail(int? id)
         {
-
-            if (id == null)
-            {
-                return RedirectToAction("Index");
-            }
             var playerListing = _detailService.FindPlayerListing(id);
-            if (playerListing == null)
+            if (id == null || playerListing == null)
             {
-                return RedirectToAction("NotFound");
+                return RedirectToAction("Detail", new { id = 1 });
             }
-
             return View(playerListing);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DetailPage(DetailViewModel AddCartVM, string startTime, int id)
+        public ActionResult Detail(AddToCartViewModel AddCartVM, string startTime, int id)
         {
-            var unpaid = _cartService.CreateUnpaidOrder(AddCartVM, startTime, id);
-            var isSuccess = _cartService.AddCartSuccess(unpaid);
 
-            if (isSuccess)
+            string currentUrl = Request.Url.AbsoluteUri;
+            if (MemberUtil.GetMemberId() == null)
             {
-                var confirmation = unpaid.OrderConfirmation;
-                return RedirectToAction("Checkout", new { Confirmation = confirmation });
+                return Redirect(currentUrl);
             }
             else
             {
-                return Content("Failed to create new order");
+                var unpaid = _cartService.CreateUnpaidOrder(AddCartVM, startTime, id);
+                var isSuccess = _cartService.AddCartSuccess(unpaid);
+                if (isSuccess)
+                {
+                    var confirmation = unpaid.OrderConfirmation;
+                    return RedirectToAction("Checkout", new { Confirmation = confirmation });
+                }
+                else
+                {
+                    return Content("Failed to create new order");
+                }
             }
-
         }
         [HttpGet]
         public ActionResult Checkout(string confirmation)
         {
             if (confirmation == null)
             {
-                return Content("Order not found!");
+                return RedirectToAction("ePal");
             }
             var checkoutVM = _checkoutService.GetCheckoutDetails(confirmation);
-
-            //GroupViewModel groupVM = new GroupViewModel
-            //{
-            //    Checkout = checkoutVM
-            //};
-
             return View(checkoutVM);
         }
         [HttpPost]
-        public ActionResult Checkout(CheckoutViewModel x, string confirmation)
+        public ActionResult Checkout(CheckoutViewModel x, string confirmation, string payType)
         {
             TempData["confirmation"] = confirmation;
-            return RedirectToAction("PaymentWithPaypal", "Checkout");
+
+            bool canCheckout = _checkoutService.ValidCheckoutTime(confirmation);
+            int ePalId = _checkoutService.GetPlayerIdFromConfirmation(confirmation).ProductId;
+            int id = ePalId;
+            int orderStatus = _checkoutService.GetOrderStatus(confirmation);
+            if (canCheckout == false || orderStatus != (int)Enums.PaymentStatus.Unpaid)
+            {
+                return RedirectToAction("Detail", new { id = id});
+            }
+            else
+            {
+                if (payType == "paypal")
+                {
+                    return RedirectToAction("PaymentWithPaypal", "Checkout");
+                }
+                else
+                {
+                    return RedirectToAction("PaymentWithLinePay", "Checkout");
+                }
+            }
         }
     }
 }

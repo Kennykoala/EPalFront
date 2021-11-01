@@ -12,6 +12,8 @@ namespace Build_School_Project_No_4.ViewModels
         public decimal UnitPrice { get; set; }
         public int Rounds { get; set; }
         public string GameName { get; set; }
+        public string CustomerId { get; set; }
+        public string ePalImg { get; set; }
         
     }
 }
