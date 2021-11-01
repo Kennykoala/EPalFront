@@ -490,7 +490,6 @@
     <Compile Include="ViewModels\MemberViewModel.cs" />
     <Compile Include="ViewModels\OrderConfirmationViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
-    <Compile Include="ViewModels\PayTransViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\WalletViewModel.cs" />

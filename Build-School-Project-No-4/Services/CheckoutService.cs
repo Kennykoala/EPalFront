@@ -9,13 +9,10 @@ namespace Build_School_Project_No_4.Services
     public class CheckoutService
     {
         private readonly Repository _repo;
-        private readonly PayTransViewModel _payTransVM;
         public CheckoutService()
         {
             _repo = new Repository();
-            _payTransVM = new PayTransViewModel();
         }
-
         public CheckoutViewModel GetCheckoutDetails(string orderConfirmation)
         {
             var orders = _repo.GetAll<Orders>();
@@ -106,7 +103,6 @@ namespace Build_School_Project_No_4.Services
                           select o.OrderId).FirstOrDefault();
             return result;        
         }
-
         public void CreateTransaction(string orderConfirmation, int payMethod, string orderUID)
         {
             try
