@@ -7,9 +7,13 @@ namespace Build_School_Project_No_4.ViewModels
 {
     public class OrderViewModel
     {
-        public int OrderStatusId { get; set; }
+        public string Title { get; set; }
+        public int? OrderStatusId { get; set; }
+        public int? OrderStatusIdCreator { get; set; }
+        public int OrderId { get; set; }
 
         public List<OrderCard> OrderCards { get; set; }
+        public List<CreatedCard> CreatedCards { get; set; }
 
         public List<Orderstatusall> Order { get; set; }
 
@@ -17,9 +21,34 @@ namespace Build_School_Project_No_4.ViewModels
     public class Orderstatusall
     {
         public string Name { get; set; }
-        public int Id { get; set; }
+        public int OrderStatusId { get; set; }
+
+        public int OrderStatusIdCreator { get; set; }
     }
     public class OrderCard
+    {
+        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public int PlayerId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal Discount { get; set; }
+        public DateTime OrderDate { get; set; }
+        public DateTime GameStartDateTime { get; set; }
+        public DateTime GameEndDateTime { get; set; }
+        public DateTime UpdateDateTime { get; set; }
+        public string OrderStatusName { get; set; }
+        public decimal TotalPrice { get; set; }
+        public string ProfilePicture { get; set; }
+        public string MemberName { get; set; }
+        public string GameName { get; set; }
+
+        public int? OrderStatusIdCreator { get; set; }
+    }
+
+
+    public class CreatedCard
     {
         public int OrderId { get; set; }
         public int PlayerId { get; set; }
@@ -36,6 +65,7 @@ namespace Build_School_Project_No_4.ViewModels
         public string ProfilePicture { get; set; }
         public string MemberName { get; set; }
         public string GameName { get; set; }
-    }
 
+        public int? OrderStatusId { get; set; }
+    }
 }

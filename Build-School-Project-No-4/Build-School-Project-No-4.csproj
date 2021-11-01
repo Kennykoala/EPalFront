@@ -898,7 +898,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Recommend\RecommenedController.cshtml" />
+    <Content Include="Views\Recommend\Recommened.cshtml" />
     <Content Include="Views\Home\HomePage.cshtml" />
     <Content Include="Views\FAQ\FAQ.cshtml" />
     <Content Include="Views\Shared\_Layout_nofooter.cshtml" />
@@ -916,16 +916,18 @@
     <Content Include="Views\Members\Login.cshtml" />
     <Content Include="Views\Members\Register.cshtml" />
     <Content Include="Views\ePals\ePal.cshtml" />
-    <Content Include="Views\ePals\GamesJson.cshtml" />
     <Content Include="Views\ePals\Order.cshtml" />
     <Content Include="Views\ePals\Checkout.cshtml" />
     <Content Include="Views\ePals\Detail.cshtml" />
     <Content Include="Views\Order\OrderSummary.cshtml" />
+    <Content Include="Views\ePals\DetailPage.cshtml" />
+    <Content Include="Views\ePals\Index.cshtml" />
+    <Content Include="Views\ePals\NotFound.cshtml" />
+    <Content Include="Views\Order\PurchasedOrderSummary.cshtml" />
     <Content Include="Views\Members\RegisterResult.cshtml" />
     <Content Include="Views\Members\EmailValidate.cshtml" />
     <Content Include="Views\Members\LoginResult.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Members\Logout.cshtml" />
     <Content Include="Views\Members\profile.cshtml" />
     <Content Include="Views\Shared\_AvatarPartial.cshtml" />
     <Content Include="Views\Members\EditProfile.cshtml" />
@@ -959,6 +961,7 @@
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Members\LineResult.cshtml" />
+    <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

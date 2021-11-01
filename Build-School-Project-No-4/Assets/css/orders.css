@@ -178,11 +178,37 @@ hr {
     border-radius: 10px;
 }
 
+.startbutton {
+    background-color: rgb(112, 65, 230);
+    border-color: transparent;
+    color: white;
+    border-radius: 50px;
+    margin-right: 10px;
+    height: 30px;
+    width: 80px;
+}
 
+.deletebtn {
+    background-color: #E3170D;
+    border-color: transparent;
+    color: white;
+    border-radius: 50px;
+    margin-right: 10px;
+    height: 30px;
+    width: 80px;
+}
 
+.finishbtn {
+    background-color: rgb(112, 65, 230);
+    border-color: transparent;
+    color: white;
+    border-radius: 50px;
+    margin-right: 10px;
+    height: 30px;
+    width: 80px;
+}
 
 @media screen and (min-width: 768px) {
-
     .order-summary{
         padding-top: 60px;
     }
@@ -324,6 +350,10 @@ hr {
         width: 18px;
         height: 18px;
         margin-right: 3px;
+    }
+
+    .order-button {
+        font-size: 15px;
     }
 
     .order-actions {

@@ -36,18 +36,10 @@ namespace Build_School_Project_No_4.Services
             var categoryId = FilterVM.CategoryId;
 
             var category = _repo.GetAll<GameCategories>().FirstOrDefault(x => x.GameCategoryId == categoryId);
-            var Members = _repo.GetAll<Members>();
-            var LineStatus = _repo.GetAll<LineStatus>();
-            var CommentDetails = _repo.GetAll<CommentDetails>();
             var ProductPositions = _repo.GetAll<ProductPosition>();
             var Positions = _repo.GetAll<Position>();
-            var Ranks = _repo.GetAll<Rank>();
             var ProductServers = _repo.GetAll<ProductServer>();
-            var Servers = _repo.GetAll<Server>();
-            var Language = _repo.GetAll<Language>();
             var thisYear = DateTime.Now.Year;
-            var productsx = _repo.GetAll<Products>();
-            var gameCat = _repo.GetAll<GameCategories>();
 
             if (category == null)
             {
@@ -113,8 +105,7 @@ namespace Build_School_Project_No_4.Services
                 else
                 {
                     products = products.Select(x => x);
-                }
-                
+                }  
             }
             var productCards = products.Select(p => new ProductCard
             {
@@ -122,11 +113,11 @@ namespace Build_School_Project_No_4.Services
                 CreatorImg = p.CreatorImg,
                 Introduction = p.Introduction,
                 RecommendationVoice = p.RecommendationVoice,
-                LineStatus = LineStatus.FirstOrDefault(y => y.LineStatusId == Members.FirstOrDefault(x => x.MemberId == p.CreatorId).LineStatusId).LineStatusImg,
-                CreatorName = Members.FirstOrDefault(x => x.MemberId == p.CreatorId).MemberName,
-                Rank = Ranks.FirstOrDefault(x => x.RankId == p.RankId) == null ? "No Rank" : Ranks.FirstOrDefault(x => x.RankId == p.RankId).RankName,
-                Position = Positions.FirstOrDefault(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
+                LineStatus = p.Members.LineStatus.LineStatusImg,
+                CreatorName = p.Members.MemberName,
+                Rank = p.Rank.RankName,
                 ProductId = p.ProductId,
+                Position = Positions.FirstOrDefault(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
             }).ToList();
             result.ProductCards = productCards;
             result.CategoryId = categoryId;

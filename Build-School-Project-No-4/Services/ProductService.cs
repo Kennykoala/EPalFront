@@ -49,28 +49,20 @@ namespace Build_School_Project_No_4.Services
             {
                 return result.ToString();
             }
-            var products = _repo.GetAll<Products>().Where(x => x.GameCategoryId == category.GameCategoryId).ToList();
-            var CommentDetails = _repo.GetAll<CommentDetails>().ToList();
-            var ProductPositions = _repo.GetAll<ProductPosition>().ToList();
-            var Positions = _repo.GetAll<Position>().ToList();
-            var Ranks = _repo.GetAll<Rank>().ToList();
-            var Members = _repo.GetAll<Members>().ToList();
-            var ProductServers = _repo.GetAll<ProductServer>().ToList();
-            var Servers = _repo.GetAll<Server>().ToList();
-            var LineStatus = _repo.GetAll<LineStatus>().ToList();
-            var LanguageName = _repo.GetAll<Language>().ToList();
-            var todayYear = DateTime.Now.Year;
+            var products = _repo.GetAll<Products>().Where(x => x.GameCategoryId == category.GameCategoryId);
+            var ProductPositions = _repo.GetAll<ProductPosition>();
+            var Positions = _repo.GetAll<Position>();
+
             var productCards = products.Select(p => new ProductCard
             {
                 UnitPrice = p.UnitPrice,
                 CreatorImg = p.CreatorImg,
                 Introduction = p.Introduction,
                 RecommendationVoice = p.RecommendationVoice,
-                LineStatus = LineStatus.First(y => y.LineStatusId == (Members.First(x => x.MemberId == p.CreatorId).LineStatusId)).LineStatusImg,
-                CreatorName = Members.First(x => x.MemberId == p.CreatorId).MemberName,
-               // StarLevel = CommentDetails.FirstOrDefault(x => x.ProductId == p.ProductId).StarLevel,
-                Rank = Ranks.FirstOrDefault(x => x.RankId == p.RankId) == null ? "No Rank" : Ranks.First(x => x.RankId == p.RankId).RankName,
-                Position = Positions.First(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
+                LineStatus = p.Members.LineStatus.LineStatusImg,
+                CreatorName = p.Members.MemberName,
+                Rank = p.Rank.RankName,
+                Position = Positions.FirstOrDefault(y => y.PositionId == (ProductPositions.FirstOrDefault(x => x.ProductId == p.ProductId).PositionId)).PositionName,
                 ProductId = p.ProductId,
             }).ToList();
             result.CategoryId = categoryId;

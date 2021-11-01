@@ -1,0 +1,486 @@
+﻿@model OrderViewModel
+@{
+    ViewBag.Title = "OrderSummary";
+}
+@section topCSS{
+    <link href="~/Assets/css/orders.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-2 order-statuses">
+            <div class="order-list col-md-2">
+                <div class="greyish title">Purchased Orders</div>
+                <div class="categories" style=" padding: 10px 10px 15px;">
+                    @foreach (var m in Model.Order)
+                    {
+                        <a href="@Url.Action("PurchasedOrderSummary","Order",new { id = m.OrderStatusId })">
+                            <span>
+                                @m.Name
+                            </span>
+                        </a><br />
+                    }
+                    @*<div class="stat-category selected">Unpaid</div>
+                        <div class="stat-category">Pending</div>
+                        <div class="stat-category">Not Started</div>
+                        <div class="stat-category">Started</div>
+                        <div class="stat-category">Cancelled</div>
+                        <div class="stat-category">Completed</div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-10">
+            <div class="order-summary">
+                <div class="status">@Model.Title</div>
+                <div class="status-header greyish">
+                    <div class="details">Details</div>
+                    <div>Quantity/OrderTime</div>
+                    <div>Total Price </div>
+                    <div class="options">Options</div>
+
+                    @if (Model.Title == "Not Started" || Model.Title == "Started")
+                    {
+                        <div>Status </div>
+                    }
+
+                </div>
+                <div class="cards-list-mobile">
+                    <div class="order-card">
+                        <a href="#">
+                            <div class="card-top">
+                                <div class="user">
+                                    <div class="user-img"></div>
+                                    <div class="name">
+                                        Jolie
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                                <div class="order-status greyish">Cancelled</div>
+                            </div>
+                        </a>
+                        <hr />
+                        <a href="#">
+                            <div class="card-bot">
+                                <div class="info">
+                                    <div class="info-left">
+                                        <div class="game-name">Among Us</div>
+                                        <div class="game- greyish">3 round(s) total</div>
+                                        <div class="start-time greyish">Sep 13, 2:12PM</div>
+                                    </div>
+                                    <div class="info-right">
+                                        <img src="~/Assets/images/Orders/currency.png" />
+                                        15.00
+                                    </div>
+                                </div>
+                                <div class="bot-section">
+                                    <div class="chat">Chat</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="cards-list">
+                    @foreach (var m in Model.OrderCards)
+                    {
+                        <div class="order-card-lg">
+                            <div class="card-info greyish">
+                                <div class="order-id">@Html.DisplayFor(x => m.OrderId)</div>
+                                <div class="order-status">@Html.DisplayFor(x => m.OrderStatusName)</div>
+
+                                @*判斷OrderStatusIdCreator是否和OrderStatusId一樣*@
+                                @Html.HiddenFor(x => m.OrderStatusIdCreator)
+                            </div>
+                            <div class="card-body">
+                                <a href="#">
+                                    <div class="u-details">
+                                        @if (m.ProfilePicture == null)
+                                        {
+                                            <div class="user-img"></div>
+                                        }
+                                        else
+                                        {
+                                            <img src="@Html.DisplayFor(x => m.ProfilePicture)" style="width: 50px; height: 50px; background-size: contain; background-repeat: no-repeat; background-position: center; margin-right: 10px; border-radius: 20px; " />
+
+                                        }
+                                        @*<div class="user-img"></div>*@
+                                        <div class="name">
+                                            <span>  @Html.DisplayFor(x => m.MemberName)</span><br>
+
+                                            <span> @Html.DisplayFor(x => m.GameName)</span>
+
+                                        </div>
+                                    </div>
+                                </a>
+                                @*<div class="order-game">
+                                        <div class="game-name">Among Us</div>
+                                    </div>*@
+                                <div class="order-details">
+                                    <div class="rounds greyish">@Html.DisplayFor(x => m.Quantity) round(s) total</div>
+                                    <div class="start-time greyish">
+                                        @Html.DisplayFor(x => m.OrderDate)
+                                    </div>
+                                </div>
+                                <div class="order-total">
+                                    <img src="~/Assets/images/Orders/currency.png" />@Html.DisplayFor(x => m.TotalPrice)
+                                </div>
+
+
+                                @*<div class="order-button">
+                                        <input type="submit" name="name" value="start" />
+                                    </div>*@
+
+
+                                <div class="order-actions">
+                                    <div class="report">
+                                        <i class="far fa-flag"></i>
+                                    </div>
+                                    <div class="message">
+                                        <i class="far fa-comment-dots"></i>
+                                    </div>
+                                    <div class="details">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!--
+                    <div class="order-card-lg">
+                        <div class="card-info greyish">
+                            <div class="order-id">Order ID: 2021092514502029041440</div>
+                            <div class="order-status">Completed</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#">
+                                <div class="u-details">
+                                    <div class="user-img"></div>
+                                    <div class="name">Jolie</div>
+                                </div>
+                            </a>
+                            <div class="order-game">
+                                <div class="game-name">Among Us</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="rounds greyish">2 round(s) total</div>
+                                <div class="start-time greyish">
+                                    Start at Sep 25, 3:00PM
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <img src="~/Assets/images/Orders/currency.png" />10.00
+                            </div>
+                            <div class="order-actions">
+                                <div class="report">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                <div class="message">
+                                    <i class="far fa-comment-dots"></i>
+                                </div>
+                                <div class="details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-card-lg">
+                        <div class="card-info greyish">
+                            <div class="order-id">Order ID: 2021092514502029041440</div>
+                            <div class="order-status">Completed</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#">
+                                <div class="u-details">
+                                    <div class="user-img"></div>
+                                    <div class="name">Jolie</div>
+                                </div>
+                            </a>
+                            <div class="order-game">
+                                <div class="game-name">Among Us</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="rounds greyish">2 round(s) total</div>
+                                <div class="start-time greyish">
+                                    Start at Sep 25, 3:00PM
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <img src="~/Assets/images/Orders/currency.png" />10.00
+                            </div>
+                            <div class="order-actions">
+                                <div class="report">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                <div class="message">
+                                    <i class="far fa-comment-dots"></i>
+                                </div>
+                                <div class="details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-card-lg">
+                        <div class="card-info greyish">
+                            <div class="order-id">Order ID: 2021092514502029041440</div>
+                            <div class="order-status">Completed</div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#">
+                                <div class="u-details">
+                                    <div class="user-img"></div>
+                                    <div class="name">Jolie</div>
+                                </div>
+                            </a>
+                            <div class="order-game">
+                                <div class="game-name">Among Us</div>
+                            </div>
+                            <div class="order-details">
+                                <div class="rounds greyish">2 round(s) total</div>
+                                <div class="start-time greyish">
+                                    Start at Sep 25, 3:00PM
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <img src="~/Assets/images/Orders/currency.png" />
+                                10.00
+                            </div>
+                            <div class="order-actions">
+                                <div class="report">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                <div class="message">
+                                    <i class="far fa-comment-dots"></i>
+                                </div>
+                                <div class="details">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </div>
+                <div class="no-orders"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section endJS{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        let order = document.querySelectorAll('.order-card-lg')
+        let orderstatus = document.querySelector('.status')
+
+
+        if (orderstatus.innerText == "Not Started") {
+
+            order.forEach(x => {
+                console.log(x.childNodes);
+                if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Not Started') {
+                    //button div
+                    let btndiv = document.createElement('div')
+                    btndiv.setAttribute('class', 'order-status')
+                    x.childNodes[3].appendChild(btndiv)
+
+                    //start button
+                    let startbtn = document.createElement('button')
+                    startbtn.innerText = 'Start'
+                    startbtn.setAttribute('class', 'startbutton')
+                    //startbtn.setAttribute('style', 'margin-right:10px')
+                    //startbtn.setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                    //startbtn.setAttribute('style', 'color: white;')
+                    //startbtn.setAttribute('style', 'border-radius: 50px;')
+
+
+                    x.childNodes[3].children[4].appendChild(startbtn)
+                    //console.log(x.childNodes[3])
+
+                    //delete button
+                    let deletebtn= document.createElement('button')
+                    deletebtn.innerText = 'Delete'
+                    deletebtn.setAttribute('class', 'deletebtn')
+                    x.childNodes[3].children[4].appendChild(deletebtn)
+
+                }
+                console.log(x.children);
+                //和created status都是3，button才開啟
+                if (x.children[0].children[2].value != 3) {
+                    x.children[1].children[4].childNodes[0].disabled = true;
+                    x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
+                }
+                else {
+                    //startbtn.setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                }
+
+            })
+
+            order.forEach(item => {
+                //start button
+                item.children[1].children[4].childNodes[0].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+                    var orderdata = JSON.stringify({
+                        OrderStatusId: 4,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdatePurchasedStstus",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (data) {
+                            //data = JSON.toString(data);
+                            console.log(data)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (data == true) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/4';
+                            }
+
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/3';
+                            }
+                        }
+                    });
+                })
+
+
+                //delete button
+                item.children[1].children[4].childNodes[1].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+                    var orderdata = JSON.stringify({
+                        OrderStatusId: 6,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdatePurchasedStstus",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (res) {
+                            //data = JSON.toString(data);
+                            console.log(res)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (res == true) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/6';
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/3';
+                            }
+                        }
+                    });
+                })
+
+
+
+            })
+
+
+        }
+        else if (orderstatus.innerText == "Started") {
+
+            order.forEach(x => {
+                //console.log(x.childNodes);
+                if (x.childNodes[1].childNodes[3].childNodes[0].data == 'Started') {
+                    let btn = document.createElement('button')
+                    btn.innerText = 'Finish'
+                    btn.setAttribute('class', 'finishbtn')
+                    x.childNodes[3].appendChild(btn)
+                    //console.log(x.childNodes[3])
+                }
+
+                //和created status都是4，button才開啟
+                if (x.children[0].children[2].value != 4) {
+                    x.children[1].children[4].disabled = true;
+                    x.children[1].children[4].setAttribute('style', 'background-color:#6A6973;');
+                }             
+
+            })
+            order.forEach(item => {
+
+                //finish button
+                item.children[1].children[4].addEventListener("click", function () {
+                    let orderid = item.children[0].children[0].innerText;
+
+                    var orderdata = JSON.stringify({
+                        OrderStatusId: 5,
+                        OrderId: `${orderid}`
+                    });
+
+                    $.ajax({
+                        url: "/Order/UpdatePurchasedStstus",
+                        type: "Post",
+                        data: orderdata,
+                        contentType: 'application/json; charset=utf-8',
+                        async: true,
+                        success: function (res) {
+                            //data = JSON.toString(data);
+                            console.log(res)
+
+                            //swal.fire({
+                            //    title: "Update Success",
+                            //    icon: "success",
+                            //    //buttons: true,
+                            //    //dangerMode: true
+                            //});
+
+                            if (res == true) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/5';
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err)
+                            if (err == false) {
+
+                                window.location.href = '/Order/PurchasedOrderSummary/4';
+                            }
+                        }
+                    });
+
+                })
+            })
+
+
+        }
+
+
+
+
+    </script>
+}

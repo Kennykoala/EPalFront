@@ -11,8 +11,13 @@ using Newtonsoft.Json;
 
 namespace Build_School_Project_No_4.Controllers
 {
+   
     public class OrderController : Controller
     {
+
+
+     
+
         private readonly ProductService _productService;
         private readonly EPalContext _ctx;
         private readonly DetailServices _detailService;
@@ -38,6 +43,7 @@ namespace Build_School_Project_No_4.Controllers
         //}
 
         //取得登入者的memberId
+       
         public string GetMemberId()
         {
             var cookie = HttpContext.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
@@ -46,44 +52,109 @@ namespace Build_School_Project_No_4.Controllers
             if (cookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-
                 var obj = JsonConvert.DeserializeObject<Members>(ticket.UserData);
                 userid = obj.MemberId.ToString();
                 return userid;
             }
             return null;
         }
+
         [Authorize]
-        public ActionResult OrderSummary(int? id)
+        public ActionResult PurchasedOrderSummary(int? id)
         {
 
             var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
             var mems = mem.MemberId;
 
-            //Orders cusid = _ctx.Orders.Find(id);
-
-            //if (mems == cusid.CustomerId)
-
                 if (!id.HasValue)
                 {
-                    return RedirectToAction("OrderSummary", "Order", new { id = 1 });
+                    return RedirectToAction("PurchasedOrderSummary", "Order", new { id = 1 });
                 }
-                //if (!id.HasValue)
-                //{
-                //    return RedirectToAction("Index");
-                //}
+
                 var order = new OrderService();
-                var abc = order.GetOrderCardData(id.Value, mems);
-                // var ordercards = _orderService.GetOrderCardData(id.Value);
-                //GroupViewModel result = new GroupViewModel
-                //{
-                //    Order = abc
-                //};
+                var PurchasedOrderInfo = order.GetOrderCardData(id.Value, mems);
             
-                return View(abc);
-            
-          
+                return View(PurchasedOrderInfo);       
+
         }
-       
+
+        [Authorize]
+        public ActionResult CreatedOrderSummary(int? id)
+        {
+
+            var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
+            var mems = mem.MemberId;
+
+            if (!id.HasValue)
+            {
+                return RedirectToAction("CreatedOrderSummary", "Order", new { id = 1 });
+            }
+
+            var order = new OrderService();
+            var CreatedOrderInfo = order.GetCreatedOrderCardData(id.Value, mems);
+
+            return View(CreatedOrderInfo);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult UpdatePurchasedStstus(OrderViewModel order)        
+        {
+            //var msg = "";
+            using (var tran = _ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    orderinfo.OrderStatusId = order.OrderStatusId;
+                    _ctx.SaveChanges();
+                    tran.Commit();
+                    return Json(true);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return Json(false);
+                }
+            }
+         }
+
+
+
+        [HttpPost]
+        public ActionResult UpdateCreatorNotStarted(OrderViewModel order)
+        {
+            //var msg = "";
+            using (var tran = _ctx.Database.BeginTransaction())
+            {
+                try
+                {
+                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    orderinfo.OrderStatusIdCreator = order.OrderStatusIdCreator;
+                    _ctx.SaveChanges();
+                    tran.Commit();
+                    return Json(true);
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return Json(false);
+                }
+            }
+        }
+
+
+
+
+
     }
 }
