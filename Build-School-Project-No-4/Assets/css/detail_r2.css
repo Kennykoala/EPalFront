@@ -9,10 +9,10 @@ body {
   margin-bottom: 150px;
 }
 
-button {
-  border: none;
-  border-radius: 17px;
-}
+/*#playModal button {
+    border: none;
+    border-radius: 17px;
+}*/
 
 #playModal input {
     border: none;
@@ -49,13 +49,15 @@ hr {
     min-height: 200px;
 }
 
-.game-backdrop button {
-  font-size: 14px;
-  padding: 8px 0;
-}
+    .game-backdrop button {
+        font-size: 14px;
+        padding: 8px 0;
+        border: none;
+        border-radius: 17px;
+    }
 
 .detail-title {
-  margin-top: 25px;
+    margin-top: 25px;
 }
 
 .greyish {
@@ -101,17 +103,7 @@ img.buff-img {
   width: 45%;
 }
 
-.btn-play {
-  background-color: rgba(255, 255, 255, 0);
-  color: rgb(110, 67, 232);
-  border: 1px solid rgb(110, 67, 232);
-}
 
-.btn-play:hover {
-  color: rgb(81, 48, 173);
-  border: 1px solid rgb(81, 48, 173);
-  transition: all 0.2s ease-out;
-}
 
 .btn-purp {
   background-color: rgb(110, 67, 232);
@@ -122,6 +114,18 @@ img.buff-img {
   background-color: rgb(92, 55, 194);
   transition: all 0.2s ease-out;
 }
+
+button.btn-play, #playButton {
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(110, 67, 232);
+    border: 1px solid rgb(110, 67, 232);
+}
+
+    .btn-play:hover {
+        color: rgb(81, 48, 173);
+        border: 1px solid rgb(81, 48, 173);
+        transition: all 0.2s ease-out;
+    }
 
 .price-header img {
     width: 17px;

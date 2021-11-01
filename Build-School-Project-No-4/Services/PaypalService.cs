@@ -3,20 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Build_School_Project_No_4.DataModels;
-using Build_School_Project_No_4.ViewModels;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
+
     public class PaypalService
     {
 
         private PayPal.Api.Payment payment;
-        private readonly Repository _repo;
+        private readonly OrderUtil _orderUtil;
+        private readonly CheckoutService _checkoutService;
         public PaypalService()
         {
-            _repo = new Repository();
+            _orderUtil = new OrderUtil();
+            _checkoutService = new CheckoutService();
         }
+
         public Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution()
@@ -31,67 +34,45 @@ namespace Build_School_Project_No_4.Services
         }
         public Payment CreatePayment(APIContext apiContext, string redirectUrl, string confirmation)
         {
-            var orders = _repo.GetAll<Orders>();
-            var members = _repo.GetAll<Members>();
-            var products = _repo.GetAll<Products>();
-            var gameCat = _repo.GetAll<GameCategories>();
-            //var result = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-            var result = (from o in orders
-                          join p in products on o.ProductId equals p.ProductId
-                          join m in members on p.CreatorId equals m.MemberId
-                          join g in gameCat on p.GameCategoryId equals g.GameCategoryId
-                          where o.OrderConfirmation == confirmation
-                          select new PaymentViewModel
-                          {
-                              ePalName = m.MemberName,
-                              UnitPrice = o.UnitPrice,
-                              Rounds = o.Quantity,
-                              GameName = g.GameName
-                          }
-                              ).SingleOrDefault();
-
-
-            //create itemlist and add item objects to it  
+            var order = _orderUtil.GetOrder(confirmation);
+            var customerId = MemberUtil.GetMemberId();
+            var orderUID = Utilities.PaymentUtil.CreateTransactionUID(customerId);
+            _checkoutService.CreateTransaction(confirmation, (int)Enums.PaymentType.PayPal, orderUID);
             var itemList = new ItemList()
             {
                 items = new List<Item>()
             };
-            //Adding Item Details like name, currency, price etc  
             itemList.items.Add(new Item()
             {
-                name = $"{result.Rounds} round(s) of {result.GameName} with {result.ePalName}",
+                name = $"{order.Rounds} round(s) of {order.GameName} with {order.ePalName}",
                 currency = "USD",
-                price = (result.UnitPrice).ToString(),
-                quantity = result.Rounds.ToString(),
+                price = (order.UnitPrice).ToString(),
+                quantity = order.Rounds.ToString(),
             });
             var payer = new Payer()
             {
                 payment_method = "paypal"
             };
-            // Configure Redirect Urls here with RedirectUrls object  
             var redirUrls = new RedirectUrls()
             {
                 cancel_url = redirectUrl + "&Cancel=true",
                 return_url = redirectUrl
             };
-            // Adding Tax, shipping and Subtotal details  
             var details = new Details()
             {
-                subtotal = (result.Rounds * result.UnitPrice).ToString()
+                subtotal = (order.Rounds * order.UnitPrice).ToString()
             };
-            //Final amount with details  
             var amount = new Amount()
             {
                 currency = "USD",
-                total = (result.Rounds * result.UnitPrice).ToString(), // Total must be equal to sum of tax, shipping and subtotal.  
+                total = (order.Rounds * order.UnitPrice).ToString(),
                 details = details
             };
             var transactionList = new List<Transaction>();
-            // Adding description about the transaction  
             transactionList.Add(new Transaction()
             {
-                description = "Game4Lyfe" + confirmation,
-                invoice_number = confirmation, //Generate an Invoice No  
+                description = $"Order ID: {confirmation}",
+                invoice_number = orderUID,
                 amount = amount,
                 item_list = itemList
             });
@@ -102,9 +83,26 @@ namespace Build_School_Project_No_4.Services
                 transactions = transactionList,
                 redirect_urls = redirUrls
             };
-            // Create a payment using a APIContext  
             return this.payment.Create(apiContext);
         }
 
+        public string GetRedirectUrl(string confirmation, APIContext apiContext)
+        {
+            string baseURI = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithPayPal?";
+            var guid = Convert.ToString((new Random()).Next(100000));
+            var createdPayment = CreatePayment(apiContext, baseURI + "guid=" + guid, confirmation);
+            var links = createdPayment.links.GetEnumerator();
+            string paypalRedirectUrl = null;
+            while (links.MoveNext())
+            {
+                Links lnk = links.Current;
+                if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                {
+                    paypalRedirectUrl = lnk.href;
+                }
+            }
+            HttpContext.Current.Session.Add(guid, createdPayment.id);
+            return paypalRedirectUrl;
+        }
     }
 }
