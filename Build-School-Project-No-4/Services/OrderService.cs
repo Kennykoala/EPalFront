@@ -48,7 +48,7 @@ namespace Build_School_Project_No_4.Services
                 OrderId = o.OrderId,
                 ProductId = o.ProductId,
                 GameName = o.Products.GameCategories.GameName,
-                MemberName = o.Members.MemberName,
+                MemberName = o.Products.Members.MemberName,
                 //ProfilePicture=o.Members.ProfilePicture
                 ProfilePicture = o.Products.Members.ProfilePicture,
                 OrderStatusIdCreator = o.OrderStatusIdCreator
