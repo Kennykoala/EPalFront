@@ -179,7 +179,8 @@ hr {
 }
 
 .startbutton {
-    background-color: rgb(112, 65, 230);
+    background-color: #6A6973;
+    /*background-color: rgb(112, 65, 230);*/
     border-color: transparent;
     color: white;
     border-radius: 50px;
@@ -199,7 +200,8 @@ hr {
 }
 
 .finishbtn {
-    background-color: rgb(112, 65, 230);
+    background-color: #6A6973;
+    /*background-color: rgb(112, 65, 230);*/
     border-color: transparent;
     color: white;
     border-radius: 50px;
