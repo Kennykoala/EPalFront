@@ -878,10 +878,11 @@ footer #address {
         position: relative;
     }
 
-    .aside-Menu .info-wrapper .infosta {
-        cursor: pointer;
-        width: 24.5%;
-    }
+        .aside-Menu .info-wrapper .infosta {
+            cursor: pointer;
+            width: 24.5%;
+            text-decoration: none;
+        }
 
     .aside-Menu .info-wrapper .infosta:hover {
         background-color: #120E1B;
@@ -896,18 +897,21 @@ footer #address {
         width: 0.5px;
     }
 
-    .aside-Menu .info-wrapper .infosta .num {
-        font-size: 20px;
-        text-align: center;
-    }
+            .aside-Menu .info-wrapper .infosta .num {
+                font-size: 20px;
+                text-align: center;
+                color: white;
+                text-decoration: none;
+            }
 
-    .aside-Menu .info-wrapper .infosta .txt {
-        font-size: 13px;
-        color: #a4a4d1;
-        font-weight: 200;
-        text-align: center;
-        padding-top: 10px;
-    }
+            .aside-Menu .info-wrapper .infosta .txt {
+                font-size: 13px;
+                color: #a4a4d1;
+                font-weight: 200;
+                text-align: center;
+                padding-top: 10px;
+                text-decoration: none;
+            }
 
     .aside-Menu .money-wrapper {
         display: flex;

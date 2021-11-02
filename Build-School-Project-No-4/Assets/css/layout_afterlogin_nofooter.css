@@ -836,6 +836,8 @@ footer {
         display: inline-block;
     }
 
+
+
     .aside-Menu .info-wrapper {
         display: flex;
         margin: 25px 15px 20px;
@@ -846,6 +848,7 @@ footer {
     .aside-Menu .info-wrapper .infosta {
         cursor: pointer;
         width: 24.5%;
+        text-decoration:none;
     }
 
     .aside-Menu .info-wrapper .infosta:hover {
@@ -864,6 +867,8 @@ footer {
     .aside-Menu .info-wrapper .infosta .num {
         font-size: 20px;
         text-align: center;
+        color: white ;
+        text-decoration: none;
     }
 
     .aside-Menu .info-wrapper .infosta .txt {
@@ -872,7 +877,11 @@ footer {
         font-weight: 200;
         text-align: center;
         padding-top: 10px;
+        text-decoration: none;
     }
+
+
+
 
     .aside-Menu .money-wrapper {
         display: flex;
