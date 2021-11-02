@@ -297,7 +297,7 @@ window.onload = function () {
         var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
         URL += 'response_type=code';
         URL += '&client_id=1656564684';   //TODO:這邊要換成你的client_id
-        URL += '&redirect_uri=https://localhost:44322/Members/LineLoginCallback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+        URL += '&redirect_uri=https://epal-frontstage.azurewebsite.net/Members/LineLoginCallback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
         URL += '&scope=openid%20profile%20email';
         URL += '&state=abcde';
         window.location.href = URL;
