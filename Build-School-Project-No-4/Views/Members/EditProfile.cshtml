@@ -205,9 +205,9 @@
             padding-bottom: 30px;
         }
 
-            .avatar-upload #imagePreview {
+/*            .avatar-upload #imagePreview {
                 background-image: url("/Assets/Edit_ProfileImages/avatar.png");
-            }
+            }*/
 
 
 
@@ -244,39 +244,44 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            //window.onload = function () {
+                //alert("OK");
+                swal.fire({
+                    title: "Update Profile Success",
+                    icon: "success",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+                //window.location.href = '/'
+            //}
+        </script>
+    }
+    else if (TempData["msg"] != null)
+    {
+        <script type="text/javascript">
+            //window.onload = function () {
+                swal.fire({
+                    title: "Update Profile Failure",
+                    icon: "error",
+                    //buttons: true,
+                    //dangerMode: true
+                });
+
+                //window.location.href = '/'
+            //}
+        </script>
+    }
+
+
+
     <script>
-        //$("#btnSubmit").click(function () {
-        //    var fileUpload = $("#imageUpload").get(0);
-        //    var files = fileUpload.files;
-        //    // Create FormData object
-        //    var fileData = new FormData();
-        //    // Looping over all files and add it to FormData object
-        //    for (var i = 0; i < files.length; i++) {
-        //        fileData.append(files[i].name, files[i]);
-        //    }
-        //    var geturl = "Members/SaveImageToServer";
-        //    $.ajax({
-        //        url: geturl,
-        //        type: "POST",
-        //        data: fileData,
-        //        async: false,
-        //        contentType: false, // Not to set any content header
-        //        processData: false, // Not to process data
-        //        success: function (IsImageUploaded) {
-        //            if (IsImageUploaded == "True") {
-        //                $("#imageUpload").val('');
-        //                $("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
-        //            }
-        //            else {
-        //                $("#imageUpload").val('');
-        //                $("#ShowMsg").text("Image Not Uploaded...!").css("color", "red")
-        //            }
-        //        }
-        //    });
-        //})
 
-
-        //save avatar to Cloudinary、DB
+        //save avatar to Cloudinary
         let photoUrl = "";
         let memberId = parseInt(@userid);
 
@@ -308,9 +313,11 @@
             }).then(function (res) {
                 console.log(res);
                 photoUrl = res.data.secure_url;
+
                 $("#imageUpload").change(function () {
                     readURL(photoUrl);
                 });
+
                 SaveImageViaAjax(memberId, photoUrl);
 
 
@@ -342,7 +349,7 @@
 
 
 
-        //save avatar to Cloudinary、DB
+        //save avatar to DB
         function SaveImageViaAjax(memberId, photoUrl) {
 
             var Data = JSON.stringify({
@@ -360,7 +367,7 @@
                 //dataType: "json",
                 success: function (res) {
                     swal.fire({
-                        title: "Update Success",
+                        title: "Update Avatar Success",
                         icon: "success",
                         //buttons: true,
                         //dangerMode: true
@@ -370,7 +377,7 @@
                 },
                 error: function (err) {
                     swal.fire({
-                        title: "Update Failure",
+                        title: "Update Avatar Failure",
                         icon: "error",
                         //buttons: true,
                         //dangerMode: true
@@ -391,4 +398,8 @@
             $("<br/>").insertAfter(".form-group");
         });
     </script>
+
+
+
 }
+

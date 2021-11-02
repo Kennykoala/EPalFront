@@ -31,22 +31,6 @@
 
     </div>
 
-    @if (TempData["message"] != null)
-    {
-        <script type="text/javascript">
-            window.onload = function () {
-                swal.fire({
-                    title: "Create Game Success",
-                    icon: "success",
-                    //buttons: true,
-                    //dangerMode: true
-                });
-
-                //window.location.href = '/'
-            }
-        </script>
-    }
-
 </body>
 
 
@@ -231,7 +215,15 @@
                     document.querySelector(".productvoice").value = url;
                     //document.querySelector("#image").src = url;
 
-                    alert("Video upload successful!")
+                    //alert("Video upload successful!")
+                    swal.fire({
+                        title: "Upload Voice Success",
+                        icon: "success",
+                        //buttons: true,
+                        //dangerMode: true
+                    });
+
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -239,55 +231,6 @@
         }
 
 
-
-
-
-        //////// Import the functions you need from the SDKs you need
-        //////import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-        //////import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-analytics.js";
-        //////// TODO: Add SDKs for Firebase products that you want to use
-        //////// https://firebase.google.com/docs/web/setup#available-libraries
-
-        ////// Your web app's Firebase configuration
-        ////// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        ////var firebaseConfig = {
-        ////    apiKey: "AIzaSyCfsXwSLcwmqr6hN8TmELq09rn__vqJyNo",
-        ////    authDomain: "bsepal.firebaseapp.com",
-        ////    projectId: "bsepal",
-        ////    storageBucket: "bsepal.appspot.com",
-        ////    messagingSenderId: "925874281844",
-        ////    appId: "1:925874281844:web:e04bfd2baf9169c34be021",
-        ////    measurementId: "G-LKKBBSRD88"
-        ////};
-
-        ////// Initialize Firebase
-        ////firebase.initializeApp(firebaseConfig);
-        ////console.log(firebase);
-
-        //////// Initialize Firebase
-        //////const app = initializeApp(firebaseConfig);
-        //////const analytics = getAnalytics(app);
-
-        //function uploadVedio() {
-        //    const ref = firebase.storage().ref();
-        //    //const file = document.querySelector("#photo").files[0];
-        //    const file = document.getElementById('uploadvoice').files[0];
-        //    const name = (+new Date()) + "-" + file.name;
-        //    const metadata = {
-        //        contentType: file.type
-        //    };
-        //    const task = ref.child(name).put(file, metadata);
-        //    task
-        //        .then(snapshot => snapshot.ref.getDownloadURL())
-        //        .then(url => {
-        //            console.log(url);
-        //            alert("Video upload successful!")
-        //            //document.querySelector("#image").src = url;
-        //        })
-        //        .catch(error => {
-        //            console.log(error);
-        //        });
-        //}
 
 
 
@@ -385,56 +328,6 @@
                 console.error(err);
             });
         }
-
-
-
-
-        ////save voice/image to Cloudinary(備份)
-        //let photoUrl = "";
-
-        //var cloud_url = 'https://api.cloudinary.com/v1_1/drub4oabm/image/upload'
-        //var cloud_upload_preset = 'cltdf3ai'
-
-        //var fileUpload = document.querySelector('.submitbtn');
-        //// var btnSubmit = document.getElementById('btnSubmit');
-
-        //fileUpload.addEventListener("click", function () {
-        //    //var file = event.target.files[0];
-
-        //    //var fileLen = document.getElementsByClassName('uploadfile').files.length;
-        //    //var voicefile = document.getElementById('uploadfile').files[0];
-        //    var imagefile = document.getElementById('uploadlistcover').files[0];
-
-        //    var formData = new FormData();
-
-        //    //for (var x = 0; x < fileLen; x++) {
-        //    //    formData.append('file[]', document.getElementsByClassName('uploadfile').files[x])
-        //    //}
-        //    //formData.append('file', voicefile);
-        //    formData.append('file', imagefile);
-        //    formData.append('upload_preset', cloud_upload_preset);
-
-        //        axios({
-        //            url: cloud_url,
-        //            method: 'POST',
-        //            Headers: {
-        //                'Content-Type': 'multipart/form-data'
-        //            },
-        //            data: formData
-        //        }).then(function (res) {
-        //            console.log(res);
-        //            photoUrl = res.data.secure_url;
-        //            console.log(photoUrl);
-        //            //$("#imageUpload").change(function () {
-        //            //    readURL(photoUrl);
-        //            //});
-        //            //SaveImageViaAjax(memberId, photoUrl);
-
-        //        }).catch(function (err) {
-        //            console.error(err);
-        //        });
-        //});
-
 
 
 

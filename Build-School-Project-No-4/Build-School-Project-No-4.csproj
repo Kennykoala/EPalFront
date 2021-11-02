@@ -918,9 +918,6 @@
     <Content Include="Views\ePals\Order.cshtml" />
     <Content Include="Views\ePals\Checkout.cshtml" />
     <Content Include="Views\ePals\Detail.cshtml" />
-    <Content Include="Views\ePals\DetailPage.cshtml" />
-    <Content Include="Views\ePals\Index.cshtml" />
-    <Content Include="Views\ePals\NotFound.cshtml" />
     <Content Include="Views\Order\PurchasedOrderSummary.cshtml" />
     <Content Include="Views\Members\RegisterResult.cshtml" />
     <Content Include="Views\Members\EmailValidate.cshtml" />

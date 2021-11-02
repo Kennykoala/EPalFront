@@ -604,7 +604,7 @@ namespace Build_School_Project_No_4.Controllers
             //};
 
             //groupMember.MemberInfo = MemberInfo;
-            ViewBag.Avatar = MemberInfo.ProfilePicture;                        
+            ViewBag.Avatar = MemberInfo.ProfilePicture;
 
             return View("EditProfile", MemberInfo);
         }
@@ -643,13 +643,15 @@ namespace Build_School_Project_No_4.Controllers
                         db.SaveChanges();
                         tran.Commit();
 
-                        return Content("寫入資料庫成功");
+                        TempData["message"] = "success";
+                        //return Content("寫入資料庫成功");
                     }
                     catch (Exception ex)
                     {
                         tran.Rollback();
 
-                        return Content("寫入資料庫失敗:" + ex.ToString());
+                        TempData["msg"] = "fail";
+                        //return Content("寫入資料庫失敗:" + ex.ToString());
                     }
                 }
 
