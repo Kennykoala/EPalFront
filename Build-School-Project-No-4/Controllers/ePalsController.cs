@@ -22,6 +22,10 @@ namespace Build_School_Project_No_4.Controllers
             _cartService = new AddToCartService();
             _checkoutService = new CheckoutService();
         }
+
+
+
+
         public ActionResult ePal(int? id)
         {
             if (!id.HasValue)
