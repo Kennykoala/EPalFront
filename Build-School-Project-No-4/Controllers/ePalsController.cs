@@ -24,19 +24,6 @@ namespace Build_School_Project_No_4.Controllers
         }
 
 
-        /// <summary>
-        /// Sonias shit don't touch
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult NotFound()
-        {
-            return View();
-        }
-
 
 
         public ActionResult ePal(int? id)

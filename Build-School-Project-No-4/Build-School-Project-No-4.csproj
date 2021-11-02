@@ -957,8 +957,6 @@
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Members\LineResult.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
-    <Content Include="Views\ePals\Index.cshtml" />
-    <Content Include="Views\ePals\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
