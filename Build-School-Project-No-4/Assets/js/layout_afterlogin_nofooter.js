@@ -358,7 +358,7 @@ window.onload = function () {
         modalfooterP.innerHTML = idx === 0 ? 'Or log in with' : 'Or sign up with';
 
         //if (!isRequestAuthenticated)
-        $('#loginmodal').trigger('click');
+        //$('#loginmodal').trigger('click');
 
 
         btn.addEventListener('click', function (event) {
