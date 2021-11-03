@@ -135,7 +135,7 @@ namespace Build_School_Project_No_4.Controllers
             var token = Utility.GetTokenFromCode(code,
                 "1656564684",  //TODO:請更正為你自己的 client_id
                 "2af2ca5d39971c612d2a2dbccfdd2e54", //TODO:請更正為你自己的 client_secret
-                "https://epal-frontstage.azurewebsite.net/Members/LineLoginCallback");  //TODO:請檢查此網址必須與你的LINE Login後台Call back URL相同
+                "https://epal-frontstage.azurewebsites.net/Members/LineLoginCallback");  //TODO:請檢查此網址必須與你的LINE Login後台Call back URL相同
 
             //利用access_token取得用戶資料
             var user = Utility.GetUserProfile(token.access_token);
