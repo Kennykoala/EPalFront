@@ -9,11 +9,9 @@ namespace Build_School_Project_No_4.Services
     public class CheckoutService
     {
         private readonly Repository _repo;
-        private readonly PayTransViewModel _payTransVM;
         public CheckoutService()
         {
             _repo = new Repository();
-            _payTransVM = new PayTransViewModel();
         }
 
         public CheckoutViewModel GetCheckoutDetails(string orderConfirmation)
