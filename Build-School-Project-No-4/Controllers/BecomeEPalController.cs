@@ -240,7 +240,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime1,
                             GameEndTime = registerVM.GameEndTime1,
                         };
-                        if (productplan1 != null) 
+                        if (productplan1.GameStartTime != null && productplan1.GameEndTime != null) 
                         {
                             _ctx.ProductPlans.Add(productplan1);
                             _ctx.SaveChanges();
@@ -254,7 +254,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime2,
                             GameEndTime = registerVM.GameEndTime2,
                         };
-                        if (productplan2 != null)
+                        if (productplan2.GameStartTime != null && productplan2.GameEndTime != null)
                         {
                             _ctx.ProductPlans.Add(productplan2);
                             _ctx.SaveChanges();
@@ -268,7 +268,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime3,
                             GameEndTime = registerVM.GameEndTime3,
                         };
-                        if (productplan3 != null)
+                        if (productplan3.GameStartTime != null && productplan3.GameEndTime != null)
                         {
                             _ctx.ProductPlans.Add(productplan3);
                             _ctx.SaveChanges();
@@ -282,7 +282,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime4,
                             GameEndTime = registerVM.GameEndTime4,
                         };
-                        if (productplan4 != null)
+                        if (productplan4.GameStartTime != null && productplan4.GameEndTime != null)
                         {
                             _ctx.ProductPlans.Add(productplan4);
                             _ctx.SaveChanges();
@@ -296,7 +296,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime5,
                             GameEndTime = registerVM.GameEndTime5,
                         };
-                        if (productplan5 != null)
+                        if (productplan5.GameStartTime != null && productplan5.GameEndTime != null)
                         {
                             _ctx.ProductPlans.Add(productplan5);
                             _ctx.SaveChanges();
@@ -310,7 +310,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime6,
                             GameEndTime = registerVM.GameEndTime6,
                         };
-                        if (productplan6 != null)
+                        if (productplan6.GameStartTime != null && productplan6.GameEndTime != null)
                         {
                             _ctx.ProductPlans.Add(productplan6);
                             _ctx.SaveChanges();
@@ -324,7 +324,7 @@ namespace Build_School_Project_No_4.Controllers
                             GameStartTime = registerVM.GameStartTime7,
                             GameEndTime = registerVM.GameEndTime7,
                         };
-                        if (productplan7 != null)
+                        if (productplan7.GameStartTime != null && productplan7.GameEndTime != null)
                         {
                             _ctx.ProductPlans.Add(productplan7);
                             _ctx.SaveChanges();
