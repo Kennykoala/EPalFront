@@ -28,11 +28,19 @@
     @*抓到使用者登入的cookie資訊*@
     @{
         var memberService = new Build_School_Project_No_4.Services.MemberService();
+        var ProfileEpalService = new Build_School_Project_No_4.Services.ProfileEpalService();
+
         HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
 
         string userid = "";
         string avatar = "";
         int? status = 1;
+
+        int followers = 0;
+        int followings = 0;
+        int likes = 0;
+        int matches = 0;
+
         if (cookie != null)
         {
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
@@ -41,6 +49,11 @@
             userid = obj.MemberId.ToString();
             avatar = memberService.GetEditProfileInfo(obj.MemberId).ProfilePicture;
             status = memberService.GetStatus(obj.MemberId).LineStatusId;
+
+            followings = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[0];
+            followers = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[1];
+            likes = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[2];
+            matches = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[3];
         }
     }
 
@@ -287,28 +300,28 @@
 
                                     <a href="@Url.Action("Followings","Members")" class="infosta">
                                         <div class="" id="followers">
-                                            <div class="num">0</div>
+                                            <div class="num">@followers</div>
                                             <div class="txt">Followers</div>
                                         </div>
                                     </a>
 
                                     <a href="@Url.Action("Followings","Members")" class="infosta">
                                         <div class="" id="followings">
-                                            <div class="num">1</div>
+                                            <div class="num">@followings</div>
                                             <div class="txt">Followings</div>
                                         </div>
                                     </a>
 
                                     <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
                                         <div class="" id="meetmatches">
-                                            <div class="num">3</div>
+                                            <div class="num">@matches</div>
                                             <div class="txt">Chill Matches</div>
                                         </div>
                                     </a>
 
                                     <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
                                         <div class="" id="meetlikes">
-                                            <div class="num">5</div>
+                                            <div class="num">@likes</div>
                                             <div class="txt">Chill Likes</div>
                                         </div>
                                     </a>
@@ -795,7 +808,7 @@
             <div class="row">
                 <div class="col">
                     <div class="item">
-                        <a href="@Url.Action("ePal","ePal")">
+                        <a href="@Url.Action("ePal","ePals")">
                             <i class="fas fa-gamepad"></i>
                             ePal
                         </a>
@@ -803,7 +816,7 @@
                 </div>
                 <div class="col">
                     <div class="item">
-                        <a href="@Url.Action("Meet","ChillMeet")">
+                        <a href="@Url.Action("Meet","Chill")">
                             <i class="fas fa-desktop"></i>
                             Chill
                         </a>
@@ -811,13 +824,13 @@
                 </div>
                 <div class="col">
                     <div class="item">
-                        <a href="#">
+                        <a href="@Url.Action("BecomeEPalPage","becomeepal")">
                             <i class="fas fa-coins"></i>
                             Creator
                         </a>
                     </div>
                 </div>
-                <div class="col">
+                @*<div class="col">
                     <div class="item">
                         <a href="@Url.Action("ChatForPhonePage","ChatForPhone")">
                             <i class="far fa-comment-dots"></i>
@@ -832,7 +845,7 @@
                             Me
                         </a>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </nav>
