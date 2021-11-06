@@ -720,7 +720,7 @@ footer #address {
     /*手機登入*/
     #loginmodal {
         border-color: transparent;
-        padding-left: 20px;
+        padding-left: 10px;
     }
 
     #loginmodal .loginiconphone {
@@ -730,7 +730,7 @@ footer #address {
     #signupmodal {
         border-color: transparent;
         background-color: transparent;
-        padding-left: 20px;
+        padding-left: 0px;
     }
 
     #logoutbutton {
