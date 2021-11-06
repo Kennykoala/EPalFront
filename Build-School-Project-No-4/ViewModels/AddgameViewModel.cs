@@ -166,7 +166,7 @@ namespace Build_School_Project_No_4.ViewModels
         Bronze = 1,
         Silver = 2,
         Gold = 3,
-        Platinum = 4,
+        Platnum = 4,
         Diamond = 5,
         Master = 6,
         Challenger = 7,
