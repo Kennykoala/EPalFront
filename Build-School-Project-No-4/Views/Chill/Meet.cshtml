@@ -680,19 +680,38 @@
             .tinder--buttons {
                 margin-bottom: 42px;
             }
+            .tinder--card {
+                height: 65vh;
+            }
         }
 
         @@media screen and (min-width:768px) {
 
+            .tinder--cards {
+                flex-grow: 0.7;
+            }
 
             .phoneTopNav {
                 display: none;
+            }
+
+            .tinder--card {
+                height: 50vh;
             }
         }
 
         /* / iPad橫向 lg/ */
         /* 平板卡片置中 */
         @@media screen and (min-width:1025px) {
+
+            .tinder--cards {
+                flex-grow: 1;
+            }
+
+            .tinder--card {
+                height: 70vh;
+            }
+
         }
 
         /* / iPad Pro橫向 & 桌機 xl/ */
