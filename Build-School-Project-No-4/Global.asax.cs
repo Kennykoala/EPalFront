@@ -29,7 +29,15 @@ namespace Build_School_Project_No_4
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
 
-
+        protected void Application_Error()
+        {
+            var error = Server.GetLastError();
+            if ((error as HttpException)?.GetHttpCode() == 404)
+            {
+                Server.ClearError();
+                Response.StatusCode = 404;
+            }
+        }
 
 
     }
