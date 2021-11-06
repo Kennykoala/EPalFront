@@ -1,0 +1,169 @@
+﻿@*@{
+        ViewBag.Title = "ForgetPwd";
+    }
+
+    <h2>ForgetPwd</h2>*@
+
+
+<div id="VuePage" class="forgetpassword">
+    <!--使用 Bootstrap 設計表單-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">Forget Password</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4">
+                    <label>Email</label>
+                    <input type="text" class="form-control" v-model="form.Email">
+                </div>
+
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn" v-on:click="SendMailToken()">Send Validation Code</button>
+        </div>
+    </div>
+
+    <!--使用 Bootstrap Modal 樣式，當執行有錯誤時，顯示錯誤訊息-->
+    <div class="modal fade" id="ErrorAlert" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">錯誤訊息</h4>
+                </div>
+                <div class="modal-body" id="ErrorMsg" style="overflow-x:auto;width:100%;">
+
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    var VuePage = new Vue({
+        el: '#VuePage'
+        , data: function () {
+            var data = {
+                form: {}
+            };
+            return data;
+        }
+        , methods: {
+            // 前端驗證權杖
+            GetToken: function () {
+                var token = '@Html.AntiForgeryToken()';
+                token = $(token).val();
+                return token;
+            }
+            // 寄送驗證碼
+            , SendMailToken: function () {
+                var self = this;
+
+                // 組合表單資料
+                var postData = {};
+                postData['Email'] = self.form.Email;
+
+                // 使用 jQuery Ajax 傳送至後端
+                $.ajax({
+                    url:'@Url.Action("SendMailToken", "Members")',
+                    method:'POST',
+                    dataType:'json',
+                    data: { inModel: postData, __RequestVerificationToken: self.GetToken() },
+                    success: function (datas) {
+                        if (datas.ErrMsg) {
+                            
+                            swal.fire({
+                                title: datas.ErrMsg,
+                                icon: "error",
+                                //buttons: true,
+                                //dangerMode: true
+                            });
+
+                            //alert(datas.ErrMsg);
+                            return;
+                        }
+                        //alert(datas.ResultMsg);
+
+                        swal.fire({
+                            title: datas.ResultMsg,
+                            icon: "success",
+                            //buttons: true,
+                            //dangerMode: true
+                        });
+
+                        window.location.href = "/";
+
+                    },
+                    error: function (err) {
+                        //$('#ErrorMsg').html(err.responseText);
+                        //$('#ErrorAlert').modal('toggle');
+
+                        swal.fire({
+                            title: "Failure",
+                            icon: "error",
+                            //buttons: true,
+                            //dangerMode: true
+                        });
+
+                        window.location.href = "/Members/ForgetPwd";
+
+                    }
+                });
+            }
+        }
+    })
+</script>
+
+
+@section topCSS{
+    
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .forgetpassword {
+            padding-top: 95px;
+            padding-left:50px;
+        }
+        .panel-heading{
+            font-size:36px;
+            font-weight:600;
+        }
+        .panel-body label {
+            padding-top: 30px;
+            padding-bottom: 10px;
+            font-size: 20px;
+        }
+        .panel-footer button {
+            margin-top: 20px;
+            background-color: #7041E6;
+            color: white;
+        }
+        .panel-footer button:hover {
+            background-color: #410ec2;
+            color: white;
+        }
+
+        @@media screen and (max-width:767px) {
+            .forgetpassword {
+                padding-top: 95px;
+                padding-left: 50px;
+                padding-right: 50px;
+            }
+            .panel-heading {
+                font-size: 28px;
+                font-weight: 600;
+            }
+        }
+
+        @@media screen and (min-width:768px) {
+
+
+        }
+
+    </style>
+    
+    }

@@ -114,6 +114,270 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
+        [HttpGet]
+        public ActionResult ForgetPwd()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// 寄送驗證碼
+        /// </summary>
+        /// <returns></returns>
+        [ValidateAntiForgeryToken]
+        public ActionResult SendMailToken(SendMailTokenIn inModel)
+        {
+            SendMailTokenOut outModel = new SendMailTokenOut();
+
+            // 檢查輸入來源
+            if (string.IsNullOrEmpty(inModel.Email))
+            {
+                outModel.ErrMsg = "Please enter registered email";
+                return Json(outModel);
+            }
+
+
+
+            //取得信箱驗證碼
+            string AuthCode = string.Empty;
+
+            //確認是否有此會員
+            var member = _MemberService.MemberRigisterData()
+                        .Where(m => m.Email == inModel.Email)
+                        .FirstOrDefault();
+
+            //完全未註冊過，或已透過第三方註冊但系統仍未註冊
+            if (member == null || (member != null && member.IsAdmin == false))
+            {
+                outModel.ErrMsg = "Please register EPal website first";
+            }
+            else
+            {
+                //取得信箱驗證碼
+                AuthCode = _MailService.GetValidateCode();
+
+                string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/ForgetPwdEmailTemplate.html"));
+
+                UriBuilder ValidateUrlForgetPwd = new UriBuilder(Request.Url)
+                {
+                    Path = Url.Action("ResetPwd", "Members", new
+                    {
+                        Email = inModel.Email,
+                        AuthCode = AuthCode
+                    })
+                };
+
+                string MailBody = _MailService.GetForgetPwdMailBody(TempMail, inModel.Email, ValidateUrlForgetPwd.ToString().Replace("%3F", "?"));
+
+                _MailService.SendForgetPwdMail(MailBody, inModel.Email);
+
+
+                outModel.ResultMsg = "Please click on validate email and return to EPal website";
+
+
+                ////用TempData儲存註冊訊息
+                //TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
+                ////重新導向頁面
+                //return RedirectToAction("RegisterResult");
+            }
+
+            // 回傳 Json 給前端
+            return Json(outModel);
+        }
+
+
+
+        ////接收驗證信連結傳進來的Action
+        //public ActionResult EmailValidateForgetPwd(string Email, string AuthCode)
+        //{
+        //    ViewData["EmailValidate"] = _MemberService.EmailValidateforgetpwd(Email, AuthCode);
+        //    return Redirect("/Members/ResetPwd");
+        //}
+
+
+
+
+        // GET: 重設密碼頁面
+        public ActionResult ResetPwd(string Email, string AuthCode)
+        {
+
+            ViewData["EmailValidate"] = _MemberService.EmailValidateforgetpwd(Email, AuthCode);
+            // 驗證碼檢查成功，加入 Session
+            Session["ResetPwdUserId"] = Email;
+
+            return View();
+
+            //// 由信件連結回來會帶參數 verify
+
+            //if (verify == "")
+            //{
+            //    ViewData["ErrorMsg"] = "缺少驗證碼";
+            //    return View();
+            //}
+
+            //// 取得系統自定密鑰，在 Web.config 設定
+            //string SecretKey = ConfigurationManager.AppSettings["SecretKey"];
+
+            //try
+            //{
+            //    // 使用 3DES 解密驗證碼
+            //    TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+            //    MD5 md5 = new MD5CryptoServiceProvider();
+            //    byte[] buf = Encoding.UTF8.GetBytes(SecretKey);
+            //    byte[] md5result = md5.ComputeHash(buf);
+            //    string md5Key = BitConverter.ToString(md5result).Replace("-", "").ToLower().Substring(0, 24);
+            //    DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+            //    DES.Mode = CipherMode.ECB;
+            //    DES.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+            //    ICryptoTransform DESDecrypt = DES.CreateDecryptor();
+            //    byte[] Buffer = Convert.FromBase64String(verify);
+            //    string deCode = UTF8Encoding.UTF8.GetString(DESDecrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+
+            //    verify = deCode; //解密後還原資料
+            //}
+            //catch (Exception ex)
+            //{
+            //    ViewData["ErrorMsg"] = "驗證碼錯誤";
+            //    return View();
+            //}
+
+            //// 取出帳號
+            //string UserID = verify.Split('|')[0];
+
+            //// 取得重設時間
+            //string ResetTime = verify.Split('|')[1];
+
+            //// 檢查時間是否超過 30 分鐘
+            //DateTime dResetTime = Convert.ToDateTime(ResetTime);
+            //TimeSpan TS = new System.TimeSpan(DateTime.Now.Ticks - dResetTime.Ticks);
+            //double diff = Convert.ToDouble(TS.TotalMinutes);
+            //if (diff > 30)
+            //{
+            //    ViewData["ErrorMsg"] = "超過驗證碼有效時間，請重寄驗證碼";
+            //    return View();
+            //}
+
+            //// 驗證碼檢查成功，加入 Session
+            //Session["ResetPwdUserId"] = UserID;
+
+            //return View();
+        }
+
+
+        /// <summary>
+        /// 重設密碼
+        /// </summary>
+        /// <param name="inModel"></param>
+        /// <returns></returns>
+        [ValidateAntiForgeryToken]
+        public ActionResult DoResetPwd(DoResetPwdIn inModel)
+        {
+            DoResetPwdOut outModel = new DoResetPwdOut();
+
+            // 檢查是否有輸入密碼
+            if (string.IsNullOrEmpty(inModel.NewUserPwd))
+            {
+                outModel.ErrMsg = "Please enter new password";
+                return Json(outModel);
+            }
+            if (string.IsNullOrEmpty(inModel.CheckUserPwd))
+            {
+                outModel.ErrMsg = "Please check new password";
+                return Json(outModel);
+            }
+            if (inModel.NewUserPwd != inModel.CheckUserPwd)
+            {
+                outModel.ErrMsg = "new password is different from checked password";
+                return Json(outModel);
+            }
+
+            // 檢查帳號 Session 是否存在
+            if (Session["ResetPwdUserId"] == null || Session["ResetPwdUserId"].ToString() == "")
+            {
+                outModel.ErrMsg = "This email doesn't exist";
+                return Json(outModel);
+            }
+
+            //將密碼Hash
+            inModel.NewUserPwd = _MemberService.HashPassword(inModel.NewUserPwd);
+            var email = Session["ResetPwdUserId"].ToString();
+
+            using (var tran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var memberdata = db.Members.First(x => x.Email == email);
+                    memberdata.Password = inModel.NewUserPwd;
+                    db.SaveChanges();
+                    tran.Commit();
+
+                    outModel.ResultMsg = "reset password seccess";
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+
+                    outModel.ErrMsg = "reset password failure";
+                }
+            }
+            // 回傳 Json 給前端
+            return Json(outModel);
+
+
+
+            //// 將新密碼使用 SHA256 雜湊運算(不可逆)
+            //string salt = Session["ResetPwdUserId"].ToString().Substring(0, 1).ToLower(); //使用帳號前一碼當作密碼鹽
+            //SHA256 sha256 = SHA256.Create();
+            //byte[] bytes = Encoding.UTF8.GetBytes(salt + inModel.NewUserPwd); //將密碼鹽及新密碼組合
+            //byte[] hash = sha256.ComputeHash(bytes);
+            //StringBuilder result = new StringBuilder();
+            //for (int i = 0; i < hash.Length; i++)
+            //{
+            //    result.Append(hash[i].ToString("X2"));
+            //}
+            //string NewPwd = result.ToString(); // 雜湊運算後密碼
+
+            //// 取得連線字串
+            //string connStr = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
+
+            //// 當程式碼離開 using 區塊時，會自動關閉連接
+            //using (SqlConnection conn = new SqlConnection(connStr))
+            //{
+            //    // 資料庫連線
+            //    conn.Open();
+
+            //    // 修改個人資料至資料庫
+            //    string sql = @"UPDATE Member SET UserPwd = @UserPwd WHERE UserID = @UserID";
+            //    SqlCommand cmd = new SqlCommand();
+            //    cmd.Connection = conn;
+            //    cmd.CommandText = sql;
+
+            //    // 使用參數化填值
+            //    cmd.Parameters.AddWithValue("@UserID", Session["ResetPwdUserId"]);
+            //    cmd.Parameters.AddWithValue("@UserPwd", NewPwd);
+
+            //    // 執行資料庫更新動作
+            //    int Ret = cmd.ExecuteNonQuery();
+
+            //    if (Ret > 0)
+            //    {
+            //        outModel.ResultMsg = "重設密碼完成";
+            //    }
+            //    else
+            //    {
+            //        outModel.ErrMsg = "無異動資料";
+            //    }
+            //}
+
+            //// 回傳 Json 給前端
+            //return Json(outModel);
+
+
+        }
+
+
+
 
 
 

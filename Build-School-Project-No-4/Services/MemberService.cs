@@ -64,7 +64,8 @@ namespace Build_School_Project_No_4.Services
                     RegistrationDate = item.RegistrationDate,
                     Email = item.Email,
                     Password = item.Password,
-                    AuthCode = item.AuthCode
+                    AuthCode = item.AuthCode,
+                    IsAdmin = item.IsAdmin
                 });
             }
             return result;
@@ -293,6 +294,51 @@ namespace Build_School_Project_No_4.Services
             _Repo.Update(member);
             _Repo.SaveChanges();
 
+        }
+
+
+
+
+
+        //忘記密碼信箱驗證碼
+        public string EmailValidateforgetpwd(string Email, string AuthCode)
+        {
+            Members ValidateMember = GetDataByAccount(Email);
+
+            string ValidateStr = string.Empty;
+            if (ValidateMember != null)
+            {
+
+                if (ValidateMember.AuthCode == AuthCode)
+                {
+
+                    using (EPalContext _ctx = new EPalContext())
+                    {
+                        var m = _ctx.Members.ToList().Find(x => x.Email.Equals(Email));
+                        try
+                        {
+                            m.AuthCode = string.Empty;
+                            _ctx.SaveChanges();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message.ToString());
+                        }
+
+                        ValidateStr = "忘記密碼信箱驗證成功，請重新修改密碼";
+                    }
+                }
+                else
+                {
+                    ValidateStr = "驗證碼錯誤或已經過認證，請重新確認";
+                }
+            }
+            else
+            {
+                ValidateStr = "傳送資料有誤，請重新確認";
+            }
+            return ValidateStr;
         }
 
     }
