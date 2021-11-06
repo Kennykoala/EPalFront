@@ -714,6 +714,341 @@ footer #address {
         display:none;
     }
 
+
+
+
+    /*手機登入*/
+    #loginmodal {
+        border-color: transparent;
+        padding-left: 20px;
+    }
+
+    #loginmodal .loginiconphone {
+        margin-bottom: -2px;
+    }
+
+    #signupmodal {
+        border-color: transparent;
+        background-color: transparent;
+        padding-left: 20px;
+    }
+
+    #logoutbutton {
+        border-color: transparent;
+        background-color: transparent;
+        color: white;
+        padding-left: 10px;
+    }
+
+    #logoutbutton .logouticonphone {
+        margin-bottom: -4px;
+    }
+
+
+    /*手機個人資訊*/
+    .navbar-right-phone .personal-account {
+        display: flex;
+        box-sizing: border-box;
+        /*margin-left: 8px;*/
+    }
+
+    .navbar-right-phone .personal-account .personal-img {
+        height: 60px;
+        width: 60px;
+        position: relative;
+        bottom: 4px;
+        right: 5%;
+        /*padding-left:10px;*/
+    }
+
+    .navbar-right-phone .personal-account .personal-img img {
+        position: absolute;
+        display: block;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 50%;
+        max-width: 55px;
+        height: 55px;
+    }
+
+    .navbar-right-phone .personal-account .aside-Menu {
+        position: absolute;
+        height: 100vh;
+        /*top: 0%;*/
+        bottom: 0%;
+        right: -100%;
+        background-color: #21212C;
+        transition: .5s;
+        z-index: 100;
+        width: 100%;
+    }
+
+
+
+    .aside-Menu .userinfo {
+        display: flex;
+        margin: 25px 25px 10px;
+    }
+
+    .aside-Menu .userinfo .user-photo {
+        width: 50px;
+        margin-right: 10px;
+        height: 50px;
+        position: relative;
+    }
+
+    .aside-Menu .userinfo .user-photo img {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .aside-Menu .userinfo .uesr-account-name {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .aside-Menu .userinfo .uesr-account-name a {
+        text-decoration: none;
+        color: white;
+        display: block;
+    }
+
+    .aside-Menu .userinfo .aside-close {
+        font-size: 12px;
+        margin-left: auto;
+    }
+
+    .aside-Menu .online-wrapper {
+        margin: 10px 25px;
+    }
+
+    .aside-Menu .online-wrapper .btn {
+        width: 100%;
+        height: 40px;
+        line-height: 25px;
+        border-radius: 50px;
+        border: 0;
+        background-color: #120E1B;
+        color: white;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .aside-Menu .online-wrapper .btn img {
+        width: 20px;
+        padding-right: 10px;
+        display: inline-block;
+    }
+
+    .aside-Menu .online-wrapper .dropdown-menu {
+        background-color: #21212C;
+    }
+
+    .aside-Menu .online-wrapper .dropdown-menu .dropdown-item {
+        color: white;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .aside-Menu .online-wrapper .dropdown-menu li .dropdown-item:hover {
+        background-color: #120E1B;
+    }
+
+    .aside-Menu .online-wrapper .dropdown-menu img {
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+        display: inline-block;
+    }
+
+
+
+    .aside-Menu .info-wrapper {
+        display: flex;
+        margin: 25px 15px 20px;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .aside-Menu .info-wrapper .infosta {
+        cursor: pointer;
+        width: 24.5%;
+        text-decoration: none;
+    }
+
+    .aside-Menu .info-wrapper .infosta:hover {
+        background-color: #120E1B;
+    }
+
+            /*            .aside-Menu .info-wrapper .infosta:not(:first-child)::after {
+                content: "";
+                background: white;
+                position: absolute;
+                bottom: 10px;
+                height: 35%;
+                width: 0.5px;
+                
+            }*/
+
+    .aside-Menu .info-wrapper .infosta .num {
+        font-size: 20px;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+    }
+
+    .aside-Menu .info-wrapper .infosta .txt {
+        font-size: 13px;
+        color: #a4a4d1;
+        font-weight: 200;
+        text-align: center;
+        padding-top: 10px;
+        text-decoration: none;
+    }
+
+
+
+
+    .aside-Menu .money-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 15px 10px;
+        background-color: #120E1B;
+        align-items: center;
+    }
+
+    .aside-Menu .money-wrapper::after {
+        content: '';
+        display: inline-block;
+        width: 93%;
+        height: .5px;
+        position: absolute;
+        top: 310px;
+        border: .1px solid gray;
+    }
+
+    .aside-Menu .money-wrapper .money-item {
+        padding: 15px 25px;
+        width: 50%;
+    }
+
+    .aside-Menu .money-wrapper .money-item a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .aside-Menu .money-wrapper .money-item img {
+        width: 30px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .aside-Menu .money-wrapper .money-item .txt {
+        font-weight: 500;
+        font-size: 14px;
+        text-align: center;
+        padding-top: 7px;
+    }
+
+    .aside-Menu .member-wrapper {
+        margin: 25px 10px;
+    }
+
+    .aside-Menu .member-wrapper .makemember {
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+    .aside-Menu .member-wrapper .makemember a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .aside-Menu .member-wrapper #epalplus {
+        background-image: url('../images/layout/epalplus.png');
+        height: 110px;
+        background-repeat: no-repeat;
+    }
+
+    .aside-Menu .member-wrapper #anepal {
+        background-image: url('../images/layout/anepal.png');
+        height: 110px;
+        background-repeat: no-repeat;
+    }
+
+    .aside-Menu .member-wrapper .makemember p {
+        font-weight: 300;
+        line-height: 1.5;
+        padding-left: 60px;
+    }
+
+    .aside-Menu .member-wrapper .makemember #plustxt {
+        padding-top: 60px;
+        font-size: 15px;
+    }
+
+    .aside-Menu .member-wrapper .makemember #anepaltxt1 {
+        padding-top: 22px;
+        padding-left: 72px;
+        font-size: 24px;
+    }
+
+    .aside-Menu .member-wrapper .makemember #anepaltxt2 {
+        font-size: 15px;
+    }
+
+    .aside-Menu .member-wrapper::after {
+        content: '';
+        display: inline-block;
+        width: 93%;
+        height: .5px;
+        position: absolute;
+        top: 565px;
+        right: 19px;
+        border: .1px solid gray;
+    }
+
+    .aside-Menu .setting-wrappers {
+        display: flex;
+        cursor: pointer;
+        margin: 30px 20px;
+        border-radius: 3px;
+        padding: 5px 0;
+    }
+
+    .aside-Menu .setting-wrappers:hover {
+        background-color: #120E1B;
+    }
+
+    .aside-Menu .setting-wrappers .settingimg {
+        padding-right: 5px;
+    }
+
+
+    .aside-Menu .setting-wrappers .settingimg a {
+        text-decoration: none;
+        color: white;
+        display: block;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .aside-Menu .setting-wrappers .settingimg a i {
+        font-size: 16px;
+    }
+
+    .aside-Menu .setting-wrappers .settingimg a i:hover {
+        color: white;
+    }
+
+
 }
 
 @media screen and (min-width:768px) {

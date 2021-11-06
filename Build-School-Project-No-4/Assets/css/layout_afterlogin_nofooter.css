@@ -625,17 +625,7 @@ footer {
 
     .navbar {
         display: none;
-/*        position:fixed;
-        bottom:10px;
-        z-index:500;
-        background-color:transparent;*/
     }
-/*    .navbar .logo,
-    .navbar .navbar-left,
-    .search, 
-    .becomeEPal-button {
-        display: none;
-    }*/
 
     .navbar-sm {
         background-color: #302F3D;
@@ -645,7 +635,7 @@ footer {
         position: fixed;
         bottom: 0;
         width: 100%;
-        z-index: 100;
+        z-index: 999;
     }
 
     .navbar-sm i {
@@ -688,32 +678,14 @@ footer {
         display:none;
     }
 
-/*    .navbar-right .loginbtn {
-        width: 80px;
-        margin-left: 24px;
-        border: 1px solid white;
-        font-size: 13px;
-        font-weight: 600;
-        position:absolute;
-        bottom:50px;
-        right:50px;
-    }*/
 
-/*    #logsign-modal-button-phone{
-        display:block;
-    }
-    .logsign-modal-button {
-        position: absolute;
-        bottom: 50px;
-        right: 50px;
-    }
-    .navbar-sm .row {
-        position:relative;
-    }*/
-
+    /*手機登入*/
     #loginmodal {
         border-color: transparent;
         padding-left: 20px;
+    }
+    #loginmodal .loginiconphone {
+        margin-bottom: -2px;
     }
     #signupmodal {
         border-color: transparent;
@@ -724,41 +696,41 @@ footer {
         border-color: transparent;
         background-color: transparent;
         color: white;
-        padding-left: 20px;
+        padding-left:10px;
     }
-
-
-
+    #logoutbutton .logouticonphone{
+        margin-bottom:-4px;
+    }
 
 
     /*手機個人資訊*/
     .navbar-right-phone .personal-account {
         display: flex;
         box-sizing: border-box;
-        margin-left: 8px;
+        /*margin-left: 8px;*/
     }
 
-        .navbar-right-phone .personal-account .personal-img {
-            height: 60px;
-            width: 60px;
-            position: absolute;
-            bottom: 23px;
-            right: 90px;
-            padding-left:10px;
-        }
+    .navbar-right-phone .personal-account .personal-img {
+        height: 60px;
+        width: 60px;
+        position: relative;
+        bottom: 4px;
+        right: 5%;
+        /*padding-left:10px;*/
+    }
 
-            .navbar-right-phone .personal-account .personal-img img {
-                position: absolute;
-                display: block;
-                margin: auto;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-                border-radius: 50%;
-                max-width: 55px;
-                height: 55px;
-            }
+    .navbar-right-phone .personal-account .personal-img img {
+        position: absolute;
+        display: block;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 50%;
+        max-width: 55px;
+        height: 55px;
+    }
 
         .navbar-right-phone .personal-account .aside-Menu {
             position: absolute;
@@ -769,6 +741,7 @@ footer {
             background-color: #21212C;
             transition: .5s;
             z-index: 100;
+            width:100%;
         }
 
 
@@ -872,14 +845,15 @@ footer {
                 background-color: #120E1B;
             }
 
-            .aside-Menu .info-wrapper .infosta:not(:first-child)::after {
+/*            .aside-Menu .info-wrapper .infosta:not(:first-child)::after {
                 content: "";
                 background: white;
                 position: absolute;
                 bottom: 10px;
                 height: 35%;
                 width: 0.5px;
-            }
+                
+            }*/
 
             .aside-Menu .info-wrapper .infosta .num {
                 font-size: 20px;
@@ -958,11 +932,13 @@ footer {
         .aside-Menu .member-wrapper #epalplus {
             background-image: url('../images/layout/epalplus.png');
             height: 110px;
+            background-repeat: no-repeat;
         }
 
         .aside-Menu .member-wrapper #anepal {
             background-image: url('../images/layout/anepal.png');
             height: 110px;
+            background-repeat: no-repeat;
         }
 
         .aside-Menu .member-wrapper .makemember p {
@@ -1013,15 +989,21 @@ footer {
             padding-right: 5px;
         }
 
-            .aside-Menu .setting-wrappers .settingimg a {
-                text-decoration: none;
-                color: white;
-                display: block;
-                font-size: 16px;
-                font-weight: 300;
-            }
 
+    .aside-Menu .setting-wrappers .settingimg a {
+        text-decoration: none;
+        color: white;
+        display: block;
+        font-size: 16px;
+        font-weight: 300;
+    }
 
+    .aside-Menu .setting-wrappers .settingimg a i {
+        font-size: 16px;        
+    }
+    .aside-Menu .setting-wrappers .settingimg a i:hover {
+        color: white;
+    }
 
 }
 

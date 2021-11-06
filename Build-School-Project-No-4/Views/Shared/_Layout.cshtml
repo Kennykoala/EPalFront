@@ -76,9 +76,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-white navItem" href="@Url.Action("Live","Chill")">Chill</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link text-white navItem" href="#">Posts</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link text-white navItem" href="@Url.Action("BecomeEPalPage","becomeepal")">Creator Project</a>
                     </li>
@@ -155,7 +152,6 @@
                     {
                         @*<div style="color:white">@(User.Identity.Name)</div>*@
                         @*<li>@Html.ActionLink("變更密碼", "ChangePassword", "Members")</li>*@
-                        @*<div>@Html.ActionLink("Log out", "Logout", "Members")</div>*@
                         <input type="button" value="Log out" class="logoutbtn" onclick="location.href='@Url.Action("Logout", "Members")'" />
 
 
@@ -326,15 +322,6 @@
                                         </div>
                                     </a>
 
-                                    @*<div class="infosta" id="vistors">
-                                        <div class="num">2</div>
-                                        <div class="txt">Vistors</div>
-                                    </div>
-                                    <div class="infosta" id="medals">
-                                        <div class="num">3</div>
-                                        <div class="txt">Medals</div>
-                                    </div>*@
-
                                 </div>
 
                                 <div class="money-wrapper">
@@ -350,18 +337,7 @@
                                             <div class="txt">Created Order</div>
                                         </a>
                                     </div>
-                                    @*<div class="money-item" id="wallet">
-                                        <a href="@Url.Action("Wallet", "epalAccount")">
-                                            <img src="~/Assets/images/layout/walleticon.png" alt="wallet">
-                                            <div class="txt">Wallet</div>
-                                        </a>
-                                    </div>*@
-                                    @*<div class="money-item" id="coupons">
-                <a href="#">
-                    <img src="~/Assets/images/layout/couponicon.png" alt="coupon">
-                    <div class="txt">Coupons</div>
-                </a>
-            </div>*@
+
                                 </div>
 
                                 <div class="member-wrapper">
@@ -382,10 +358,9 @@
                                 <div class="setting-wrappers">
                                     <div class="settingimg">
                                         <a href="~/Members/EditProfile/@userid">
-                                            <i class="fas fa-cog"></i>Settings
+                                            <i class="fas fa-cog"></i>Account Settings
                                         </a>
-                                    </div>
-                                    @*<div class="txt">Settings</div>*@
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
@@ -515,23 +490,13 @@
                         <button id="GOOGLE_login" class="btn" style="background-color:transparent;">
                             <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
                         </button>
-                        @*<button id="GOOGLE_login" class="btn">
-                                <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
-                            </button>*@
-                        @*<a href="#"><img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google"></a>*@
-                        @*<a href="#"><i class="fab fa-twitch"></i></a>
-                            <a href="#"><i class="fab fa-discord"></i></a>*@
                         <button id="FB_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-facebook"></i>
                         </button>
-                        @*<a href="#"><i class="fab fa-facebook"></i></a>*@
-                        @*<a href="#"><i class="fab fa-apple"></i></a>*@
                         <button id="Line_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-line"></i>
                         </button>
-                        @*<a href="#"><i class="fab fa-line"></i></a>*@
                     </div>
-                    <span id="GOOGLE_STATUS_2"></span>
                 </div>
 
             </div>
@@ -830,22 +795,192 @@
                         </a>
                     </div>
                 </div>
-                @*<div class="col">
-                    <div class="item">
-                        <a href="@Url.Action("ChatForPhonePage","ChatForPhone")">
-                            <i class="far fa-comment-dots"></i>
-                            Chat
-                        </a>
+
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div class="col">
+                        <div class="item">
+                            <button type="button" class="loginbtn text-white modalbutton modalbuttonPhone" data-bs-toggle="modal"
+                                    data-bs-target="#myModal" id="loginmodal">
+                                <i class="fas fa-sign-in-alt loginiconphone"></i>
+                                LogIn
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="item">
-                        <a href="@Url.Action("MeForPhonePage","MeForPhone")">
-                            <i class="fas fa-user"></i>
-                            Me
-                        </a>
+                    <div class="col">
+                        <div class="item">
+                            <button type="button" class="loginbtn text-white modalbutton modalbuttonPhone" data-bs-toggle="modal"
+                                    data-bs-target="#myModal" id="signupmodal">
+                                <i class="fas fa-user-plus"></i>
+                                SignUp
+                            </button>
+                        </div>
                     </div>
-                </div>*@
+
+                }
+                else
+                {
+                    @*<div style="color:white">@(User.Identity.Name)</div>*@
+                    @*<li>@Html.ActionLink("變更密碼", "ChangePassword", "Members")</li>*@
+                    <div class="col">
+                        <div class="item">
+                            <button type="button" value="Log out" class="logoutbtn" id="logoutbutton" onclick="location.href='@Url.Action("Logout", "Members")'">
+                                <i class="fas fa-sign-out-alt logouticonphone"></i>
+                                LogOut
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="item navbar-right-phone">
+
+                            @*個人帳戶資訊*@
+                            <div class="personal-account">
+                                <div class="personal-img">
+                                    @if (avatar == null)
+                                    {
+                                        <img src="~/Assets/images/layout/avatar.png" style="cursor:pointer" onclick="PersonalOpenPhone()" id="navbarAvatar">
+                                    }
+                                    else
+                                    {
+                                        <img src="@avatar" style="cursor:pointer" onclick="PersonalOpenPhone()" id="navbarAvatar">
+                                    }
+                                </div>
+                                <div class="aside-Menu">
+                                    <div class="userinfo">
+                                        <div class="user-photo">
+                                            <a href="~/Members/profile/@userid">
+                                                @if (avatar == null)
+                                                {
+                                                    <img src="~/Assets/images/layout/avatar.png" alt="userphoto">
+                                                }
+                                                else
+                                                {
+                                                    <img src=@avatar alt="userphoto">
+                                                }
+
+                                            </a>
+                                        </div>
+                                        <div class="uesr-account-name">
+                                            <a href="~/Members/profile/@userid">
+                                                <div style="color:white">@(User.Identity.Name)</div>
+                                            </a>
+                                        </div>
+                                        <div class="aside-close">
+                                            <button type="button" class="btn-close btn-close-white" aria-label="Close"
+                                                    onclick="PersonalClosePhone()"></button>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="online-wrapper">
+                                        @if (status == 2)
+                                        {
+                                            <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                            </a>
+                                        }
+
+                                        <ul class="dropdown-menu">
+
+                                            <li>
+                                                <button class="dropdown-item statusbtn" type="button" value="1">
+                                                    <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item statusbtn" type="button" value="2">
+                                                    <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                                </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="info-wrapper">
+                                        <a href="@Url.Action("Followings","Members")" class="infosta">
+                                            <div class="" id="followers">
+                                                <div class="num">@followers</div>
+                                                <div class="txt">Followers</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="@Url.Action("Followings","Members")" class="infosta">
+                                            <div class="" id="followings">
+                                                <div class="num">@followings</div>
+                                                <div class="txt">Followings</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
+                                            <div class="" id="meetmatches">
+                                                <div class="num">@matches</div>
+                                                <div class="txt">Chill Matches</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
+                                            <div class="" id="meetlikes">
+                                                <div class="num">@likes</div>
+                                                <div class="txt">Chill Likes</div>
+                                            </div>
+                                        </a>
+
+                                    </div>
+
+                                    <div class="money-wrapper">
+                                        <div class="money-item" id="order">
+                                            <a href="~/Order/PurchasedOrderSummary/1">
+                                                <img src="~/Assets/images/layout/ordericon.png" alt="order">
+                                                <div class="txt">Purchased Order</div>
+                                            </a>
+                                        </div>
+                                        <div class="money-item" id="order">
+                                            <a href="~/Order/CreatedOrderSummary/1">
+                                                <img src="~/Assets/images/layout/ordericon.png" alt="order">
+                                                <div class="txt">Created Order</div>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="member-wrapper">
+                                        <div class="makemember" id="epalplus">
+                                            <a href="#">
+                                                <p id="plustxt">4.99 Buff for 14 privileges</p>
+                                            </a>
+
+                                        </div>
+                                        <div class="makemember" id="anepal">
+                                            <a href="@Url.Action("BecomeEPalPage","becomeepal")">
+                                                <p id="anepaltxt1">Become an ePal</p>
+                                                <p id="anepaltxt2">Earn extra cash by gaming with others.</p>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-wrappers">
+                                        <div class="settingimg">
+                                            <a href="~/Members/EditProfile/@userid">
+                                                <i class="fas fa-cog">Account Settings</i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
             </div>
         </div>
     </nav>

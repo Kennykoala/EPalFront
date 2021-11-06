@@ -77,9 +77,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-white navItem" href="@Url.Action("Live","Chill")">Chill</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link text-white navItem" href="#">Posts</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link text-white navItem" href="@Url.Action("BecomeEPalPage","becomeepal")">Creator Project</a>
                     </li>
@@ -139,7 +136,7 @@
 
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <div class="logsign-modal-button" id="logsign-modal-button-phone">
+                        <div class="logsign-modal-button">
                             <!-- login/signup -->
                             <!-- Button trigger modal -->
                             <button type="button" class="loginbtn text-white modalbutton" data-bs-toggle="modal"
@@ -156,7 +153,6 @@
                     {
                         @*<div style="color:white">@(User.Identity.Name)</div>*@
                         @*<li>@Html.ActionLink("變更密碼", "ChangePassword", "Members")</li>*@
-                        @*<div>@Html.ActionLink("Log out", "Logout", "Members")</div>*@
                         <input type="button" value="Log out" class="logoutbtn" id="logoutbutton" onclick="location.href='@Url.Action("Logout", "Members")'" />
 
                         <!-- right navbar message dropdown list -->
@@ -324,14 +320,6 @@
                                         </div>
                                     </a>
 
-                                    @*<div class="infosta" id="vistors">
-                                        <div class="num">2</div>
-                                        <div class="txt">Vistors</div>
-                                    </div>
-                                    <div class="infosta" id="medals">
-                                        <div class="num">3</div>
-                                        <div class="txt">Medals</div>
-                                    </div>*@
                                 </div>
 
                                 <div class="money-wrapper">
@@ -347,18 +335,7 @@
                                             <div class="txt">Created Order</div>
                                         </a>
                                     </div>
-                                    @*<div class="money-item" id="wallet">
-                                        <a href="@Url.Action("Wallet", "epalAccount")">
-                                            <img src="~/Assets/images/layout/walleticon.png" alt="wallet">
-                                            <div class="txt">Wallet</div>
-                                        </a>
-                                    </div>*@
-                                    @*<div class="money-item" id="coupons">
-                                        <a href="@Url.Action("Coupons", "Coupons")">
-                                            <img src="~/Assets/images/layout/couponicon.png" alt="coupon">
-                                            <div class="txt">Coupons</div>
-                                        </a>
-                                    </div>*@
+
                                 </div>
 
                                 <div class="member-wrapper">
@@ -379,8 +356,7 @@
                                 <div class="setting-wrappers">
                                     <div class="settingimg">
                                         <a href="~/Members/EditProfile/@userid">
-                                            <i class="fas fa-cog"></i>Settings
-                                            @*<div class="txt">Settings</div>*@
+                                            <i class="fas fa-cog"></i>Account Settings                                            
                                         </a>
                                     </div>
                                 </div>
@@ -513,24 +489,13 @@
                         <button id="GOOGLE_login" class="btn" style="background-color:transparent;">
                             <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
                         </button>
-                        @*<button id="GOOGLE_login" class="btn">
-                                <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
-                            </button>*@
-                        @*<a href="#"><img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google"></a>*@
-                        @*<a href="#"><i class="fab fa-twitch"></i></a>
-                            <a href="#"><i class="fab fa-discord"></i></a>*@
                         <button id="FB_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-facebook"></i>
                         </button>
-                        @*<a href="#"><i class="fab fa-facebook"></i></a>*@
-                        @*<a href="#"><i class="fab fa-apple"></i></a>*@
                         <button id="Line_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-line"></i>
                         </button>
-                        @*<input type="submit" class="btn btn-primary linesavetodb" name="GetUserProfile" value="取得用戶資訊" style="background-color:transparent;" />*@
-                        @*<a href="@Url.Action("LineLoginDirect","Members")" id="Line_login"><i class="fab fa-line"></i></a>*@
                     </div>
-                    @*<span id="GOOGLE_STATUS_2"></span>*@
                 </div>
 
             </div>
@@ -831,48 +796,33 @@
                 {
                     <div class="col">
                         <div class="item">
-                            <button type="button" class="loginbtn text-white modalbutton" data-bs-toggle="modal"
+                            <button type="button" class="loginbtn text-white modalbutton modalbuttonPhone" data-bs-toggle="modal"
                                     data-bs-target="#myModal" id="loginmodal">
-                                <i class="fas fa-sign-in-alt"></i>
-                                Log In
+                                <i class="fas fa-sign-in-alt loginiconphone"></i>
+                                LogIn
                             </button>
                         </div>
                     </div>
                     <div class="col">
                         <div class="item">
-                            <button type="button" class="loginbtn text-white modalbutton" data-bs-toggle="modal"
+                            <button type="button" class="loginbtn text-white modalbutton modalbuttonPhone" data-bs-toggle="modal"
                                     data-bs-target="#myModal" id="signupmodal">
                                 <i class="fas fa-user-plus"></i>
-                                Sign Up
+                                SignUp
                             </button>
                         </div>
                     </div>
 
-                    @*<div class="logsign-modal-button" id="logsign-modal-button-phone">
-                <div class="col">
-                    <button type="button" class="loginbtn text-white modalbutton" data-bs-toggle="modal"
-                            data-bs-target="#myModal" id="loginmodal">
-                        Log In
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="loginbtn text-white modalbutton" data-bs-toggle="modal"
-                            data-bs-target="#myModal" id="signupmodal">
-                        Sign Up
-                    </button>
-                </div>
-            </div>*@
                 }
                 else
                 {
                     @*<div style="color:white">@(User.Identity.Name)</div>*@
                     @*<li>@Html.ActionLink("變更密碼", "ChangePassword", "Members")</li>*@
-                    @*<div>@Html.ActionLink("Log out", "Logout", "Members")</div>*@
                     <div class="col">
                         <div class="item">
                             <button type="button" value="Log out" class="logoutbtn" id="logoutbutton" onclick="location.href='@Url.Action("Logout", "Members")'">
-                                <i class="fas fa-sign-out-alt"></i>
-                                Log out
+                                <i class="fas fa-sign-out-alt logouticonphone"></i>
+                                LogOut
                             </button>
                         </div>
                     </div>
@@ -914,12 +864,12 @@
                                         </div>
                                         <div class="aside-close">
                                             <button type="button" class="btn-close btn-close-white" aria-label="Close"
-                                                    onclick="PersonalClose()"></button>
+                                                    onclick="PersonalClosePhone()"></button>
                                         </div>
                                     </div>
 
 
-                                    <div class="online-wrapper dropstart">
+                                    <div class="online-wrapper">
                                         @if (status == 2)
                                         {
                                             <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
@@ -953,28 +903,28 @@
                                     <div class="info-wrapper">
                                         <a href="@Url.Action("Followings","Members")" class="infosta">
                                             <div class="" id="followers">
-                                                <div class="num">0</div>
+                                                <div class="num">@followers</div>
                                                 <div class="txt">Followers</div>
                                             </div>
                                         </a>
 
                                         <a href="@Url.Action("Followings","Members")" class="infosta">
                                             <div class="" id="followings">
-                                                <div class="num">1</div>
+                                                <div class="num">@followings</div>
                                                 <div class="txt">Followings</div>
                                             </div>
                                         </a>
 
                                         <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
                                             <div class="" id="meetmatches">
-                                                <div class="num">3</div>
+                                                <div class="num">@matches</div>
                                                 <div class="txt">Chill Matches</div>
                                             </div>
                                         </a>
 
                                         <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
                                             <div class="" id="meetlikes">
-                                                <div class="num">5</div>
+                                                <div class="num">@likes</div>
                                                 <div class="txt">Chill Likes</div>
                                             </div>
                                         </a>
@@ -1014,7 +964,7 @@
                                     <div class="setting-wrappers">
                                         <div class="settingimg">
                                             <a href="~/Members/EditProfile/@userid">
-                                                <i class="fas fa-cog"></i>Settings
+                                                <i class="fas fa-cog">Account Settings</i>
                                             </a>
                                         </div>
                                     </div>
@@ -1024,27 +974,8 @@
                         </div>
                     </div>
 
-
-
-
                 }
 
-                @*<div class="col">
-            <div class="item">
-                <a href="@Url.Action("ChatForPhonePage","ChatForPhone")">
-                    <i class="far fa-comment-dots"></i>
-                    Chat
-                </a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="item">
-                <a href="@Url.Action("MeForPhonePage","MeForPhone")">
-                    <i class="fas fa-user"></i>
-                    Me
-                </a>
-            </div>
-        </div>*@
             </div>
         </div>
     </nav>
