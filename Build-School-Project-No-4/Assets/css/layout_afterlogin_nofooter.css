@@ -232,7 +232,7 @@ body {
 }
 
 .modal .modal-body .emailinput {
-    width: 460px;
+    /*width: 440px;*/
     height: 40px;
     border-radius: 5px;
     margin-top: 5px;
@@ -296,7 +296,7 @@ body {
 }
 
 .modal .modal-body .passwordinput {
-    width: 460px;
+    /*width: 440px;*/
     height: 40px;
     border-radius: 5px;
     margin-top: 5px;
@@ -682,7 +682,7 @@ footer {
     /*手機登入*/
     #loginmodal {
         border-color: transparent;
-        padding-left: 10px;
+        margin-left: 3px;
     }
     #loginmodal .loginiconphone {
         margin-bottom: -2px;
@@ -691,6 +691,8 @@ footer {
         border-color: transparent;
         background-color: transparent;
         padding-left: 0px;
+        margin-left: -5px;
+        margin-right: -3px;
     }
     #logoutbutton {
         border-color: transparent;
@@ -701,6 +703,7 @@ footer {
     #logoutbutton .logouticonphone{
         margin-bottom:-4px;
     }
+
 
 
     /*手機個人資訊*/
@@ -1008,6 +1011,26 @@ footer {
 }
 
 @media screen and (min-width:768px) {
+
+    .modal .modal-body .emailinput {
+        width: 440px;
+        height: 40px;
+        border-radius: 5px;
+        margin-top: 5px;
+        background-color: #21212C;
+        color: white;
+        border: 0;
+    }
+    .modal .modal-body .passwordinput {
+        width: 440px;
+        height: 40px;
+        border-radius: 5px;
+        margin-top: 5px;
+        background-color: #21212C;
+        color: white;
+        border: 0;
+    }
+
     .me-sm {
         display: none;
     }
