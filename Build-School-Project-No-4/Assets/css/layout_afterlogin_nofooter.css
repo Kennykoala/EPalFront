@@ -647,7 +647,7 @@ footer {
     }
 
     .navbar-sm a {
-        font-weight: 300;
+        font-weight: 600;
         text-align: center;
         text-decoration: none;
         color: white;
@@ -683,8 +683,9 @@ footer {
     #loginmodal {
         border-color: transparent;
         margin-left: 3px;
-        font-size:15px;
-        color:white;
+        font-size: 15px;
+        color: white;
+        font-weight: 600;
     }
     #loginmodal .loginiconphone {
         margin-bottom: -3px;
@@ -697,12 +698,15 @@ footer {
         margin-right: -3px;
         font-size: 15px;
         color: white;
+        font-weight: 600;
     }
     #logoutbutton {
         border-color: transparent;
         background-color: transparent;
         color: white;
-        padding-left:10px;
+        padding-left: 10px;
+        font-size: 15px;
+        font-weight: 600;
     }
     #logoutbutton .logouticonphone{
         margin-bottom:-4px;
