@@ -921,19 +921,51 @@ namespace Build_School_Project_No_4.Controllers
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
+
+
+                    string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
+                    UriBuilder ValidateUrl = new UriBuilder(Request.Url)
+                    {
+                        Path = Url.Action("EmailValidate", "Members", new
+                        {
+                            Email = newMember.Email,
+                            AuthCode = AuthCode
+                        })
+                    };
+                    string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
+
+                    _MailService.SendRegisterMail(MailBody, newMember.Email);
+
+                    //用TempData儲存註冊訊息
+                    TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
+                    //重新導向頁面
+                    return RedirectToAction("RegisterResult");
+
                 }
                 //已透過第三方登入註冊過
-                else if (member != null && (member.GoogleId !="" || member.FBId != "" || member.LineId != ""))
+                //else if (member != null && (member.GoogleId != "" || member.FBId != "" || member.LineId != ""))
+                else if (member.IsAdmin == false && (member.GoogleId != "" || member.FBId != "" || member.LineId != ""))
                 {
-
                     _MemberService.UpdateThirdpartyRegister(newMember, AuthCode);
 
-                    ////將密碼Hash
-                    //newMember.Password = _MemberService.HashPassword(newMember.Password);
-                    //member.Password = newMember.Password;
-                    //member.AuthCode = AuthCode;
-                    //member.IsAdmin = true;                    
-                    //db.SaveChanges();
+                    string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
+                    UriBuilder ValidateUrl = new UriBuilder(Request.Url)
+                    {
+                        Path = Url.Action("EmailValidate", "Members", new
+                        {
+                            Email = newMember.Email,
+                            AuthCode = AuthCode
+                        })
+                    };
+                    string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
+
+                    _MailService.SendRegisterMail(MailBody, newMember.Email);
+
+                    //用TempData儲存註冊訊息
+                    TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
+                    //重新導向頁面
+                    return RedirectToAction("RegisterResult");
+
                 }
                 else
                 {
@@ -943,25 +975,6 @@ namespace Build_School_Project_No_4.Controllers
                     return RedirectToAction("RegisterResult");
                 }
 
-
-                string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
-
-                UriBuilder ValidateUrl = new UriBuilder(Request.Url)
-                {
-                    Path = Url.Action("EmailValidate", "Members", new{
-                        Email = newMember.Email,
-                        AuthCode = AuthCode
-                    })
-                };
-
-                string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
-
-                _MailService.SendRegisterMail(MailBody, newMember.Email);
-
-                //用TempData儲存註冊訊息
-                TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
-                //重新導向頁面
-                return RedirectToAction("RegisterResult");
 
             }
 
@@ -995,7 +1008,9 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult EmailValidate(string Email, string AuthCode)
         {
             ViewData["EmailValidate"] = _MemberService.EmailValidate(Email, AuthCode);
-            return Redirect("/Home/HomePage");
+            //TempData["valmsg"] = "valiOK";
+            return View();
+            //return Redirect("/Home/HomePage");
         }
 
 

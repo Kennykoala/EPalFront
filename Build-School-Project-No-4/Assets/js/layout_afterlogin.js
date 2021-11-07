@@ -86,7 +86,7 @@ window.onload = function () {
                 var OauthId = profile.getId();
                 var OauthName = profile.getName();
                 var OauthEmail = profile.getEmail();
-                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
+                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token 
                 //var LoginMethod = "1";
 
                 $.ajax({
@@ -109,19 +109,19 @@ window.onload = function () {
                             icon: "success",
                             //buttons: true,
                             //dangerMode: true
+                        }).then(function () {
+                            window.location.href = "/";
                         });
 
-                        if (msg == true) {
-                            window.location.href = '/'
-                        }
-
+                        //if (msg == true) {
+                        //    window.location.href = '/'
+                        //}
 
                     }
-                });//end $.ajax
+                });
             },
             // 登入失敗
             function (error) {
-                //$("#GOOGLE_STATUS_2").html("");
                 alert(JSON.stringify(error, undefined, 2));
                 swal.fire({
                     title: "Login Fail",
@@ -200,7 +200,7 @@ window.onload = function () {
 
 
     //資料傳到後端
-    function FBPassToServer(fbemail, fbname, fbid) {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    function FBPassToServer(fbemail, fbname, fbid) {                      
 
         var Data = JSON.stringify({
             Fbemail: `${fbemail}`,
@@ -221,11 +221,13 @@ window.onload = function () {
                     icon: "success",
                     //buttons: true,
                     //dangerMode: true
+                }).then(function () {
+                    window.location.href = "/";
                 });
 
-                if (msg == true) {
-                    window.location.href = '/'
-                }
+                //if (msg == true) {
+                //    window.location.href = '/'
+                //}
 
             },
             error: function (err) {

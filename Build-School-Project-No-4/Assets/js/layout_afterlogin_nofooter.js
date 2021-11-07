@@ -86,8 +86,7 @@ window.onload = function () {
                 var OauthId = profile.getId();
                 var OauthName = profile.getName();
                 var OauthEmail = profile.getEmail();
-                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
-                //var LoginMethod = "1";
+                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token 
 
                 $.ajax({
                     url: '/Members/GoogleLogin',
@@ -98,29 +97,29 @@ window.onload = function () {
                         OauthName: OauthName,
                         OauthEmail: OauthEmail,
                         AuthResponse: AuthResponse,
-                        //LoginMethod: "1"
                     },
                     success: function (msg) {
                         $("#myModal").modal('hide');
 
-                        console.log(msg);
+                        //console.log(msg);
                         swal.fire({
                             title: "Welcome to Epal",
                             icon: "success",
                             //buttons: true,
                             //dangerMode: true
+                        }).then(function () {
+                            window.location.href = "/";
                         });
 
-                        if (msg == true) {
-                            window.location.href = '/'
-                        }
+                        //if (msg == true) {
+                        //    window.location.href = '/'
+                        //}
                     }
-                });//end $.ajax
+                });
 
             },
             // 登入失敗
             function (error) {
-                //$("#GOOGLE_STATUS_2").html("");
                 alert(JSON.stringify(error, undefined, 2));
                 swal.fire({
                     title: "Login Fail",
@@ -220,12 +219,14 @@ window.onload = function () {
                     icon: "success",
                     //buttons: true,
                     //dangerMode: true
+                }).then(function () {
+                    window.location.href = "/";
                 });
 
 
-                if (msg == true) {
-                    window.location.href = '/'
-                }
+                //if (msg == true) {
+                //    window.location.href = '/'
+                //}
 
             },
             error: function (err) {
