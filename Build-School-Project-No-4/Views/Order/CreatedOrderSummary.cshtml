@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-2 order-statuses">
-            <div class="order-list col-md-2">
+            <div class="order-list col-12 col-md-2">
                 <div class="greyish title">Created Orders</div>
                 <div class="categories" style=" padding: 10px 10px 15px;">
                     @foreach (var m in Model.Order)
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-10">
+        <div class="col-12 col-md-10 order-summary-container">
             <div class="order-summary">
                 <div class="status">@Model.Title</div>
                 <div class="status-header greyish">
@@ -42,7 +42,7 @@
                         <div>Status </div>
                     }
                 </div>
-                <div class="cards-list-mobile">
+                @*<div class="cards-list-mobile">
                     <div class="order-card">
                         <a href="#">
                             <div class="card-top">
@@ -76,7 +76,7 @@
                             </div>
                         </a>
                     </div>
-                </div>
+                </div>*@
                 <div class="cards-list">
                     @foreach (var m in Model.CreatedCards)
                     {
@@ -251,7 +251,7 @@
                     </div>
                     -->
                 </div>
-                <div class="no-orders"></div>
+                @*<div class="no-orders"></div>*@
             </div>
         </div>
     </div>

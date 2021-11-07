@@ -210,8 +210,196 @@ hr {
     width: 80px;
 }
 
+
+@media screen and (max-width: 767px) {
+    .order-summary-container {
+        padding-bottom: 100px;
+    }
+    .order-summary {
+        padding-top: 120px;
+    }
+
+    .order-statuses {
+        padding: 0;
+    }
+
+    .order-list {
+        margin: 0;
+        /*margin-top: 60px;*/
+        padding: 0px 12px;
+        padding-top: 30px;
+        /*height: 100%;*/
+        background-color: rgb(33, 33, 44);
+        flex-direction: column;
+        overflow-x: initial;
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+
+    .categories {
+        /*flex-direction: column;*/
+        justify-content: space-between;
+    }
+
+    .title {
+        padding: 10px 10px 15px;
+        font-size: 25px;
+        font-weight: 600;
+    }
+
+    .stat-category {
+        padding: 10px;
+        margin: 0;
+    }
+
+    .selected {
+        border: none;
+        background-color: rgb(18, 14, 27);
+        border-radius: 4px;
+    }
+
+    .stat-category:hover {
+        background-color: rgb(27, 23, 39);
+        border-radius: 4px;
+    }
+
+    .order-card-lg {
+        font-size: 13px;
+    }
+
+    .order-summary {
+        margin: 30px 0px;
+    }
+
+    .status {
+        font-size: 20px;
+        margin: 15px 0;
+    }
+
+    .status-header {
+        font-size: 15px;
+    }
+
+    .cards-list-mobile {
+        display: none;
+    }
+
+    .name i {
+        display: none;
+    }
+
+    .status {
+        display: block;
+    }
+
+    .status-header {
+        display: flex;
+        justify-content: space-between;
+        background-color: rgb(33, 33, 44);
+        padding: 8px 10px;
+        border-radius: 10px;
+    }
+
+    .order-card-lg {
+        margin: 20px 0;
+    }
+
+    .cards-list {
+        margin: 15px 0;
+        display: block;
+    }
+
+    .card-info {
+        background-color: rgb(33, 33, 44);
+        padding: 8px 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .card-body {
+        background-color: rgb(48, 47, 61);
+        padding: 15px 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .u-details {
+        display: flex;
+        align-items: center;
+        background-color: rgb(18, 14, 27);
+        border-radius: 35px;
+        width: 150px;
+        height: 55px;
+    }
+
+    .user-img {
+        width: 55px;
+        height: 55px;
+        background-image: url('../images/Orders/testavatar.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 8px;
+        border-radius: 50%;
+        border: 2px solid rgb(112, 95, 247);
+    }
+
+    .order-total {
+        font-size: 15px;
+    }
+
+        .order-total img {
+            width: 18px;
+            height: 18px;
+            margin-right: 3px;
+        }
+
+    .order-button {
+        font-size: 15px;
+    }
+
+    .order-actions {
+        display: flex;
+    }
+
+        .order-actions div {
+            height: 30px;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(33, 33, 44);
+            border-radius: 50%;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .order-actions i {
+            font-size: 14px;
+        }
+
+
+    .order-status {
+        display: flex;
+        flex-direction:column;
+    }
+    .startbutton {
+        margin-bottom: 10px;
+    }
+}
+
+
 @media screen and (min-width: 768px) {
-    .order-summary{
+    .order-summary-container {
+        padding-bottom: 50px;
+    }
+    .order-summary {
         padding-top: 60px;
     }
     .order-statuses {
