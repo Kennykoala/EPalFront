@@ -647,7 +647,7 @@ footer {
     }
 
     .navbar-sm a {
-        font-weight: 100;
+        font-weight: 300;
         text-align: center;
         text-decoration: none;
         color: white;
@@ -683,9 +683,11 @@ footer {
     #loginmodal {
         border-color: transparent;
         margin-left: 3px;
+        font-size:15px;
+        color:white;
     }
     #loginmodal .loginiconphone {
-        margin-bottom: -2px;
+        margin-bottom: -3px;
     }
     #signupmodal {
         border-color: transparent;
@@ -693,6 +695,8 @@ footer {
         padding-left: 0px;
         margin-left: -5px;
         margin-right: -3px;
+        font-size: 15px;
+        color: white;
     }
     #logoutbutton {
         border-color: transparent;
