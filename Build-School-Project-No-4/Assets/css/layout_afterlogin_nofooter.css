@@ -638,6 +638,10 @@ footer {
         z-index: 999;
     }
 
+    .navbar-sm .navbar-sm-container {
+        margin-bottom:5px;
+    }
+
     .navbar-sm i {
         color: white;
         text-align: center;
@@ -684,7 +688,7 @@ footer {
         border-color: transparent;
         margin-left: 3px;
         font-size: 15px;
-        color: red;
+        color: white;
         font-weight: 600;
         outline: none;
     }
@@ -702,7 +706,7 @@ footer {
         margin-left: -5px;
         margin-right: -3px;
         font-size: 15px;
-        color: red;
+        color: white;
         font-weight: 600;
         outline: none;
     }
@@ -720,7 +724,7 @@ footer {
         outline: none;
     }
     #logoutbutton .logouticonphone{
-        margin-bottom:-3px;
+        margin-bottom:-4px;
     }
     #logoutbutton span {
         padding-bottom: 5px;
