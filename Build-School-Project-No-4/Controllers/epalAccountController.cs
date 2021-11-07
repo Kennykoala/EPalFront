@@ -23,7 +23,7 @@ namespace Build_School_Project_No_4.Controllers
 
             GroupViewModel Epalindex = new GroupViewModel
             {
-                wallets = Wallets
+                //wallets = Wallets
             };
             return View(Epalindex);
         }

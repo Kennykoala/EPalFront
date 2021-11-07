@@ -96,6 +96,7 @@ namespace Build_School_Project_No_4.ViewModels
     public class DoResetPwdIn
     {
         public string NewUserPwd { get; set; }
+
         public string CheckUserPwd { get; set; }
     }
 
@@ -108,25 +109,6 @@ namespace Build_School_Project_No_4.ViewModels
         public string ResultMsg { get; set; }
     }
 
-
-
-
-
-    //public class SignupViewModel
-    //{
-    //    [Required(ErrorMessage = "Please enter your Email")]
-    //    [EmailAddress]
-    //    public string Email { get; set; }
-
-    //    [Required(ErrorMessage = "Please enter your password")]
-    //    [DataType(DataType.Password)]
-    //    public string Password { get; set; }
-
-    //    //[DataType(DataType.Password)]
-    //    //[Display(Name = "確認密碼")]
-    //    //[Compare("Password", ErrorMessage = "密碼和確認密碼不相符。")]
-    //    //public string ConfirmPassword { get; set; }
-    //}
 
 
 }

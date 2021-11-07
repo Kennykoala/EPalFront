@@ -388,7 +388,6 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BasicInformationController.cs" />
     <Compile Include="Controllers\becomeepalController.cs" />
-    <Compile Include="Controllers\ChatForPhoneController.cs" />
     <Compile Include="Controllers\ChillController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ChillMeetApiController.cs" />
@@ -403,7 +402,6 @@
     <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="Controllers\LinePayApiController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MeForPhoneController.cs" />
     <Compile Include="Controllers\MemberFollowApiController.cs" />
     <Compile Include="Controllers\MembersApiController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
@@ -904,8 +902,6 @@
     <Content Include="Views\Shared\_Layout_nofooter.cshtml" />
     <Content Include="Views\Coupons\Coupons.cshtml" />
     <Content Include="Views\epalAccount\Wallet.cshtml" />
-    <Content Include="Views\MeForPhone\MeForPhonePage.cshtml" />
-    <Content Include="Views\ChatForPhone\ChatForPhonePage.cshtml" />
     <Content Include="Views\becomeepal\BecomeEPalPage.cshtml" />
     <Content Include="Views\Page404\Page404.cshtml" />
     <Content Include="Views\AboutUs\AboutUs.cshtml" />
@@ -956,7 +952,6 @@
     <Content Include="Views\Shared\SignupPartialPage.cshtml" />
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
-    <Content Include="Views\Members\LineResult.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
     <Content Include="Views\Members\ForgetPwd.cshtml" />
     <Content Include="Views\Members\ResetPwd.cshtml" />

@@ -55,7 +55,6 @@ namespace Build_School_Project_No_4.Services
             List<Members> members = _Repo.GetAll<Members>().ToList();
 
             List<MemberRegisterViewModel> result = new List<MemberRegisterViewModel>();
-
             foreach (var item in members)
             {
                 result.Add(new MemberRegisterViewModel
@@ -235,7 +234,7 @@ namespace Build_School_Project_No_4.Services
                 emp.LanguageId = 0;
             }
 
-            //DM -> MemberInfoViewModel -> GroupViewModel
+            //DM -> MemberInfoViewModel 
             MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
             {
                 MemberId = emp.MemberId,
@@ -259,8 +258,6 @@ namespace Build_School_Project_No_4.Services
         public LinestatusViewModel GetStatus(int memberid)
         {
             var emp = _Repo.GetAll<Members>().FirstOrDefault(x => x.MemberId == memberid);
-
-            //Members emp = db.Members.Find(memberid);
             if (emp == null)
             {
                 throw new NotImplementedException();
@@ -282,10 +279,6 @@ namespace Build_School_Project_No_4.Services
         {
             var member = _Repo.GetAll<Members>().FirstOrDefault(m => m.Email == newMember.Email);
 
-            //var member = MemberRigisterData()
-            //            .Where(m => m.Email == newMember.Email)
-            //            .FirstOrDefault();
-
             //將密碼Hash
             newMember.Password = HashPassword(newMember.Password);
             member.Password = newMember.Password;
@@ -295,8 +288,6 @@ namespace Build_School_Project_No_4.Services
             _Repo.SaveChanges();
 
         }
-
-
 
 
 

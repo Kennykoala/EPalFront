@@ -1,12 +1,5 @@
-﻿@*@{
-        ViewBag.Title = "ForgetPwd";
-    }
-
-    <h2>ForgetPwd</h2>*@
-
-
-<div id="VuePage" class="forgetpassword">
-    <!--使用 Bootstrap 設計表單-->
+﻿<div id="VuePage" class="forgetpassword container-fluid">
+    <!--Bootstrap-->
     <div class="panel panel-primary">
         <div class="panel-heading">Forget Password</div>
         <div class="panel-body">
@@ -24,7 +17,7 @@
     </div>
 
     <!--使用 Bootstrap Modal 樣式，當執行有錯誤時，顯示錯誤訊息-->
-    <div class="modal fade" id="ErrorAlert" tabindex="-1" role="dialog">
+    @*<div class="modal fade" id="ErrorAlert" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -36,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.modal -->
+    </div>*@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -51,7 +44,7 @@
             return data;
         }
         , methods: {
-            // 前端驗證權杖
+            // 前端驗證
             GetToken: function () {
                 var token = '@Html.AntiForgeryToken()';
                 token = $(token).val();
@@ -91,10 +84,9 @@
                             icon: "success",
                             //buttons: true,
                             //dangerMode: true
-                        });
-
-                        window.location.href = "/";
-
+                        }).then(function () {
+                            window.location.href = "/Home/HomePage";
+                        })
                     },
                     error: function (err) {
                         //$('#ErrorMsg').html(err.responseText);
@@ -159,10 +151,6 @@
             }
         }
 
-        @@media screen and (min-width:768px) {
-
-
-        }
 
     </style>
     
