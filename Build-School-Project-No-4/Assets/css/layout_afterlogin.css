@@ -671,7 +671,7 @@ footer #address {
         position: fixed;
         bottom: 0;
         width: 100%;
-        z-index:999;
+        z-index:1;
     }
 
     .navbar-sm i {
@@ -791,9 +791,9 @@ footer #address {
         margin-bottom: -4px;
     }
     #logoutbutton p {
-        padding-bottom: 5px;
+        padding-bottom: 1px;
         display: block;
-        margin-top:3px;
+        margin-top: -4px;
     }
 
 
