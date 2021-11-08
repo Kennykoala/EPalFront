@@ -386,7 +386,6 @@
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\BasicInformationController.cs" />
     <Compile Include="Controllers\becomeepalController.cs" />
     <Compile Include="Controllers\ChillController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
@@ -930,8 +929,6 @@
     <Content Include="Views\Members\Followings.cshtml" />
     <Content Include="Views\becomeepal\addgame _jzp.cshtml" />
     <Content Include="Views\becomeepal\addgame.cshtml" />
-    <Content Include="Views\BasicInformation\Register.cshtml" />
-    <Content Include="Views\BasicInformation\BasicInformation.cshtml" />
     <Content Include="Views\CreatorProject\BasicInformation.cshtml" />
     <Content Include="Views\CreatorProject\ChooseAService.cshtml" />
     <Content Include="Views\CreatorProject\GameInformation.cshtml" />

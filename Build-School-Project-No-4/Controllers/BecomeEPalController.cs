@@ -54,11 +54,6 @@ namespace Build_School_Project_No_4.Controllers
         [HttpGet]
         public ActionResult addgame()
         {
-            //GroupViewModel addgame = new GroupViewModel()
-            //{
-            //    addgame = new AddgameViewModel()
-            //};
-
             AddgameViewModel addVM = new AddgameViewModel()
             {
                 //planset = new List<ProductPlanSet>(),
@@ -67,18 +62,6 @@ namespace Build_School_Project_No_4.Controllers
                 PositionItems = new List<Position>(),
                 PositionSelectedId = new List<int>(),
             };
-
-            //List<ProductPlanSet> AvailabledayList = new List<ProductPlanSet>()
-            //{
-            //    new ProductPlanSet{ GameAvailableDay = "Monday", GameStartTime = null, GameEndTime=null },
-            //    new ProductPlanSet{ GameAvailableDay = "Tuesday", GameStartTime = null, GameEndTime=null },
-            //    new ProductPlanSet{ GameAvailableDay = "Wednesday", GameStartTime = null, GameEndTime=null },
-            //    new ProductPlanSet{ GameAvailableDay = "Thursday", GameStartTime = null, GameEndTime=null },
-            //    new ProductPlanSet{ GameAvailableDay = "Friday", GameStartTime = null, GameEndTime=null },
-            //    new ProductPlanSet{ GameAvailableDay = "Saturday", GameStartTime = null, GameEndTime=null },
-            //    new ProductPlanSet{ GameAvailableDay = "Sunday", GameStartTime = null, GameEndTime=null }
-            //};
-
 
             List<Server> ServerList = new List<Server>()
             {
@@ -112,9 +95,6 @@ namespace Build_School_Project_No_4.Controllers
             };
             List<int> defaultStyle = new List<int>() { 1 };
 
-
-
-            //addgame.addgame.planset = AvailabledayList;
             addVM.ServerItems = ServerList;
             addVM.ServerSelectedId = defaultServer;
             addVM.PositionItems = PositionList;
@@ -130,11 +110,7 @@ namespace Build_School_Project_No_4.Controllers
             addVM.GameAvailableDay6 = "Saturday";
             addVM.GameAvailableDay7 = "Sunday";
 
-            //string JsonDay = JsonConvert.SerializeObject(AvailabledayList);
-            //ViewBag.JsonLocations = JsonDay;
-
             return View(addVM);
-            //return View("_GameDayPartial", addgame);
         }
 
         [Authorize]
@@ -142,14 +118,12 @@ namespace Build_School_Project_No_4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult addgame(AddgameViewModel registerVM)
         {
-
                 using (var tran = _ctx.Database.BeginTransaction())
                 {
                     try
                     {
                         AddgameViewModel add = new AddgameViewModel()
                         {
-                            //planset = new List<ProductPlanSet>(),
                             ServerItems = new List<Server>(),
                             ServerSelectedId = new List<int>(),
                             PositionItems = new List<Position>(),
@@ -167,7 +141,6 @@ namespace Build_School_Project_No_4.Controllers
                             ProductImg = registerVM.ProductImg,
                             Introduction = registerVM.Introduction,
                             CreatorImg = registerVM.CreatorImg,
-                            //CreatorImg = registerVM.addgame.CreatorImg,
                             RecommendationVoice = registerVM.RecommendationVoice,
                             RankId = (int)registerVM.RankId
                         };
@@ -176,20 +149,17 @@ namespace Build_School_Project_No_4.Controllers
                         _ctx.SaveChanges();
 
 
-
                         //server
                         ProductServer serverDB = new ProductServer();
                         var serverSelected = registerVM.ServerSelectedId;
                         foreach (var item in serverSelected)
                         {
-                            //.username = comboUserName3.SelectedValue.ToString();
                             serverDB.ProductId = product.ProductId;
 
                             string selectedItem = item.ToString();
                             int val = int.Parse(selectedItem);
                             serverDB.ServerId = val;
-                            ////grp.iscurrent = true;
-                            //grp.dateadded = DateTime.Now;
+
                             _ctx.ProductServer.Add(serverDB);
                             _ctx.SaveChanges();                            
                         }
@@ -200,14 +170,13 @@ namespace Build_School_Project_No_4.Controllers
                         var positionSelected = registerVM.PositionSelectedId;
                         foreach (var item in positionSelected)
                         {
-                            //.username = comboUserName3.SelectedValue.ToString();
+
                             positionDB.ProductId = product.ProductId;
 
                             string selectedItem = item.ToString();
                             int val = int.Parse(selectedItem);
                             positionDB.PositionId = val;
-                            ////grp.iscurrent = true;
-                            //grp.dateadded = DateTime.Now;
+
                             _ctx.ProductPosition.Add(positionDB);
                             _ctx.SaveChanges();
                         }
@@ -218,14 +187,12 @@ namespace Build_School_Project_No_4.Controllers
                         var styleSelected = registerVM.StyleSelectedId;
                         foreach (var item in styleSelected)
                         {
-                            //.username = comboUserName3.SelectedValue.ToString();
                             styleDB.ProductId = product.ProductId;
 
                             string selectedItem = item.ToString();
                             int val = int.Parse(selectedItem);
                             styleDB.StyleId = val;
-                            ////grp.iscurrent = true;                            
-                            //grp.dateadded = DateTime.Now;
+
                             _ctx.ProductStyle.Add(styleDB);
                             _ctx.SaveChanges();
                         }
@@ -234,7 +201,6 @@ namespace Build_School_Project_No_4.Controllers
                         //plan
                         ProductPlans productplan1 = new ProductPlans
                         {
-                            //.ToShortTimeString()
                             ProductId = product.ProductId,
                             GameAvailableDay = registerVM.GameAvailableDay1,
                             GameStartTime = registerVM.GameStartTime1,
@@ -331,12 +297,9 @@ namespace Build_School_Project_No_4.Controllers
                         }
 
                         tran.Commit();
-                        //Response.Write("<script language=javascript>alert('123');</" + "script>");
+
                         TempData["message"] = "success";
                         return RedirectToAction("BecomeEPalPage", "becomeepal");
-
-                        //string script = "window.onload = function () {swal.fire({title: 'Create Game Success', icon: 'success'}); }";
-                        //return JavaScript(script);
 
                     }
                     catch (Exception ex)
@@ -345,7 +308,6 @@ namespace Build_School_Project_No_4.Controllers
                         TempData["msg"] = "fail";
                         return RedirectToAction("BecomeEPalPage", "becomeepal");
 
-                        //return Content("創建商品失敗:" + ex.ToString());
                     }
 
                 }
