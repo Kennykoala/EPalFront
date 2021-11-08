@@ -628,15 +628,15 @@ footer {
     }
 
     .navbar-sm {
-        /*background-color: #302F3D;*/
-        background-color: transparent;
+        background-color: #302F3D;
+        /*background-color: transparent;*/
         border-bottom: 1px solid #302F3D;
         box-shadow: -2px -1px 5px #333333;
         padding: 10px 0 25px;
         position: fixed;
         bottom: 0;
         width: 100%;
-        z-index: 1;
+        z-index: 999;
     }
 
     .navbar-sm .navbar-sm-container {
@@ -699,7 +699,8 @@ footer {
     }
         #loginmodal p {
             padding-bottom: 5px;
-            color:white;
+            display: block;
+            color: white;
         }
 
     #signupmodal {
@@ -715,6 +716,7 @@ footer {
     }
         #signupmodal p {
             padding-bottom: 5px;
+            display: block;
             color: white;
         }
 
