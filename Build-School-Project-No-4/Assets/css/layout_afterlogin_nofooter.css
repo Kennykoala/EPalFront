@@ -697,9 +697,10 @@ footer {
     #loginmodal .loginiconphone {
         margin-bottom: -3px;
     }
-    #loginmodal p {
-        padding-bottom: 5px;
-    }
+        #loginmodal p {
+            padding-bottom: 5px;
+            color:white;
+        }
 
     #signupmodal {
         border-color: transparent;
@@ -712,9 +713,10 @@ footer {
         font-weight: 600;
         outline: none;
     }
-    #signupmodal p {
-        padding-bottom: 5px;
-    }
+        #signupmodal p {
+            padding-bottom: 5px;
+            color: white;
+        }
 
     #logoutbutton {
         border-color: transparent;
@@ -728,11 +730,12 @@ footer {
     #logoutbutton .logouticonphone{
         margin-bottom:2px;
     }
-    #logoutbutton p {
-        padding-bottom: 1px;
-        display: block;
-        margin-top: -4px;
-    }
+        #logoutbutton p {
+            padding-bottom: 1px;
+            display: block;
+            margin-top: -4px;
+            color: white;
+        }
 
 
     /*手機個人資訊*/

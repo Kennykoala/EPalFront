@@ -760,9 +760,10 @@ footer #address {
     #loginmodal .loginiconphone {
         margin-bottom: -3px;
     }
-    #loginmodal p {
-        padding-bottom: 5px;
-    }
+        #loginmodal p {
+            padding-bottom: 5px;
+            color: white;
+        }
 
     #signupmodal {
         border-color: transparent;
@@ -775,9 +776,10 @@ footer #address {
         font-weight: 600;
         outline: none;
     }
-    #signupmodal p {
-        padding-bottom: 5px;
-    }
+        #signupmodal p {
+            padding-bottom: 5px;
+            color: white;
+        }
 
     #logoutbutton {
         border-color: transparent;
@@ -791,11 +793,12 @@ footer #address {
     #logoutbutton .logouticonphone {
         margin-bottom: -4px;
     }
-    #logoutbutton p {
-        padding-bottom: 1px;
-        display: block;
-        margin-top: -4px;
-    }
+        #logoutbutton p {
+            padding-bottom: 1px;
+            display: block;
+            margin-top: -4px;
+            color: white;
+        }
 
 
 
