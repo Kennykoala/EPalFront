@@ -756,12 +756,10 @@ footer #address {
         font-weight: 600;
         outline: none;
     }
-
     #loginmodal .loginiconphone {
         margin-bottom: -3px;
     }
-
-    #loginmodal span {
+    #loginmodal p {
         padding-bottom: 5px;
     }
 
@@ -776,8 +774,7 @@ footer #address {
         font-weight: 600;
         outline: none;
     }
-
-    #signupmodal span {
+    #signupmodal p {
         padding-bottom: 5px;
     }
 
@@ -790,12 +787,10 @@ footer #address {
         font-weight: 600;
         outline: none;
     }
-
     #logoutbutton .logouticonphone {
         margin-bottom: -4px;
     }
-
-    #logoutbutton span {
+    #logoutbutton p {
         padding-bottom: 5px;
     }
 
