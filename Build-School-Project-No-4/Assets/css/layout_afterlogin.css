@@ -664,14 +664,15 @@ footer #address {
     }
 
     .navbar-sm {
-        background-color: #302F3D;
+        /*background-color: #302F3D;*/
+        background-color: transparent;
         border-bottom: 1px solid #302F3D;
         box-shadow: -2px -1px 5px #333333;
         padding: 10px 0 25px;
         position: fixed;
         bottom: 0;
         width: 100%;
-        z-index:1;
+        z-index: 1;
     }
 
     .navbar-sm i {
