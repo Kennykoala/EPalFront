@@ -725,10 +725,12 @@ footer {
         outline: none;
     }
     #logoutbutton .logouticonphone{
-        margin-bottom:-1px;
+        margin-bottom:2px;
     }
     #logoutbutton p {
         padding-bottom: 5px;
+        display: block;
+        margin-top: 3px;
     }
 
 
