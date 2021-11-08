@@ -693,6 +693,7 @@ footer {
         font-size: 15px;
         font-weight: 600;
         outline: none;
+        height: auto;
     }
     #loginmodal .loginiconphone {
         margin-bottom: -3px;
@@ -713,6 +714,7 @@ footer {
         font-size: 15px;
         font-weight: 600;
         outline: none;
+        height: auto;
     }
         #signupmodal p {
             padding-bottom: 5px;
