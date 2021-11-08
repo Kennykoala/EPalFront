@@ -696,10 +696,10 @@ footer {
         height: auto;
     }
     #loginmodal .loginiconphone {
-        margin-bottom: -3px;
+        margin-bottom: -2px;
     }
         #loginmodal p {
-            padding-bottom: 5px;
+            padding-bottom: 1px;
             display: block;
             color: white;
         }
