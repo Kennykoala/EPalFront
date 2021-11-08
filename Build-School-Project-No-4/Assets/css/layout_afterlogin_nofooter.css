@@ -686,9 +686,10 @@ footer {
     /*手機登入*/
     #loginmodal {
         border-color: transparent;
+        background-color: transparent;
+        color: white;
         margin-left: 3px;
         font-size: 15px;
-        color: white;
         font-weight: 600;
         outline: none;
     }
@@ -702,11 +703,11 @@ footer {
     #signupmodal {
         border-color: transparent;
         background-color: transparent;
+        color: white;
         padding-left: 0px;
         margin-left: -5px;
         margin-right: -3px;
         font-size: 15px;
-        color: white;
         font-weight: 600;
         outline: none;
     }

@@ -718,7 +718,7 @@ footer #address {
 
 
     /*手機登入*/
-    #loginmodal {
+/*    #loginmodal {
         border-color: transparent;
         margin-left: 3px;
     }
@@ -745,7 +745,59 @@ footer #address {
     #logoutbutton .logouticonphone {
         margin-bottom: -4px;
     }
+*/
 
+    #loginmodal {
+        border-color: transparent;
+        background-color: transparent;
+        color: white;
+        margin-left: 3px;
+        font-size: 15px;
+        font-weight: 600;
+        outline: none;
+    }
+
+    #loginmodal .loginiconphone {
+        margin-bottom: -3px;
+    }
+
+    #loginmodal span {
+        padding-bottom: 5px;
+    }
+
+    #signupmodal {
+        border-color: transparent;
+        background-color: transparent;
+        color: white;
+        padding-left: 0px;
+        margin-left: -5px;
+        margin-right: -3px;
+        font-size: 15px;
+        font-weight: 600;
+        outline: none;
+    }
+
+    #signupmodal span {
+        padding-bottom: 5px;
+    }
+
+    #logoutbutton {
+        border-color: transparent;
+        background-color: transparent;
+        color: white;
+        padding-left: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        outline: none;
+    }
+
+    #logoutbutton .logouticonphone {
+        margin-bottom: -4px;
+    }
+
+    #logoutbutton span {
+        padding-bottom: 5px;
+    }
 
 
 
