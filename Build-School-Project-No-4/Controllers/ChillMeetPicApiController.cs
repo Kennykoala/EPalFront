@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace Build_School_Project_No_4.Controllers
 {
@@ -15,6 +16,9 @@ namespace Build_School_Project_No_4.Controllers
 
         public IHttpActionResult PostMeetAvater([FromBody] ProfileViewModel Data)
         {
+           
+            //}
+
             Members member = db.Members.First(x => x.MemberId == Data.MemberId);
 
             using (var tran = db.Database.BeginTransaction())

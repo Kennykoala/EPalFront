@@ -15,6 +15,9 @@ namespace Build_School_Project_No_4.Controllers
 
         public IHttpActionResult PostSwiperResult([FromBody] ChillMeetViewModel swiperData)
         {
+
+          
+
             var testLikeId = swiperData.LikeId;
             var testMemberId = swiperData.UserId;
 
