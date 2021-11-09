@@ -240,6 +240,10 @@ hr {
     .categories {
         /*flex-direction: column;*/
         justify-content: space-between;
+        width:100%;
+    }
+    .categories span {
+        font-size:12px;
     }
 
     .title {
@@ -351,7 +355,7 @@ hr {
     }
 
     .order-total {
-        font-size: 15px;
+        font-size: 13px;
     }
 
         .order-total img {
@@ -365,7 +369,8 @@ hr {
     }
 
     .order-actions {
-        display: flex;
+        /*display: flex;*/
+        display: none;
     }
 
         .order-actions div {
@@ -387,10 +392,21 @@ hr {
 
     .order-status {
         display: flex;
-        flex-direction:column;
+        flex-direction: column;
     }
     .startbutton {
         margin-bottom: 10px;
+        width: 60px;
+        
+    }
+    .deletebtn {
+        width: 60px;
+    }
+    .finishbtn {
+        width: 60px;
+    }
+    .options{
+        display:none;
     }
 }
 
