@@ -80,10 +80,7 @@ namespace Build_School_Project_No_4.Controllers
                 var profiles = new ProfileEpalService();
                 var profileGetAll = profiles.GetProfiles(memberId);
 
-                //GroupViewModel profileContent = new GroupViewModel
-                //{
-                //    Profiles = profileGetAll
-                //};
+ 
                 return View(profileGetAll);
 
             }
@@ -96,15 +93,23 @@ namespace Build_School_Project_No_4.Controllers
 
         public ActionResult Followings()
         {
-            var memberGet = new FollowService();
-            var members = memberGet.GetMemberFollow();
-            var Followers = memberGet.GetMemberFollowers();
+            int memberId;
+            bool IsSuccess = true;
+            string memId = GetMemberId();
+            IsSuccess = int.TryParse(memId, out memberId);
 
-            //GroupViewModel followSelectMembers = new GroupViewModel
-            //{
-            //    FollowingMember = members,
-            //    FollowerMember = Followers
-            //};
+            if (!IsSuccess)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //throw new NotImplementedException();
+            }
+
+
+            var memberGet = new FollowService();
+            var members = memberGet.GetMemberFollow(memberId);
+            var Followers = memberGet.GetMemberFollowers(memberId);
+
+
 
             ViewBag.Followings = members;
             ViewBag.Followers = Followers;

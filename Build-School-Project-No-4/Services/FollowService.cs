@@ -17,14 +17,14 @@ namespace Build_School_Project_No_4.Services
         }
 
         //取得Follow對應的會員資料
-        public List<FollowViewModel> GetMemberFollow()
+        public List<FollowViewModel> GetMemberFollow(int? assignMemberId)
         {
             var followings = _Repo.GetAll<Followings>();
             var members = _Repo.GetAll<Members>();
 
             //demoId
-            int ownId = 60;
-            var ownfollow = followings.Where(x => x.MemberId == ownId);
+            //int ownId = 60;
+            var ownfollow = followings.Where(x => x.MemberId == assignMemberId);
 
             List<FollowViewModel> result = new List<FollowViewModel>();
             foreach (var item in ownfollow)
@@ -46,14 +46,14 @@ namespace Build_School_Project_No_4.Services
         }
 
         //取得Follow自己對應的會員資料
-        public List<FollowViewModel> GetMemberFollowers()
+        public List<FollowViewModel> GetMemberFollowers(int? assignMemberId)
         {
             var followings = _Repo.GetAll<Followings>();
             var members = _Repo.GetAll<Members>();
 
             //demoId
-            int ownId = 60;
-            var followers = followings.Where(x => x.FollowingId == ownId);
+            //int ownId = 60;
+            var followers = followings.Where(x => x.FollowingId == assignMemberId);
 
             List<FollowViewModel> result = new List<FollowViewModel>();
             foreach (var item in followers)

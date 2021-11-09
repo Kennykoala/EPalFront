@@ -62,8 +62,6 @@ namespace Build_School_Project_No_4.Controllers
                 //throw new NotImplementedException();
             }
 
-
-
             var meetGet = new ChillMeetService();
             var meetsContent = meetGet.GetMeetFiles(memberId);
 
