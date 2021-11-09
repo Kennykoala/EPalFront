@@ -238,12 +238,16 @@
 
 
 @section endJS{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
-            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script src="~/Assets/jquery/jquery.min.js"></script>
 
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="~/Assets/axios/axios.min.js"></script>
+
+    @*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>*@
+    <script src="~/Assets/sweetalert/sweetalert2@11.js"></script>
 
     @if (TempData["message"] != null)
     {

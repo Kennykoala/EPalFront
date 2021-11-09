@@ -1,30 +1,26 @@
 ﻿@model AddgameViewModel
 <head>
     <!-- font-family -->
-    @*<link rel="preconnect" href="https://fonts.googleapis.com">*@
-    @*<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>*@
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    @*<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">*@
+    <link href="~/Assets/google/css2.css" rel="stylesheet" />
+
     <!-- Bootstrap -->
-    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">*@
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
             crossorigin="anonymous"></script>
-    @*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
-        crossorigin="anonymous"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
             integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
             crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>*@
+    <script src="~/Assets/sweetalert/sweetalert2@11.js"></script>
 </head>
 
 
 <body style="background-color: #120E1B;">
 
-    <div class="">
+    <div>
 
         @Html.Partial("_AddgamePartial", Model)
 
@@ -35,9 +31,10 @@
 
 
 @section endJS{
-    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
-
+    @*<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>*@
+    <script src="~/Assets/firebase/firebase-app.js"></script>
+    <script src="~/Assets/firebase/firebase-storage.js"></script>
 
     <script>
         $(function () {
@@ -68,12 +65,9 @@
                 document.getElementById("nextBtn").value = "Submit";
                 document.getElementById("nextBtn").innerText = "Submit";
                 document.getElementById("nextBtn").classList.add("submitbtn");
-                //document.getElementById("nextBtn").type = "submit";
-                //document.getElementById("nextBtn").style.display = "none";
-                //document.getElementById("btnSubmit").style.display = "inline";
+
             } else {
-                //document.getElementById("btnSubmit").style.display = "none";
-                //document.getElementById("nextBtn").style.display = "inline";
+
                 document.getElementById("nextBtn").value = "Next";
                 document.getElementById("nextBtn").innerText = "Next";
 
@@ -98,16 +92,13 @@
             x[currentTab].style.display = "none";
             currentTab = currentTab + n;
             if (currentTab >= x.length) {
-                //uploadAudio();
-                //uploadToCloudinary();
 
                 document.getElementById("becomeForm").submit();
-
                 return false;
-                //alert("sdf");
+
                 document.getElementById("nextprevious").style.display = "none";
                 document.getElementById("all-steps").style.display = "none";
-                //document.getElementById("register").style.display = "none";
+
             }
             showTab(currentTab);
         }
@@ -134,9 +125,7 @@
             else if (currentTab == 1) {
                 for (i = 0; i < s.length; i++) {
                     if ((s[i].value == "") || (e[i].value == "") || (u.value == "")) {
-                        //y[i].className += " invalid";
                         valid = false;
-                        /*break;*/
                     }
                     else {
                         valid = true;
@@ -213,9 +202,6 @@
                     console.log(url);
 
                     document.querySelector(".productvoice").value = url;
-                    //document.querySelector("#image").src = url;
-
-                    //alert("Video upload successful!")
                     swal.fire({
                         title: "Upload Voice Success",
                         icon: "success",
@@ -242,18 +228,11 @@
 
             var cloud_url = 'https://api.cloudinary.com/v1_1/djamumruo/image/upload'
             var cloud_upload_preset = 'roldewr6'
-            //var file = event.target.files[0];
 
-            //var fileLen = document.getElementsByClassName('uploadfile').files.length;
-            //var voicefile = document.getElementById('uploadvoice').files[0];
             var imagefile = document.getElementById('uploadlistcover').files[0];
 
             var formData = new FormData();
 
-            //for (var x = 0; x < fileLen; x++) {
-            //    formData.append('file[]', document.getElementsByClassName('uploadfile').files[x])
-            //}
-            //formData.append('file', voicefile);
             formData.append('file', imagefile);
             formData.append('upload_preset', cloud_upload_preset);
 
@@ -271,11 +250,6 @@
 
                 document.querySelector(".productimg").value = photoUrl;
 
-                //$("#imageUpload").change(function () {
-                //    readURL(photoUrl);
-                //});
-                //SaveImageViaAjax(memberId, photoUrl);
-
             }).catch(function (err) {
                 console.error(err);
             });
@@ -290,18 +264,11 @@
 
             var cloud_url = 'https://api.cloudinary.com/v1_1/djamumruo/image/upload'
             var cloud_upload_preset = 'roldewr6'
-            //var file = event.target.files[0];
 
-            //var fileLen = document.getElementsByClassName('uploadfile').files.length;
-            //var voicefile = document.getElementById('uploadvoice').files[0];
             var imagefile = document.getElementById('uploadcreatoravatar').files[0];
 
             var formData = new FormData();
 
-            //for (var x = 0; x < fileLen; x++) {
-            //    formData.append('file[]', document.getElementsByClassName('uploadfile').files[x])
-            //}
-            //formData.append('file', voicefile);
             formData.append('file', imagefile);
             formData.append('upload_preset', cloud_upload_preset);
 
@@ -319,11 +286,6 @@
 
                 document.querySelector(".creatorimg").value = photoUrl;
 
-                //$("#imageUpload").change(function () {
-                //    readURL(photoUrl);
-                //});
-                //SaveImageViaAjax(memberId, photoUrl);
-
             }).catch(function (err) {
                 console.error(err);
             });
@@ -338,21 +300,12 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    //$('.upload_cover').resize(function() {
-                    //    if ($(this).height() > 200) {
-                    //        $(this).css('height', 'auto');
-                    //    }
-                    //});
 
                     $('.upload_cover').css({ 'width': '', 'height': '', 'background-size': 'contain', 'background-repeat': 'no-repeat', 'border': 'transparent', 'background-color': '#120E1B' });
-
 
                     $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
                     document.querySelector("#imagePreview img").src = "";
 
-                    //$('#imagePreview img').css('background-image', 'url(' + e.target.result + ')');
-                    //$('#imagePreview').hide();
-                    //$('#imagePreview').fadeIn(650);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -364,11 +317,6 @@
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    //$('.upload_cover').resize(function() {
-                    //    if ($(this).height() > 200) {
-                    //        $(this).css('height', 'auto');
-                    //    }
-                    //});
 
                     $('.upload_cover_creator').css({ 'width': '', 'height': '', 'background-size': 'contain', 'background-repeat': 'no-repeat', 'border': 'transparent', 'background-color': '#120E1B' });
 
@@ -376,9 +324,6 @@
                     $('#imagePreview_creator').css('background-image', 'url(' + e.target.result + ')');
                     document.querySelector("#imagePreview_creator img").src = "";
 
-                    //$('#imagePreview img').css('background-image', 'url(' + e.target.result + ')');
-                    //$('#imagePreview').hide();
-                    //$('#imagePreview').fadeIn(650);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -414,15 +359,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            /*color: white;*/
         }
-        /*        .container {
-            display: block;
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 12px;
-            cursor: pointer;
-        }*/
+
         body {
             position: relative;
         }
@@ -479,9 +417,6 @@
 
 
 
-
-
-
         .tab-content input[type="radio"] {
             /*display: none;*/
         }
@@ -504,7 +439,6 @@
             height: 15px;
             width: 15px;
             margin: 0 2px;
-            /*background-color: #bbbbbb;*/
             background-color: transparent;
             border: none;
             border-radius: 50%;
@@ -809,25 +743,6 @@
             margin-left: auto;
         }
 
-        /*        .btn-outline-dark {
-            position: relative !important;
-            border: 0 !important;
-            outline: 0 !important;
-            margin-top: 0% !important;
-            margin-bottom: 5% !important;
-            width: 150px !important;
-            padding: 9px !important;
-            text-align: center !important;
-            text-decoration: none !important;
-            font-size: 14px !important;
-            font-weight: 500 !important;
-            box-sizing: border-box !important;
-            border: 1px solid grey !important;
-            color: grey !important;
-            background: transparent !important;
-            background-size: 100% !important;
-            border-radius: 400px !important;
-        }*/
 
         .btn:hover {
             color: white !important;
@@ -835,29 +750,17 @@
             border-color: #2f244d !important;
         }
 
-        /* selectgameAction */
 
-        /* .chooseBtnImg img{
-            background-image: url(/E-Pal/ChooseAService1/Img_ChooseAService1/Vc.png);
-        } */
-
-
-        /*定义滚动条高宽及背景
- 高宽分别对应横竖滚动条的尺寸*/
         .gamelistbox::-webkit-scrollbar {
             width: 16px;
             height: 16px;
             background-color: #F5F5F5;
         }
-        /*定义滚动条轨道
- 内阴影+圆角*/
         .gamelistbox::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
             /*border-radius: 10px;*/
             background-color: #F5F5F5;
         }
-        /*定义滑块
- 内阴影+圆角*/
         .gamelistbox::-webkit-scrollbar-thumb {
             /*border-radius: 10px;*/
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);

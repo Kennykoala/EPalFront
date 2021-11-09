@@ -665,13 +665,14 @@ footer #address {
 
     .navbar-sm {
         background-color: #302F3D;
+        /*background-color: transparent;*/
         border-bottom: 1px solid #302F3D;
         box-shadow: -2px -1px 5px #333333;
         padding: 10px 0 25px;
         position: fixed;
         bottom: 0;
         width: 100%;
-        z-index:999;
+        z-index: 999;
     }
 
     .navbar-sm i {
@@ -683,7 +684,7 @@ footer #address {
     }
 
     .navbar-sm a {
-        font-weight: 100;
+        font-weight: 600;
         text-align: center;
         text-decoration: none;
         color: white;
@@ -720,32 +721,59 @@ footer #address {
     /*手機登入*/
     #loginmodal {
         border-color: transparent;
-        margin-left: 3px;
+        background-color: transparent;
+        color: white;
+        margin-left: 1px;
+        font-size: 15px;
+        font-weight: 600;
+        outline: none;
+        height: auto;
     }
-
     #loginmodal .loginiconphone {
         margin-bottom: -2px;
     }
+        #loginmodal p {
+            padding-bottom: 1px;
+            display: block;
+            color: white;
+        }
 
     #signupmodal {
         border-color: transparent;
         background-color: transparent;
+        color: white;
         padding-left: 0px;
         margin-left: -5px;
         margin-right: -3px;
+        font-size: 15px;
+        font-weight: 600;
+        outline: none;
+        height:auto;
     }
+        #signupmodal p {
+            padding-bottom: 5px;
+            display: block;
+            color: white;
+        }
 
     #logoutbutton {
         border-color: transparent;
         background-color: transparent;
         color: white;
-        padding-left: 10px;
+        padding-left: 5px;
+        font-size: 15px;
+        font-weight: 600;
+        outline: none;
     }
-
     #logoutbutton .logouticonphone {
-        margin-bottom: -4px;
+        margin-bottom: 2px;
     }
-
+        #logoutbutton p {
+            padding-bottom: 1px;
+            display: block;
+            margin-top: -4px;
+            color: white;
+        }
 
 
 
@@ -1052,6 +1080,17 @@ footer #address {
         color: white;
     }
 
+
+    .modal .modal-body .passwordshowLogin {
+        position: absolute;
+        top: 50%;
+        left: 85%;
+        color: #7041e6;
+        background-color: transparent;
+        outline: none;
+        border: transparent;
+        font-size: 16px;
+    }
 
 }
 
