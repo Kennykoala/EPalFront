@@ -43,40 +43,40 @@
                     }
                 </div>
                 @*<div class="cards-list-mobile">
-                    <div class="order-card">
-                        <a href="#">
-                            <div class="card-top">
-                                <div class="user">
-                                    <div class="user-img"></div>
-                                    <div class="name">
-                                        Jolie
-                                        <i class="fas fa-chevron-right"></i>
+                        <div class="order-card">
+                            <a href="#">
+                                <div class="card-top">
+                                    <div class="user">
+                                        <div class="user-img"></div>
+                                        <div class="name">
+                                            Jolie
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="order-status greyish">Cancelled</div>
+                                </div>
+                            </a>
+                            <hr />
+                            <a href="#">
+                                <div class="card-bot">
+                                    <div class="info">
+                                        <div class="info-left">
+                                            <div class="game-name">Among Us</div>
+                                            <div class="game- greyish">3 round(s) total</div>
+                                            <div class="start-time greyish">Sep 13, 2:12PM</div>
+                                        </div>
+                                        <div class="info-right">
+                                            <img src="~/Assets/images/Orders/currency.png" />
+                                            15.00
+                                        </div>
+                                    </div>
+                                    <div class="bot-section">
+                                        <div class="chat">Chat</div>
                                     </div>
                                 </div>
-                                <div class="order-status greyish">Cancelled</div>
-                            </div>
-                        </a>
-                        <hr />
-                        <a href="#">
-                            <div class="card-bot">
-                                <div class="info">
-                                    <div class="info-left">
-                                        <div class="game-name">Among Us</div>
-                                        <div class="game- greyish">3 round(s) total</div>
-                                        <div class="start-time greyish">Sep 13, 2:12PM</div>
-                                    </div>
-                                    <div class="info-right">
-                                        <img src="~/Assets/images/Orders/currency.png" />
-                                        15.00
-                                    </div>
-                                </div>
-                                <div class="bot-section">
-                                    <div class="chat">Chat</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>*@
+                            </a>
+                        </div>
+                    </div>*@
                 <div class="cards-list">
                     @foreach (var m in Model.OrderCards)
                     {
@@ -267,11 +267,18 @@
 
 
 @section endJS{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
-            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script src="~/Assets/jquery/jquery.min.js"></script>
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+        integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="~/Assets/axios/axios.min.js"></script>
+
+    @*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>*@
+    <script src="~/Assets/sweetalert/sweetalert2@11.js"></script>
+
 
     <script>
 
@@ -298,7 +305,7 @@
                     //console.log(x.childNodes[3])
 
                     //delete button
-                    let deletebtn= document.createElement('button')
+                    let deletebtn = document.createElement('button')
                     deletebtn.innerText = 'Delete'
                     deletebtn.setAttribute('class', 'deletebtn')
                     x.childNodes[3].children[4].appendChild(deletebtn)
@@ -438,7 +445,7 @@
 
                     //x.children[1].children[4].childNodes[0].disabled = true;
                     //x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
-                }             
+                }
 
             })
             order.forEach(item => {

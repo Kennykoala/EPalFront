@@ -1044,6 +1044,18 @@ footer {
         color: white;
     }
 
+
+    .modal .modal-body .passwordshowLogin {
+        position: absolute;
+        top: 50%;
+        left: 85%;
+        color: #7041e6;
+        background-color: transparent;
+        outline: none;
+        border: transparent;
+        font-size: 16px;
+    }
+
 }
 
 @media screen and (min-width:768px) {
