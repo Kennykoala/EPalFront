@@ -391,7 +391,6 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ChillMeetApiController.cs" />
     <Compile Include="Controllers\ChillMeetPicApiController.cs" />
-    <Compile Include="Controllers\epalAccountController.cs" />
     <Compile Include="Controllers\ePalsController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -474,7 +473,6 @@
     <Compile Include="ViewModels\DetailViewModel.cs" />
     <Compile Include="ViewModels\FilterItemViewModel.cs" />
     <Compile Include="ViewModels\AddgameViewModel.cs" />
-    <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\LinestatusViewModel.cs" />
     <Compile Include="ViewModels\LinePayViewModel.cs" />
     <Compile Include="ViewModels\MemberAvatarViewModel.cs" />
@@ -928,7 +926,6 @@
     <Content Include="Views\Home\HomePage.cshtml" />
     <Content Include="Views\FAQ\FAQ.cshtml" />
     <Content Include="Views\Shared\_Layout_nofooter.cshtml" />
-    <Content Include="Views\epalAccount\Wallet.cshtml" />
     <Content Include="Views\becomeepal\BecomeEPalPage.cshtml" />
     <Content Include="Views\Page404\Page404.cshtml" />
     <Content Include="Views\AboutUs\AboutUs.cshtml" />
@@ -953,7 +950,6 @@
     <Content Include="Views\Chill\MeetLikes.cshtml" />
     <Content Include="Views\Chill\MeetMatches.cshtml" />
     <Content Include="Views\Members\Followings.cshtml" />
-    <Content Include="Views\becomeepal\addgame _jzp.cshtml" />
     <Content Include="Views\becomeepal\addgame.cshtml" />
     <Content Include="Views\Shared\_GameDayPartial.cshtml" />
     <Content Include="Views\Checkout\Failure.cshtml" />
