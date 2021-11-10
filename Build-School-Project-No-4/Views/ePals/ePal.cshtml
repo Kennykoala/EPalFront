@@ -1679,12 +1679,23 @@
 
         //post filter
         function sendfilter(filterObj) {
-            axios.post('/api/jsonapi', filterObj).then(res =>
-                JSON.parse(res.data).ProductCards.forEach(x => {
-                    CreateProducts(x)
+            axios.post('/api/jsonapi', filterObj)
+                .then(res => {
+                    if (JSON.parse(res.data).ProductCards.length == 0) {
+                        let img = document.createElement("img")
+                        img.setAttribute('src', 'https://res.cloudinary.com/drh5ybnss/image/upload/v1634565041/Independent%20Study/OtherPhoto/11111_pevnlt.png')
+                        img.classList.add('w-75')
+                        img.setAttribute('style','margin:auto;')
+                        row.appendChild(img)
+                    } else {
+                        JSON.parse(res.data).ProductCards.forEach(x => {
+                            CreateProducts(x)
+                        })
+                    }
                 })
-                
-            )
+                .catch(ex => {
+                    console.log(ex)
+                })
         }
 
         // sideBar
@@ -1696,19 +1707,19 @@
         })
 
 
-        var w = window.innerWidth;
-        let button = document.getElementById('group-Btn')
-        let list = document.querySelector('.filter-Game-Group')
+        //var w = window.innerWidth;
+        //let button = document.getElementById('group-Btn')
+        //let list = document.querySelector('.filter-Game-Group')
 
-        if (w > 375) {
-            button.classList.toggle('d-none');
-        } else {
-            list.classList.add('d-none');
-            button.addEventListener('click', () => {
-                list.classList.toggle('d-none')
-                list.classList.toggle('d-flex');
-            })
-        }
+        //if (w > 375) {
+        //    //button.classList.toggle('d-none');
+        //} else {
+        //    list.classList.add('d-none');
+        //    button.addEventListener('click', () => {
+        //        list.classList.toggle('d-none')
+        //        list.classList.toggle('d-flex');
+        //    })
+        //}
 
         //voice
         let VoiceBtn = document.querySelector('.user-Voice')
