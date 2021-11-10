@@ -779,6 +779,7 @@
     <Content Include="Assets\jquery\jquery.min.js" />
     <Content Include="Assets\js\checkout.js" />
     <Content Include="Assets\js\detail.js" />
+    <Content Include="Assets\js\HomeCard.js" />
     <Content Include="Assets\js\layout.js" />
     <Content Include="Assets\js\layout_afterlogin_nofooter.js" />
     <Content Include="Assets\js\layout_afterlogin.js" />
