@@ -28,6 +28,26 @@ namespace Build_School_Project_No_4
                 defaults: new { controller = "ePals", action = "ePal", id = UrlParameter.Optional }
             );
 
+            //routes.MapRoute(
+            //    name: "homepage",
+            //    url: "home/homepage",
+            //    defaults: new { controller = "Home", action = "HomePage", id = UrlParameter.Optional }
+            //);
+
+            //routes.MapRoute(
+            //    name: "editProfile",
+            //    url: "members/editprofile/{id}",
+            //    defaults: new { controller = "Members", action = "EditProfile", id = UrlParameter.Optional }
+            //);
+
+            //routes.MapRoute(
+            //    name: "profile",
+            //    url: "Members/profile/{id}",
+            //    defaults: new { controller = "Members", action = "profile", id = UrlParameter.Optional }
+            //);
+
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
