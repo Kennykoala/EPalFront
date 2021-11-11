@@ -109,7 +109,6 @@
                                                         @if (item.isFollow)
                                                         {
                                                             <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#20202e">Following</button>
-
                                                         }
                                                         else
                                                         {
@@ -213,9 +212,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="listButton">
-                                                    <div class="followButton">
+                                                    @*<div class="followButton">
                                                         <button class="btnfollowing" id="followButton">Follow</button>
+                                                    </div>*@
+
+                                                    <div class="followButton">
+                                                        @*<button class="btnfollowing" id="followButton">Follow</button>*@
+
+                                                        @if (item.isFollow)
+                                                        {
+                                                            <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#20202e">Following</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" onclick="myMsgColorChg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#7041e6">Follow</button>
+                                                        }
+
                                                     </div>
+
                                                     <div class="chatBotton">
                                                         <button type="button" class="btn btn-outline-dark">Chat</button>
                                                     </div>
