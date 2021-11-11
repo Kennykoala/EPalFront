@@ -113,7 +113,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <a href="#">Edit profile</a>
+                    <a href="@Url.Action("EditProfile","Members")">Edit profile</a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#changeAvatarModal">Edit Meet</a>
                     <a data-bs-dismiss="modal">Cancel</a>
                 </div>
@@ -690,6 +690,10 @@
             cursor: pointer;
         }
 
+        .swiper-wrapper {
+            margin-top:20px;
+        }
+
         .swiper-container {
             overflow: hidden;
             position: relative;
@@ -715,6 +719,7 @@
         .services-container,
         .album-div {
             margin-top: 15px;
+           /* margin-top: 20px;*/
         }
 
         .services-container {
@@ -871,7 +876,10 @@
 
                 .swiper-container button {
                     /*top: -3px;*/
-                    top: -10px;
+                    /* top: -10px;*/
+                    top: -20px;
+                   /* margin-top:20px;*/
+                  /* margin-bottom:20px;*/
                     left: 75%;
                     padding: 3px 15px;
                 }
