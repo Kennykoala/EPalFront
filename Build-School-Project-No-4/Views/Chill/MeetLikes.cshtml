@@ -4,6 +4,25 @@
 
 }
 
+@*抓到使用者登入的cookie資訊*@
+@{
+
+    HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
+
+    string userid = "";
+
+
+    if (cookie != null)
+    {
+        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+        var obj = Json.Decode<Members>(ticket.UserData);
+        userid = obj.MemberId.ToString();
+
+    }
+}
+
+
 
 <!-- visitorsPage -->
 <div class="visitorPage">
@@ -213,19 +232,19 @@
                                                 </div>
                                                 <div class="listButton">
                                                     @*<div class="followButton">
-                                                        <button class="btnfollowing" id="followButton">Follow</button>
-                                                    </div>*@
+                                                            <button class="btnfollowing" id="followButton">Follow</button>
+                                                        </div>*@
 
                                                     <div class="followButton">
                                                         @*<button class="btnfollowing" id="followButton">Follow</button>*@
 
                                                         @if (item.isFollow)
                                                         {
-                                                            <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#20202e">Following</button>
+                                                            <button type="button" onclick="myMsg(this)" id="@item.MemberId" value="@userid" class="btnfollowing" style="background:#20202e">Following</button>
                                                         }
                                                         else
                                                         {
-                                                            <button type="button" onclick="myMsgColorChg(this)" id="@item.MemberId" value="@item.UserId" class="btnfollowing" style="background:#7041e6">Follow</button>
+                                                            <button type="button" onclick="myMsgColorChg(this)" id="@item.MemberId" value="@userid" class="btnfollowing" style="background:#7041e6">Follow</button>
                                                         }
 
                                                     </div>
@@ -406,7 +425,7 @@
         }
 
         .nav-item a {
-           /* font-size: 14px;*/
+            /* font-size: 14px;*/
             color: #c4c3e6;
         }
 
@@ -424,12 +443,12 @@
 
         .nav-tabs {
             border-bottom: 1px solid #c4c3e6 !important;
-            color:white;
+            color: white;
         }
 
             .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
                 background-color: transparent !important;
-               color:white;
+                color: white;
             }
 
         .nav {
@@ -728,7 +747,7 @@
             font-weight: 500 !important;
             box-sizing: border-box !important;
             border: 1px solid #21212C !important;
-            background: #7041e6 ;
+            background: #7041e6;
             background-size: 100% !important;
             border-radius: 400px !important;
         }
