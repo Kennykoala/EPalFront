@@ -62,23 +62,24 @@ namespace Build_School_Project_No_4.Controllers
        
 
         //[Authorize]
-        public ActionResult profile()
+        public ActionResult profile(int? id)
         {
-            int memberId;
-            bool IsSuccess = true;
-            string memId = GetMemberId();
-            IsSuccess = int.TryParse(memId, out memberId);
 
-            if(!IsSuccess)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                //throw new NotImplementedException();
             }
+            var profileNoId = db.Members.Find(id);
 
+            if (profileNoId == null)
+            {
+                return HttpNotFound();
+            }
+  
             try
             {
                 var profiles = new ProfileEpalService();
-                var profileGetAll = profiles.GetProfiles(memberId);
+                var profileGetAll = profiles.GetProfiles(id);
 
  
                 return View(profileGetAll);

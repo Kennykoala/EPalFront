@@ -93,7 +93,7 @@ namespace Build_School_Project_No_4.Controllers
             var memberlikeGet = new ChillMeetService();
             var memberMatchGet = new ChillMeetService();
 
-            var memberMatch = memberMatchGet.GetMemberMatch();
+            var memberMatch = memberMatchGet.GetMemberMatch(memberId);
             var memberlike = memberlikeGet.GetMemberLike(memberId);
 
             ViewBag.Match = memberMatch;
