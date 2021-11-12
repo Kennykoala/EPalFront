@@ -652,6 +652,7 @@
     <Content Include="Assets\images\detail\details.png" />
     <Content Include="Assets\images\detail\lol-screenshot.jpg" />
     <Content Include="Assets\images\detail\profile-eniza.gif" />
+    <Content Include="Assets\images\epalPage\badge.png" />
     <Content Include="Assets\images\epalPage\games.png" />
     <Content Include="Assets\images\epalPage\lifestyle.png" />
     <Content Include="Assets\images\epalPage\trending.png" />
@@ -919,7 +920,6 @@
     <Content Include="Views\ePals\Checkout.cshtml" />
     <Content Include="Views\ePals\Detail.cshtml" />
     <Content Include="Views\Order\OrderSummary.cshtml" />
-    <Content Include="Views\ePals\DetailPage.cshtml" />
     <Content Include="Views\ePals\Index.cshtml" />
     <Content Include="Views\ePals\NotFound.cshtml" />
     <Content Include="Views\Order\PurchasedOrderSummary.cshtml" />
@@ -961,6 +961,7 @@
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Members\LineResult.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
+    <Content Include="Views\Shared\_Layout_DetailMobileNoFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
