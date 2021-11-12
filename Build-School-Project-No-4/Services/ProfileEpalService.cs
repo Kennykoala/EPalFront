@@ -16,9 +16,6 @@ namespace Build_School_Project_No_4.Services
             _Repo = new Repository();
         }
 
-
-
-
         public List<ProfileViewModel> GetProfiles(int? assignMemberId)
         {
 

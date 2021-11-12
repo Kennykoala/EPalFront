@@ -15,7 +15,6 @@ namespace Build_School_Project_No_4.Services
         {
             _Repo = new Repository();
         }
-
         public List<ChillMeetViewModel> GetMeetFiles(int? assignMemberId)
         {
             var MeetLikesAll = _Repo.GetAll<MeetLikes>();
@@ -34,7 +33,6 @@ namespace Build_School_Project_No_4.Services
             var isLike = Memberlikes.Select(x => x.MemberId).ToList();
             var memberAlls = MembersAll.Select(x => x.MemberId).ToList();
             var MemberDislike = memberAlls.Except(isLike);
-
 
             List<Members> resultMembers = new List<Members>();
             List<ChillMeetViewModel> result = new List<ChillMeetViewModel>();
@@ -75,8 +73,6 @@ namespace Build_School_Project_No_4.Services
             //var b = followings.Where(x => x.FollowingId)
             bool isFollowData;
 
-
-
             List<MemberViewModel> result = new List<MemberViewModel>();
             foreach (var item in ownLike)
             {
@@ -93,8 +89,7 @@ namespace Build_School_Project_No_4.Services
                 {
                     isFollowData = false;
                 }
-
-         
+        
                 var m = new MemberViewModel
                 {
                     MemberId = y.MemberId,
@@ -137,7 +132,6 @@ namespace Build_School_Project_No_4.Services
                 }
 
             }
-
 
             List<MemberViewModel> result = new List<MemberViewModel>();
             foreach (var item in MatchList)
