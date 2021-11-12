@@ -55,5 +55,27 @@ namespace Build_School_Project_No_4.Services
             SmtpServer.Send(mail);
         }
 
+        //忘記密碼--使用者資料填入驗證信
+        public string GetForgetPwdMailBody(string TempString, string UserEmail, string ValidateUrlForgetPwd)
+        {
+            TempString = TempString.Replace("{{UserEmail}}", UserEmail);
+            TempString = TempString.Replace("{{ValidateUrlForgetPwd}}", ValidateUrlForgetPwd);
+            return TempString;
+        }
+        //忘記密碼--寄驗證信
+        public void SendForgetPwdMail(string MailBody, string ToEmail)
+        {
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential(gmail_account, gmail_password);
+            SmtpServer.EnableSsl = true;
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(gmail_mail);
+            mail.To.Add(ToEmail);
+            mail.Subject = "會員忘記密碼驗證碼確認信";
+            mail.Body = MailBody;
+            mail.IsBodyHtml = true;
+            SmtpServer.Send(mail);
+        }
     }
 }

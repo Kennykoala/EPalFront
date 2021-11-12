@@ -98,5 +98,23 @@ namespace Build_School_Project_No_4.Services
             return avgStar;
         }
 
+
+        public int[] GetSideMenuAccount(int? assignMemberId)
+        {
+
+            var followAll = _Repo.GetAll<Followings>();
+            var LikeAll = _Repo.GetAll<MeetLikes>();
+
+            var followingCal = followAll.Where(x => x.MemberId == assignMemberId).ToList().Count();
+            var followersCal = followAll.Where(x => x.FollowingId == assignMemberId).ToList().Count();
+
+            var likeCal = LikeAll.Where(x => x.MemberId == assignMemberId).ToList().Count();
+            var matchCal = LikeAll.Where(x => x.LikeId == assignMemberId).ToList().Count();
+
+            int[] arrcount = new int[] { followingCal, followersCal, likeCal, matchCal };
+
+            return arrcount;
+        }
+
     }
 }

@@ -16,6 +16,8 @@ namespace Build_School_Project_No_4.Controllers
 
         public ActionResult Page404()
         {
+            Response.StatusCode = 404;
+
             return View();
         }
     }

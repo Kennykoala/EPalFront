@@ -22,24 +22,10 @@
 
 
                         <!-- Main-Body-Header-Filter -->
-                        <div class="body-Header-Filter">
-                            <div class="filter-Person">
-                                <a class="filter-Person-Item" href="#">
-                                    <p>All</p>
-                                </a>
-                                <a class="filter-Person-Item" href="#">
-                                    <p>Creator</p>
-                                </a>
-                                <a class="filter-Person-Item" href="#">
-                                    <p>Coach</p>
-                                </a>
-                            </div>
+                        <div class="body-Header-Filter">                   
                             <div class="filter-Game">
                                 <div class="filter-Game-Left">
-                                    <div class="filter-Game-Text">Filter</div>
-                                    @*<div class="btn-Box">
-                                        <button id="group-Btn" class="btn" type="button">Click me</button>
-                                    </div>*@
+                                    <div class="filter-Game-Text">Filter</div>                              
                                     <div class="filter-Game-Group">
                                         <div class="dropdown">
                                             <div class="btn btn-secondary dropdown-toggle" role="button"
@@ -100,12 +86,14 @@
                                             </div>
 
                                             <ul class="dropdown-menu level-list" aria-labelledby="level" id="abc">
-                                                <li><span class="dropdown-item">Iron</span></li>
                                                 <li><span class="dropdown-item">Bronze</span></li>
                                                 <li><span class="dropdown-item">Silver</span></li>
                                                 <li><span class="dropdown-item">Gold</span></li>
-                                                <li><span class="dropdown-item">Platinum</span></li>
+                                                <li><span class="dropdown-item">Platnum</span></li>
                                                 <li><span class="dropdown-item">Diamond</span></li>
+                                                <li><span class="dropdown-item">Master</span></li>
+                                                <li><span class="dropdown-item">Challenger</span></li>
+                                                <li><span class="dropdown-item">Unranked</span></li>
                                             </ul>
                                         </div>
                                         <div class="dropdown">
@@ -150,7 +138,7 @@
                             <div class="row">
                                 <div class="recommendWapper col-12">
                                     <img src="https://g.epal.gg/entry/us/static/discount.281516f8.png" alt="">
-                                    <a href="@Url.Action("RecommenedController","Recommend")">
+                                    <a href="@Url.Action("Recommened","Recommend",1)">
                                         <div class="wrapper">
                                             <div class="recommendWapper-Left">
                                                 <div class="left-Title">
@@ -274,7 +262,7 @@
     <div class="sidebar">
         <div class="top_navbar">
             <div class="left">
-                <a href="#">
+                <a>
                     <i class="fas fa-arrow-left"></i>
                 </a>
             </div>
@@ -607,7 +595,7 @@
             }
 
             .row .col-12 {
-                min-width: 316px;
+                min-width: 33.333333%;
             }
         }
 
@@ -629,10 +617,19 @@
 
 
         /* NavBar */
+        .accordion-body{
+            height:400px;
+            overflow-y:auto;
+        }
 
+        /*捲軸寬度*/
+        .accordion-body::-webkit-scrollbar {
+            width: 6px;
+            background-color: black;
+            display: none;
+        }
 
         /* main-Header */
-
         h1 {
             margin-bottom: 0;
             margin: auto;
@@ -889,34 +886,6 @@
                 height: 10px;
                 line-height: 10px;
             }
-            #filter-Item-check-1,
-            #filter-Item-check-2,
-            #filter-Item-check-3,
-            #filter-Item-check-4,
-            #filter-Item-check-5,
-            #filter-Item-check-6,
-            #filter-Item-check-7,
-            #filter-Item-check-8,
-            #filter-Item-check-9,
-            #filter-Item-check-10 {
-                position: absolute;
-                opacity: 0;
-            }
-
-        #filter-Item-check-1 ~ label,
-        #filter-Item-check-2 ~ label,
-        #filter-Item-check-3 ~ label,
-        #filter-Item-check-4 ~ label,
-        #filter-Item-check-5 ~ label,
-        #filter-Item-check-6 ~ label,
-        #filter-Item-check-7 ~ label,
-        #filter-Item-check-8 ~ label,
-        #filter-Item-check-9 ~ label,
-        #filter-Item-check-10 ~ label {
-            display: flex;
-            margin: auto;
-            justify-content: space-around;
-        }
 
         .gameFilter-Item-SelectWrapper {
             display: none;
@@ -928,34 +897,6 @@
 
         .selectWrapper-List a:hover .list-Item {
             background-color: #120E1B;
-        }
-
-
-            #filter-Item-check-1:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-2:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-3:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-4:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-5:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-6:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-7:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-8:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-9:checked ~ label .gameFilter-Item-SelectWrapper,
-            #filter-Item-check-10:checked ~ label .gameFilter-Item-SelectWrapper {
-                display: block;
-            }
-
-        #filter-Item-check-1:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-2:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-3:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-4:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-5:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-6:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-7:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-8:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-9:checked ~ label .filter-Icon .fas,
-        #filter-Item-check-10:checked ~ label .filter-Icon .fas {
-            transform: scaleY(-1);
-            transition: 0.3s;
         }
 
         .list-Item p {
@@ -973,6 +914,8 @@
             height:20px;
             margin-right:10px;
         }
+
+
         /* 推薦區 */
         .recommendWapper {
             background: linear-gradient(90deg, rgb(255, 39, 26) 0%, rgb(255, 129, 117) 100%);
@@ -1112,6 +1055,7 @@
             height: 100%;
             display: block;
             border-radius: 5px;
+            object-fit:cover;
         }
 
         .head-Status {
@@ -1441,11 +1385,18 @@
         .accordion-button:after {
             background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
         }
+
+        #dropdown-about {
+            margin-top: 0px !important;
+        }
+        
     </style>
 }
 @section endJS
 {
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>*@
+    <script src="~/Assets/vue/vue.js"></script>
+
     <script>
         //取到網址的最後數字ID
         var x = location.href;
@@ -1722,7 +1673,7 @@
         function CreateProducts(item) {
             let card = document.querySelector('#cardCreator')
             let cloneContent = card.content.cloneNode(true);
-            cloneContent.querySelector('.item-Card a').href = '@Url.Action("DetailPage", new {id = "ID"})'.replace("ID", item.ProductId);
+            cloneContent.querySelector('.item-Card a').href = '@Url.Action("Detail", new {id = "ID"})'.replace("ID", item.ProductId);
             cloneContent.querySelectorAll('.user-Title-Item span')[0].innerText = item.Rank;
             cloneContent.querySelectorAll('.user-Title-Item span')[1].innerText = item.Position;
             cloneContent.querySelector('.head-Person-Pic img').src = item.CreatorImg;
@@ -1734,12 +1685,23 @@
 
         //post filter
         function sendfilter(filterObj) {
-            axios.post('/api/jsonapi', filterObj).then(res =>
-                JSON.parse(res.data).ProductCards.forEach(x => {
-                    CreateProducts(x)
+            axios.post('/api/jsonapi', filterObj)
+                .then(res => {
+                    if (JSON.parse(res.data).ProductCards.length == 0) {
+                        let img = document.createElement("img")
+                        img.setAttribute('src', 'https://res.cloudinary.com/drh5ybnss/image/upload/v1634565041/Independent%20Study/OtherPhoto/11111_pevnlt.png')
+                        img.classList.add('w-75')
+                        img.setAttribute('style','margin:auto;')
+                        row.appendChild(img)
+                    } else {
+                        JSON.parse(res.data).ProductCards.forEach(x => {
+                            CreateProducts(x)
+                        })
+                    }
                 })
-                
-            )
+                .catch(ex => {
+                    console.log(ex)
+                })
         }
 
         // sideBar
@@ -1751,19 +1713,19 @@
         })
 
 
-        var w = window.innerWidth;
-        let button = document.getElementById('group-Btn')
-        let list = document.querySelector('.filter-Game-Group')
+        //var w = window.innerWidth;
+        //let button = document.getElementById('group-Btn')
+        //let list = document.querySelector('.filter-Game-Group')
 
-        if (w > 375) {
-            button.classList.toggle('d-none');
-        } else {
-            list.classList.add('d-none');
-            button.addEventListener('click', () => {
-                list.classList.toggle('d-none')
-                list.classList.toggle('d-flex');
-            })
-        }
+        //if (w > 375) {
+        //    //button.classList.toggle('d-none');
+        //} else {
+        //    list.classList.add('d-none');
+        //    button.addEventListener('click', () => {
+        //        list.classList.toggle('d-none')
+        //        list.classList.toggle('d-flex');
+        //    })
+        //}
 
         //voice
         let VoiceBtn = document.querySelector('.user-Voice')

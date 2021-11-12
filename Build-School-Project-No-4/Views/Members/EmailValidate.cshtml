@@ -4,31 +4,38 @@
 }
 
 
-<h2 class="ValidateTilte">註冊Email驗證結果:</h2>
+<h2 class="ValidateTilte">Register Email Validation Result</h2>
 
 @*顯示Email驗證結果訊息*@
 <h3 class="ValidateMsg">@ViewData["EmailValidate"]</h3>
 <br />
-@*顯示登入與註冊連結*@
-<!--@Html.ActionLink("去登入", "Login") |
-@Html.ActionLink("再註冊", "Register")-->
 
+
+
+@*@section endJS{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+
+        $('#loginmodal').trigger('click');
+
+    </script>
+}*@
 
 
 @section topCSS{
     <style>
-        body{
-            background-color:#000000;
-            
-
+        body {
+            background-color: #000000;
         }
 
         .ValidateTilte {
             padding-top: 100px;
-            padding-left:100px;
+            padding-left: 100px;
             color: white;
-            font-size:28px;
+            font-size: 28px;
         }
+
         .ValidateMsg {
             padding-top: 20px;
             padding-left: 100px;
@@ -36,6 +43,6 @@
             font-size: 24px;
         }
     </style>
-    
-    }
+
+}
 

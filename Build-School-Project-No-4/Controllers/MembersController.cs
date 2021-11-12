@@ -62,28 +62,26 @@ namespace Build_School_Project_No_4.Controllers
        
 
         //[Authorize]
-        public ActionResult profile()
+        public ActionResult profile(int? id)
         {
-            int memberId;
-            bool IsSuccess = true;
-            string memId = GetMemberId();
-            IsSuccess = int.TryParse(memId, out memberId);
 
-            if(!IsSuccess)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                //throw new NotImplementedException();
             }
+            var profileNoId = db.Members.Find(id);
 
+            if (profileNoId == null)
+            {
+                return HttpNotFound();
+            }
+  
             try
             {
                 var profiles = new ProfileEpalService();
-                var profileGetAll = profiles.GetProfiles(memberId);
+                var profileGetAll = profiles.GetProfiles(id);
 
-                //GroupViewModel profileContent = new GroupViewModel
-                //{
-                //    Profiles = profileGetAll
-                //};
+ 
                 return View(profileGetAll);
 
             }
@@ -96,20 +94,165 @@ namespace Build_School_Project_No_4.Controllers
 
         public ActionResult Followings()
         {
-            var memberGet = new FollowService();
-            var members = memberGet.GetMemberFollow();
-            var Followers = memberGet.GetMemberFollowers();
+            int memberId;
+            bool IsSuccess = true;
+            string memId = GetMemberId();
+            IsSuccess = int.TryParse(memId, out memberId);
 
-            //GroupViewModel followSelectMembers = new GroupViewModel
-            //{
-            //    FollowingMember = members,
-            //    FollowerMember = Followers
-            //};
+            if (!IsSuccess)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //throw new NotImplementedException();
+            }
+
+
+            var memberGet = new FollowService();
+            var members = memberGet.GetMemberFollow(memberId);
+            var Followers = memberGet.GetMemberFollowers(memberId);
+
+
 
             ViewBag.Followings = members;
             ViewBag.Followers = Followers;
 
             return View();
+        }
+
+
+
+
+        [HttpGet]
+        public ActionResult ForgetPwd()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 忘記密碼寄送驗證碼
+        /// </summary>
+        /// <returns></returns>
+        [ValidateAntiForgeryToken]
+        public ActionResult SendMailToken(SendMailTokenIn inModel)
+        {
+            SendMailTokenOut outModel = new SendMailTokenOut();
+
+            // 檢查輸入來源
+            if (string.IsNullOrEmpty(inModel.Email))
+            {
+                outModel.ErrMsg = "Please enter registered email";
+                return Json(outModel);
+            }
+
+            //取得信箱驗證碼
+            string AuthCode = string.Empty;
+
+            //確認是否有此會員
+            var member = _MemberService.MemberRigisterData()
+                        .Where(m => m.Email == inModel.Email)
+                        .FirstOrDefault();
+
+            //完全未註冊過，或已透過第三方註冊但系統仍未註冊
+            if (member == null || (member != null && member.IsAdmin == false))
+            {
+                outModel.ErrMsg = "Please register EPal website first";
+            }
+            else
+            {
+                //取得信箱驗證碼
+                AuthCode = _MailService.GetValidateCode();
+
+                string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/ForgetPwdEmailTemplate.html"));
+
+                UriBuilder ValidateUrlForgetPwd = new UriBuilder(Request.Url)
+                {
+                    Path = Url.Action("ResetPwd", "Members", new
+                    {
+                        Email = inModel.Email,
+                        AuthCode = AuthCode
+                    })
+                };
+
+                string MailBody = _MailService.GetForgetPwdMailBody(TempMail, inModel.Email, ValidateUrlForgetPwd.ToString().Replace("%3F", "?"));
+                _MailService.SendForgetPwdMail(MailBody, inModel.Email);
+                outModel.ResultMsg = "Please click on validate email and return to EPal website";
+            }
+            // 回傳 Json 給前端
+            return Json(outModel);
+        }
+
+
+
+
+
+
+        // GET: 重設密碼頁面
+        public ActionResult ResetPwd(string Email, string AuthCode)
+        {
+            ViewData["EmailValidate"] = _MemberService.EmailValidateforgetpwd(Email, AuthCode);
+            // 驗證碼檢查成功，加入 Session
+            Session["ResetPwdUserId"] = Email;
+            return View();
+        }
+
+
+        /// <summary>
+        /// 忘記密碼重設密碼
+        /// </summary>
+        /// <param name="inModel"></param>
+        /// <returns></returns>
+        [ValidateAntiForgeryToken]
+        public ActionResult DoResetPwd(DoResetPwdIn inModel)
+        {
+            DoResetPwdOut outModel = new DoResetPwdOut();
+
+            // 檢查是否有輸入密碼
+            if (string.IsNullOrEmpty(inModel.NewUserPwd))
+            {
+                outModel.ErrMsg = "Please enter new password";
+                return Json(outModel);
+            }
+            if (string.IsNullOrEmpty(inModel.CheckUserPwd))
+            {
+                outModel.ErrMsg = "Please check new password";
+                return Json(outModel);
+            }
+            if (inModel.NewUserPwd != inModel.CheckUserPwd)
+            {
+                outModel.ErrMsg = "new password is different from checked password";
+                return Json(outModel);
+            }
+
+            // 檢查帳號 Session 是否存在
+            if (Session["ResetPwdUserId"] == null || Session["ResetPwdUserId"].ToString() == "")
+            {
+                outModel.ErrMsg = "This email doesn't exist";
+                return Json(outModel);
+            }
+
+            //將密碼Hash
+            inModel.NewUserPwd = _MemberService.HashPassword(inModel.NewUserPwd);
+            var email = Session["ResetPwdUserId"].ToString();
+
+            using (var tran = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var memberdata = db.Members.First(x => x.Email == email);
+                    memberdata.Password = inModel.NewUserPwd;
+                    db.SaveChanges();
+                    tran.Commit();
+
+                    outModel.ResultMsg = "reset password seccess";
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+
+                    outModel.ErrMsg = "reset password failure";
+                }
+            }
+            // 回傳 Json 給前端
+            return Json(outModel);
         }
 
 
@@ -127,15 +270,14 @@ namespace Build_School_Project_No_4.Controllers
             if (code == null)
             {
                 ViewBag.access_token = "沒有正確的code...";
-                //return View("LineResult");
                 return Content("未取得登入授權");
             }
 
             //從Code取回token
             var token = Utility.GetTokenFromCode(code,
-                "1656564684",  //TODO:請更正為你自己的 client_id
-                "2af2ca5d39971c612d2a2dbccfdd2e54", //TODO:請更正為你自己的 client_secret
-                "https://localhost:44322/Members/LineLoginCallback");  //TODO:請檢查此網址必須與你的LINE Login後台Call back URL相同
+                "1656564684",  //client_id
+                "2af2ca5d39971c612d2a2dbccfdd2e54", 
+                "https://epal-frontstage.azurewebsites.net/Members/LineLoginCallback");  
 
             //利用access_token取得用戶資料
             var user = Utility.GetUserProfile(token.access_token);
@@ -148,21 +290,13 @@ namespace Build_School_Project_No_4.Controllers
             if (JwtSecurityToken.Claims.ToList().Find(c => c.Type == "email") != null)
                 lineemail = JwtSecurityToken.Claims.First(c => c.Type == "email").Value;
 
-            //ViewBag
-            //ViewBag.email = lineemail;
-            //ViewBag.access_token = token.access_token;
             linename = user.displayName;
             lineId = user.userId;
-            //TempData["lineemail"] = email;
-            //TempData["linename"] = user.displayName;
 
             string msg = "ok";
             if (msg == "ok" && lineemail != null)
             {
                 //確認是否已註冊
-                //var memberDM = _MemberService.MemberLoginData()
-                //            .Where(m => m.Email == email   )
-                //            .FirstOrDefault();
                 var memberRVM = _MemberService.MemberRigisterData()
                             .Where(m => m.Email == lineemail)
                             .FirstOrDefault();
@@ -190,8 +324,6 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         LineId = lineId,
-                        //MemberName = linename,
-                        //ProfilePicture = memberRVM.ProfilePicture
                         LoginMethod = 3
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -214,11 +346,6 @@ namespace Build_School_Project_No_4.Controllers
                     Response.Cookies.Add(cookie);
 
                 }
-                ////系統註冊過，Line未註冊
-                //else if (memberRVM != null && memberRVM.LineId =="")
-                //{
-
-                //}
                 else
                 {
                     var memberdata = db.Members.First(x => x.Email == lineemail);
@@ -231,8 +358,6 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         LineId = lineId,
-                        //MemberName = memberRVM.MemberName,
-                        //ProfilePicture = memberRVM.ProfilePicture,
                         LoginMethod = 3
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -259,11 +384,7 @@ namespace Build_School_Project_No_4.Controllers
                 return Redirect("/");
             }
             msg = "error";
-            return Content(msg);
-
-            //return Json("OK", JsonRequestBehavior.AllowGet);
-            //return View("LineResult");
-            //return RedirectToAction("GetUserProfile");       
+            return Content(msg);  
 
         }
 
@@ -286,9 +407,6 @@ namespace Build_School_Project_No_4.Controllers
                 fullname = Fbname;
                 fbid = FBId;
                 //確認是否已註冊FB
-                //var memberDM = _MemberService.MemberLoginData()
-                //            .Where(m => m.Email == email   )
-                //            .FirstOrDefault();
                 var memberRVM = _MemberService.MemberRigisterData()
                             .Where(m => m.Email == email)
                             .FirstOrDefault();
@@ -316,8 +434,6 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         FBId = fbid,
-                        //MemberName = fullname,
-                        //ProfilePicture = memberRVM.ProfilePicture
                         LoginMethod = 2
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -352,8 +468,6 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         FBId = fbid,
-                        //MemberName = memberRVM.MemberName,
-                        //ProfilePicture = memberRVM.ProfilePicture,
                         LoginMethod = 2
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -386,7 +500,7 @@ namespace Build_School_Project_No_4.Controllers
 
 
 
-        //google 
+        //google login
         [HttpPost]
         public async Task<ActionResult> GoogleLogin(string id_token)
         {
@@ -399,7 +513,7 @@ namespace Build_School_Project_No_4.Controllers
             {
                 payload = await GoogleJsonWebSignature.ValidateAsync(id_token, new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id，把自己申請的Client ID填進去
+                    Audience = new List<string>() { "1025795679023-8g9j439beq7h92iv9us8nj3d77ifitr7.apps.googleusercontent.com" }//要驗證的client id
                 });
                 //email = payload.Email;
                 //string Id = payload.JwtId;
@@ -425,9 +539,6 @@ namespace Build_School_Project_No_4.Controllers
                 fullname = payload.Name;
                 googleid = payload.JwtId;
                 //確認是否已註冊google
-                //var memberDM = _MemberService.MemberLoginData()
-                //            .Where(m => m.Email == email   )
-                //            .FirstOrDefault();
                 var memberRVM = _MemberService.MemberRigisterData()
                             .Where(m => m.Email == email  )
                             .FirstOrDefault();
@@ -455,8 +566,6 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         GoogleId = googleid,
-                        //MemberName = fullname,
-                        //ProfilePicture = memberRVM.ProfilePicture
                         LoginMethod = 1
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -478,10 +587,6 @@ namespace Build_School_Project_No_4.Controllers
                     var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     Response.Cookies.Add(cookie);
 
-
-                    //msg = "新增會員成功";
-                    //return Content(msg);
-                    //return RedirectToAction("HomePage", "Home");
                 }
                 else
                 {
@@ -495,8 +600,6 @@ namespace Build_School_Project_No_4.Controllers
                     {
                         MemberId = memberRVM.MemberId,
                         GoogleId = googleid,
-                        //MemberName = memberRVM.MemberName,
-                        //ProfilePicture = memberRVM.ProfilePicture,
                         LoginMethod = 1
                     };
                     string JsonMeminfo = JsonConvert.SerializeObject(meminfo);
@@ -545,13 +648,13 @@ namespace Build_School_Project_No_4.Controllers
                     db.SaveChanges();
                     tran.Commit();
 
-                    return Content("更新linestatus成功");
+                    return Content("update linestatus success");
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();
 
-                    return Content("更新linestatus失敗:" + ex.ToString());
+                    return Content("update linestatus failure:" + ex.ToString());
                 }
             }
             //return View();
@@ -604,7 +707,7 @@ namespace Build_School_Project_No_4.Controllers
             //};
 
             //groupMember.MemberInfo = MemberInfo;
-            ViewBag.Avatar = MemberInfo.ProfilePicture;                        
+            ViewBag.Avatar = MemberInfo.ProfilePicture;
 
             return View("EditProfile", MemberInfo);
         }
@@ -643,13 +746,13 @@ namespace Build_School_Project_No_4.Controllers
                         db.SaveChanges();
                         tran.Commit();
 
-                        return Content("寫入資料庫成功");
+                        TempData["message"] = "success";
                     }
                     catch (Exception ex)
                     {
                         tran.Rollback();
 
-                        return Content("寫入資料庫失敗:" + ex.ToString());
+                        TempData["msg"] = "failure";
                     }
                 }
 
@@ -666,15 +769,8 @@ namespace Build_School_Project_No_4.Controllers
         {
             FormsAuthentication.SignOut();
 
-            //獲取該頁面url的參數資訊
-            string returnURL = Request.Params["HTTP_REFERER"];
-            int index = returnURL.IndexOf('=');
-            returnURL = returnURL.Substring(index + 1);
-            //如果參數為空，則跳轉到首頁，否則切回原頁面
-            if (string.IsNullOrEmpty(returnURL))
-                return Redirect("/Home/HomePage");
-            else
-                return Redirect(returnURL);
+            return Redirect("/Home/HomePage");
+
         }
 
 
@@ -710,7 +806,6 @@ namespace Build_School_Project_No_4.Controllers
             {
                 //通過Model驗證後, 使用HtmlEncode將帳密做HTML編碼, 去除有害的字元
                 string email = HttpUtility.HtmlEncode(loginMember.Email);
-                //string password = HashService.MD5Hash(HttpUtility.HtmlEncode(loginVM.Password));
 
                 Members meminfo = new Members()
                 {
@@ -814,30 +909,69 @@ namespace Build_School_Project_No_4.Controllers
                 var member = _MemberService.MemberRigisterData()
                             .Where(m => m.Email == newMember.Email)
                             .FirstOrDefault();
+
+                //完全未註冊過
                 if (member == null)
                 {
                     //將密碼Hash
                     newMember.Password = _MemberService.HashPassword(newMember.Password);
 
-                    //GroupViewModel -> DM
+                    //VM -> DM
                     Members emp = new Members
                     {
                         Email = newMember.Email,
                         Password = newMember.Password,
                         AuthCode = AuthCode,
-                        LineStatusId = 1
+                        LineStatusId = 1,
+                        IsAdmin = true
                     };
                     db.Members.Add(emp);
                     db.SaveChanges();
+
+
+                    string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
+                    UriBuilder ValidateUrl = new UriBuilder(Request.Url)
+                    {
+                        Path = Url.Action("EmailValidate", "Members", new
+                        {
+                            Email = newMember.Email,
+                            AuthCode = AuthCode
+                        })
+                    };
+                    string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
+
+                    _MailService.SendRegisterMail(MailBody, newMember.Email);
+
+                    //用TempData儲存註冊訊息
+                    TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
+                    //重新導向頁面
+                    return RedirectToAction("RegisterResult");
+
                 }
-                //與第三方登入判斷
-                else if (member != null && (member.GoogleId !="" || member.FBId != "" || member.LineId != ""))
+                //已透過第三方登入註冊過
+                //else if (member != null && (member.GoogleId != "" || member.FBId != "" || member.LineId != ""))
+                else if (member.IsAdmin == false && (member.GoogleId != "" || member.FBId != "" || member.LineId != ""))
                 {
-                    //將密碼Hash
-                    newMember.Password = _MemberService.HashPassword(newMember.Password);
-                    member.Password = newMember.Password;
-                    member.AuthCode = AuthCode;
-                    db.SaveChanges();
+                    _MemberService.UpdateThirdpartyRegister(newMember, AuthCode);
+
+                    string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
+                    UriBuilder ValidateUrl = new UriBuilder(Request.Url)
+                    {
+                        Path = Url.Action("EmailValidate", "Members", new
+                        {
+                            Email = newMember.Email,
+                            AuthCode = AuthCode
+                        })
+                    };
+                    string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
+
+                    _MailService.SendRegisterMail(MailBody, newMember.Email);
+
+                    //用TempData儲存註冊訊息
+                    TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
+                    //重新導向頁面
+                    return RedirectToAction("RegisterResult");
+
                 }
                 else
                 {
@@ -847,25 +981,6 @@ namespace Build_School_Project_No_4.Controllers
                     return RedirectToAction("RegisterResult");
                 }
 
-
-                string TempMail = System.IO.File.ReadAllText(Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
-
-                UriBuilder ValidateUrl = new UriBuilder(Request.Url)
-                {
-                    Path = Url.Action("EmailValidate", "Members", new{
-                        Email = newMember.Email,
-                        AuthCode = AuthCode
-                    })
-                };
-
-                string MailBody = _MailService.GetRegisterMailBody(TempMail, newMember.Email, ValidateUrl.ToString().Replace("%3F", "?"));
-
-                _MailService.SendRegisterMail(MailBody, newMember.Email);
-
-                //用TempData儲存註冊訊息
-                TempData["RegisterState"] = "註冊成功，請到註冊信箱進行驗證";
-                //重新導向頁面
-                return RedirectToAction("RegisterResult");
 
             }
 
@@ -899,7 +1014,9 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult EmailValidate(string Email, string AuthCode)
         {
             ViewData["EmailValidate"] = _MemberService.EmailValidate(Email, AuthCode);
-            return RedirectToAction("ePal", "ePal");
+            //TempData["valmsg"] = "valiOK";
+            return View();
+            //return Redirect("/Home/HomePage");
         }
 
 

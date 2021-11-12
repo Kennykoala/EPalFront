@@ -42,7 +42,7 @@
                                                     aria-selected="true">
                                                 Hot(11)
                                             </button>*@
-                                        <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Hot(11)</a>
+                                        <a class="nav-link nav-link-tab active" data-bs-toggle="tab" href="#tab1">Hot(11)</a>
                                     </li>
                                     <li class="nav-item purple-text-border" role="presentation">
                                         @*<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
@@ -50,7 +50,7 @@
                                                     aria-selected="false">
                                                 Games(32)
                                             </button>*@
-                                        <a class="nav-link" data-bs-toggle="tab" href="#tab2">Games(10)</a>
+                                        <a class="nav-link nav-link-tab" data-bs-toggle="tab" href="#tab2">Games(10)</a>
                                     </li>
                                     <li class="nav-item purple-text-border" role="presentation">
                                         @*<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
@@ -58,7 +58,7 @@
                                                     aria-selected="false">
                                                 LifeStyles(10)
                                             </button>*@
-                                        <a class="nav-link" data-bs-toggle="tab" href="#tab3">LifeStyles(6)</a>
+                                        <a class="nav-link nav-link-tab" data-bs-toggle="tab" href="#tab3">LifeStyles(6)</a>
                                     </li>
                                 </ul>
 
@@ -918,13 +918,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        @Html.ListBoxFor(model => model.ServerSelectedId, new SelectList(Model.ServerItems, "ServerId", "ServerName"), new { @class = "form-control col-md-4", @style = "background-color: #302F3D; color:white;" })
+                                        @Html.ListBoxFor(model => model.ServerSelectedId, new SelectList(Model.ServerItems, "ServerId", "ServerName"), new { @class = "form-control col-md-4 gamelistbox", @style = "background-color: #302F3D; color:white;" })
                                         @Html.ValidationMessageFor(model => model.ServerSelectedId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Server(s) -->
+
                             <!--<p>Server(s)</p>
                             <div class="row d-flex justify-content-center mt-100">
                                 <div class="col-md-6">
@@ -957,7 +958,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        @Html.ListBoxFor(model => model.PositionSelectedId, new SelectList(Model.PositionItems, "PositionId", "PositionName"), new { @class = "form-control form-select", style = "background-color:#21212C; color:white; margin-top:5px;" })
+                                        @Html.ListBoxFor(model => model.PositionSelectedId, new SelectList(Model.PositionItems, "PositionId", "PositionName"), new { @class = "form-control form-select gamelistbox", style = "background-color:#21212C; color:white; margin-top:5px;" })
                                         @Html.ValidationMessageFor(model => model.PositionSelectedId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -985,7 +986,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        @Html.ListBoxFor(model => model.StyleSelectedId, new SelectList(Model.StyleItems, "StyleId", "StyleName"), new { @class = "form-control form-select", style = "background-color:#21212C; color:white; margin-top:5px;" })
+                                        @Html.ListBoxFor(model => model.StyleSelectedId, new SelectList(Model.StyleItems, "StyleId", "StyleName"), new { @class = "form-control form-select gamelistbox", style = "background-color:#21212C; color:white; margin-top:5px;" })
                                         @Html.ValidationMessageFor(model => model.StyleSelectedId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
