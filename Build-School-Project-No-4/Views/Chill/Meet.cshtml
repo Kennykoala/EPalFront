@@ -1,42 +1,7 @@
 ﻿@model IEnumerable<ChillMeetViewModel>
 
 
-@*<nav>
-    <div class="container phoneTopNav">
-        <div class="phoneNavSelect">
-            <div class="row text-center">
-                <div class="col-4 selectPlay">
-                    <a href="@Url.Action("Live","Chill")">Live</a>
-                </div>
-                <div class="col-4 selectPlay">
-                    <a href="@Url.Action("Meet", "Chill")">Meet</a>
-                </div>
-                <div class="col-4">
-                    <input type="checkbox" id="menu-checks">
-                    <div class="personal-account">
-                        <label class="hb" for="menu-checks">
-                            <i class="fas fa-th-large"></i>
-                        </label>
-                        <nav class="aside-Menu">
-                            <ul class="list-group align-items-start ">
-                                <li class="list-group-item bg-secondary  ">
-                                    <a href="#">
-                                        <i class="far fa-smile" id="likeMenu">&nbsp Like &nbsp &nbsp<br></i>
-                                    </a>
-                                </li>
-                                <li class="list-group-item bg-secondary  ">
-                                    <a href="#">
-                                        <i class="far fa-smile" id="likeMenu">&nbsp Setting<br></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>*@
+
 
 
 <nav>
@@ -165,24 +130,25 @@
     var allCards = document.querySelectorAll('.tinder--card');
     var nope = document.getElementById('nope');
     var love = document.getElementById('love');
-    /* let cardUserId = 60;*/
 
 
+    //載入卡片
     function initCards(card, index) {
         var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
 
         newCards.forEach(function (card, index) {
             card.style.zIndex = allCards.length - index;
-            /*    card.tagName = allCards.length - index;*/
-            // card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
             card.style.opacity = (10 - index) / 10;
         });
 
         tinderContainer.classList.add('loaded');
     }
-
     initCards();
 
+
+
+    //滑動翻牌功能
+    //監聽滑動
     allCards.forEach(function (el) {
         var hammertime = new Hammer(el);
 
@@ -209,10 +175,12 @@
             tinderContainer.classList.remove('tinder_love');
             tinderContainer.classList.remove('tinder_nope');
 
+
+        
             var moveOutWidth = document.body.clientWidth;
+            //翻牌判斷條件 
             var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
 
-            /*  event.target.classList.toggle('removed', !keep);*/
 
             if (keep) {
                 event.target.style.transform = '';
@@ -226,15 +194,16 @@
                 var rotate = xMulti * yMulti;
 
 
+                //翻牌Like
                 if (toX > 0) {
                     var cards = document.querySelectorAll('.tinder--card:not(.removed)');
 
                     var card = cards[0];
-                    //取得卡片最後一個元素的內容
+                    //取得目前卡片元素的內容
                     var cardHtml = cards[0].innerHTML;
                     var cardlikeId = cards[0].lastElementChild.innerText;
                     var cardUserId = cards[0].firstElementChild.innerText;
-                    /* console.log(cardUserId);*/
+
 
                     SaveImageViaAjax(cardUserId, cardlikeId);
                 }
@@ -247,6 +216,7 @@
         });
     });
 
+    //按鈕翻牌功能
     function createButtonListener(love) {
         return function (event) {
             var cards = document.querySelectorAll('.tinder--card:not(.removed)');
@@ -258,12 +228,7 @@
             //取得卡片最後一個元素的內容
             var cardlikeId = cards[0].lastElementChild.innerText;
             var cardUserId = cards[0].firstElementChild.innerText;
-            console.log(cardUserId);
-            console.log(cardlikeId);
-
-            //let memberId = 1;
-            //SaveImageViaAjax(memberId, cardlikeId);
-
+ 
 
             if (love) {
                 card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
@@ -273,7 +238,6 @@
             }
 
             card.classList.add('removed');
-
             initCards();
 
             event.preventDefault();
@@ -316,7 +280,6 @@
 
 
         var Data = JSON.stringify({
-            /*     CardUserId: 555,*/
             UserId: `${usersId}`,
             LikeId: `${CardIDs}`,
         });
@@ -334,11 +297,11 @@
             //dataType: "json",
             success: function (res) {
                 console.log(res);
-                //$("#ShowMsg").text("Image Uploaded Successfully...!").css("color", "green")
+                
             },
             error: function (err) {
                 console.log(err);
-                //$("#ShowMsg").text("Image Not Uploaded...!").css("color", "red")
+                
             }
         });
 
