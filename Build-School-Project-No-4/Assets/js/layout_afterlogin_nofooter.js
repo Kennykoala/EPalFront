@@ -3,7 +3,10 @@
 let html = document.queryCommandValue('html')
 let logbtn = document.querySelector('#loginmodal')
 let signbtn = document.querySelector('#signupmodal')
-let modalbtn = document.querySelectorAll('.modalbutton');
+
+let modalbtn = document.querySelectorAll('.navbar-right .modalbutton');
+let modalbtnPhone = document.querySelectorAll('.navbar-sm .modalbuttonPhone');
+
 let modalbtnclose = document.querySelector('.modal-btn-close');
 let maillog = document.querySelector('.maillog');
 let phonelog = document.querySelector('.phonelog');
@@ -33,17 +36,20 @@ let passshow = document.querySelectorAll('.passwordshow');
 let msgroom = document.querySelector('#dropdown-message');
 let searchbar = document.querySelector('.search input');
 let statusbar = document.querySelector('.statusbar');
+let statusbarPhone = document.querySelector('.navbar-right-phone .statusbar');
+
 let statuslistbtn = document.querySelectorAll('.aside-Menu .dropdown-menu button');
+let statuslistbtnPhone = document.querySelectorAll('.navbar-right-phone .aside-Menu .dropdown-menu button');
 
 
 let email = document.querySelector(".emailinput");
-/*let password = document.querySelector(".passwordinput");*/
+
 let logsignmodalbtn = document.querySelector('.logsign-modal-button');
 
 let mailerror = document.getElementById('email-error');
 let passerror = document.getElementById('myinput-error');
 let valerror = document.querySelectorAll(".field-validation-error");
-//let isRequestAuthenticated = ' @Request.IsAuthenticated';
+
 
 let logoutbtn = document.querySelector('#logoutbutton')
 
@@ -52,7 +58,7 @@ let logoutbtn = document.querySelector('#logoutbutton')
 
 window.onload = function () {
 
-    //google進行登入程序，使用gapi.auth2.init()方法的client_id參數指定應用程序的客戶端ID
+    //google login
     var startApp = function () {
         gapi.load("auth2", function () {
             auth2 = gapi.auth2.init({
@@ -73,12 +79,6 @@ window.onload = function () {
             function (googleUser) {
                 // Useful data for your client-side scripts:
                 var profile = googleUser.getBasicProfile();
-                //console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-                //console.log('Full Name: ' + profile.getName());
-                //console.log('Given Name: ' + profile.getGivenName());
-                //console.log('Family Name: ' + profile.getFamilyName());
-                //console.log("Image URL: " + profile.getImageUrl());
-                //console.log("Email: " + profile.getEmail());
 
                 // The ID token you need to pass to your backend:
                 var id_token = googleUser.getAuthResponse().id_token;
@@ -86,8 +86,7 @@ window.onload = function () {
                 var OauthId = profile.getId();
                 var OauthName = profile.getName();
                 var OauthEmail = profile.getEmail();
-                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token ，false則不會，自行決定。如果只需要Google登入功能應該不會使用到access token
-                //var LoginMethod = "1";
+                var AuthResponse = googleUser.getAuthResponse(true);//true會回傳access token 
 
                 $.ajax({
                     url: '/Members/GoogleLogin',
@@ -98,29 +97,29 @@ window.onload = function () {
                         OauthName: OauthName,
                         OauthEmail: OauthEmail,
                         AuthResponse: AuthResponse,
-                        //LoginMethod: "1"
                     },
                     success: function (msg) {
                         $("#myModal").modal('hide');
 
-                        console.log(msg);
+                        //console.log(msg);
                         swal.fire({
                             title: "Welcome to Epal",
                             icon: "success",
                             //buttons: true,
                             //dangerMode: true
+                        }).then(function () {
+                            window.location.href = "/";
                         });
 
-                        if (msg == true) {
-                            window.location.href = '/'
-                        }
+                        //if (msg == true) {
+                        //    window.location.href = '/'
+                        //}
                     }
-                });//end $.ajax
+                });
 
             },
             // 登入失敗
             function (error) {
-                $("#GOOGLE_STATUS_2").html("");
                 alert(JSON.stringify(error, undefined, 2));
                 swal.fire({
                     title: "Login Fail",
@@ -139,14 +138,7 @@ window.onload = function () {
         startApp();
     });
 
-    //// 點擊登出
-    //$("#GOOGLE_logout").click(function () {
-    //    var auth2 = gapi.auth2.getAuthInstance();
-    //    auth2.signOut().then(function () {
-    //        // 登出後的動作
-    //        $("#GOOGLE_STATUS_2").html("");
-    //    });
-    //});
+
 
 
 
@@ -172,8 +164,6 @@ window.onload = function () {
     function statusChangeCallback(response) {
         console.log('statusChangeCallback/authResponse:');
         console.log(response);
-        //var target = document.getElementById("FB_STATUS_2"),
-            //html = "";
 
         // 登入 FB 且已加入會員
         if (response.status === 'connected') {
@@ -181,11 +171,9 @@ window.onload = function () {
 
             FB.api('/me?fields=id,name,email', function (response) {
 
-                console.log('fbapi');
-                console.log(response);
-                //html += "會員暱稱：" + response.name + "<br/>";
-                //html += "會員 email：" + response.email;
-                //target.innerHTML = html;
+                //console.log('fbapi');
+                //console.log(response);
+
 
                 var fbemail = response.email;
                 var fbname = response.name;
@@ -231,12 +219,14 @@ window.onload = function () {
                     icon: "success",
                     //buttons: true,
                     //dangerMode: true
+                }).then(function () {
+                    window.location.href = "/";
                 });
 
 
-                if (msg == true) {
-                    window.location.href = '/'
-                }
+                //if (msg == true) {
+                //    window.location.href = '/'
+                //}
 
             },
             error: function (err) {
@@ -251,13 +241,6 @@ window.onload = function () {
             }
         })
 
-        //原本的function testAPI()
-        // console.log('Welcome!  Fetching your information.... ');
-        // FB.api('/me', function (response) {
-        //     console.log('Successful login for: ' + response.name);
-        //     document.getElementById('status').innerHTML =
-        //         'Thanks for logging in, ' + response.name + '!';
-        // });
     }
 
     // 點擊登入
@@ -270,12 +253,7 @@ window.onload = function () {
         });
     });
 
-    //// 點擊登出
-    //$("#FB_logout").click(function () {
-    //    FB.logout(function (response) {
-    //        statusChangeCallback(response);
-    //    });
-    //});
+
 
     // 載入 FB SDK
     (function (d, s, id) {
@@ -294,13 +272,13 @@ window.onload = function () {
 
 
 
-    //Line Login  v1
+    //Line Login  
     //建立OAuth 身分驗證頁面並導入
     function AuthWithEmail() {
         var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
         URL += 'response_type=code';
         URL += '&client_id=1656564684';   //TODO:這邊要換成你的client_id
-        URL += '&redirect_uri=https://localhost:44322/Members/LineLoginCallback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+        URL += '&redirect_uri=https://epal-frontstage.azurewebsites.net/Members/LineLoginCallback';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
         URL += '&scope=openid%20profile%20email';
         URL += '&state=abcde';
         window.location.href = URL;
@@ -311,16 +289,7 @@ window.onload = function () {
     }
     $('#Line_login').click(Button2_click);
 
-    ////var strValue = "@((string)ViewBag.msg)";
-    //var strValue = TempData["message"];
-    //if (strValue != null && strValue != "") {
-    //    swal.fire({
-    //        title: strValue,
-    //        icon: "success",
-    //        //buttons: true,
-    //        //dangerMode: true
-    //    });
-    //}
+
 
 
 
@@ -350,15 +319,10 @@ window.onload = function () {
     modalbtn.forEach((btn, idx) => {
         logsigntab[idx].classList.remove('logsign-purple-border');
 
-        //logsignTabContent[idx].classList.remove('show', 'active');
-        //logsigntab[idx].classList.remove('active');    
-
         logsigntitle.innerHTML = idx === 0 ? "Log in and experience ePal services for free" : "Sign up and experience ePal services for free";
-        //modalfooter.style.display = idx === 0 ? 'flex' : 'none';
         modalfooterP.innerHTML = idx === 0 ? 'Or log in with' : 'Or sign up with';
 
-        //if (!isRequestAuthenticated)
-        $('#loginmodal').trigger('click');
+        //$('#loginmodal').trigger('click');
 
 
         btn.addEventListener('click', function (event) {
@@ -368,85 +332,30 @@ window.onload = function () {
             logsigntab[idx].classList.add('active');
             logsignTabContent[idx].classList.add('show', 'active');
 
-
             logsigntitle.innerHTML = idx === 0 ? "Log in and experience ePal services for free" : "Sign up and experience ePal services for free";
-            //modalfooter.style.display = idx === 0 ? 'flex' : 'none';
             modalfooterP.innerHTML = idx === 0 ? 'Or log in with' : 'Or sign up with';
-
-            //if (idx === 0) { logsignBtn[0].value = "Log In"; }
-            //else if (idx === 1) { logsignBtn[1].value = "Sign Up"; }
-
-            //maillog.style.display = 'block';
-
-            //if (idx == 0) {
-            //    validate[0].innerHTML = "";
-            //    validate[1].innerHTML = "";
-            //}
-            //else if (idx == 1) {
-            //    validate[2].innerHTML = "";
-            //    validate[3].innerHTML = "";
-            //}
-
 
 
             logsigntab.forEach((item, index) => {
 
-
-                //if ( (idx == 0 && index == 0) || (idx == 1 && index == 0) ) {
-                //    hometab.style.display = "block";
-                //    profiletab.style.display = "none";
-                //}
-                //else if ((idx == 1 && index == 1) || (idx == 0 && index == 1)) {
-                //    hometab.style.display = "none";
-                //    profiletab.style.display = "block";
-                //}
-
                 //modal裡面按下不同tab，執行各自的purple border
                 item.addEventListener('click', function (event) {
-                    // maillog.style.display = 'block';
-
-                    ////登入驗證errormsg清除
-                    //document.querySelectorAll(".field-validation-error").forEach(item => {
-                    //    item.innerText = "";
-                    //})
-
-                    //if ((idx == 0 && index == 0) || (idx == 1 && index == 0)) {
-                    //    hometab.style.display = "block";
-                    //    profiletab.style.display = "none";
-                    //}
-                    //else if ((idx == 1 && index == 1) || (idx == 0 && index == 1)) {
-                    //    hometab.style.display = "none";
-                    //    profiletab.style.display = "block";
-                    //}
-
 
                     item.classList.remove('logsign-purple-border');
 
                     logsigntab.forEach(e => {
                         e.classList.remove('logsign-purple-border');
                         logsigntitle.innerHTML = index === 0 ? "Log in and experience ePal services for free" : "Sign up and experience ePal services for free";
-                        //modalfooter.style.display = index === 0 ? 'flex' : 'none';
                         modalfooterP.innerHTML = index === 0 ? 'Or log in with' : 'Or sign up with';
-
-                        //if (index === 0) { logsignBtn[0].value = "Log In"; }
-                        //else if (index === 1) { logsignBtn[1].value = "Sign Up"; }
-
-                        //e.classList.remove('show', 'active');
-
                     })
                     event.srcElement.classList.add('logsign-purple-border');
-                    //event.srcElement.classList.add('show', 'active');
 
                     //modal關閉後清除purple border
                     modalbtnclose.addEventListener('click', function (event) {
                         item.classList.remove('logsign-purple-border');
                         logsignTabContent[index].classList.remove('show', 'active');
                         logsigntab[index].classList.remove('active');
-                        //idx == "";
-                        //index == "";
-                        //validate.forEach(item => {
-                        //    item.innerHTML = "";
-                        //})
+
                     })
 
                 })
@@ -458,6 +367,66 @@ window.onload = function () {
     })
     //$('#myModal').modal({ backdrop: 'static', keyboard: false });
 
+
+
+
+
+
+    //login / signup modal Phone
+    modalbtnPhone.forEach((btn, idx) => {
+        logsigntab[idx].classList.remove('logsign-purple-border');
+
+        logsigntitle.innerHTML = idx === 0 ? "Log in and experience ePal services for free" : "Sign up and experience ePal services for free";
+        modalfooterP.innerHTML = idx === 0 ? 'Or log in with' : 'Or sign up with';
+
+        //$('#loginmodal').trigger('click');
+
+
+        btn.addEventListener('click', function (event) {
+            //初始化modal打開樣式
+            logsigntab[idx].classList.add('logsign-purple-border');
+
+            logsigntab[idx].classList.add('active');
+            logsignTabContent[idx].classList.add('show', 'active');
+
+
+            logsigntitle.innerHTML = idx === 0 ? "Log in and experience ePal services for free" : "Sign up and experience ePal services for free";
+            modalfooterP.innerHTML = idx === 0 ? 'Or log in with' : 'Or sign up with';
+
+
+            logsigntab.forEach((item, index) => {
+
+                //modal裡面按下不同tab，執行各自的purple border
+                item.addEventListener('click', function (event) {
+                    // maillog.style.display = 'block';
+
+
+                    item.classList.remove('logsign-purple-border');
+
+                    logsigntab.forEach(e => {
+                        e.classList.remove('logsign-purple-border');
+                        logsigntitle.innerHTML = index === 0 ? "Log in and experience ePal services for free" : "Sign up and experience ePal services for free";
+                        modalfooterP.innerHTML = index === 0 ? 'Or log in with' : 'Or sign up with';
+
+                    })
+                    event.srcElement.classList.add('logsign-purple-border');
+
+                    //modal關閉後清除purple border
+                    modalbtnclose.addEventListener('click', function (event) {
+                        item.classList.remove('logsign-purple-border');
+                        logsignTabContent[index].classList.remove('show', 'active');
+                        logsigntab[index].classList.remove('active');
+
+                    })
+
+                })
+
+            })
+        })
+
+
+    })
+    //$('#myModal').modal({ backdrop: 'static', keyboard: false });
 
 
 }
@@ -535,6 +504,18 @@ function PersonalClose() {
 }
 
 
+//personal info.  open/close  Phone
+function PersonalOpenPhone() {
+    document.querySelector(".navbar-right-phone .aside-Menu").style.width = "100%";
+    document.querySelector(".navbar-right-phone .aside-Menu").style.right = "0%";
+    document.querySelector(".navbar-right-phone .aside-Menu").style.zIndex = "100";
+}
+function PersonalClosePhone() {
+    document.querySelector(".navbar-right-phone .aside-Menu").style.right = "-100%";
+}
+
+
+
 
 //chatroom  open/close
 function MsgRoomOpen() {
@@ -610,3 +591,33 @@ statuslistbtn.forEach((stabtn, idx) => {
 })
 
 
+//online/offline change  Phone
+statuslistbtnPhone.forEach((stabtn, idx) => {
+
+    stabtn.addEventListener('click', function () {
+        statusbarPhone.innerHTML = stabtn.innerHTML;
+
+        linestatusId = stabtn.value;
+        var Data = JSON.stringify({
+            //MemberId: `${memberId}`,
+            LineStatusId: `${linestatusId}`
+        });
+
+        $.ajax({
+            url: "/Members/MemberStatus",
+            type: "POST",
+            data: Data,
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            processData: false,
+            //dataType: "json",
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    })
+})

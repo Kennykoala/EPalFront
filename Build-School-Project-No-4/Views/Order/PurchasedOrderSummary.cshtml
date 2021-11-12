@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-2 order-statuses">
-            <div class="order-list col-md-2">
+            <div class="order-list col-12 col-md-2">
                 <div class="greyish title">Purchased Orders</div>
                 <div class="categories" style=" padding: 10px 10px 15px;">
                     @foreach (var m in Model.Order)
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-10">
+        <div class="col-12 col-md-10 order-summary-container">
             <div class="order-summary">
                 <div class="status">@Model.Title</div>
                 <div class="status-header greyish">
@@ -37,48 +37,46 @@
                     <div>Quantity/OrderTime</div>
                     <div>Total Price </div>
                     <div class="options">Options</div>
-
                     @if (Model.Title == "Not Started" || Model.Title == "Started")
                     {
                         <div>Status </div>
                     }
-
                 </div>
-                <div class="cards-list-mobile">
-                    <div class="order-card">
-                        <a href="#">
-                            <div class="card-top">
-                                <div class="user">
-                                    <div class="user-img"></div>
-                                    <div class="name">
-                                        Jolie
-                                        <i class="fas fa-chevron-right"></i>
+                @*<div class="cards-list-mobile">
+                        <div class="order-card">
+                            <a href="#">
+                                <div class="card-top">
+                                    <div class="user">
+                                        <div class="user-img"></div>
+                                        <div class="name">
+                                            Jolie
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                    <div class="order-status greyish">Cancelled</div>
+                                </div>
+                            </a>
+                            <hr />
+                            <a href="#">
+                                <div class="card-bot">
+                                    <div class="info">
+                                        <div class="info-left">
+                                            <div class="game-name">Among Us</div>
+                                            <div class="game- greyish">3 round(s) total</div>
+                                            <div class="start-time greyish">Sep 13, 2:12PM</div>
+                                        </div>
+                                        <div class="info-right">
+                                            <img src="~/Assets/images/Orders/currency.png" />
+                                            15.00
+                                        </div>
+                                    </div>
+                                    <div class="bot-section">
+                                        <div class="chat">Chat</div>
                                     </div>
                                 </div>
-                                <div class="order-status greyish">Cancelled</div>
-                            </div>
-                        </a>
-                        <hr />
-                        <a href="#">
-                            <div class="card-bot">
-                                <div class="info">
-                                    <div class="info-left">
-                                        <div class="game-name">Among Us</div>
-                                        <div class="game- greyish">3 round(s) total</div>
-                                        <div class="start-time greyish">Sep 13, 2:12PM</div>
-                                    </div>
-                                    <div class="info-right">
-                                        <img src="~/Assets/images/Orders/currency.png" />
-                                        15.00
-                                    </div>
-                                </div>
-                                <div class="bot-section">
-                                    <div class="chat">Chat</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                            </a>
+                        </div>
+                    </div>*@
                 <div class="cards-list">
                     @foreach (var m in Model.OrderCards)
                     {
@@ -259,7 +257,7 @@
                     </div>
                     -->
                 </div>
-                <div class="no-orders"></div>
+                @*<div class="no-orders"></div>*@
             </div>
         </div>
     </div>
@@ -269,11 +267,18 @@
 
 
 @section endJS{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
-            integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script src="~/Assets/jquery/jquery.min.js"></script>
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+        integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="~/Assets/axios/axios.min.js"></script>
+
+    @*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>*@
+    <script src="~/Assets/sweetalert/sweetalert2@11.js"></script>
+
 
     <script>
 
@@ -295,35 +300,31 @@
                     let startbtn = document.createElement('button')
                     startbtn.innerText = 'Start'
                     startbtn.setAttribute('class', 'startbutton')
-                    //startbtn.setAttribute('style', 'margin-right:10px')
-                    //startbtn.setAttribute('style', 'background-color:rgb(112, 65, 230);')
-                    //startbtn.setAttribute('style', 'color: white;')
-                    //startbtn.setAttribute('style', 'border-radius: 50px;')
-
-
+                    startbtn.disabled = true;
                     x.childNodes[3].children[4].appendChild(startbtn)
                     //console.log(x.childNodes[3])
 
                     //delete button
-                    let deletebtn= document.createElement('button')
+                    let deletebtn = document.createElement('button')
                     deletebtn.innerText = 'Delete'
                     deletebtn.setAttribute('class', 'deletebtn')
                     x.childNodes[3].children[4].appendChild(deletebtn)
 
                 }
                 console.log(x.children);
-                //和created status都是3，button才開啟
-                if (x.children[0].children[2].value != 3) {
-                    x.children[1].children[4].childNodes[0].disabled = true;
-                    x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
+                //和created status都是3或4，button才開啟
+                if ((x.children[0].children[2].value == 3) || (x.children[0].children[2].value == 4)) {
+                    x.children[1].children[4].childNodes[0].disabled = false;
+                    x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                    //x.children[1].children[4].childNodes[0].disabled = true;
+                    //x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
                 }
-                else {
-                    //startbtn.setAttribute('style', 'background-color:rgb(112, 65, 230);')
-                }
+
 
             })
 
             order.forEach(item => {
+
                 //start button
                 item.children[1].children[4].childNodes[0].addEventListener("click", function () {
                     let orderid = item.children[0].children[0].innerText;
@@ -333,7 +334,7 @@
                     });
 
                     $.ajax({
-                        url: "/Order/UpdatePurchasedStstus",
+                        url: "/Order/UpdatePurchasedStatus",
                         type: "Post",
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',
@@ -348,6 +349,18 @@
                             //    //buttons: true,
                             //    //dangerMode: true
                             //});
+
+                            //if ((item.children[0].children[2].value == 3)) {
+                            //    item.children[1].children[4].childNodes[0].disabled = false;
+                            //    item.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                            //    //x.children[1].children[4].childNodes[0].disabled = true;
+                            //    //x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
+                            //} else if ((item.children[0].children[2].value == 4)) {
+                            //    item.children[1].children[4].childNodes[0].disabled = false;
+                            //    item.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:rgb(112, 65, 230);')
+                            //}
+
+
 
                             if (data == true) {
 
@@ -375,7 +388,7 @@
                     });
 
                     $.ajax({
-                        url: "/Order/UpdatePurchasedStstus",
+                        url: "/Order/UpdatePurchasedStatus",
                         type: "Post",
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',
@@ -420,15 +433,19 @@
                     let btn = document.createElement('button')
                     btn.innerText = 'Finish'
                     btn.setAttribute('class', 'finishbtn')
+                    btn.disabled = true;
                     x.childNodes[3].appendChild(btn)
                     //console.log(x.childNodes[3])
                 }
 
-                //和created status都是4，button才開啟
-                if (x.children[0].children[2].value != 4) {
-                    x.children[1].children[4].disabled = true;
-                    x.children[1].children[4].setAttribute('style', 'background-color:#6A6973;');
-                }             
+                //和created status都是4或5，button才開啟
+                if ((x.children[0].children[2].value == 4) || (x.children[0].children[2].value == 5)) {
+                    x.children[1].children[4].disabled = false;
+                    x.children[1].children[4].setAttribute('style', 'background-color:rgb(112, 65, 230);');
+
+                    //x.children[1].children[4].childNodes[0].disabled = true;
+                    //x.children[1].children[4].childNodes[0].setAttribute('style', 'background-color:#6A6973;')
+                }
 
             })
             order.forEach(item => {
@@ -443,7 +460,7 @@
                     });
 
                     $.ajax({
-                        url: "/Order/UpdatePurchasedStstus",
+                        url: "/Order/UpdatePurchasedStatus",
                         type: "Post",
                         data: orderdata,
                         contentType: 'application/json; charset=utf-8',

@@ -12,10 +12,12 @@ namespace Build_School_Project_No_4.Services
     {
 
         private readonly Repository _repo;
+        private readonly EPalContext _ctx;
 
         public OrderService()
         {
             _repo = new Repository();
+            _ctx = new EPalContext();
         }
 
 
@@ -48,7 +50,7 @@ namespace Build_School_Project_No_4.Services
                 OrderId = o.OrderId,
                 ProductId = o.ProductId,
                 GameName = o.Products.GameCategories.GameName,
-                MemberName = o.Members.MemberName,
+                MemberName = o.Products.Members.MemberName,
                 //ProfilePicture=o.Members.ProfilePicture
                 ProfilePicture = o.Products.Members.ProfilePicture,
                 OrderStatusIdCreator = o.OrderStatusIdCreator
@@ -133,6 +135,90 @@ namespace Build_School_Project_No_4.Services
             return result;
 
         }
+
+
+
+
+        public bool PurchasedStatusToDB(OrderViewModel order)
+        {
+
+            //using (var tran = _ctx.Database.BeginTransaction())
+            //{
+                try
+                {
+                    var orderinfo = _repo.GetAll<Orders>().First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+
+                    if (order.OrderStatusId == 6)
+                    {
+                        orderinfo.OrderStatusId = 6;
+                        orderinfo.OrderStatusIdCreator = 6;
+                        _repo.Update(orderinfo);
+                        _repo.SaveChanges();
+                    }
+                    else
+                    {
+                        orderinfo.OrderStatusId = order.OrderStatusId;
+                        _repo.Update(orderinfo);
+                        _repo.SaveChanges();
+                    }
+
+                    //tran.Commit();
+                    return true;
+
+                }
+                catch (Exception ex)
+                {
+                    //tran.Rollback();
+                    return false;
+                }
+            //}
+        }
+
+
+        public bool CreatedStatusToDB(OrderViewModel order)
+        {
+
+            //using (var tran = _ctx.Database.BeginTransaction())
+            //{
+                try
+                {
+                    var orderinfo = _repo.GetAll<Orders>().First(x => x.OrderId == order.OrderId);
+                    if (orderinfo == null)
+                    {
+                        throw new NotImplementedException();
+                    }
+
+                    if (order.OrderStatusId == 6)
+                    {
+                        orderinfo.OrderStatusId = 6;
+                        orderinfo.OrderStatusIdCreator = 6;
+                        _repo.Update(orderinfo);
+                        _repo.SaveChanges();
+                    }
+                    else
+                    {
+                        orderinfo.OrderStatusIdCreator = order.OrderStatusIdCreator;
+                        _repo.Update(orderinfo);
+                        _repo.SaveChanges();
+                    }
+
+                    //tran.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //tran.Rollback();
+                    return false;
+                }
+            //}
+        }
+
+
+
 
 
 

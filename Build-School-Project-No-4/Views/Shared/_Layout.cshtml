@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>E-Pal</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">*@
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/bootstrap.min.css">
+    @*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">*@
+    <link href="~/Assets/fontawesome/fontcss/all.css" rel="stylesheet" />
+
+    @*<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />*@
+    <link href="~/Assets/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+
+
+    <link rel="icon" href="~/Favicon_epal.ico" type="image/x-icon" />
 
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
@@ -26,11 +34,19 @@
     @*抓到使用者登入的cookie資訊*@
     @{
         var memberService = new Build_School_Project_No_4.Services.MemberService();
+        var ProfileEpalService = new Build_School_Project_No_4.Services.ProfileEpalService();
+
         HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
 
         string userid = "";
         string avatar = "";
         int? status = 1;
+
+        int followers = 0;
+        int followings = 0;
+        int likes = 0;
+        int matches = 0;
+
         if (cookie != null)
         {
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
@@ -39,6 +55,11 @@
             userid = obj.MemberId.ToString();
             avatar = memberService.GetEditProfileInfo(obj.MemberId).ProfilePicture;
             status = memberService.GetStatus(obj.MemberId).LineStatusId;
+
+            followings = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[0];
+            followers = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[1];
+            likes = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[2];
+            matches = ProfileEpalService.GetSideMenuAccount(obj.MemberId)[3];
         }
     }
 
@@ -61,9 +82,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-white navItem" href="@Url.Action("Live","Chill")">Chill</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link text-white navItem" href="#">Posts</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link text-white navItem" href="@Url.Action("BecomeEPalPage","becomeepal")">Creator Project</a>
                     </li>
@@ -140,7 +158,6 @@
                     {
                         @*<div style="color:white">@(User.Identity.Name)</div>*@
                         @*<li>@Html.ActionLink("變更密碼", "ChangePassword", "Members")</li>*@
-                        @*<div>@Html.ActionLink("Log out", "Logout", "Members")</div>*@
                         <input type="button" value="Log out" class="logoutbtn" onclick="location.href='@Url.Action("Logout", "Members")'" />
 
 
@@ -282,26 +299,35 @@
 
 
                                 <div class="info-wrapper">
-                                    @*<a href="@Url.Action("Followings","Members")">*@
-                                    <div class="infosta" id="followers">
-                                        <div class="num">0</div>
-                                        <div class="txt">Followers</div>
-                                    </div>
-                                    @*</a>*@
-                                    @*<a href="@Url.Action("Followings","Members")">*@
-                                    <div class="infosta" id="followings">
-                                        <div class="num">1</div>
-                                        <div class="txt">Followings</div>
-                                    </div>
-                                    @*</a>*@
-                                    <div class="infosta" id="vistors">
-                                        <div class="num">2</div>
-                                        <div class="txt">Vistors</div>
-                                    </div>
-                                    <div class="infosta" id="medals">
-                                        <div class="num">3</div>
-                                        <div class="txt">Medals</div>
-                                    </div>
+
+                                    <a href="@Url.Action("Followings","Members")" class="infosta">
+                                        <div class="" id="followers">
+                                            <div class="num">@followers</div>
+                                            <div class="txt">Followers</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="@Url.Action("Followings","Members")" class="infosta">
+                                        <div class="" id="followings">
+                                            <div class="num">@followings</div>
+                                            <div class="txt">Followings</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
+                                        <div class="" id="meetmatches">
+                                            <div class="num">@matches</div>
+                                            <div class="txt">Chill Matches</div>
+                                        </div>
+                                    </a>
+
+                                    <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
+                                        <div class="" id="meetlikes">
+                                            <div class="num">@likes</div>
+                                            <div class="txt">Chill Likes</div>
+                                        </div>
+                                    </a>
+
                                 </div>
 
                                 <div class="money-wrapper">
@@ -317,18 +343,7 @@
                                             <div class="txt">Created Order</div>
                                         </a>
                                     </div>
-                                    @*<div class="money-item" id="wallet">
-                                        <a href="@Url.Action("Wallet", "epalAccount")">
-                                            <img src="~/Assets/images/layout/walleticon.png" alt="wallet">
-                                            <div class="txt">Wallet</div>
-                                        </a>
-                                    </div>*@
-                                    @*<div class="money-item" id="coupons">
-                <a href="#">
-                    <img src="~/Assets/images/layout/couponicon.png" alt="coupon">
-                    <div class="txt">Coupons</div>
-                </a>
-            </div>*@
+
                                 </div>
 
                                 <div class="member-wrapper">
@@ -349,10 +364,9 @@
                                 <div class="setting-wrappers">
                                     <div class="settingimg">
                                         <a href="~/Members/EditProfile/@userid">
-                                            <i class="fas fa-cog"></i>Settings
+                                            <i class="fas fa-cog"></i>Account Settings
                                         </a>
                                     </div>
-                                    @*<div class="txt">Settings</div>*@
                                 </div>
                             </div>
                         </div>
@@ -482,23 +496,13 @@
                         <button id="GOOGLE_login" class="btn" style="background-color:transparent;">
                             <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
                         </button>
-                        @*<button id="GOOGLE_login" class="btn">
-                                <img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google">
-                            </button>*@
-                        @*<a href="#"><img src="~/Assets/images/layout/googleicon.png" alt="googleicon" id="google"></a>*@
-                        @*<a href="#"><i class="fab fa-twitch"></i></a>
-                            <a href="#"><i class="fab fa-discord"></i></a>*@
                         <button id="FB_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-facebook"></i>
                         </button>
-                        @*<a href="#"><i class="fab fa-facebook"></i></a>*@
-                        @*<a href="#"><i class="fab fa-apple"></i></a>*@
                         <button id="Line_login" class="btn" style="background-color:transparent;">
                             <i class="fab fa-line"></i>
                         </button>
-                        @*<a href="#"><i class="fab fa-line"></i></a>*@
                     </div>
-                    <span id="GOOGLE_STATUS_2"></span>
                 </div>
 
             </div>
@@ -535,8 +539,12 @@
             <div class="row">
                 <div class="col">
                     <div class="item" id="address">
-                        <p>Address: 25 Barberry,Lake Forest,California - 92630 United States.</p>
-                        <p>Email: &emsp&emsp support@epal.gg</p>
+                        @*<a href="https://lin.ee/hKZutf6">
+                                <img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0">
+                            </a>*@
+                        <img src="https://qr-official.line.me/sid/M/748ohyvi.png" class="lineqrcode">
+                        @*<p>Address: 25 Barberry,Lake Forest,California - 92630 United States.</p>
+                            <p>Email: &emsp&emsp support@epal.gg</p>*@
                     </div>
                 </div>
             </div>
@@ -550,7 +558,7 @@
 
 
     <!-- chatroom  for desktop/pad-->
-    <div class="chatroom">
+    @*<div class="chatroom">
         <button class="chatbot" onclick="MsgRoomOpen()">
             <img src="~/Assets/images/layout/chatroom.png" alt="">
         </button>
@@ -765,7 +773,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
 
 
@@ -775,7 +783,7 @@
             <div class="row">
                 <div class="col">
                     <div class="item">
-                        <a href="@Url.Action("ePal","ePal")">
+                        <a href="@Url.Action("ePal","ePals")">
                             <i class="fas fa-gamepad"></i>
                             ePal
                         </a>
@@ -783,7 +791,7 @@
                 </div>
                 <div class="col">
                     <div class="item">
-                        <a href="@Url.Action("Meet","ChillMeet")">
+                        <a href="@Url.Action("Live","Chill")">
                             <i class="fas fa-desktop"></i>
                             Chill
                         </a>
@@ -791,28 +799,198 @@
                 </div>
                 <div class="col">
                     <div class="item">
-                        <a href="#">
+                        <a href="@Url.Action("BecomeEPalPage","becomeepal")">
                             <i class="fas fa-coins"></i>
                             Creator
                         </a>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="item">
-                        <a href="@Url.Action("ChatForPhonePage","ChatForPhone")">
-                            <i class="far fa-comment-dots"></i>
-                            Chat
-                        </a>
+
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div class="col">
+                        <div class="item">
+                            <button type="button" class="loginbtn modalbutton modalbuttonPhone" data-bs-toggle="modal"
+                                    data-bs-target="#myModal" id="loginmodal">
+                                <i class="fas fa-sign-in-alt loginiconphone"></i>
+                                <p>LogIn</p>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="item">
-                        <a href="@Url.Action("MeForPhonePage","MeForPhone")">
-                            <i class="fas fa-user"></i>
-                            Me
-                        </a>
+                    <div class="col">
+                        <div class="item">
+                            <button type="button" class="loginbtn modalbutton modalbuttonPhone" data-bs-toggle="modal"
+                                    data-bs-target="#myModal" id="signupmodal">
+                                <i class="fas fa-user-plus"></i>
+                                <p>SignUp</p>
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+                }
+                else
+                {
+                    @*<div style="color:white">@(User.Identity.Name)</div>*@
+                    @*<li>@Html.ActionLink("變更密碼", "ChangePassword", "Members")</li>*@
+                    <div class="col">
+                        <div class="item">
+                            <button type="button" value="Log out" class="logoutbtn" id="logoutbutton" onclick="location.href='@Url.Action("Logout", "Members")'">
+                                <i class="fas fa-sign-out-alt logouticonphone"></i>
+                                <p>LogOut</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="item navbar-right-phone">
+
+                            @*個人帳戶資訊*@
+                            <div class="personal-account">
+                                <div class="personal-img">
+                                    @if (avatar == null)
+                                    {
+                                        <img src="~/Assets/images/layout/avatar.png" style="cursor:pointer" onclick="PersonalOpenPhone()" id="navbarAvatar">
+                                    }
+                                    else
+                                    {
+                                        <img src="@avatar" style="cursor:pointer" onclick="PersonalOpenPhone()" id="navbarAvatar">
+                                    }
+                                </div>
+                                <div class="aside-Menu">
+                                    <div class="userinfo">
+                                        <div class="user-photo">
+                                            <a href="~/Members/profile/@userid">
+                                                @if (avatar == null)
+                                                {
+                                                    <img src="~/Assets/images/layout/avatar.png" alt="userphoto">
+                                                }
+                                                else
+                                                {
+                                                    <img src=@avatar alt="userphoto">
+                                                }
+
+                                            </a>
+                                        </div>
+                                        <div class="uesr-account-name">
+                                            <a href="~/Members/profile/@userid">
+                                                <div style="color:white">@(User.Identity.Name)</div>
+                                            </a>
+                                        </div>
+                                        <div class="aside-close">
+                                            <button type="button" class="btn-close btn-close-white" aria-label="Close"
+                                                    onclick="PersonalClosePhone()"></button>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="online-wrapper">
+                                        @if (status == 2)
+                                        {
+                                            <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a type="button" class="btn statusbar" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                            </a>
+                                        }
+
+                                        <ul class="dropdown-menu">
+
+                                            <li>
+                                                <button class="dropdown-item statusbtn" type="button" value="1">
+                                                    <img src="~/Assets/images/layout/online.png" alt="">ONLINE
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item statusbtn" type="button" value="2">
+                                                    <img src="~/Assets/images/layout/offline.png" alt="">OFFLINE
+                                                </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="info-wrapper">
+                                        <a href="@Url.Action("Followings","Members")" class="infosta">
+                                            <div class="" id="followers">
+                                                <div class="num">@followers</div>
+                                                <div class="txt">Followers</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="@Url.Action("Followings","Members")" class="infosta">
+                                            <div class="" id="followings">
+                                                <div class="num">@followings</div>
+                                                <div class="txt">Followings</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
+                                            <div class="" id="meetmatches">
+                                                <div class="num">@matches</div>
+                                                <div class="txt">Chill Matches</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="@Url.Action("MeetLikes","Chill")" class="infosta">
+                                            <div class="" id="meetlikes">
+                                                <div class="num">@likes</div>
+                                                <div class="txt">Chill Likes</div>
+                                            </div>
+                                        </a>
+
+                                    </div>
+
+                                    <div class="money-wrapper">
+                                        <div class="money-item" id="order">
+                                            <a href="~/Order/PurchasedOrderSummary/1">
+                                                <img src="~/Assets/images/layout/ordericon.png" alt="order">
+                                                <div class="txt">Purchased Order</div>
+                                            </a>
+                                        </div>
+                                        <div class="money-item" id="order">
+                                            <a href="~/Order/CreatedOrderSummary/1">
+                                                <img src="~/Assets/images/layout/ordericon.png" alt="order">
+                                                <div class="txt">Created Order</div>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="member-wrapper">
+                                        <div class="makemember" id="epalplus">
+                                            <a href="#">
+                                                <p id="plustxt">4.99 Buff for 14 privileges</p>
+                                            </a>
+
+                                        </div>
+                                        <div class="makemember" id="anepal">
+                                            <a href="@Url.Action("BecomeEPalPage","becomeepal")">
+                                                <p id="anepaltxt1">Become an ePal</p>
+                                                <p id="anepaltxt2">Earn extra cash by gaming with others.</p>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-wrappers">
+                                        <div class="settingimg">
+                                            <a href="~/Members/EditProfile/@userid">
+                                                <i class="fas fa-cog">Account Settings</i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+
             </div>
         </div>
     </nav>
@@ -820,17 +998,29 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
-            integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
-            integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="~/Assets/axios/axios.min.js"></script>
+
+
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>*@
+    <script src="~/Assets/jquery/jquery-3.6.0.min.js"></script>
+
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
+        integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="~/Assets/ajax/popper.min.js"></script>
+
+
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>*@
+    <script src="~/Assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -841,10 +1031,14 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-    <script src="https://apis.google.com/js/api:client.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @*<script src="https://apis.google.com/js/api:client.js"></script>*@
+    <script src="~/Assets/google/api_client.js"></script>
 
+    @*<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>*@
+    <script src="~/Assets/jquery/jquery.min.js"></script>
+
+    @*<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>*@
+    <script src="~/Assets/sweetalert/sweetalert2@11.js"></script>
 
 
     @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>*@

@@ -42,6 +42,8 @@ namespace Build_School_Project_No_4.DataModels
         [Required]
         public string CreatorImg { get; set; }
 
+        public bool? ProductStatus { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentDetails> CommentDetails { get; set; }
 

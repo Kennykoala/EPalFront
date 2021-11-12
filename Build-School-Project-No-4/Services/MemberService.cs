@@ -55,7 +55,6 @@ namespace Build_School_Project_No_4.Services
             List<Members> members = _Repo.GetAll<Members>().ToList();
 
             List<MemberRegisterViewModel> result = new List<MemberRegisterViewModel>();
-
             foreach (var item in members)
             {
                 result.Add(new MemberRegisterViewModel
@@ -64,7 +63,8 @@ namespace Build_School_Project_No_4.Services
                     RegistrationDate = item.RegistrationDate,
                     Email = item.Email,
                     Password = item.Password,
-                    AuthCode = item.AuthCode
+                    AuthCode = item.AuthCode,
+                    IsAdmin = item.IsAdmin
                 });
             }
             return result;
@@ -234,7 +234,7 @@ namespace Build_School_Project_No_4.Services
                 emp.LanguageId = 0;
             }
 
-            //DM -> MemberInfoViewModel -> GroupViewModel
+            //DM -> MemberInfoViewModel 
             MemberInfoViewModel MemberInfo = new MemberInfoViewModel()
             {
                 MemberId = emp.MemberId,
@@ -258,8 +258,6 @@ namespace Build_School_Project_No_4.Services
         public LinestatusViewModel GetStatus(int memberid)
         {
             var emp = _Repo.GetAll<Members>().FirstOrDefault(x => x.MemberId == memberid);
-
-            //Members emp = db.Members.Find(memberid);
             if (emp == null)
             {
                 throw new NotImplementedException();
@@ -281,10 +279,6 @@ namespace Build_School_Project_No_4.Services
         {
             var member = _Repo.GetAll<Members>().FirstOrDefault(m => m.Email == newMember.Email);
 
-            //var member = MemberRigisterData()
-            //            .Where(m => m.Email == newMember.Email)
-            //            .FirstOrDefault();
-
             //將密碼Hash
             newMember.Password = HashPassword(newMember.Password);
             member.Password = newMember.Password;
@@ -293,6 +287,49 @@ namespace Build_School_Project_No_4.Services
             _Repo.Update(member);
             _Repo.SaveChanges();
 
+        }
+
+
+
+        //忘記密碼信箱驗證碼
+        public string EmailValidateforgetpwd(string Email, string AuthCode)
+        {
+            Members ValidateMember = GetDataByAccount(Email);
+
+            string ValidateStr = string.Empty;
+            if (ValidateMember != null)
+            {
+
+                if (ValidateMember.AuthCode == AuthCode)
+                {
+
+                    using (EPalContext _ctx = new EPalContext())
+                    {
+                        var m = _ctx.Members.ToList().Find(x => x.Email.Equals(Email));
+                        try
+                        {
+                            m.AuthCode = string.Empty;
+                            _ctx.SaveChanges();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message.ToString());
+                        }
+
+                        ValidateStr = "忘記密碼信箱驗證成功，請重新修改密碼";
+                    }
+                }
+                else
+                {
+                    ValidateStr = "驗證碼錯誤或已經過認證，請重新確認";
+                }
+            }
+            else
+            {
+                ValidateStr = "傳送資料有誤，請重新確認";
+            }
+            return ValidateStr;
         }
 
     }

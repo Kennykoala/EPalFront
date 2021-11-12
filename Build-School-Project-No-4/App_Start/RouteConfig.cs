@@ -28,6 +28,7 @@ namespace Build_School_Project_No_4
                 defaults: new { controller = "ePals", action = "ePal", id = UrlParameter.Optional }
             );
 
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -22,11 +22,20 @@ namespace Build_School_Project_No_4.Controllers
             _cartService = new AddToCartService();
             _checkoutService = new CheckoutService();
         }
+
+
+
+
         public ActionResult ePal(int? id)
         {
             if (!id.HasValue)
             {
                 return RedirectToAction("ePal", "ePals", new { id = 1 });
+            }
+            var pro = _ctx.GameCategories.Find(id);
+            if(pro == null)
+            {
+                return HttpNotFound();
             }
             var GamesDeatils = _productService.GetGamesAllAndDeatils(id.Value);
             return View("ePal", GamesDeatils);

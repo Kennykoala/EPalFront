@@ -15,7 +15,6 @@ namespace Build_School_Project_No_4.Services
         {
             _Repo = new Repository();
         }
-
         public List<ChillMeetViewModel> GetMeetFiles(int? assignMemberId)
         {
             var MeetLikesAll = _Repo.GetAll<MeetLikes>();
@@ -34,7 +33,6 @@ namespace Build_School_Project_No_4.Services
             var isLike = Memberlikes.Select(x => x.MemberId).ToList();
             var memberAlls = MembersAll.Select(x => x.MemberId).ToList();
             var MemberDislike = memberAlls.Except(isLike);
-
 
             List<Members> resultMembers = new List<Members>();
             List<ChillMeetViewModel> result = new List<ChillMeetViewModel>();
@@ -75,8 +73,6 @@ namespace Build_School_Project_No_4.Services
             //var b = followings.Where(x => x.FollowingId)
             bool isFollowData;
 
-
-
             List<MemberViewModel> result = new List<MemberViewModel>();
             foreach (var item in ownLike)
             {
@@ -93,8 +89,7 @@ namespace Build_School_Project_No_4.Services
                 {
                     isFollowData = false;
                 }
-
-         
+        
                 var m = new MemberViewModel
                 {
                     MemberId = y.MemberId,
@@ -112,15 +107,18 @@ namespace Build_School_Project_No_4.Services
         }
 
 
-        //取得LikeID對應的會員資料
-        public List<MemberViewModel> GetMemberMatch()
+        //取得MatchID對應的會員資料
+        public List<MemberViewModel> GetMemberMatch(int ownId)
         {
             var meetLikes = _Repo.GetAll<MeetLikes>();
             var members = _Repo.GetAll<Members>();
+            var followings = _Repo.GetAll<Followings>();
 
             //demoId
-            int ownId = 60;
+            //int ownId = 60;
             var ownLike = meetLikes.Where(x => x.MemberId == ownId);
+
+            bool isFollowData;
 
             List<MeetLikes> MatchList = new List<MeetLikes>();
             //onwLike有多個清單
@@ -135,11 +133,20 @@ namespace Build_School_Project_No_4.Services
 
             }
 
-
             List<MemberViewModel> result = new List<MemberViewModel>();
             foreach (var item in MatchList)
             {
                 var y = members.First(x => x.MemberId == item.MemberId);
+                var b = followings.Where(x => x.MemberId == ownId).FirstOrDefault(h => h.FollowingId == y.MemberId);
+
+                if (b != null)
+                {
+                    isFollowData = true;
+                }
+                else
+                {
+                    isFollowData = false;
+                }
 
                 var m = new MemberViewModel
                 {
@@ -147,7 +154,9 @@ namespace Build_School_Project_No_4.Services
                     MemberName = y.MemberName,
                     Bio = y.Bio,
                     ProfilePicture = y.ProfilePicture,
-                    Gender = y.Gender
+                    Gender = y.Gender,
+                    UserId = ownId,
+                    isFollow = isFollowData
 
                 };
                 result.Add(m);

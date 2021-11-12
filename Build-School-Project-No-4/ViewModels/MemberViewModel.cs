@@ -69,26 +69,46 @@ namespace Build_School_Project_No_4.ViewModels
         public bool isFollow { get; set; }
 
 
-
     }
 
 
+    /// <summary>
+    /// [寄送驗證碼]參數
+    /// </summary>
+    public class SendMailTokenIn
+    {
+        public string Email { get; set; }
+    }
 
-    //public class SignupViewModel
-    //{
-    //    [Required(ErrorMessage = "Please enter your Email")]
-    //    [EmailAddress]
-    //    public string Email { get; set; }
+    /// <summary>
+    /// [寄送驗證碼]回傳
+    /// </summary>
+    public class SendMailTokenOut
+    {
+        public string ErrMsg { get; set; }
+        public string ResultMsg { get; set; }
+    }
 
-    //    [Required(ErrorMessage = "Please enter your password")]
-    //    [DataType(DataType.Password)]
-    //    public string Password { get; set; }
 
-    //    //[DataType(DataType.Password)]
-    //    //[Display(Name = "確認密碼")]
-    //    //[Compare("Password", ErrorMessage = "密碼和確認密碼不相符。")]
-    //    //public string ConfirmPassword { get; set; }
-    //}
+    /// <summary>
+    /// [重設密碼]參數
+    /// </summary>
+    public class DoResetPwdIn
+    {
+        public string NewUserPwd { get; set; }
+
+        public string CheckUserPwd { get; set; }
+    }
+
+    /// <summary>
+    /// [重設密碼]回傳
+    /// </summary>
+    public class DoResetPwdOut
+    {
+        public string ErrMsg { get; set; }
+        public string ResultMsg { get; set; }
+    }
+
 
 
 }

@@ -62,10 +62,13 @@ namespace Build_School_Project_No_4.Controllers
                 //throw new NotImplementedException();
             }
 
-
-
             var meetGet = new ChillMeetService();
             var meetsContent = meetGet.GetMeetFiles(memberId);
+
+            if (memberId == null)
+            {
+
+            }
             //GroupViewModel meetlikes = new GroupViewModel
             //{
             //    ChillMeetResult = meetsContent
@@ -90,7 +93,7 @@ namespace Build_School_Project_No_4.Controllers
             var memberlikeGet = new ChillMeetService();
             var memberMatchGet = new ChillMeetService();
 
-            var memberMatch = memberMatchGet.GetMemberMatch();
+            var memberMatch = memberMatchGet.GetMemberMatch(memberId);
             var memberlike = memberlikeGet.GetMemberLike(memberId);
 
             ViewBag.Match = memberMatch;

@@ -99,57 +99,69 @@ namespace Build_School_Project_No_4.Controllers
 
 
         [HttpPost]
-        public ActionResult UpdatePurchasedStstus(OrderViewModel order)        
+        public ActionResult UpdatePurchasedStatus(OrderViewModel order)        
         {
-            //var msg = "";
-            using (var tran = _ctx.Database.BeginTransaction())
-            {
-                try
-                {
-                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
-                    if (orderinfo == null)
-                    {
-                        throw new NotImplementedException();
-                    }
-                    orderinfo.OrderStatusId = order.OrderStatusId;
-                    _ctx.SaveChanges();
-                    tran.Commit();
-                    return Json(true);
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return Json(false);
-                }
-            }
-         }
+            bool msg = _orderService.PurchasedStatusToDB(order);
+
+            return Json(msg);
+
+
+            //using (var tran = _ctx.Database.BeginTransaction())
+            //{
+            //    try
+            //    {
+            //        var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+            //        if (orderinfo == null)
+            //        {
+            //            throw new NotImplementedException();
+            //        }
+            //        orderinfo.OrderStatusId = order.OrderStatusId;
+            //        _ctx.SaveChanges();
+            //        tran.Commit();
+            //        return Json(true);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        tran.Rollback();
+            //        return Json(false);
+            //    }
+            //}
+
+
+        }
 
 
 
         [HttpPost]
         public ActionResult UpdateCreatorNotStarted(OrderViewModel order)
         {
-            //var msg = "";
-            using (var tran = _ctx.Database.BeginTransaction())
-            {
-                try
-                {
-                    var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
-                    if (orderinfo == null)
-                    {
-                        throw new NotImplementedException();
-                    }
-                    orderinfo.OrderStatusIdCreator = order.OrderStatusIdCreator;
-                    _ctx.SaveChanges();
-                    tran.Commit();
-                    return Json(true);
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return Json(false);
-                }
-            }
+
+            bool msg = _orderService.CreatedStatusToDB(order);
+
+            return Json(msg);
+
+
+            //using (var tran = _ctx.Database.BeginTransaction())
+            //{
+            //    try
+            //    {
+            //        var orderinfo = _ctx.Orders.First(x => x.OrderId == order.OrderId);
+            //        if (orderinfo == null)
+            //        {
+            //            throw new NotImplementedException();
+            //        }
+            //        orderinfo.OrderStatusIdCreator = order.OrderStatusIdCreator;
+            //        _ctx.SaveChanges();
+            //        tran.Commit();
+            //        return Json(true);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        tran.Rollback();
+            //        return Json(false);
+            //    }
+            //}
+
         }
 
 
