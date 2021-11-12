@@ -43,10 +43,15 @@
             <div class="trending-services">
                 Trending services:
                 <div class="trending-btns">
-                    <button class="rounded-pill">League of Legends</button>
-                    <button class="rounded-pill">Minecraft</button>
-                    <button class="rounded-pill">E-Chat</button>
-                    <button class="rounded-pill">Movie</button>
+                    @*<button class="rounded-pill">League of Legends</button>
+        <button class="rounded-pill">Minecraft</button>
+        <button class="rounded-pill">E-Chat</button>
+        <button class="rounded-pill">Movie</button>*@
+                    @Html.ActionLink("League of Legends", "ePal", "ePals", new { id = 1 }, new { @class = "rounded-pill trending-btns-style" })
+                    @Html.ActionLink("Minecraft", "ePal", "ePals", new { id = 18 }, new { @class = "rounded-pill trending-btns-style" })
+                    @Html.ActionLink("E-Chat", "ePal", "ePals", new { id = 2 }, new { @class = "rounded-pill trending-btns-style" })
+                    @Html.ActionLink("Movie", "ePal", "ePals", new { id = 3 }, new { @class = "rounded-pill trending-btns-style" })
+
                 </div>
             </div>
         </div>
@@ -746,7 +751,7 @@
             display: none;
         }
 
-        .trending-btns button {
+        .trending-btns button, .trending-btns-style {
             background-color: rgba(255, 255, 255, 0);
             font-size: 9px;
             color: white;
@@ -774,7 +779,7 @@
                 transition: all 0.2s ease-out;
             }
 
-        .trending-services button:hover {
+        .trending-services button:hover, .trending-btns-style:hover {
             color: rgb(196, 196, 196);
             border: 1px solid white;
             transition: all 0.3s ease-out;
@@ -990,7 +995,7 @@
                 font-size: 4vw;
             }
 
-            .trending-btns button {
+            .trending-btns button, trending-btns-style {
                 font-size: 11px;
                 margin-top: 5px;
                 padding: 3px 10px;
@@ -1333,7 +1338,7 @@
                 display: inline;
             }
 
-                .trending-btns button {
+                .trending-btns button, .trending-btns-style {
                     font-size: 16px;
                     padding: 8px 20px;
                 }

@@ -26,5 +26,15 @@ namespace Build_School_Project_No_4.Utilities
             Success = 1,
             Failed = 2
         }
+        public enum DayOfWeek
+        {
+            Sunday,
+            Monday,
+            Tuesday,
+            Wednesday,
+            Thursday,
+            Friday,
+            Saturday
+        }
     }
 }

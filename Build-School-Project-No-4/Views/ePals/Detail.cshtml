@@ -1,6 +1,7 @@
 ﻿@model DetailViewModel
 @{
-    ViewBag.Title = "DetailPage";
+    Layout = "~/Views/Shared/_Layout_DetailMobileNoFooter.cshtml";
+
 }
 @section topCSS{
 
@@ -73,38 +74,6 @@
         </div>
 
         <div class="col-12 col-md-9 col-lg-9">
-            <div class="streamer-info">
-                <div class="row">
-                    <div class="col-3 review-score">
-                        <div class="info-title">Score</div>
-                        <div class="streamer-info-data streamer-score">
-                            <div class="one-star">
-                                <i class="fas fa-star gold-star"></i>
-                            </div>
-                            5.0
-                            <div class="five-stars">
-                                <i class="fas fa-star gold-star"></i>
-                                <i class="fas fa-star gold-star"></i>
-                                <i class="fas fa-star gold-star"></i>
-                                <i class="fas fa-star gold-star"></i>
-                                <i class="fas fa-star gold-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 served">
-                        <div class="info-title">Served</div>
-                        <div class="streamer-info-data cust-served">284</div>
-                    </div>
-                    <div class="col-3 recommended">
-                        <div class="info-title">Recommended</div>
-                        <div class="streamer-info-data num-recommended">284</div>
-                    </div>
-                    <div class="col-3">
-                        <div class="info-title">Coach</div>
-                        <div class="streamer-info-data is-coach">No</div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="game-screenshot">
                     <img src="@Model.GameScreenshot" />
@@ -152,34 +121,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="whitish">Monday</td>
-                                    <td class="greyish">
-                                        12:00 am-06:00 am <br>
-                                        04:00 pm-12:00 am
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="whitish">Tuesday</td>
-                                    <td class="greyish">
-                                        12:00 am-06:00 am <br>
-                                        04:00 pm-12:00 am
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="whitish">Wednesday</td>
-                                    <td class="greyish">
-                                        12:00 am-06:00 am <br>
-                                        04:00 pm-12:00 am
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="whitish">Thursday</td>
-                                    <td class="greyish">
-                                        12:00 am-06:00 am <br>
-                                        04:00 pm-12:00 am
-                                    </td>
-                                </tr>
+                                @foreach (var item in Model.Availability)
+                                {
+                                    <tr>
+                                        <td class="whitish">@item.AvailDay</td>
+                                        <td class="greyish">
+                                            @item.Start - @item.End
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -189,113 +139,107 @@
 
         @* fix *@
 
-    <div class="modal fade" id="playModal" tabindex="-1" aria-labelledby="playModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="playModalLabel">Confirm Order</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                @using (Html.BeginForm())
-                {
-                    var prod = Model;
-                    @Html.AntiForgeryToken()
-                    <div class="modal-body">
-                        <div class="container whitish">
-                            <div class="row">
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="col-3 ">
-                                    <div class="game-img">
-                                        <img src="@Model.MobileGameImg" />
-                                    </div>
-                                </div>
-                                <div class="col-9 ">
-                                    <div class="game-user-price">
-                                        <div class="game-name">@prod.GameName</div>
-                                        <div class="player-name">@prod.MemberName</div>
-                                        <div class="price-per-game">
-                                            <img src="~/Assets/images/detail/currency.png" />
-                                            <span id="price">@prod.UnitPrice.ToString("N2")</span>
-                                            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control", @Value = Model.UnitPrice, type = "hidden" } })
-                                            /Game
+        <div class="modal fade" id="playModal" tabindex="-1" aria-labelledby="playModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="playModalLabel">Confirm Order</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+                        var prod = Model;
+                        @Html.AntiForgeryToken()
+                        <div class="modal-body">
+                            <div class="container whitish">
+                                <div class="row">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="col-3 ">
+                                        <div class="game-img">
+                                            <img src="@Model.MobileGameImg" />
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <div class="rounds">
-                                            <span>@Html.LabelFor(x => x.Rounds)</span>
-                                            <div class="rounds-div">
-                                                <button type="button" class="round-subtract"><span>-</span></button>
-                                                @*<input type="number"  value="1" onfocus="setOldVal(this.value)" onkeyup="PriceChange(undefined, this.value)">*@
-                                                @* 衝突 BUG *@
-                                                @*@Html.EditorFor(x => x.AddCart.Rounds, new { htmlAttributes = new { @class = "round-number" } })*@
-                                                @*@Html.EditorFor(x => x.AddCart.Rounds, new { htmlAttributes = new { @class = "round-number" } })*@
-                                                @*@Html.EditorFor(x => x.AddCart.Rounds, null, new { htmlAttributes = new { onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })*@
-                                                @*@Html.EditorFor(x => x.AddCart.Rounds, null,"sadfs",new { htmlAttributes = new { @class = "asdf", onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })*@
-                                                @Html.EditorFor(x => x.Rounds, new { htmlAttributes = new { @class = "round-number", Value = "1", onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })
-                                                @*@Html.EditorFor(x => x.AddCart.Rounds, new { @class = "round-number" })*@
-                                                @Html.ValidationMessageFor(x => x.Rounds, "", new { @class = "text-danger" })
-                                                <button type="button" class="round-add"><span>+</span></button>
+                                    <div class="col-9 ">
+                                        <div class="game-user-price">
+                                            <div class="game-name">@prod.GameName</div>
+                                            <div class="player-name">@prod.MemberName</div>
+                                            <div class="price-per-game">
+                                                <img src="~/Assets/images/detail/currency.png" />
+                                                <span id="price">@prod.UnitPrice.ToString("N2")</span>
+                                                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control", @Value = Model.UnitPrice, type = "hidden" } })
+                                                /Game
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="start-time-div">
-                                            <span>Start Time</span>
-                                            <div class="start-time-settings">
-                                                <input type="datetime-local" id="start-time" name="startTime" class="whitish" onblur="DateCheck(this.value)">
-                                                <button type="button" class="time-now"><span>Now</span></button>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="rounds">
+                                                <span>@Html.LabelFor(x => x.Rounds)</span>
+                                                <div class="rounds-div">
+                                                    <button type="button" class="round-subtract"><span>-</span></button>
+                                                    @Html.EditorFor(x => x.Rounds, new { htmlAttributes = new { @class = "round-number", Value = "1", onfocus = "setOldVal(this.value)", onkeyup = "PriceChange(undefined, this.value)" } })
+                                                    @Html.ValidationMessageFor(x => x.Rounds, "", new { @class = "text-danger" })
+                                                    <button type="button" class="round-add"><span>+</span></button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="subtotal-div">
-                                        <span>Subtotal</span>
-                                        <div class="subtotal-div2">
-                                            <img src="~/Assets/images/detail/currency.png" />
-                                            <span class="subtotal">@Model.UnitPrice.ToString("N2")</span>
+                                        <div class="form-group">
+                                            <div class="start-time-div">
+                                                <span>Start Time</span>
+                                                <div class="start-time-settings">
+                                                    <input type="datetime-local" id="start-time" name="startTime" class="whitish" onblur="DateCheck(this.value)">
+                                                    <button type="button" class="time-now"><span>Now</span></button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="promo-code-div">
-                                        <span>Promo code</span>
-                                        <div class="enter-code">
-                                            <input placeholder="Enter your promo code" type="text" disabled>
+                                        <hr>
+                                        <div class="subtotal-div">
+                                            <span>Subtotal</span>
+                                            <div class="subtotal-div2">
+                                                <img src="~/Assets/images/detail/currency.png" />
+                                                <span class="subtotal">@Model.UnitPrice.ToString("N2")</span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <hr>
-
-                                    <div class="final-price-div">
-                                        <span>Final Price</span>
-                                        <div class="final-price">
-
-                                            <span class="rounds-final">1</span> Round(s) total
-                                            <img src="~/Assets/images/detail/currency.png" />
-                                            <span class="final-amount">@Model.UnitPrice.ToString("N2")</span>
+                                        <div class="promo-code-div">
+                                            <span>Promo code</span>
+                                            <div class="enter-code">
+                                                <input placeholder="Enter your promo code" type="text" disabled>
+                                            </div>
                                         </div>
-                                    </div>
 
+                                        <hr>
+
+                                        <div class="final-price-div">
+                                            <span>Final Price</span>
+                                            <div class="final-price">
+
+                                                <span class="rounds-final">1</span> Round(s) total
+                                                <img src="~/Assets/images/detail/currency.png" />
+                                                <span class="final-amount">@Model.UnitPrice.ToString("N2")</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancel" data-bs-dismiss="modal">Close</button>
-                        <button class="btn-purp btn-confirm">Confirm</button>
-                    </div>
-                }</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-cancel" data-bs-dismiss="modal">Close</button>
+                            <button class="btn-purp btn-confirm">Confirm</button>
+                        </div>
+                    }
+                </div>
 
-                
+
+            </div>
         </div>
-    </div>
-        
+
 
     </div>
 </div>

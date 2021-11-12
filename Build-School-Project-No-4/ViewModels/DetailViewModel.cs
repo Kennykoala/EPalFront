@@ -22,14 +22,17 @@ namespace Build_School_Project_No_4.ViewModels
         public string LanguageName { get; set; }
         public string MobileGameImg { get; set; }
 
-
-
         public int Rounds { get; set; }
+        public List<PlayerAvailability> Availability { get; set; }
 
-        public DateTime StartTime { get; set; }
 
-        //public decimal CartUnitPrice { get; set; }
-        public int OrderId { get; set; }
-        //public int PlayerId { get; set; }
     }
+    public class PlayerAvailability
+    {
+        public int ProductId { get; set; }
+        public string AvailDay { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
+    }
+
 }

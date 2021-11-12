@@ -656,6 +656,7 @@
     <Content Include="Assets\images\detail\details.png" />
     <Content Include="Assets\images\detail\lol-screenshot.jpg" />
     <Content Include="Assets\images\detail\profile-eniza.gif" />
+    <Content Include="Assets\images\epalPage\badge.png" />
     <Content Include="Assets\images\epalPage\games.png" />
     <Content Include="Assets\images\epalPage\lifestyle.png" />
     <Content Include="Assets\images\epalPage\trending.png" />
@@ -963,8 +964,6 @@
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
-    <Content Include="Views\Members\ForgetPwd.cshtml" />
-    <Content Include="Views\Members\ResetPwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
