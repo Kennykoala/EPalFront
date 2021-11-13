@@ -1,7 +1,21 @@
 ﻿@model DetailViewModel
+
 @{
     Layout = "~/Views/Shared/_Layout_DetailMobileNoFooter.cshtml";
+    HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
 
+    string userid = "";
+    string avatar = "";
+    if (cookie != null)
+    {
+        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+        var obj = Json.Decode<Members>(ticket.UserData);
+        userid = obj.MemberId.ToString();
+
+        avatar = obj.ProfilePicture;
+
+    }
 }
 @section topCSS{
 
@@ -16,6 +30,11 @@
     }
     </style>
 
+}
+@section topJS{
+    <script>
+        var userid = '@userid';
+    </script>
 }
 
 <div class="container game-backdrop">
@@ -32,7 +51,14 @@
         <div class="col-12 col-md-3">
             <div class="detail-header">
                 <div class="header-btns">
-                    <button type="button" id="playButton" class="btn-play" data-bs-toggle="modal" data-bs-target="#playModal">Play</button>
+                    @if (userid == "")
+                    {
+                        <button type="button" class="btn-play" onclick="promptLogin()">Play</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn-play" id="playButton" data-bs-toggle="modal" data-bs-target="#playModal">Play</button>
+                    }
                     <button type="button" class="btn-purp">Chat</button>
                 </div>
             </div>
@@ -65,7 +91,14 @@
                             /Game
                         </div>
                         <div class="ppg-btns">
-                            <button type="button" class="btn-play" id="playButton" data-bs-toggle="modal" data-bs-target="#playModal">Play</button>
+                            @if (userid == "")
+                            {
+                                <button type="button" class="btn-play" onclick="promptLogin()">Play</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn-play" id="playButton" data-bs-toggle="modal" data-bs-target="#playModal">Play</button>
+                            }
                             <button type="button" class="btn-purp">Chat</button>
                         </div>
                     </div>
@@ -253,6 +286,16 @@
 @section endJS{
 
     <script src="~/Assets/js/detail.js"></script>
+    <script>
+        @*let loginBtn = document.getElementById('loginmodal');
+        var userid = '@userid';
+        if (userid == "") {
+            //loginBtn.
+
+                }*@
+
+
+    </script>
 
 }
 @section Scripts{

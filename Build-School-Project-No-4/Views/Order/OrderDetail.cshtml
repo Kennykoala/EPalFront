@@ -1,8 +1,7 @@
 ﻿@model Build_School_Project_No_4.ViewModels.OrderDetailViewModel
 
-@{
-    ViewBag.Title = "OrderDetail";
-}
+
+
 @section TopCSS {
     <link href="~/Assets/css/orderDetails.css" rel="stylesheet" />
     <style>
@@ -48,7 +47,7 @@
                         <div class="game-name">League of Legends</div>
                         <div class="unit-price greyish">
                             Unit Price:
-                            <img src="~/Assets/images/detail/currency.png" class="currency"/>
+                            <img src="~/Assets/images/detail/currency.png" class="currency" />
                             <span class="whitish">@Model.UnitPrice</span>/Game
                         </div>
                         <div class="rounds greyish">
@@ -67,7 +66,7 @@
                 <div class="subtotal">
                     <div class="sub-field greyish">Subtotal</div>
                     <div class="amount">
-                        <img src="~/Assets/images/detail/currency.png" class="currency"/>
+                        <img src="~/Assets/images/detail/currency.png" class="currency" />
                         @((Model.Rounds * Model.UnitPrice).ToString("N2"))
                     </div>
                 </div>
@@ -76,7 +75,7 @@
                     <div class="final-field greyish">Final Price</div>
                     <div class="final-price">
                         @Model.Rounds Round(s) total
-                        <img src="~/Assets/images/detail/currency.png" class="currency"/>
+                        <img src="~/Assets/images/detail/currency.png" class="currency" />
                         <div class="final-lg">
                             @((Model.Rounds * Model.UnitPrice).ToString("N2"))
                         </div>
@@ -101,3 +100,4 @@
         </div>
     </div>
 </div>
+
