@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using Build_School_Project_No_4.DataModels;
 using Build_School_Project_No_4.ViewModels;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Services
 {
@@ -41,24 +42,42 @@ namespace Build_School_Project_No_4.Services
 
             //Purchased Orders
             var orders = _repo.GetAll<Orders>().Where(x => x.OrderStatusId == category.OrderStatusId && x.CustomerId == mems);
-            var OrderCards = orders.Select(o => new OrderCard
-            {
-                OrderStatusName = category.OrderStatusName,
-                Quantity = o.Quantity,
-                OrderDate = o.OrderDate,
-                TotalPrice = o.UnitPrice * o.Quantity,
-                OrderId = o.OrderId,
-                ProductId = o.ProductId,
-                GameName = o.Products.GameCategories.GameName,
-                MemberName = o.Products.Members.MemberName,
-                //ProfilePicture=o.Members.ProfilePicture
-                ProfilePicture = o.Products.Members.ProfilePicture,
-                OrderStatusIdCreator = o.OrderStatusIdCreator
+            var products = _repo.GetAll<Products>();
+            var OrderCards = (from o in orders
+                              join p in products on o.ProductId equals p.ProductId
+                              select new OrderCard
+                              {
+                                  OrderStatusName = category.OrderStatusName,
+                                  Quantity = o.Quantity,
+                                  OrderDate = o.OrderDate,
+                                  TotalPrice = o.UnitPrice * o.Quantity,
+                                  OrderId = o.OrderId,
+                                  ProductId = o.ProductId,
+                                  GameName = o.Products.GameCategories.GameName,
+                                  MemberName = o.Products.Members.MemberName,
+                                  ProfilePicture = o.Products.Members.ProfilePicture,
+                                  OrderStatusIdCreator = o.OrderStatusIdCreator,
+                                  PlayerId = p.CreatorId
+                              }).OrderByDescending(x => x.OrderId).ToList();
+            //var OrderCards = orders.Select(o => new OrderCard
+            //{
+            //    OrderStatusName = category.OrderStatusName,
+            //    Quantity = o.Quantity,
+            //    OrderDate = o.OrderDate,
+            //    TotalPrice = o.UnitPrice * o.Quantity,
+            //    OrderId = o.OrderId,
+            //    ProductId = o.ProductId,
+            //    GameName = o.Products.GameCategories.GameName,
+            //    MemberName = o.Products.Members.MemberName,
+            //    //ProfilePicture=o.Members.ProfilePicture
+            //    ProfilePicture = o.Products.Members.ProfilePicture,
+            //    OrderStatusIdCreator = o.OrderStatusIdCreator,
+            //    //PlayerId = 
 
-                //ProductId =o.Products.ProductId
-                //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
+            //    //ProductId =o.Products.ProductId
+            //    //GameName=GameCat.FirstOrDefault(y=>y.GameCategoryId ==(products.FirstOrDefault(x=>x.ProductId==o.ProductId).GameCategoryId)).GameName
 
-            }).ToList();
+            //}).ToList();
 
 
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
@@ -114,7 +133,7 @@ namespace Build_School_Project_No_4.Services
 
                 OrderStatusId = c.OrderStatusId
 
-            }).ToList();
+            }).OrderByDescending(x => x.OrderId).ToList();
 
 
 
@@ -131,6 +150,7 @@ namespace Build_School_Project_No_4.Services
 
             result.OrderStatusId = OrderStatusIdCreator;
             result.Title = category.OrderStatusName;
+
 
             return result;
 
@@ -215,6 +235,52 @@ namespace Build_School_Project_No_4.Services
                     return false;
                 }
             //}
+        }
+
+        public OrderDetailViewModel GetOrderDetail(int orderId)
+        {
+            var memberId = MemberUtil.GetMemberId();
+            var products = _repo.GetAll<Products>();
+            var orders = _repo.GetAll<Orders>();
+            var payments = _repo.GetAll<Payments>();
+            var members = _repo.GetAll<Members>();
+            var gameCat = _repo.GetAll<GameCategories>();
+            var result = (from pr in products
+                          join o in orders on pr.ProductId equals o.ProductId
+                          join m in members on pr.CreatorId equals m.MemberId
+                          join g in gameCat on pr.GameCategoryId equals g.GameCategoryId
+                          where o.OrderId == orderId
+                          select new OrderDetailViewModel
+                          {
+                              PlayerName = m.MemberName,
+                              ProfilePic = m.ProfilePicture,
+                              OrderStatusId = (int)o.OrderStatusId,
+                              GameImg = g.GameCoverImgMini,
+                              GameName = g.GameName,
+                              UnitPrice = o.UnitPrice,
+                              Rounds = o.Quantity,
+                              OrderConfirmation = o.OrderConfirmation,
+                              OrderDateTime = o.OrderDate,
+                              ProductId = pr.ProductId
+                          }).FirstOrDefault();
+
+            var statusName = Enum.GetName(typeof(Enums.PaymentStatus), result.OrderStatusId);
+            result.OrderStatusName = statusName;
+            var orderPaid = (from o in orders
+                             join p in payments on o.OrderId equals p.OrderId
+                             where o.OrderId == orderId
+                             select new OrderDetailViewModel
+                             {
+                                 PaymentConfirmation = p.ConfirmationId,
+                                 PaymentDateTime = p.TransationDateTime
+                             }).FirstOrDefault();
+            if (orderPaid != null)
+            {
+                result.PaymentConfirmation = orderPaid.PaymentConfirmation;
+                result.PaymentDateTime = orderPaid.PaymentDateTime;
+            }
+            return result;
+
         }
 
 

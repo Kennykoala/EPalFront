@@ -89,7 +89,7 @@
                                 @Html.HiddenFor(x => m.OrderStatusIdCreator)
                             </div>
                             <div class="card-body">
-                                <a href="#">
+                                <a href="@Url.Action("Profile","Members",new { id = m.PlayerId })">
                                     <div class="u-details">
                                         @if (m.ProfilePicture == null)
                                         {
@@ -136,7 +136,9 @@
                                         <i class="far fa-comment-dots"></i>
                                     </div>
                                     <div class="details">
-                                        <i class="fas fa-chevron-right"></i>
+                                        <a href="@Url.Action("OrderDetail","Order",new { id = m.OrderId })">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

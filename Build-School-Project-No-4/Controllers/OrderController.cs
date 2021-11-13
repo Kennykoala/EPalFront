@@ -139,8 +139,6 @@ namespace Build_School_Project_No_4.Controllers
             bool msg = _orderService.CreatedStatusToDB(order);
 
             return Json(msg);
-
-
             //using (var tran = _ctx.Database.BeginTransaction())
             //{
             //    try
@@ -162,6 +160,20 @@ namespace Build_School_Project_No_4.Controllers
             //    }
             //}
 
+        }
+
+        [HttpGet]
+        public ActionResult OrderDetail(int? id)
+        {
+            if (id == null || !id.HasValue)
+            {
+                return RedirectToAction("CreatedOrderSummary", "Order", new { id = 1 });
+            }
+            else
+            {
+                var order = _orderService.GetOrderDetail((int)id);
+                return View(order);
+            }
         }
 
 

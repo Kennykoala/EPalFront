@@ -481,6 +481,7 @@
     <Compile Include="ViewModels\MemberRegisterViewModel.cs" />
     <Compile Include="ViewModels\MemberViewModel.cs" />
     <Compile Include="ViewModels\OrderConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
@@ -499,6 +500,7 @@
     <Content Include="Assets\css\detail_r2.css" />
     <Content Include="Assets\css\layout_afterlogin_nofooter.css" />
     <Content Include="Assets\css\layout_afterlogin.css" />
+    <Content Include="Assets\css\orderDetails.css" />
     <Content Include="Assets\css\orders.css" />
     <Content Include="Assets\css\orderconfirmedpaypal.css" />
     <Content Include="Assets\css\paypalSuccess.css" />
@@ -964,6 +966,7 @@
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
+    <Content Include="Views\Order\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
