@@ -1,0 +1,1021 @@
+﻿
+body {
+    font-family: Poppins, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
+    background-color: rgb(18, 14, 27);
+    color: white;
+    background-image: url("https://g.epal.gg/entry/us/static/bgLine.ac5ec96f.png");
+    background-repeat: no-repeat;
+}
+
+nav {
+    z-index: 5;
+}
+a {
+    text-decoration: none;
+}
+
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    content: "";
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.swiper1 .swiper-slide {
+    flex-shrink: 0;
+    display: block;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+    .swiper1 .swiper-slide img {
+        width: 300%;
+        height: auto;
+    }
+
+.swiper-pagination > .swiper-pagination-bullet {
+    opacity: 0.3;
+    border: white solid 2px;
+    background-color: rgb(107, 107, 107);
+}
+
+.swiper-pagination {
+    margin-bottom: -5px;
+    display: none;
+}
+
+    .swiper-pagination > .swiper-pagination-bullet-active {
+        opacity: 0.9;
+        border: white solid 1px;
+        background-color: white;
+    }
+
+
+.homepage .row {
+    padding: 0 3%;
+}
+
+    .homepage .row:first-child {
+        padding: 0;
+    }
+
+.main-carousel-div {
+    margin-top: 5px;
+    position: absolute;
+    z-index: 5;
+    top: 25px;
+}
+
+h2, .carousel-text {
+    font-weight: 600;
+    font-size: 18px;
+    background-color: rgba(18, 14, 27, 0.555);
+    display: inline;
+    border-radius: 8px;
+}
+
+.search-main {
+    height: 20px;
+    /* width: 85%; */
+    margin: 2vh 0 1vh 0;
+}
+
+    .search-main input {
+        margin-right: 1vw;
+        padding-left: 15px;
+        width: 70%;
+        font-size: 10px;
+    }
+
+    .search-main .search,
+    .search-main input {
+        font-size: 10px;
+        height: 20px;
+    }
+
+.trending-services {
+    display: none;
+}
+
+.trending-btns button, .trending-btns-style {
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 14px;
+    color: white;
+    border: 1px solid white;
+    padding: 0 16px;
+
+}
+
+.trending-btns {
+    width: 60%;
+    overflow: hidden;
+    max-height: 7.5vh;
+}
+
+.btn-purp {
+    background-color: rgb(110, 67, 232);
+    color: white;
+    border: none;
+    padding: 0 13px;
+}
+
+    .btn-purp:hover {
+        background-color: rgb(92, 55, 194);
+        color: white;
+        border: none;
+        transition: all 0.2s ease-out;
+    }
+
+.trending-services button:hover, .trending-btns-style:hover {
+    color: rgb(196, 196, 196);
+    border: 1px solid white;
+    transition: all 0.3s ease-out;
+}
+
+.variety {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+h3, .h3-txt {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.desc {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.lifestyle-services {
+    color: rgb(140, 100, 233);
+    font-size: 15px;
+    padding-top: 12px;
+    line-height: 0.9em;
+    font-weight: 600;
+}
+
+.lifestyle-more {
+    padding-top: 8px;
+    font-size: 11px;
+}
+
+.try-now {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 0;
+    margin-top: 15px;
+    width: 200px;
+}
+
+.explore-more {
+    font-size: 13px;
+    padding: 6px 20px;
+    margin: 10px 0;
+}
+
+.watch {
+    margin-top: 20px;
+    max-width: 650px;
+}
+
+    .watch iframe {
+        height: 250px;
+    }
+
+    .watch p {
+        font-size: 12px;
+        margin: 10px 0 20px;
+    }
+
+.cards {
+    margin-top: 30px;
+}
+
+h4, .h4-txt {
+    color: white;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.swiper-button-next {
+    right: -10px;
+    top: 60%;
+}
+
+.swiper-button-prev {
+    left: -10px;
+    top: 60%;
+}
+
+.story-nav div {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    color: white;
+    border-radius: 30px;
+}
+
+.story-nav img {
+    width: 20px;
+    height: 20px;
+}
+
+.stories {
+    margin: 30px 0;
+}
+
+.swiper2 .swiper-slide {
+    width: 100%;
+}
+
+.swiper-story {
+    width: 100%;
+    height: 100%;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    z-index: 5;
+    border-radius: 5px;
+}
+
+.profile-div {
+    background: url("data:image/png;base64,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");
+    height: 240px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+    border-radius: 15px;
+    position: relative;
+    margin-top: 30px;
+    overflow: scroll;
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 18px;
+    position: relative;
+    left: 130px;
+    top: 38px;
+}
+
+.profile-desc {
+    position: relative;
+    margin: 80px 15px 10px 30px;
+    font-size: 18px;
+    line-height: 1.2em;
+    font-weight: 500;
+    overflow: scroll;
+}
+
+.find-your-epal {
+    display: flex;
+    justify-content: center;
+}
+
+    .find-your-epal h3, .h3-txt {
+        margin-top: 20px;
+    }
+
+.find-epal {
+    background-image: url("https://g.epal.gg/entry/us/static/1.92989f29.png");
+    height: 250px;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+}
+
+    .find-epal:nth-of-type(2) {
+        background-image: url("https://g.epal.gg/entry/us/static/2.e8ba4a08.png");
+    }
+
+    .find-epal:nth-of-type(3) {
+        background-image: url("https://g.epal.gg/entry/us/static/3.e0303b94.png");
+    }
+
+    .find-epal p {
+        font-size: 25px;
+        font-weight: 600;
+        vertical-align: middle;
+        position: relative;
+        top: 67%;
+    }
+
+.game-swiper1 {
+    margin-top: 50px;
+}
+
+.game-swiper2 {
+    margin-top: 40px;
+}
+
+    .game-swiper1 img,
+    .game-swiper2 img {
+        height: 160px;
+        width: 120px;
+    }
+
+.game-swiper1 > .swiper-wrapper {
+    transition-timing-function: linear;
+}
+
+.game-swiper2 > .swiper-wrapper {
+    transition-timing-function: linear;
+}
+
+.offering {
+    font-size: 16px;
+}
+
+@media screen and (min-width: 400px) {
+    .main-carousel-div {
+        margin-top: 30px;
+    }
+
+    h2, .carousel-text {
+        font-size: 4vw;
+    }
+
+    .trending-btns button, .trending-btns-style {
+        margin-top: 5px;
+        padding: 3px 10px;
+    }
+
+    .homepage .row {
+        padding: 0 5%;
+    }
+
+    .search-main {
+        width: 80%;
+        margin: 20px 0;
+    }
+
+        .search-main .search,
+        .search-main input {
+            font-size: 11px;
+            height: 20px;
+        }
+
+    .trending-btns {
+        max-height: none;
+        overflow: auto;
+        display: inline;
+    }
+
+    .profile-name {
+        font-size: 19px;
+        left: 145px;
+        top: 42px;
+    }
+
+    .profile-desc {
+        position: relative;
+        margin: 80px 15px 10px 30px;
+        font-size: 18px;
+        line-height: 1.1em;
+    }
+
+    .find-epal {
+        margin-bottom: 10px;
+    }
+
+    .item-Card {
+        margin: auto;
+    }
+}
+
+
+
+
+@media screen and (min-width: 576px) {
+
+    h2, .carousel-text {
+        font-weight: 700;
+        font-size: 4vw;
+        background-color: rgba(18, 14, 27, 0);
+        display: inline;
+        padding: 0 10px 0 5px;
+        border-radius: 8px;
+    }
+
+    .search-main {
+        width: 70%;
+        margin: 15px 0 20px 0;
+    }
+
+        .search-main .search,
+        .search-main input {
+            font-size: 13px;
+            height: 25px;
+        }
+
+    .trending-services {
+        display: block;
+        font-size: 12px;
+        width: 90%;
+    }
+
+    .trending-services {
+        margin-top: 10px;
+    }
+
+    .trending-btns {
+        width: 70%;
+        margin-top: 8px;
+        max-height: none;
+        overflow: auto;
+
+    }
+    .trending-btns-style {
+        display: inline-block;
+        font-size: 13px;
+        color: white;
+    }
+
+    h3, .h3-txt {
+        font-size: 25px;
+    }
+
+    .lifestyle-services {
+        font-size: 21px;
+        padding-top: 12px;
+        margin-top: 10px;
+    }
+
+    .lifestyle-more {
+        padding-top: 8px;
+        font-size: 15px;
+    }
+
+    .try-now {
+        width: auto;
+        font-size: 15px;
+        padding: 7px 20px;
+        margin-top: 18px;
+    }
+
+    .watch {
+        margin-top: 40px;
+    }
+
+        .watch p {
+            font-size: 15px;
+        }
+
+    .profile-div {
+        top: 0;
+        position: static;
+        margin-top: 30px;
+        margin-left: 30px;
+        padding-left: 140px;
+        padding-right: 40px;
+    }
+
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-name {
+        font-size: 23px;
+        left: 0;
+    }
+
+    .profile-desc {
+        margin: 0;
+        margin-top: 57px;
+        max-width: 700px;
+        /* line-height: 1.2em; */
+        font-size: 19px;
+    }
+
+    .story-nav div {
+        width: 45px;
+        height: 45px;
+    }
+
+    .swiper-button-next {
+        right: 0;
+        top: 60%;
+    }
+
+    .swiper-button-prev {
+        left: 0;
+        top: 60%;
+    }
+
+    .item-Card {
+        margin: auto;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .swiper1 {
+        margin-top: 60px;
+    }
+
+    .homepage .row {
+        padding: 0 7%;
+    }
+
+    .swiper-pagination {
+        margin-bottom: -3px;
+        display: block;
+    }
+
+        .swiper-pagination > .swiper-pagination-bullet {
+            border: white solid 5px;
+        }
+
+        .swiper-pagination > .swiper-pagination-bullet-active {
+            border: white solid 5px;
+        }
+
+    .main-carousel-div {
+        top: 15%;
+    }
+
+    h2, .carousel-text {
+        font-weight: 800;
+        font-size: 3.5vw;
+    }
+
+    .search-main {
+        margin: 20px 0 22px 0;
+    }
+
+        .search-main .search,
+        .search-main input {
+            font-size: 14px;
+            height: 30px;
+        }
+
+        .search-main .search {
+            justify-content: center;
+            width: 100px;
+        }
+
+    .trending-services {
+        font-size: 18px;
+    }
+
+        .trending-services button {
+            margin-top: 5px;
+            font-size: 15px;
+        }
+
+    .trending-btns {
+        width: 100%;
+        max-height: none;
+    }
+    .trending-btns-style {
+        font-size: 15px;
+    }
+
+    .variety {
+        margin-top: 30px;
+    }
+
+    h3, .h3-txt {
+        margin-top: 50px;
+        font-size: 28px;
+    }
+
+    .lifestyle-services:first-of-type {
+        margin-top: 0;
+    }
+
+    .lifestyle-services {
+        font-size: 23px;
+        padding-top: 20px;
+    }
+
+    .lifestyle-more {
+        font-size: 15px;
+    }
+
+    .try-now {
+        margin-top: 20px;
+    }
+
+    .watch iframe {
+        max-width: 600px;
+        height: 330px;
+    }
+
+    .watch p {
+        margin: 15px 0;
+        font-size: 16px;
+    }
+
+    .profile-pic {
+        width: 200px;
+        height: 200px;
+    }
+
+    .profile-div {
+        overflow: hidden;
+        padding-left: 110px;
+        padding-right: 130px;
+    }
+
+    .profile-name,
+    .profile-desc {
+        left: 80px;
+    }
+
+    .find-epal {
+        height: 300px;
+    }
+
+    .game-swiper1 {
+        margin-top: 60px;
+    }
+
+    .offering {
+        font-size: 26px;
+    }
+
+    .explore-more {
+        font-size: 17px;
+        font-weight: 600;
+        padding: 10px 30px;
+        margin: 15px 0px;
+    }
+
+    .item-Card {
+        margin: auto;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .homepage .row {
+        padding: 0 10%;
+    }
+
+    .main-carousel-div {
+        top: 130px;
+    }
+
+    .swiper-pagination {
+        margin-bottom: 13px;
+    }
+
+    h2, .carousel-text {
+        font-size: 40px;
+    }
+
+    .search-main {
+        width: 100%;
+        margin: 30px 0 40px 0;
+    }
+
+        .search-main .search,
+        .search-main input {
+            font-size: 18px;
+            height: 40px;
+        }
+
+    .trending-services {
+        font-size: 20px;
+    }
+
+    .trending-btns {
+        display: inline;
+    }
+
+        .trending-btns button, .trending-btns-style {
+            font-size: 16px;
+            padding: 8px 20px;
+        }
+
+    .item-Card {
+        margin: auto;
+    }
+
+    .variety {
+        margin-top: 45px;
+    }
+
+    h3, .h3-txt {
+        font-size: 38px;
+    }
+
+    .lifestyle-services {
+        font-size: 25px;
+        padding-top: 20px;
+    }
+
+    .lifestyle-more {
+        font-size: 16px;
+    }
+
+    .try-now {
+        margin-top: 30px;
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+
+    .watch p {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .story-nav div {
+        width: 45px;
+        height: 45px;
+        background-color: white;
+        color: white;
+        border-radius: 30px;
+    }
+
+    .profile-div {
+        padding-right: 130px;
+    }
+
+    .profile-desc {
+        line-height: 1.25em;
+        font-weight: normal;
+        margin-top: 65px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+  
+
+@media screen and (min-width:1700px) {
+    .item-Card {
+        margin: auto;
+    }
+
+    #cardCreator {
+        max-width: 1800px;
+    }
+}
+
+
+.head-Person-Pic img {
+    object-fit: cover;
+}
+
+
+#cardCreator {
+    margin: 50px auto;
+}
+
+.card {
+    background-color: #302F3D;
+    border-radius: 8px;
+}
+
+.item-Card {
+    width: 313px;
+    height: auto;
+    border-radius: 8px;
+    /*max-width:313px;*/
+}
+
+.head-Person-Pic {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 15px;
+    top: -20px;
+}
+
+    .head-Person-Pic img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 5px;
+    }
+
+.head-Status {
+    position: absolute;
+    bottom: 0;
+    right: -5px;
+}
+
+.status-Pic {
+    display: flex;
+    align-items: center;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    font-size: 18px;
+}
+
+    .status-Pic img {
+        width: 100%;
+        height: 100%;
+    }
+
+
+/* cardBody */
+
+.user-Info {
+    display: flex;
+    padding: 10px 0;
+}
+
+.uesr-Info-Icon {
+    width: 20px;
+    height: 20px;
+}
+
+    .uesr-Info-Icon img {
+        width: 100%;
+        height: 100%;
+    }
+
+.user-Info-Name {
+    padding-right: 5px;
+    padding-left: 16px;
+}
+
+    .user-Info-Name span {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+.user-Title-Item {
+    color: #C4C3E6;
+    padding: 1px 15px;
+}
+
+    .user-Title-Item span {
+        margin-right: 5px;
+    }
+
+.user-Title {
+    margin-bottom: 20px;
+}
+
+.user-Title-Item span {
+    background-color: #21212C;
+    padding: 5px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.user-Voice {
+    height: 30px;
+    width: 67px;
+    display: flex;
+    background: linear-gradient(90deg, #625cff, #7041e6);
+    border-radius: 0 8px 0 8px;
+    position: absolute;
+    bottom: 0;
+    right: -1px;
+    top: -1px;
+    justify-content: space-evenly;
+}
+
+    .user-Voice:hover {
+        background: #8d65ea;
+    }
+
+.voice-Left {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: rotate(90deg);
+    margin: auto;
+}
+
+.w-15 {
+    width: 15px;
+    transition: 0.5s ease-in;
+}
+
+.w-10 {
+    width: 10px;
+    transition: 0.5s ease-in;
+}
+
+.voice-Left span {
+    height: 1.5px;
+    background-color: #fff;
+}
+
+.voice-Right {
+    color: #fff;
+    font-size: 12px;
+    margin: auto;
+}
+
+
+/* cardFooter */
+
+.card-Footer {
+    background-color: #21212C;
+    padding: 5px 16px;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.footer-Discound p {
+    color: #AF93EF;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.price {
+    display: flex;
+    font-size: 12px;
+    text-align: center;
+}
+
+.price-Text {
+    margin: auto;
+}
+
+    .price-Text p {
+        margin: auto;
+    }
+
+.price span {
+    font-size: 24px;
+}
+
+.price-Icon {
+    width: 16px;
+    height: 16px;
+    margin: auto 2px;
+}
+
+    .price-Icon img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .price-Icon img {
+        width: 100%;
+        height: 100%;
+    }
+
+.rate {
+    display: flex;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.footer-Price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rate-Icon {
+    margin: auto;
+}
+
+.rate-Text {
+    margin: auto;
+}
+
+    .rate-Text p {
+        margin: auto;
+    }
+
+.rate .fas {
+    font-size: 16px;
+    background: -webkit-linear-gradient(#ff894c, #ffd839);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 5px;
+}
+
+.rate-Text span {
+    margin-left: 5px;
+    color: #C4C3E6;
+}
+
