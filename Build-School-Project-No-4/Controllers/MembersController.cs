@@ -863,7 +863,7 @@ namespace Build_School_Project_No_4.Controllers
                 if (string.IsNullOrEmpty(returnURL))
                     return Redirect("/Home/HomePage");
                 else
-                    return Redirect(returnURL);
+                    return Redirect("/ePals/ePal");
             }
             else
             {
