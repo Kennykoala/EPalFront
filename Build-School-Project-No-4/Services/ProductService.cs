@@ -49,7 +49,7 @@ namespace Build_School_Project_No_4.Services
             {
                 return result.ToString();
             }
-            var products = _repo.GetAll<Products>().Where(x => x.GameCategoryId == category.GameCategoryId);
+            var products = _repo.GetAll<Products>().Where(x => x.GameCategoryId == category.GameCategoryId && x.ProductStatus == true);
             var ProductPositions = _repo.GetAll<ProductPosition>();
             var Positions = _repo.GetAll<Position>();
 
