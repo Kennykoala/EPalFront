@@ -1,8 +1,22 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Becomeepal - E-Pal";
 }
 
+@*抓到使用者登入的cookie資訊*@
+@{
+
+    HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(FormsAuthentication.FormsCookieName);
+
+    string userid = "";
+
+    if (cookie != null)
+    {
+        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+        var obj = Json.Decode<Members>(ticket.UserData);
+        userid = obj.MemberId.ToString();
+    }
+}
 <div class="container-fluid" id="become-an-ePal">
     <div class="row" id="anepal">
         <div class="anepal-item">
@@ -100,6 +114,10 @@
         </script>
     }
 
+    @if(userid == null)
+    {
+
+    }
 }
 
 @section topCSS{
