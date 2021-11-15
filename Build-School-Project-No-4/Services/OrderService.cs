@@ -321,6 +321,7 @@ namespace Build_School_Project_No_4.Services
                     {
                         var orderResult = orders.Where(x => x.OrderId == order.OrderId).FirstOrDefault();
                         orderResult.OrderStatusId = (int)Enums.PaymentStatus.Cancelled;
+                        orderResult.OrderStatusIdCreator = (int)Enums.PaymentStatus.Cancelled;
                         _repo.Update(orderResult);
                         _repo.SaveChanges();
                     }
