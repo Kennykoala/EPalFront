@@ -73,7 +73,10 @@
                 </div>
                 <div class="col-6 col-md-12">
                     <div class="main-profile basic-info">
+                        <a href="@Url.Action("Profile","Members",new { id = Model.PlayerMemberId })">
                         <h2 class="name heading2">@Model.MemberName</h2>
+                        </a>
+                        
                         <div class="language">
                             <span class="language-label">Language: </span>@Model.LanguageName
                         </div>

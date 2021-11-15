@@ -8,16 +8,13 @@ using System.Web.Mvc;
 using Build_School_Project_No_4.ViewModels;
 using System.Web.Security;
 using Newtonsoft.Json;
+using Build_School_Project_No_4.Utilities;
 
 namespace Build_School_Project_No_4.Controllers
 {
    
     public class OrderController : Controller
     {
-
-
-     
-
         private readonly ProductService _productService;
         private readonly EPalContext _ctx;
         private readonly DetailServices _detailService;
@@ -66,15 +63,19 @@ namespace Build_School_Project_No_4.Controllers
             var mem = _ctx.Members.Find(int.Parse(GetMemberId()));
             var mems = mem.MemberId;
 
-                if (!id.HasValue)
-                {
-                    return RedirectToAction("PurchasedOrderSummary", "Order", new { id = 1 });
-                }
+            if (!id.HasValue)
+            {
+                return RedirectToAction("PurchasedOrderSummary", "Order", new { id = 1 });
+            }
+            if (id == (int)Enums.PaymentStatus.Unpaid)
+            {
+                _orderService.CheckOrderTimeoutPurchased(mems);
+            }
 
-                var order = new OrderService();
-                var PurchasedOrderInfo = order.GetOrderCardData(id.Value, mems);
+            var order = new OrderService();
+            var PurchasedOrderInfo = order.GetOrderCardData(id.Value, mems);
             
-                return View(PurchasedOrderInfo);       
+            return View(PurchasedOrderInfo);       
 
         }
 
@@ -88,6 +89,10 @@ namespace Build_School_Project_No_4.Controllers
             if (!id.HasValue)
             {
                 return RedirectToAction("CreatedOrderSummary", "Order", new { id = 1 });
+            }
+            if (id == (int)Enums.PaymentStatus.Unpaid)
+            {
+                _orderService.CheckOrderTimeoutCreated(mems);
             }
 
             var order = new OrderService();
@@ -163,7 +168,7 @@ namespace Build_School_Project_No_4.Controllers
         }
 
         [HttpGet]
-        public ActionResult OrderDetail(int? id)
+        public ActionResult OrderDetailPurchased(int? id)
         {
             if (id == null || !id.HasValue)
             {
@@ -172,13 +177,22 @@ namespace Build_School_Project_No_4.Controllers
             else
             {
                 var order = _orderService.GetOrderDetail((int)id);
+                return View("OrderDetailPurchased", order);
+            }
+        }
+        [HttpGet]
+        public ActionResult OrderDetailCreated(int? id)
+        {
+            if (id == null || !id.HasValue)
+            {
+                return RedirectToAction("PurchasedOrderSummary", "Order", new { id = 1 });
+            }
+            else
+            {
+                var order = _orderService.GetOrderDetail((int)id);
                 return View(order);
             }
         }
-
-
-
-
 
     }
 }

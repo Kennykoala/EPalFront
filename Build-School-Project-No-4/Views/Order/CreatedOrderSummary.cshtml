@@ -90,7 +90,7 @@
 
                             </div>
                             <div class="card-body">
-                                <a href="#">
+                                <a href="@Url.Action("Profile","Members",new { id = m.PlayerId })">
                                     <div class="u-details">
                                         @if (m.ProfilePicture == null)
                                         {
@@ -116,7 +116,7 @@
                                 <div class="order-details">
                                     <div class="rounds greyish">@Html.DisplayFor(x => m.Quantity) round(s) total</div>
                                     <div class="start-time greyish">
-                                        @Html.DisplayFor(x => m.OrderDate)
+                                        @m.OrderDate.ToString("MM/dd/yyyy hh:mm tt")
                                     </div>
                                 </div>
                                 <div class="order-total">
@@ -130,7 +130,9 @@
                                         <i class="far fa-comment-dots"></i>
                                     </div>
                                     <div class="details">
-                                        <i class="fas fa-chevron-right"></i>
+                                        <a href="@Url.Action("OrderDetailCreated","Order",new { id = m.OrderId })">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

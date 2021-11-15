@@ -10,6 +10,9 @@ namespace Build_School_Project_No_4.ViewModels
         public string PlayerName { get; set; }
         public int ProductId { get; set; }
         public string ProfilePic { get; set; }
+        public string BuyerName { get; set; }
+        public string BuyerProfilePic { get; set; }
+        public int BuyerId { get; set; }
         public int OrderStatusId { get; set; }
         public string OrderStatusName { get; set; }
         public string GameImg { get; set; }

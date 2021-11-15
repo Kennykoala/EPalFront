@@ -967,7 +967,8 @@
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
-    <Content Include="Views\Order\OrderDetail.cshtml" />
+    <Content Include="Views\Order\OrderDetailPurchased.cshtml" />
+    <Content Include="Views\Order\OrderDetailCreated.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

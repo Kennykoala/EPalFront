@@ -53,6 +53,7 @@ namespace Build_School_Project_No_4.Services
                               LanguageName = l.LanguageName,
                               PlayerId = p.ProductId,
                               MobileGameImg = g.GameCoverImgMini,
+                              PlayerMemberId = pl.MemberId
                           }).FirstOrDefault();
             result.Availability = (from p in products
                          join plan in prodPlan on p.ProductId equals plan.ProductId

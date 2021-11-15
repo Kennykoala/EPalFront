@@ -1,0 +1,103 @@
+﻿@model Build_School_Project_No_4.ViewModels.OrderDetailViewModel
+
+
+
+@section TopCSS {
+    <link href="~/Assets/css/orderDetails.css" rel="stylesheet" />
+    <style>
+        .epal-img{
+        background-image: url('@Model.BuyerProfilePic')
+        }
+    </style>
+}
+
+<div class="container spacing m-width">
+    <div class="row">
+        <div class="col-12">
+            <div class="order-title">
+                <div class="title">Order Details</div>
+                <div class="flag">
+                    <i class="far fa-flag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rev">
+        <div class="col-12 col-md-4 col-lg-3">
+            <div class="epal">
+                <div class="epal-img"></div>
+                <a href="@Url.Action("Profile","Members",new { id = Model.BuyerId })" class="epal-profile">
+                    <div class="epal-name">@Model.BuyerName</div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+
+
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-9">
+            <div class="order-status d-title">
+                @Model.OrderStatusName
+            </div>
+            <div class="game-div">
+                <div class="d-title">Game</div>
+                <div class="game">
+                    <img src="@Model.GameImg" alt="" class="game-img">
+                    <div class="game-details">
+                        <div class="game-name">League of Legends</div>
+                        <div class="unit-price greyish">
+                            Unit Price:
+                            <img src="~/Assets/images/detail/currency.png" class="currency" />
+                            <span class="whitish">@Model.UnitPrice</span>/Game
+                        </div>
+                        <div class="rounds greyish">
+                            Rounds:
+                            <span class="whitish">@Model.Rounds</span>
+                        </div>
+                        <div class="service-time greyish">
+                            Service Time:
+                            <span class="whitish">@Model.OrderDateTime.ToString("MM/dd/yyyy hh:mm tt")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="price-div">
+                <div class="d-title">Price</div>
+                <div class="subtotal">
+                    <div class="sub-field greyish">Subtotal</div>
+                    <div class="amount">
+                        <img src="~/Assets/images/detail/currency.png" class="currency" />
+                        @((Model.Rounds * Model.UnitPrice).ToString("N2"))
+                    </div>
+                </div>
+                <hr>
+                <div class="final">
+                    <div class="final-field greyish">Final Price</div>
+                    <div class="final-price">
+                        @Model.Rounds Round(s) total
+                        <img src="~/Assets/images/detail/currency.png" class="currency" />
+                        <div class="final-lg">
+                            @((Model.Rounds * Model.UnitPrice).ToString("N2"))
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="order-div">
+                <div class="d-title">Order</div>
+                <div class="order">
+                    <div class="order-num-field greyish">Order No</div>
+                    <div class="order-num">@Model.OrderConfirmation</div>
+                </div>
+                <div class="payment-confirmation">
+                    <div class="order-num-field greyish">Payment Confirmation</div>
+                    <div class="order-num">@Model.PaymentConfirmation</div>
+                </div>
+                <div class="order-time">
+                    <div class="order-time-field greyish">Order Time</div>
+                    <div class="time">@Model.PaymentDateTime.ToString("MM/dd/yyyy hh:mm tt")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
