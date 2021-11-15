@@ -10,7 +10,7 @@ namespace Build_School_Project_No_4.Services
     {
 
         private string gmail_account = "epalmemberservice@gmail.com"; 
-        private string gmail_password = "epalproject2021"; 
+        private string gmail_password = "ahliqdpkudwsnqqi"; 
         private string gmail_mail = "epalmemberservice@gmail.com"; 
 
         
