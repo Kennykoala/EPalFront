@@ -2,7 +2,9 @@ body {
     font-family: Poppins, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
     color: white;
 }
-
+body::-webkit-scrollbar {
+    display: none
+}
 
 .navbar {
     position: fixed;

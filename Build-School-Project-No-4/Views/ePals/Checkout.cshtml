@@ -119,15 +119,15 @@
         <div class="modal-dialog .modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <p>Cart Session Has Timed Out</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=Redirect()></button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <p>Please try placing your order again :(</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  onclick=Redirect()>Okay</button>
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
         var unixDateTime = Model.OrderDateTime;
     }
 
-    <script>
+<script>
 
 let timer = document.getElementById('counter')
     let dateTimeNow = new Date();
@@ -198,6 +198,9 @@ let timer = document.getElementById('counter')
         var checkoutBtn = document.getElementById('checkoutButton');
         checkoutBtn.setAttribute("disabled", "disabled");
 
-    }
-    </script>
+        }
+        function Redirect() {
+        window.location = `/epals/detail/@Model.ProductId`;
+        }
+</script>
 }

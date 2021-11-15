@@ -43,10 +43,7 @@
             <div class="trending-services">
                 Trending services:
                 <div class="trending-btns">
-                    @*<button class="rounded-pill">League of Legends</button>
-        <button class="rounded-pill">Minecraft</button>
-        <button class="rounded-pill">E-Chat</button>
-        <button class="rounded-pill">Movie</button>*@
+
                     @Html.ActionLink("League of Legends", "ePal", "ePals", new { id = 1 }, new { @class = "rounded-pill trending-btns-style" })
                     @Html.ActionLink("Minecraft", "ePal", "ePals", new { id = 18 }, new { @class = "rounded-pill trending-btns-style" })
                     @Html.ActionLink("E-Chat", "ePal", "ePals", new { id = 2 }, new { @class = "rounded-pill trending-btns-style" })
@@ -93,7 +90,7 @@
         </div>
 
     </div>
-    <div class="epal-card container-fluid">       
+    <div class="epal-card container-fluid">
         <div id='cardCreator' class="row">
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 my-3">
                 <div class="item-Card">
@@ -115,8 +112,8 @@
                                         <span>Brandy</span>
                                     </div>
                                     <div class="uesr-Info-Icon">
-                                        <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
-                                             alt="">
+
+                                        <img src="~/Assets/images/epalPage/badge.png" />
                                     </div>
                                 </div>
                                 <div class="user-Title">
@@ -187,8 +184,7 @@
                                         <span>Risiyana</span>
                                     </div>
                                     <div class="uesr-Info-Icon">
-                                        <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
-                                             alt="">
+                                        <img src="~/Assets/images/epalPage/badge.png" />
                                     </div>
                                 </div>
                                 <div class="user-Title">
@@ -259,8 +255,7 @@
                                         <span>Mawy ♥</span>
                                     </div>
                                     <div class="uesr-Info-Icon">
-                                        <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
-                                             alt="">
+                                        <img src="~/Assets/images/epalPage/badge.png" />
                                     </div>
                                 </div>
                                 <div class="user-Title">
@@ -331,8 +326,7 @@
                                         <span>raBerry</span>
                                     </div>
                                     <div class="uesr-Info-Icon">
-                                        <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
-                                             alt="">
+                                        <img src="~/Assets/images/epalPage/badge.png" />
                                     </div>
                                 </div>
                                 <div class="user-Title">
@@ -639,7 +633,8 @@
 
 
 @section topCSS{
-    <style>
+    <link href="~/Assets/css/home.css" rel="stylesheet" />
+    @*<style>
         body {
             font-family: Poppins, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
             background-color: rgb(18, 14, 27);
@@ -790,7 +785,7 @@
             margin-bottom: 0;
         }
 
-        h3, .h3-txt{
+        h3, .h3-txt {
             font-size: 20px;
             margin-top: 30px;
             margin-bottom: 10px;
@@ -1038,6 +1033,7 @@
             .find-epal {
                 margin-bottom: 10px;
             }
+
             .item-Card {
                 margin: auto;
             }
@@ -1161,6 +1157,7 @@
                 left: 0;
                 top: 60%;
             }
+
             .item-Card {
                 margin: auto;
             }
@@ -1297,6 +1294,7 @@
                 padding: 10px 30px;
                 margin: 15px 0px;
             }
+
             .item-Card {
                 margin: auto;
             }
@@ -1342,6 +1340,7 @@
                     font-size: 16px;
                     padding: 8px 20px;
                 }
+
             .item-Card {
                 margin: auto;
             }
@@ -1395,7 +1394,6 @@
             a {
                 text-decoration: none;
             }
-
             /*#card {
             text-decoration: none;
         }
@@ -1446,11 +1444,8 @@
             width: 100%;
             height: 100%;
         }*/
-
-
-        /* cardBody */
-
-        /*.user-Info {
+            /* cardBody */
+            /*.user-Info {
             display: flex;
             padding: 10px 0;
         }
@@ -1544,11 +1539,8 @@
             font-size: 12px;
             margin: auto;
         }*/
-
-
-        /* cardFooter */
-
-        /*.card-Footer {
+            /* cardFooter */
+            /*.card-Footer {
             background-color: #21212C;
             padding: 5px 16px;
             color: #fff;
@@ -1630,19 +1622,18 @@
             margin-left: 5px;
             color: #C4C3E6;
         }*/
-           
-
         }
 
 
-       
 
-        @@media screen and (min-width:1700px){
+
+        @@media screen and (min-width:1700px) {
             .item-Card {
-                margin:auto;
+                margin: auto;
             }
-            #cardCreator{
-                max-width:1800px;
+
+            #cardCreator {
+                max-width: 1800px;
             }
         }
 
@@ -1655,6 +1646,7 @@
         #cardCreator {
             margin: 50px auto;
         }
+
         .card {
             background-color: #302F3D;
             border-radius: 8px;
@@ -1663,7 +1655,6 @@
         .item-Card {
             width: 313px;
             height: auto;
-            
             border-radius: 8px;
             /*max-width:313px;*/
         }
@@ -1887,7 +1878,7 @@
             margin-left: 5px;
             color: #C4C3E6;
         }
-    </style>
+    </style>*@
 }
 
 @section endJS{

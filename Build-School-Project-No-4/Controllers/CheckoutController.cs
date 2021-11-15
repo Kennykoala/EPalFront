@@ -83,13 +83,14 @@ namespace Build_School_Project_No_4.Controllers
                 var payStatus = await _linePayService.ConfirmApiPost(long.Parse(transactionId), confirmation);
                 if (payStatus == Enums.PayAttempt.Success.ToString())
                 {
-                    return Content(":D");
+                    return Content("Success");
                 }
-                return Content(":(");
+                return Content("Fail");
             }
             var payRedirectUrl = await _linePayService.RequestApiPost(confirmation);
             return Redirect(payRedirectUrl);
         }
+
         public ActionResult Success(string transactionId, string orderId)
         {
 

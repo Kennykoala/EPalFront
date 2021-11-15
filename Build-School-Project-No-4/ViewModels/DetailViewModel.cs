@@ -8,6 +8,7 @@ namespace Build_School_Project_No_4.ViewModels
     public class DetailViewModel
     {
         public int PlayerId { get; set; }
+        public int PlayerMemberId { get; set; }
         public string MemberName { get; set; }
         public string Status { get; set; }
         public double UnitPrice { get; set; }
