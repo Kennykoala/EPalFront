@@ -95,14 +95,12 @@ namespace Build_School_Project_No_4.Controllers
         public ActionResult Checkout(CheckoutViewModel x, string confirmation, string payType)
         {
             TempData["confirmation"] = confirmation;
-
-            bool canCheckout = _checkoutService.ValidCheckoutTime(confirmation);
-            int ePalId = _checkoutService.GetPlayerIdFromConfirmation(confirmation).ProductId;
-            int id = ePalId;
+            bool canCheckout = _checkoutService.CanCheckout(confirmation);
+            int productId = _checkoutService.GetPlayerIdFromConfirmation(confirmation).ProductId;
             int orderStatus = _checkoutService.GetOrderStatus(confirmation);
             if (canCheckout == false || orderStatus != (int)Enums.PaymentStatus.Unpaid)
             {
-                return RedirectToAction("Detail", new { id = id});
+                return RedirectToAction("Detail", new { id = productId});
             }
             else
             {
