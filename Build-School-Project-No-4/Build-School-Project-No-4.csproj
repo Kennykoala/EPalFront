@@ -968,6 +968,7 @@
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
     <Content Include="Views\Order\OrderDetailPurchased.cshtml" />
     <Content Include="Views\Order\OrderDetailCreated.cshtml" />
+    <Content Include="Views\Shared\_Layout_DetailMobileNoFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
