@@ -96,7 +96,6 @@ namespace Build_School_Project_No_4.Services
                 return result;
             }
 
-
             //created orders
             var createorders = _repo.GetAll<Orders>().Where(x => x.OrderStatusIdCreator == category.OrderStatusId && x.Products.CreatorId == mems);
             var CreateCards = createorders.Select(c => new CreatedCard
@@ -117,8 +116,6 @@ namespace Build_School_Project_No_4.Services
             }).ToList();
 
 
-
-
             var orderstatu = _repo.GetAll<OrderStatus>().ToList();
             var Orders = orderstatu.Select(g => new Orderstatusall
             {
@@ -135,9 +132,6 @@ namespace Build_School_Project_No_4.Services
             return result;
 
         }
-
-
-
 
         public bool PurchasedStatusToDB(OrderViewModel order)
         {
