@@ -7,11 +7,10 @@ namespace Build_School_Project_No_4.Utilities
 {
     public static class PaymentUtil
     {
-        public static string CreateTransactionUID(string id)
+        public static string CreateTransactionUID(string memberId)
         {
             var utcTimestamp = UtcDateTimeToUnix(DateTime.Now.ToUniversalTime());
-            string transId = id + utcTimestamp;
-            return transId;
+            return  memberId + utcTimestamp;
         }
         public static long UtcDateTimeToUnix(DateTime x)
         {

@@ -49,7 +49,6 @@ namespace Build_School_Project_No_4.Services
         public static string HashLinePayRequest(string channelSecret, string apiUrl, string body, string orderId, string key)
         {
             var request = channelSecret + apiUrl + body + orderId;
-            key = key ?? "";
             var encoding = new System.Text.UTF8Encoding();
             byte[] keyByte = encoding.GetBytes(key);
             byte[] messageBytes = encoding.GetBytes(request);
@@ -62,10 +61,7 @@ namespace Build_School_Project_No_4.Services
 
         public LinePayViewModel.LinePayRequest LinePayCreateOrder(string confirmation)
         {
-            //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted"ttpContext.Current.Request.Url.Scheme ;
-            //var redirectUrl = "https://localhost:44322/api/linepayapi/linepaycompleted/";
             var redirectUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/Success";
-            //var redirectUrl = HttpContext.Current.Request.Url.Host + "://" + HttpContext.Current.Request.Url.Authority + "/Checkout/PaymentWithLinePay?";
             var order = _orderUtil.GetOrder(confirmation);
             var linePayRequest = new LinePayViewModel.LinePayRequest
             {

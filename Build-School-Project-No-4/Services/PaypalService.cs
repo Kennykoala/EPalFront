@@ -34,10 +34,10 @@ namespace Build_School_Project_No_4.Services
         }
         public Payment CreatePayment(APIContext apiContext, string redirectUrl, string confirmation)
         {
-            var order = _orderUtil.GetOrder(confirmation);
             var customerId = MemberUtil.GetMemberId();
-            var orderUID = Utilities.PaymentUtil.CreateTransactionUID(customerId);
-            _checkoutService.CreateTransaction(confirmation, (int)Enums.PaymentType.PayPal, orderUID);
+            var transactionUID = Utilities.PaymentUtil.CreateTransactionUID(customerId);
+            _checkoutService.CreateTransaction(confirmation, (int)Enums.PaymentType.PayPal, transactionUID);
+            var order = _orderUtil.GetOrder(confirmation);
             var itemList = new ItemList()
             {
                 items = new List<Item>()
@@ -72,7 +72,7 @@ namespace Build_School_Project_No_4.Services
             transactionList.Add(new Transaction()
             {
                 description = $"Order ID: {confirmation}",
-                invoice_number = orderUID,
+                invoice_number = transactionUID,
                 amount = amount,
                 item_list = itemList
             });
