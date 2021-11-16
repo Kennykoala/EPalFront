@@ -65,17 +65,12 @@
                 </div><div class="a-col">
                     @foreach (var item in Model)
                     {
-
-                        @*<a href="@Url.Action("Followings","FollowController")" class="a-title">*@
-                        <a href="@Url.Action("Followings","Members")" class="a-title">
+                        <a href="" class="a-title">
                             <span class="followers-count">@item.FollowsNumber</span> Followers <i class="fas fa-chevron-right"></i>
                         </a>
-                        <a href="@Url.Action("Followings","Members")" class="a-title">
+                        <a href="" class="a-title">
                             <span class="following-count">@item.FollingsNumber</span> Following <i class="fas fa-chevron-right"></i>
                         </a>
-                        @*<a href="#" class="a-title">
-                                <span class="visitors-count">@item.VistorsNumber</span> Visitors <i class="fas fa-chevron-right"></i>
-                            </a>*@
                         <a href="#" class="a-title">
                             <span class="medals-count">0</span> Medals <i class="fas fa-chevron-right"></i>
                         </a>
