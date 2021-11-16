@@ -69,7 +69,6 @@ function clearTimers() {
     clearInterval(interval)
 }
 
-
 function PriceChange(a, b) {
     if (b == "") {
         b = 1;
@@ -77,9 +76,7 @@ function PriceChange(a, b) {
     if (b > 999) {
         b = 999;
     }
-
     if (a == undefined) a = oldVal;
-
     if (Number.isNaN(parseInt(b))) {
         roundDisplay.value = parseInt(a);
     } else {
@@ -107,12 +104,10 @@ window.addEventListener('load', function () {
     inputDate.value = localDatetime;
 });
 
-
 timeNowBtn.addEventListener('click', () => {
     localDatetime = TimeNowPlusTen();
     inputDate.value = localDatetime;
 });
-
 
 function TimeNowPlusTen() {
     const now = new Date();
@@ -129,4 +124,12 @@ function DateCheck(a) {
     } else {
         return inputDate.value = a;
     }
+}
+
+//if user is not logged in when "play" button is pressed
+//prompt user to log in and prevent entering checkout page
+function promptLogin() {
+    var loginBtn = document.getElementById('loginmodal');
+    loginBtn.click();
+
 }

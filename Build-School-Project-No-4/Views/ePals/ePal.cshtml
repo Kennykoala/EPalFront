@@ -205,8 +205,7 @@
                                     <span></span>
                                 </div>
                                 <div class="uesr-Info-Icon">
-                                    <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637505/Independent%20Study/OtherPhoto/Level_db9q6b.jpg"
-                                         alt="">
+                                    <img src="~/Assets/images/epalPage/badge.png" />
                                 </div>
                             </div>
                             <div class="user-Title">
@@ -233,8 +232,7 @@
                             <div class="footer-Price">
                                 <div class="price">
                                     <div class="price-Icon">
-                                        <img src="https://res.cloudinary.com/drh5ybnss/image/upload/v1632637598/Independent%20Study/OtherPhoto/Icon2_w7mcnt.jpg"
-                                             alt="">
+                                        <img src="~/Assets/images/detail/currency.png" />
                                     </div>
                                     <div class="price-Text">
                                         <p>
@@ -242,14 +240,14 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="rate">
+                                @*<div class="rate">
                                     <div class="rate-Icon">
                                         <i class="fas fa-star"></i>
                                     </div>
                                     <div class="rate-Text">
                                         <p>5.0<span>(85)</span></p>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
@@ -1673,7 +1671,7 @@
         function CreateProducts(item) {
             let card = document.querySelector('#cardCreator')
             let cloneContent = card.content.cloneNode(true);
-            cloneContent.querySelector('.item-Card a').href = '@Url.Action("Detail", new {id = "ID"})'.replace("ID", item.ProductId);
+            cloneContent.querySelector('.item-Card a').href = '@Url.Action("Detail", "ePals", new {id = "ID"})'.replace("ID", item.ProductId);
             cloneContent.querySelectorAll('.user-Title-Item span')[0].innerText = item.Rank;
             cloneContent.querySelectorAll('.user-Title-Item span')[1].innerText = item.Position;
             cloneContent.querySelector('.head-Person-Pic img').src = item.CreatorImg;

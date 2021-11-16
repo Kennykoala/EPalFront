@@ -24,10 +24,12 @@ namespace Build_School_Project_No_4.Services
             var server = _repo.GetAll<Server>();
             var rank = _repo.GetAll<Rank>();
             var lang = _repo.GetAll<Language>();
+            var prodPlan = _repo.GetAll<ProductPlans>();
             if (id == null)
             {
                 return null ;
             }
+
             var result = (from p in products
                           join pl in playerInfo on p.CreatorId equals pl.MemberId
                           join g in gameInfo on p.GameCategoryId equals g.GameCategoryId
@@ -50,9 +52,19 @@ namespace Build_School_Project_No_4.Services
                               RankName = r.RankName,
                               LanguageName = l.LanguageName,
                               PlayerId = p.ProductId,
-                              MobileGameImg = g.GameCoverImgMini
+                              MobileGameImg = g.GameCoverImgMini,
+                              PlayerMemberId = pl.MemberId
                           }).FirstOrDefault();
-
+            result.Availability = (from p in products
+                         join plan in prodPlan on p.ProductId equals plan.ProductId
+                         where p.ProductId == id
+                         select new PlayerAvailability
+                         {
+                             ProductId = plan.ProductId,
+                             AvailDay = plan.GameAvailableDay,
+                             Start = plan.GameStartTime.ToString().Substring(0,5),
+                             End = plan.GameEndTime.ToString().Substring(0, 5)
+                         }).ToList();
             return result;
         }
 

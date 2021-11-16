@@ -395,7 +395,6 @@
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
-    <Compile Include="Controllers\LinePayApiController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberFollowApiController.cs" />
     <Compile Include="Controllers\MembersApiController.cs" />
@@ -481,6 +480,7 @@
     <Compile Include="ViewModels\MemberRegisterViewModel.cs" />
     <Compile Include="ViewModels\MemberViewModel.cs" />
     <Compile Include="ViewModels\OrderConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
@@ -497,8 +497,10 @@
     <Content Include="Assets\CouponsImages\Coupons.png" />
     <Content Include="Assets\css\checkout.css" />
     <Content Include="Assets\css\detail_r2.css" />
+    <Content Include="Assets\css\home.css" />
     <Content Include="Assets\css\layout_afterlogin_nofooter.css" />
     <Content Include="Assets\css\layout_afterlogin.css" />
+    <Content Include="Assets\css\orderDetails.css" />
     <Content Include="Assets\css\orders.css" />
     <Content Include="Assets\css\orderconfirmedpaypal.css" />
     <Content Include="Assets\css\paypalSuccess.css" />
@@ -656,6 +658,7 @@
     <Content Include="Assets\images\detail\details.png" />
     <Content Include="Assets\images\detail\lol-screenshot.jpg" />
     <Content Include="Assets\images\detail\profile-eniza.gif" />
+    <Content Include="Assets\images\epalPage\badge.png" />
     <Content Include="Assets\images\epalPage\games.png" />
     <Content Include="Assets\images\epalPage\lifestyle.png" />
     <Content Include="Assets\images\epalPage\trending.png" />
@@ -963,8 +966,9 @@
     <Content Include="Views\Shared\_EditProfilePartial.cshtml" />
     <Content Include="Views\Shared\_AddgamePartial.cshtml" />
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
-    <Content Include="Views\Members\ForgetPwd.cshtml" />
-    <Content Include="Views\Members\ResetPwd.cshtml" />
+    <Content Include="Views\Order\OrderDetailPurchased.cshtml" />
+    <Content Include="Views\Order\OrderDetailCreated.cshtml" />
+    <Content Include="Views\Shared\_Layout_DetailMobileNoFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

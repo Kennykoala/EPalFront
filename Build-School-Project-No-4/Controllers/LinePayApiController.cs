@@ -62,40 +62,6 @@ namespace Build_School_Project_No_4.Controllers
 
 
                 return JsonConvert.DeserializeObject<LinePayViewModel.LinePayRequestResponse>(result).returnMessage;
-                //using (var client = new HttpClient())
-                //{
-
-                //    var requestbody = new
-                //    {
-                //        amount = _linePayService.GetOrderTotal(orderId),
-                //        currency = "TWD"
-                //    };
-
-                //    var body = JsonConvert.SerializeObject(requestbody);
-                //    string apiurl = $"/v3/payments/{transactionId}/confirm";
-                //    var baseUri = "https://sandbox-api-pay.line.me";
-                //    string ChannelSecret = "c8244dcfe709313a3b55afb35f0da7d1";
-                //    string ChannelId = "1656554768";
-                //    var nonce = Utilities.PaymentUtility.CreateTransactionUID("1");
-
-
-                //    string Signature = LinePayService.HashLinePayRequest(nonce, body, apiurl);
-
-                //    client.BaseAddress = new Uri("https://sandbox-api-pay.line.me");
-                //    client.DefaultRequestHeaders.Add("X-LINE-ChannelId", ChannelId);
-                //    client.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", ChannelSecret);
-                //    client.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
-                //    client.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
-
-                //    var content = new StringContent(body, Encoding.UTF8, "application/json");
-                //    var response = await client.PostAsync(baseUri + apiurl, content);
-                //    var result = await response.Content.ReadAsStringAsync();
-
-
-
-                //    return JsonConvert.DeserializeObject<LinePayViewModel.LinePayConfirmResponse>(result).returnMessage;
-
-                //}
 
 
             }

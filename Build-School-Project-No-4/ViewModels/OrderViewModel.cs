@@ -45,6 +45,7 @@ namespace Build_School_Project_No_4.ViewModels
         public string GameName { get; set; }
 
         public int? OrderStatusIdCreator { get; set; }
+        public string Confirmation { get; set; }
     }
 
 

@@ -28,6 +28,7 @@ namespace Build_School_Project_No_4.ViewModels
 
         public string RecommendationVoice { get; set; }
 
+        public bool ProductStatus { get; set; }
 
 
 

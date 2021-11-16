@@ -142,7 +142,8 @@ namespace Build_School_Project_No_4.Controllers
                             Introduction = registerVM.Introduction,
                             CreatorImg = registerVM.CreatorImg,
                             RecommendationVoice = registerVM.RecommendationVoice,
-                            RankId = (int)registerVM.RankId
+                            RankId = (int)registerVM.RankId,
+                            ProductStatus = false
                         };
 
                         _ctx.Products.Add(product);

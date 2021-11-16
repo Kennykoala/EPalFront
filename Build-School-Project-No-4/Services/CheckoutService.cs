@@ -44,7 +44,7 @@ namespace Build_School_Project_No_4.Services
             }
             return result;
         }
-        public bool ValidCheckoutTime(string confirmation)
+        public CheckoutViewModel GetOrderDateTime(string confirmation)
         {
             var orders = _repo.GetAll<Orders>();
             var members = _repo.GetAll<Members>();
@@ -59,26 +59,24 @@ namespace Build_School_Project_No_4.Services
                           {
                               OrderDateTime = o.OrderDate,
                           }).SingleOrDefault();
-
+            return result;
+        }
+        public bool CanCheckout(string confirmation)
+        {
+            var orders = _repo.GetAll<Orders>();
+            var order = GetOrderDateTime(confirmation);
             var dateTimeNow = DateTime.UtcNow;
-            var timeOut = result.OrderDateTime.AddMinutes(15);
+            var timeOut = order.OrderDateTime.AddMinutes(15);
             if (dateTimeNow > timeOut)
             {
-                try
-                {
-                    var orderResult = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
-                    orderResult.OrderStatusId = (int)Enums.PaymentStatus.Cancelled;
-                    orderResult.OrderStatusIdCreator = (int)Enums.PaymentStatus.Cancelled;
-                    _repo.Update(orderResult);
-                    _repo.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    var err = ex.ToString();
-                    return false;
-                }   
+                var orderResult = orders.Where(x => x.OrderConfirmation == confirmation).FirstOrDefault();
+                orderResult.OrderStatusId = (int)Enums.PaymentStatus.Cancelled;
+                orderResult.OrderStatusIdCreator = (int)Enums.PaymentStatus.Cancelled;
+                _repo.Update(orderResult);
+                _repo.SaveChanges();
+                return false; 
             }
-                return true;
+           return true;
         }
         public CheckoutViewModel GetPlayerIdFromConfirmation(string orderConfirmation)
         {
