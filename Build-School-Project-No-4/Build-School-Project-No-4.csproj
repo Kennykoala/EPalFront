@@ -892,6 +892,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Shared\ForgetPwdEmailTemplate.html" />
     <Content Include="Views\Shared\RegisterEmailTemplate.html" />
+    <Content Include="Views\Shared\_Layout_DetailMobileNoFooter.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -968,7 +969,6 @@
     <Content Include="Views\Order\CreatedOrderSummary.cshtml" />
     <Content Include="Views\Order\OrderDetailPurchased.cshtml" />
     <Content Include="Views\Order\OrderDetailCreated.cshtml" />
-    <Content Include="Views\Shared\_Layout_DetailMobileNoFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
